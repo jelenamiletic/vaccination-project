@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<in:Interesovanje xmlns:in="http:///www.ftn.uns.ac.rs/vakcinacija/interesovanje" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http:///www.ftn.uns.ac.rs/vakcinacija/interesovanje interesovanje.xsd">
+    <in:DrzavljaninOpcija>Drzаvljаnin Republike Srbije</in:DrzavljaninOpcija>
+    <in:JMBG>3553355353533</in:JMBG>
+    <in:Ime>Daniel</in:Ime>
+    <in:Prezime>Bozanic</in:Prezime>
+    <in:AdresaElektronskePoste>test@gmail.com</in:AdresaElektronskePoste>
+    <in:BrojMobilnogTelefona>0635678901</in:BrojMobilnogTelefona>
+    <in:BrojFiksnogTelefona>011518556</in:BrojFiksnogTelefona>
+    <in:Opstina>Sabac</in:Opstina>
+    <in:VakcinaOpcija>Pfizer-BioNTech</in:VakcinaOpcija>
+    <in:DavalacKrviOpcija>Nе</in:DavalacKrviOpcija>
+</in:Interesovanje>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<iz:Izvestaj xmlns:iz="http:///www.ftn.uns.ac.rs/vakcinacija/izvestaj" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http:///www.ftn.uns.ac.rs/vakcinacija/izvestaj izvestaj.xsd" 
+    iz:DatumIzdavanja = "2022-09-11">
+    <iz:Naslov>Izvestaj o imunizaciji</iz:Naslov>
+    <iz:PeriodIzvestaja>
+        <iz:OdDatum>2021-08-01</iz:OdDatum>
+        <iz:DoDatum>2021-09-01</iz:DoDatum>
+    </iz:PeriodIzvestaja>
+    <iz:BrojPodnetihDokumenata>2758</iz:BrojPodnetihDokumenata>
+    <iz:ZahteviZaDigitalniSertifikat>
+        <iz:UkupanBroj>456</iz:UkupanBroj>
+        <iz:BrojIzdatih>428</iz:BrojIzdatih>
+    </iz:ZahteviZaDigitalniSertifikat>
+    <iz:UkupanBrojDatihDoza>3225</iz:UkupanBrojDatihDoza>
+    <iz:KolicnaDozaPoRednomBroju>
+        <iz:RedniBroj>1</iz:RedniBroj>
+        <iz:BrojDatihDoza>1789</iz:BrojDatihDoza>
+        <iz:RedniBroj>2</iz:RedniBroj>
+        <iz:BrojDatihDoza>1276</iz:BrojDatihDoza>
+        <iz:RedniBroj>3</iz:RedniBroj>
+        <iz:BrojDatihDoza>160</iz:BrojDatihDoza>
+    </iz:KolicnaDozaPoRednomBroju>
+    <iz:RaspodelaDozaPoProizvodjacu>
+        <iz:Proizvodjac>Pfizer</iz:Proizvodjac>
+        <iz:BrojDatihDoza>1625</iz:BrojDatihDoza>
+        <iz:Proizvodjac>Sinopharm</iz:Proizvodjac>
+        <iz:BrojDatihDoza>1100</iz:BrojDatihDoza>
+        <iz:Proizvodjac>Sputnik V</iz:Proizvodjac>
+        <iz:BrojDatihDoza>356</iz:BrojDatihDoza>
+        <iz:Proizvodjac>AstraZeneca</iz:Proizvodjac>
+        <iz:BrojDatihDoza>144</iz:BrojDatihDoza>
+    </iz:RaspodelaDozaPoProizvodjacu>
+</iz:Izvestaj>

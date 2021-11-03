@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:za="http:///www.ftn.uns.ac.rs/vakcinacija/zahtev" 
+    targetNamespace="http:///www.ftn.uns.ac.rs/vakcinacija/zahtev" elementFormDefault="qualified" >
+    <xs:element name="Zahtev">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name = "ImeIPrezime" type = "xs:string"/>
+                <xs:element name = "DatumRodjenja" type = "xs:date"/>
+                <xs:element name = "Pol" type = "xs:string"/>
+                <xs:element name = "JMBG">
+                    <xs:simpleType>
+                            <xs:restriction base = "xs:string">
+                                    <xs:pattern value="\d{13}"/>
+                            </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name = "BrojPasosa">
+                    <xs:simpleType>
+                        <xs:restriction base = "xs:string">
+                            <xs:pattern value="\d{9}"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name = "RazlogPodnosenja" type = "xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
