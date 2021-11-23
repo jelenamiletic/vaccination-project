@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:sag="http:///www.ftn.uns.ac.rs/vakcinacija/saglasnost" 
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:sag="http:///www.ftn.uns.ac.rs/vakcinacija/saglasnost"
+    xmlns:ct="http:///www.ftn.uns.ac.rs/vakcinacija/commonTypes"
     targetNamespace="http:///www.ftn.uns.ac.rs/vakcinacija/saglasnost" elementFormDefault="qualified" >
+    <xs:import schemaLocation="CommonTypes.xsd"
+        namespace="http:///www.ftn.uns.ac.rs/vakcinacija/commonTypes" />
     <xs:element name="Saglasnost">
         <xs:complexType>
             <xs:sequence>
@@ -13,13 +16,7 @@
                                         <xs:element name = "RepublikaSrbija">
                                             <xs:complexType>
                                                 <xs:sequence>
-                                                    <xs:element name = "JMBG">
-                                                        <xs:simpleType>
-                                                            <xs:restriction base = "xs:string">
-                                                                <xs:pattern value="\d{13}"/>
-                                                            </xs:restriction>
-                                                        </xs:simpleType>
-                                                    </xs:element>
+                                                    <xs:element name = "JMBG" type = "ct:JMBG"/>                                               
                                                 </xs:sequence>
                                             </xs:complexType>
                                         </xs:element>
@@ -28,13 +25,7 @@
                                                 <xs:sequence>
                                                     <xs:element name = "NazivDrzave" type = "xs:string"/>
                                                     <xs:choice>
-                                                        <xs:element name = "BrojPasosa">
-                                                            <xs:simpleType>
-                                                                <xs:restriction base = "xs:string">
-                                                                    <xs:pattern value="\d{9}"/>
-                                                                </xs:restriction>
-                                                            </xs:simpleType>
-                                                        </xs:element>
+                                                        <xs:element name = "BrojPasosa" type = "ct:BrojPasosa"/> 
                                                         <xs:element name = "EBS" type = "xs:string"/>
                                                     </xs:choice>
                                                 </xs:sequence>
@@ -43,43 +34,17 @@
                                     </xs:choice>
                                 </xs:complexType>
                             </xs:element>
-                            <xs:element name = "Prezime" type = "xs:string"/>
-                            <xs:element name = "Ime" type = "xs:string"/>
+                            <xs:element name = "PunoIme" type = "ct:PunoIme"/>
                             <xs:element name = "ImeRoditelja" type = "xs:string"/>
-                            <xs:element name = "Pol">
-                                <xs:simpleType>
-                                    <xs:restriction base = "xs:string">
-                                        <xs:enumeration value="M"/>
-                                        <xs:enumeration value="Z"/>
-                                    </xs:restriction>
-                                </xs:simpleType>
-                            </xs:element>
+                            <xs:element name = "Pol" type = "ct:Pol"/> 
                             <xs:element name = "DatumRodjenja" type = "xs:date"/>
                             <xs:element name = "MestoRodjenja" type = "xs:string"/>
                             <xs:element name = "Adresa" type = "xs:string"/>
-                            <xs:element name = "Mesto" type = "xs:string"/>
-                            <xs:element name = "Opstina" type = "xs:string"/>
-                            <xs:element name = "BrojFiksnogTelefona">
-                                <xs:simpleType>
-                                    <xs:restriction base="xs:string">
-                                        <xs:pattern value="\d{9}"/>
-                                    </xs:restriction>
-                                </xs:simpleType>
-                            </xs:element>
-                            <xs:element name = "BrojMobilnogTelefona">
-                                <xs:simpleType>
-                                    <xs:restriction base="xs:string">
-                                        <xs:pattern value="\d{10}"/>
-                                    </xs:restriction>
-                                </xs:simpleType>
-                            </xs:element>
-                            <xs:element name="Email">
-                                <xs:simpleType>
-                                    <xs:restriction base="xs:string"> 
-                                            <xs:pattern value="[^@]+@[^\.]+\..+"/> 
-                                        </xs:restriction>
-                                </xs:simpleType>
-                            </xs:element>
+                            <xs:element name = "Mesto" type = "ct:Mesto"/>
+                            <xs:element name = "Opstina" type = "ct:Opstina"/>
+                            <xs:element name = "BrojFiksnogTelefona" type = "ct:BrojFiksnogTelefona"/>
+                            <xs:element name = "BrojMobilnogTelefona" type = "ct:BrojMobilnogTelefona"/>
+                            <xs:element name = "Email" type = "ct:Email"/>
                             <xs:element name = "RadniStatus">
                                 <xs:simpleType>
                                     <xs:restriction base = "xs:string">
@@ -104,27 +69,13 @@
                                     </xs:restriction>
                                 </xs:simpleType>
                             </xs:element>
-                            <xs:element name = "KorisnikUstanoveSocZast">
-                                <xs:simpleType>
-                                    <xs:restriction base = "xs:string">
-                                        <xs:enumeration value="Da"/>
-                                        <xs:enumeration value="Ne"/>
-                                    </xs:restriction>
-                                </xs:simpleType>
-                            </xs:element>
-                            <xs:element name = "NazivIOpstinaSedista" type = "xs:string" minOccurs = "0"/>
+                            <xs:element name = "KorisnikUstanoveSocZast" type = "xs:boolean"/>
+                            <xs:element name = "NazivIOpstinaSedista" type = "ct:Opstina" minOccurs = "0"/>
                             <xs:element name = "ImunoloskiLek">
                                 <xs:complexType>
                                     <xs:sequence>
                                         <xs:element name = "NazivLeka" type = "xs:string"/>
-                                        <xs:element name = "Izjava">
-                                            <xs:simpleType>
-                                                <xs:restriction base = "xs:string">
-                                                    <xs:enumeration value="Saglasan sam"/>
-                                                    <xs:enumeration value="Nisam saglasan"/>
-                                                </xs:restriction>
-                                            </xs:simpleType>
-                                        </xs:element>
+                                        <xs:element name = "Izjava" type = "xs:boolean"/>
                                     </xs:sequence>
                                 </xs:complexType>
                             </xs:element>
@@ -139,20 +90,14 @@
                             <xs:element name = "Ime" type = "xs:string"/>
                             <xs:element name = "Prezime" type = "xs:string"/>
                             <xs:element name = "Faksimil" type = "xs:string"/>
-                            <xs:element name = "BrojTelefona">
-                                <xs:simpleType>
-                                    <xs:restriction base="xs:string">
-                                        <xs:pattern value="\d{10}"/>
-                                    </xs:restriction>
-                                </xs:simpleType>
-                            </xs:element>
+                            <xs:element name = "BrojTelefona" type = "ct:BrojMobilnogTelefona"/> 
                             <xs:element name = "Tabela">
                                 <xs:complexType>
                                     <xs:sequence>
                                         <xs:element name = "VakcineInfo">
                                             <xs:complexType>
                                                 <xs:sequence minOccurs = "2" maxOccurs="2">
-                                                    <xs:element name = "NazivVakcine" type = "xs:string"/>
+                                                    <xs:element name = "NazivVakcine" type = "ct:Proizvodjac"/>
                                                     <xs:element name = "DatumDavanjaVakcine" type = "xs:date"/>
                                                     <xs:element name = "NacinDavanjeVakcine" type = "xs:string" fixed = "IM"/>
                                                     <xs:element name = "Ekstremitet">
@@ -164,9 +109,8 @@
                                                         </xs:simpleType>
                                                     </xs:element>
                                                     <xs:element name = "SerijaVakcine" type = "xs:string"/>
-                                                    <xs:element name = "Proizvodjac" type = "xs:string"/>
+                                                    <xs:element name = "Proizvodjac" type = "ct:Proizvodjac"/>
                                                     <xs:element name = "NezeljanaReakcija" type = "xs:string"/>
-                                                    <xs:element name = "PotpisLekara" type = "xs:string"/>
                                                 </xs:sequence>
                                             </xs:complexType>
                                         </xs:element>

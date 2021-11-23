@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:iz="http:///www.ftn.uns.ac.rs/vakcinacija/izvestaj" 
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:iz="http:///www.ftn.uns.ac.rs/vakcinacija/izvestaj"
+    xmlns:ct="http:///www.ftn.uns.ac.rs/vakcinacija/commonTypes"
     targetNamespace="http:///www.ftn.uns.ac.rs/vakcinacija/izvestaj" elementFormDefault="qualified" attributeFormDefault="qualified">
+    <xs:import schemaLocation="CommonTypes.xsd"
+               namespace="http:///www.ftn.uns.ac.rs/vakcinacija/commonTypes" />
     <xs:element name="Izvestaj">
         <xs:complexType>
             <xs:sequence>
@@ -34,7 +37,7 @@
                 <xs:element name = "RaspodelaDozaPoProizvodjacu">
                     <xs:complexType>
                         <xs:sequence maxOccurs="unbounded">
-                            <xs:element name = "Proizvodjac" type = "xs:string"/>
+                            <xs:element name = "Proizvodjac" type = "ct:Proizvodjac"/>
                             <xs:element name = "BrojDatihDoza" type = "xs:positiveInteger"/>
                         </xs:sequence>
                     </xs:complexType>

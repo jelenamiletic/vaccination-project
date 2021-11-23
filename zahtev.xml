@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<za:Zahtev xmlns:za="http:///www.ftn.uns.ac.rs/vakcinacija/zahtev" 
+<za:Zahtev xmlns:za="http:///www.ftn.uns.ac.rs/vakcinacija/zahtev" xmlns:ct="http:///www.ftn.uns.ac.rs/vakcinacija/commonTypes"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http:///www.ftn.uns.ac.rs/vakcinacija/zahtev zahtev.xsd">
-    <za:ImeIPrezime>Daniel Bozanic</za:ImeIPrezime>
+    <za:PunoIme>
+        <ct:Ime>Daniel</ct:Ime>
+        <ct:Prezime>Bozanic</ct:Prezime>
+    </za:PunoIme>
     <za:DatumRodjenja>1999-07-10</za:DatumRodjenja>
     <za:Pol>Muski</za:Pol>
     <za:JMBG>9231414241223</za:JMBG>

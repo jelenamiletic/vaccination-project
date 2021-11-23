@@ -22,11 +22,11 @@
         <iz:BrojDatihDoza>160</iz:BrojDatihDoza>
     </iz:KolicnaDozaPoRednomBroju>
     <iz:RaspodelaDozaPoProizvodjacu>
-        <iz:Proizvodjac>Pfizer</iz:Proizvodjac>
+        <iz:Proizvodjac>Pfizer-BioNTech</iz:Proizvodjac>
         <iz:BrojDatihDoza>1625</iz:BrojDatihDoza>
         <iz:Proizvodjac>Sinopharm</iz:Proizvodjac>
         <iz:BrojDatihDoza>1100</iz:BrojDatihDoza>
-        <iz:Proizvodjac>Sputnik V</iz:Proizvodjac>
+        <iz:Proizvodjac>Sputnik V (Gamaleya истраживачки центар)</iz:Proizvodjac>
         <iz:BrojDatihDoza>356</iz:BrojDatihDoza>
         <iz:Proizvodjac>AstraZeneca</iz:Proizvodjac>
         <iz:BrojDatihDoza>144</iz:BrojDatihDoza>

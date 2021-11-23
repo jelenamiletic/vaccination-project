@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ct="http:///www.ftn.uns.ac.rs/vakcinacija/commonTypes"
+    targetNamespace="http:///www.ftn.uns.ac.rs/vakcinacija/commonTypes" elementFormDefault="qualified" >
+    <xs:simpleType name = "JMBG">
+        <xs:restriction base = "xs:string">
+            <xs:pattern value="\d{13}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name = "Email">
+        <xs:restriction base="xs:string"> 
+             <xs:pattern value="[^@]+@[^\.]+\..+"/> 
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name = "Opstina">
+        <xs:restriction base="xs:string"> 
+            <xs:pattern value="[a-zA-z]+"/> 
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name = "Mesto">
+        <xs:restriction base="xs:string"> 
+            <xs:pattern value="[a-zA-z]+"/> 
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name = "Proizvodjac">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Pfizer-BioNTech"/>
+            <xs:enumeration value="Sputnik V (Gamaleya истраживачки центар)"/>
+            <xs:enumeration value="Sinopharm"/>
+            <xs:enumeration value="AstraZeneca"/>
+            <xs:enumeration value="Moderna"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name = "BrojPasosa">
+        <xs:restriction base = "xs:string">
+            <xs:pattern value="\d{9}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name = "Pol">
+        <xs:restriction base = "xs:string">
+            <xs:enumeration value="Muski"/>
+            <xs:enumeration value="Zenski"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name = "BrojFiksnogTelefona">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="\d{9}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name = "BrojMobilnogTelefona">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="\d{10}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="PunoIme">
+        <xs:sequence>
+            <xs:element name = "Ime" type = "xs:string"/>
+            <xs:element name = "Prezime" type = "xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>
