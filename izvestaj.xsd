@@ -7,7 +7,6 @@
     <xs:element name="Izvestaj">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name = "Naslov"/>
                 <xs:element name = "PeriodIzvestaja">
                     <xs:complexType>
                         <xs:sequence>
@@ -20,23 +19,23 @@
                 <xs:element name = "ZahteviZaDigitalniSertifikat">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element name = "UkupanBroj" type = "xs:positiveInteger"/>
+                            <xs:element name = "BrojPrimljenih" type = "xs:positiveInteger"/>
                             <xs:element name = "BrojIzdatih" type = "xs:positiveInteger"/>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
                 <xs:element name = "UkupanBrojDatihDoza" type = "xs:positiveInteger"/>
-                <xs:element name = "KolicnaDozaPoRednomBroju">
+                <xs:element name = "KolicnaDozaPoRednomBroju" maxOccurs="unbounded">
                     <xs:complexType>
-                        <xs:sequence maxOccurs="unbounded">
+                        <xs:sequence>
                             <xs:element name = "RedniBroj" type = "xs:positiveInteger"/>
                             <xs:element name = "BrojDatihDoza" type = "xs:positiveInteger"/>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
-                <xs:element name = "RaspodelaDozaPoProizvodjacu">
+                <xs:element name = "RaspodelaDozaPoProizvodjacu" maxOccurs="unbounded">
                     <xs:complexType>
-                        <xs:sequence maxOccurs="unbounded">
+                        <xs:sequence>
                             <xs:element name = "Proizvodjac" type = "ct:Proizvodjac"/>
                             <xs:element name = "BrojDatihDoza" type = "xs:positiveInteger"/>
                         </xs:sequence>
@@ -45,5 +44,13 @@
             </xs:sequence>
             <xs:attribute name = "DatumIzdavanja" type = "xs:date"/>
         </xs:complexType>
+        <xs:unique name="RedniBrojUnique">
+            <xs:selector xpath="iz:KolicnaDozaPoRednomBroju"/>
+            <xs:field xpath="iz:RedniBroj"/>
+        </xs:unique>
+        <xs:unique name="ProizvodjacKljuc">
+            <xs:selector xpath="iz:RaspodelaDozaPoProizvodjacu"/>
+            <xs:field xpath="iz:Proizvodjac"/>
+        </xs:unique>
     </xs:element>
 </xs:schema>

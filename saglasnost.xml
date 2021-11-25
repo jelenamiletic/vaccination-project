@@ -2,41 +2,44 @@
 <sa:Saglasnost xmlns:sa="http:///www.ftn.uns.ac.rs/vakcinacija/saglasnost"
     xmlns:ct="http:///www.ftn.uns.ac.rs/vakcinacija/commonTypes" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
     xsi:schemaLocation="http:///www.ftn.uns.ac.rs/vakcinacija/saglasnost saglasnost.xsd">
-    <sa:PacijentDeo>
-        <sa:Drzavljanstvo>
-            <sa:RepublikaSrbija>
-                <sa:JMBG>3344324343444</sa:JMBG>
-            </sa:RepublikaSrbija>
-        </sa:Drzavljanstvo>
-        <sa:PunoIme>
-            <ct:Ime>Petar</ct:Ime>
-            <ct:Prezime>Markovic</ct:Prezime>
-        </sa:PunoIme>
-        <sa:ImeRoditelja>Petar</sa:ImeRoditelja>
-        <sa:Pol>Muski</sa:Pol>
-        <sa:DatumRodjenja>1999-07-10</sa:DatumRodjenja>
-        <sa:MestoRodjenja>NS</sa:MestoRodjenja>
-        <sa:Adresa>Adresa</sa:Adresa>
-        <sa:Mesto>Mesto</sa:Mesto>
-        <sa:Opstina>NS</sa:Opstina>
-        <sa:BrojFiksnogTelefona>015421442</sa:BrojFiksnogTelefona>
-        <sa:BrojMobilnogTelefona>0603234353</sa:BrojMobilnogTelefona>
-        <sa:Email>test@gmail.com</sa:Email>
-        <sa:RadniStatus>Student</sa:RadniStatus>
-        <sa:KorisnikUstanoveSocZast>false</sa:KorisnikUstanoveSocZast>
-        <sa:ImunoloskiLek>
-            <sa:NazivLeka>Lek</sa:NazivLeka>
-            <sa:Izjava>true</sa:Izjava>
-        </sa:ImunoloskiLek>
-    </sa:PacijentDeo>
-    <sa:ZdravstveniRadnikDeo>
+    <sa:PacijentSaglasnost>
+        <sa:LicneInformacijeSaglasnost>
+            <sa:Drzavljanstvo>
+                <sa:RepublikaSrbija>
+                    <sa:JMBG>3344324343444</sa:JMBG>
+                </sa:RepublikaSrbija>
+            </sa:Drzavljanstvo>
+            <sa:PunoIme>
+                <ct:Ime>Petar</ct:Ime>
+                <ct:Prezime>Markovic</ct:Prezime>
+            </sa:PunoIme>
+            <sa:ImeRoditelja>Petar</sa:ImeRoditelja>
+            <sa:Pol>Muski</sa:Pol>
+            <sa:DatumRodjenja>1999-07-10</sa:DatumRodjenja>
+            <sa:MestoRodjenja>NS</sa:MestoRodjenja>
+            <sa:Adresa>Adresa</sa:Adresa>
+            <sa:Mesto>Mesto</sa:Mesto>
+            <sa:Opstina>NS</sa:Opstina>
+            <sa:BrojFiksnogTelefona>015421442</sa:BrojFiksnogTelefona>
+            <sa:BrojMobilnogTelefona>0603234353</sa:BrojMobilnogTelefona>
+            <sa:Email>test@gmail.com</sa:Email>
+            <sa:RadniStatus>Student</sa:RadniStatus>
+        </sa:LicneInformacijeSaglasnost>
+        <sa:Imunizacija>
+            <sa:NazivImunoloskogLeka>Lek</sa:NazivImunoloskogLeka>
+        </sa:Imunizacija>
+    </sa:PacijentSaglasnost>
+    <sa:ZdravstveniRadnikSaglasnost>
         <sa:ZdravstvenaUstanova>Ustanova</sa:ZdravstvenaUstanova>
         <sa:VakcinacijskiPunkt>Punkt</sa:VakcinacijskiPunkt>
-        <sa:Ime>Petar</sa:Ime>
-        <sa:Prezime>Markovic</sa:Prezime>
-        <sa:Faksimil>dsadsffs</sa:Faksimil>
-        <sa:BrojTelefona>0603535255</sa:BrojTelefona>
-        <sa:Tabela>
+        <sa:LicneInformacijeLekara>
+            <sa:PunoIme>
+                <ct:Ime>Petar</ct:Ime>
+                <ct:Prezime>Markovic</ct:Prezime>
+            </sa:PunoIme>
+            <sa:BrojTelefona>0603535255</sa:BrojTelefona>
+        </sa:LicneInformacijeLekara>
+        <sa:Obrazac>
             <sa:VakcineInfo>
                 <sa:NazivVakcine>Pfizer-BioNTech</sa:NazivVakcine>
                 <sa:DatumDavanjaVakcine>2021-03-10</sa:DatumDavanjaVakcine>
@@ -58,6 +61,6 @@
                 <sa:Dijagnoza>dijagnoza</sa:Dijagnoza>
             </sa:PrivremeneKontraindikacije>
             <sa:TrajneKontraindikacije>asdf</sa:TrajneKontraindikacije>
-        </sa:Tabela>
-    </sa:ZdravstveniRadnikDeo>
+        </sa:Obrazac>
+    </sa:ZdravstveniRadnikSaglasnost>
 </sa:Saglasnost>

@@ -1,54 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:in="http:///www.ftn.uns.ac.rs/vakcinacija/interesovanje"
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:in="http:///www.ftn.uns.ac.rs/vakcinacija/interesovanje"
     xmlns:ct="http:///www.ftn.uns.ac.rs/vakcinacija/commonTypes"
-    targetNamespace="http:///www.ftn.uns.ac.rs/vakcinacija/interesovanje" elementFormDefault="qualified" >
+    targetNamespace="http:///www.ftn.uns.ac.rs/vakcinacija/interesovanje"
+    elementFormDefault="qualified">
     <xs:import schemaLocation="CommonTypes.xsd"
-               namespace="http:///www.ftn.uns.ac.rs/vakcinacija/commonTypes" />
+        namespace="http:///www.ftn.uns.ac.rs/vakcinacija/commonTypes"/>
     <xs:element name="Interesovanje">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="DrzavljaninOpcija">
-                    <xs:simpleType>
-                        <xs:restriction base="xs:string">
-                            <xs:enumeration value="Drzаvljаnin Republike Srbije"/>
-                            <xs:enumeration value="Strani drzаvljаnin sa boravkom u RS"/>
-                            <xs:enumeration value="Strani drzаvljаnin bez boravka u RS"/>
-                        </xs:restriction>
-                    </xs:simpleType>
-                </xs:element>
-                <xs:element name = "licneInformacije">
+                <xs:element name="LicneInformacijeInteresovanje">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element name="JMBG" type = "ct:JMBG"/>
+                            <xs:element name="Drzavljanstvo">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:enumeration value="Drzаvljаnin Republike Srbije"/>
+                                        <xs:enumeration value="Strani drzаvljаnin sa boravkom u RS"/>
+                                        <xs:enumeration value="Strani drzаvljаnin bez boravka u RS"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="JMBG" type="ct:JMBG"/>
                             <xs:element name="PunoIme" type="ct:PunoIme"/>
-                            <xs:element name="AdresaElektronskePoste" type = "ct:Email"/>
-                            <xs:element name = "BrojMobilnogTelefona">
-                                <xs:simpleType>
-                                    <xs:restriction base="xs:string">
-                                        <xs:pattern value="06\d{8}"/>
-                                    </xs:restriction>
-                                </xs:simpleType>
-                            </xs:element>
-                            <xs:element name = "BrojFiksnogTelefona">
-                                <xs:simpleType>
-                                    <xs:restriction base="xs:string">
-                                        <xs:pattern value="011\d{6}"/>
-                                    </xs:restriction>
-                                </xs:simpleType>
-                            </xs:element>
-                            <xs:element name = "Opstina" type = "ct:Opstina"/>
+                            <xs:element name="AdresaElektronskePoste" type="ct:Email"/>
+                            <xs:element name="BrojMobilnogTelefona" type="ct:BrojMobilnogTelefona"/>
+                            <xs:element name="BrojFiksnogTelefona" type = "ct:BrojFiksnogTelefona"/>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
-                <xs:element name="VakcinaOpcija" type = "ct:Proizvodjac"/>
-                <xs:element name="DavalacKrviOpcija">
-                    <xs:simpleType>
-                        <xs:restriction base="xs:string">
-                            <xs:enumeration value="Dа"/>
-                            <xs:enumeration value="Nе"/>
-                        </xs:restriction>
-                    </xs:simpleType>
-                </xs:element>
+                <xs:element name="OpstinaPrimanja" type="ct:Opstina"/>
+                <xs:element name="Vakcina" type="ct:Proizvodjac"/>
+                <xs:element name="DavalacKrvi" type = "xs:boolean"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
