@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:iz="http:///www.ftn.uns.ac.rs/vakcinacija/potvrda"
+    xmlns:ct="http:///www.ftn.uns.ac.rs/vakcinacija/commonTypes"
+    targetNamespace="http:///www.ftn.uns.ac.rs/vakcinacija/potvrda" elementFormDefault="qualified"
+    attributeFormDefault="qualified">
+    <xs:import schemaLocation="CommonTypes.xsd"
+        namespace="http:///www.ftn.uns.ac.rs/vakcinacija/commonTypes"/>
+    <xs:element name="Potvrda">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Sifra" type="xs:string"/>
+                <xs:element name="LicneInformacije">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="PunoIme" type="ct:PunoIme"/>
+                            <xs:element name="DatumRodjenja" type="xs:date"/>
+                            <xs:element name="Pol" type="ct:Pol"/>
+                            <xs:element name="JMBG" type="ct:JMBG"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="InformacijeOVakcinacijama">
+                    <xs:complexType>
+                        <xs:sequence maxOccurs="unbounded">
+                            <xs:element name="BrojDoze" type="xs:positiveInteger"/>
+                            <xs:element name="DatumDavanja" type="xs:date"/>
+                            <xs:element name="Serija" type="xs:string"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="ZdravstvenaUstanova" type="xs:string"/>
+                <xs:element name="Vakcina" type="ct:Proizvodjac"/>
+                <xs:element name="DatumIzdavanja" type="xs:date"/>
+                <xs:element name="QR" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
