@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<po:Sertifikat xmlns:po="http:///www.ftn.uns.ac.rs/vakcinacija/sertifikat"
+    xmlns:ct="http:///www.ftn.uns.ac.rs/vakcinacija/commonTypes" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http:///www.ftn.uns.ac.rs/vakcinacija/sertifikat sertifikat.xsd">
+    <po:BrojSertifikata>SERT-3848837820</po:BrojSertifikata>
+    <po:DatumVremeIzdavanja>2021-11-26T21:32:52</po:DatumVremeIzdavanja>
+    <po:QR>http://www.ftn.uns.ac.rs/</po:QR>
+    <po:LicneInformacije>
+        <po:PunoIme>
+            <ct:Ime>Petar</ct:Ime>
+            <ct:Prezime>Markovic</ct:Prezime>
+        </po:PunoIme>
+        <po:DatumRodjenja>1990-08-01</po:DatumRodjenja>
+        <po:Pol>Muski</po:Pol>
+        <po:JMBG>3553355353532</po:JMBG>
+        <po:BrojPasosa>040503921</po:BrojPasosa>
+    </po:LicneInformacije>
+    <po:Vakcinacija>
+        <po:BrojDoze>1</po:BrojDoze>
+        <po:TipVakcine>Pfizer-BioNTech</po:TipVakcine>
+        <po:DatumDavanja>2021-08-02</po:DatumDavanja>
+        <po:Proizvodjac>BIONTECH MANUFACTURING GMBH</po:Proizvodjac>
+        <po:Serija>PFI-55609</po:Serija>
+        <po:ZdravstvenaUstanova>DOM ZDRAVLJA NOVI SAD</po:ZdravstvenaUstanova>
+    </po:Vakcinacija>
+</po:Sertifikat>
