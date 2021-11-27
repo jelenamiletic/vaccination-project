@@ -20,9 +20,9 @@
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
-                <xs:element name="InformacijeOVakcinacijama">
+                <xs:element name="InformacijeOVakcinacijama" maxOccurs="unbounded" minOccurs="2">
                     <xs:complexType>
-                        <xs:sequence maxOccurs="unbounded">
+                        <xs:sequence>
                             <xs:element name="BrojDoze" type="xs:positiveInteger"/>
                             <xs:element name="DatumDavanja" type="xs:date"/>
                             <xs:element name="Serija" type="xs:string"/>
@@ -30,7 +30,15 @@
                     </xs:complexType>
                 </xs:element>
                 <xs:element name="ZdravstvenaUstanova" type="xs:string"/>
-                <xs:element name="Vakcina" type="ct:Proizvodjac"/>
+                <xs:element name="VakcinaPrveDveDoze" type="ct:Proizvodjac"/>
+                <xs:element name="Vakcine" maxOccurs="unbounded" minOccurs="0">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="BrojDoze" type="xs:positiveInteger"/>
+                            <xs:element name="Vakcina" type="ct:Proizvodjac"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
                 <xs:element name="DatumIzdavanja" type="xs:date"/>
                 <xs:element name="QR" type="xs:string"/>
             </xs:sequence>
