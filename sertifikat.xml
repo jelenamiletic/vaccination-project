@@ -23,4 +23,15 @@
         <po:Serija>PFI-55609</po:Serija>
         <po:ZdravstvenaUstanova>DOM ZDRAVLJA NOVI SAD</po:ZdravstvenaUstanova>
     </po:Vakcinacija>
+    
+    <po:Test>
+        <po:ImeTesta>SARS-CoV-2 RT</po:ImeTesta>
+        <po:VrstaUzorka>Krv</po:VrstaUzorka>
+        <po:ProizvodjacTesta>BIONTECH MANUFACTURING GMBH</po:ProizvodjacTesta>
+        <po:DatumVremeUzorkovanja>2021-11-26T21:32:52</po:DatumVremeUzorkovanja>
+        <po:DatumVremeIzdavanjaRezultata>2021-11-26T21:32:52</po:DatumVremeIzdavanjaRezultata>
+        <po:Rezultat>Negativan</po:Rezultat>
+        <po:Laboratorija>Dom Zdravlja Zvezdara</po:Laboratorija>
+    </po:Test>
+    
 </po:Sertifikat>

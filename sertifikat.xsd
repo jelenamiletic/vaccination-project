@@ -35,7 +35,20 @@
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
-              <!--Druga polovina treba da se zavrsi -->
+
+                <xs:element name="Test">
+                    <xs:complexType>
+                        <xs:sequence maxOccurs="unbounded">
+                            <xs:element name="ImeTesta" type="xs:string"/>
+                            <xs:element name="VrstaUzorka" type="xs:string"/>
+                            <xs:element name="ProizvodjacTesta" type="xs:string"/>
+                            <xs:element name="DatumVremeUzorkovanja" type="xs:dateTime"/>
+                            <xs:element name="DatumVremeIzdavanjaRezultata" type="xs:dateTime"/>
+                            <xs:element name="Rezultat" type="ct:RezultatTesta"/>
+                            <xs:element name="Laboratorija" type="xs:string"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
