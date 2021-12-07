@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    xmlns:iz="http:///www.ftn.uns.ac.rs/vakcinacija/potvrda"
+    xmlns:po="http:///www.ftn.uns.ac.rs/vakcinacija/potvrda"
     xmlns:ct="http:///www.ftn.uns.ac.rs/vakcinacija/commonTypes"
     targetNamespace="http:///www.ftn.uns.ac.rs/vakcinacija/potvrda" elementFormDefault="qualified"
     attributeFormDefault="qualified">
@@ -34,7 +34,13 @@
                 <xs:element name="Vakcine" maxOccurs="unbounded" minOccurs="0">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element name="BrojDoze" type="xs:positiveInteger"/>
+                            <xs:element name="BrojDoze">
+                                <xs:simpleType>
+                                <xs:restriction base="xs:positiveInteger">
+                                    <xs:minInclusive value="3"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
                             <xs:element name="Vakcina" type="ct:Proizvodjac"/>
                         </xs:sequence>
                     </xs:complexType>
@@ -43,5 +49,9 @@
                 <xs:element name="QR" type="xs:string"/>
             </xs:sequence>
         </xs:complexType>
+        <xs:key name="BrojDozeKljuc">
+            <xs:selector xpath="po:Vakcine"/>
+            <xs:field xpath="po:BrojDoze"/>
+        </xs:key>
     </xs:element>
 </xs:schema>
