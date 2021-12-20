@@ -9,7 +9,7 @@
     <xs:element name="Interesovanje">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="LicneInformacijeInteresovanje">
+                <xs:element name="LicneInformacije">
                     <xs:complexType>
                         <xs:sequence>
                             <xs:element name="Drzavljanstvo">

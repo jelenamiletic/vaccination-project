@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sa:Saglasnost xmlns:sa="http:///www.ftn.uns.ac.rs/vakcinacija/saglasnost"
     xmlns:ct="http:///www.ftn.uns.ac.rs/vakcinacija/commonTypes" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-    xsi:schemaLocation="http:///www.ftn.uns.ac.rs/vakcinacija/saglasnost saglasnost.xsd">
+    xsi:schemaLocation="http:///www.ftn.uns.ac.rs/vakcinacija/saglasnost ../xsd/saglasnost.xsd">
     <sa:PacijentSaglasnost>
-        <sa:LicneInformacijeSaglasnost>
+        <sa:LicneInformacije>
             <sa:Drzavljanstvo>
                 <sa:RepublikaSrbija>
                     <sa:JMBG>3344324343444</sa:JMBG>
@@ -24,7 +24,7 @@
             <sa:BrojMobilnogTelefona>0603234353</sa:BrojMobilnogTelefona>
             <sa:Email>test@gmail.com</sa:Email>
             <sa:RadniStatus>Student</sa:RadniStatus>
-        </sa:LicneInformacijeSaglasnost>
+        </sa:LicneInformacije>
         <sa:Imunizacija>
             <sa:NazivImunoloskogLeka>Lek</sa:NazivImunoloskogLeka>
         </sa:Imunizacija>

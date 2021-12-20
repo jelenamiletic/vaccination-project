@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <iz:Izvestaj xmlns:iz="http:///www.ftn.uns.ac.rs/vakcinacija/izvestaj" 
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http:///www.ftn.uns.ac.rs/vakcinacija/izvestaj izvestaj.xsd" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http:///www.ftn.uns.ac.rs/vakcinacija/izvestaj ../xsd/izvestaj.xsd" 
     iz:DatumIzdavanja = "2022-09-11">
     <iz:PeriodIzvestaja>
         <iz:OdDatum>2021-08-01</iz:OdDatum>

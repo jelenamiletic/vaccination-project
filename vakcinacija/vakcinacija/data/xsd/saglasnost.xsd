@@ -10,7 +10,7 @@
                 <xs:element name="PacijentSaglasnost">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element name = "LicneInformacijeSaglasnost">
+                            <xs:element name = "LicneInformacije">
                                 <xs:complexType>
                                     <xs:sequence>
                                         <xs:element name="Drzavljanstvo">
@@ -111,7 +111,7 @@
                                     <xs:sequence>
                                         <xs:element name = "VakcineInfo">
                                             <xs:complexType>
-                                                <xs:sequence minOccurs = "2" maxOccurs="2">
+                                                <xs:sequence minOccurs = "2" maxOccurs="unbounded">
                                                     <xs:element name = "NazivVakcine" type = "ct:Proizvodjac"/>
                                                     <xs:element name = "DatumDavanjaVakcine" type = "xs:date"/>
                                                     <xs:element name = "NacinDavanjeVakcine" type = "xs:string" fixed = "IM"/>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <po:Sertifikat xmlns:po="http:///www.ftn.uns.ac.rs/vakcinacija/sertifikat"
     xmlns:ct="http:///www.ftn.uns.ac.rs/vakcinacija/commonTypes" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-    xsi:schemaLocation="http:///www.ftn.uns.ac.rs/vakcinacija/sertifikat sertifikat.xsd">
+    xsi:schemaLocation="http:///www.ftn.uns.ac.rs/vakcinacija/sertifikat ../xsd/sertifikat.xsd">
     <po:BrojSertifikata>SERT-3848837820</po:BrojSertifikata>
     <po:DatumVremeIzdavanja>2021-11-26T21:32:52</po:DatumVremeIzdavanja>
     <po:QR>http://www.ftn.uns.ac.rs/</po:QR>
@@ -32,6 +32,5 @@
         <po:DatumVremeIzdavanjaRezultata>2021-11-26T21:32:52</po:DatumVremeIzdavanjaRezultata>
         <po:Rezultat>Negativan</po:Rezultat>
         <po:Laboratorija>Dom Zdravlja Zvezdara</po:Laboratorija>
-    </po:Test>
-    
+    </po:Test>  
 </po:Sertifikat>
