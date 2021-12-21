@@ -1,4 +1,4 @@
-package com.xml.vakcinacija.model;
+package com.xml.vakcinacija.model.interesovanje;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -6,7 +6,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-import com.xml.vakcinacija.utils.XMLNamespaceKonstante;
+import com.xml.vakcinacija.model.Proizvodjac;
+import com.xml.vakcinacija.model.PunoIme;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
@@ -15,19 +16,19 @@ import com.xml.vakcinacija.utils.XMLNamespaceKonstante;
         "Vakcina", 
         "DavalacKrvi"
 })
-@XmlRootElement(name = "Interesovanje", namespace = XMLNamespaceKonstante.NAMESPACE_INTERESOVANJE)
+@XmlRootElement(name = "Interesovanje")
 public class Interesovanje {
 	
-	@XmlElement(required = true, namespace = XMLNamespaceKonstante.NAMESPACE_INTERESOVANJE)
+	@XmlElement(required = true)
     protected Interesovanje.LicneInformacije LicneInformacije;
 	
-	@XmlElement(required = true, namespace = XMLNamespaceKonstante.NAMESPACE_INTERESOVANJE)
+	@XmlElement(required = true)
 	protected String OpstinaPrimanja;
 	
-	@XmlElement(required = true, namespace = XMLNamespaceKonstante.NAMESPACE_INTERESOVANJE)
+	@XmlElement(required = true)
 	protected Proizvodjac Vakcina;
 	
-	@XmlElement(required = true, namespace = XMLNamespaceKonstante.NAMESPACE_INTERESOVANJE)
+	@XmlElement(required = true)
 	protected boolean DavalacKrvi;
 	
 	public Interesovanje.LicneInformacije getLicneInformacije() {
@@ -72,27 +73,27 @@ public class Interesovanje {
 	})
 	public static class LicneInformacije {
 		
-		@XmlElement(required = true, namespace = XMLNamespaceKonstante.NAMESPACE_INTERESOVANJE)
-		protected LicneInformacije.PunoIme PunoIme;
+		@XmlElement(required = true)
+		protected PunoIme PunoIme;
 		
-		@XmlElement(required = true, namespace = XMLNamespaceKonstante.NAMESPACE_INTERESOVANJE)
+		@XmlElement(required = true)
 		protected String Drzavljanstvo;
 		
-		@XmlElement(required = true, namespace = XMLNamespaceKonstante.NAMESPACE_INTERESOVANJE)
+		@XmlElement(required = true)
 		protected String JMBG;
 		
-		@XmlElement(required = true, namespace = XMLNamespaceKonstante.NAMESPACE_INTERESOVANJE)
+		@XmlElement(required = true)
 		protected String AdresaElektronskePoste;
 		
-		@XmlElement(required = true, namespace = XMLNamespaceKonstante.NAMESPACE_INTERESOVANJE)
+		@XmlElement(required = true)
 		protected String BrojMobilnogTelefona;
 		
-		@XmlElement(required = true, namespace = XMLNamespaceKonstante.NAMESPACE_INTERESOVANJE)
+		@XmlElement(required = true)
 		protected String BrojFiksnogTelefona;
 		
-		public LicneInformacije.PunoIme getPunoIme() {
+		public PunoIme getPunoIme() {
 			if (PunoIme == null) {
-				PunoIme = new LicneInformacije.PunoIme();
+				PunoIme = new PunoIme();
 	        }
 	        return this.PunoIme;
 		}
@@ -135,36 +136,6 @@ public class Interesovanje {
 
 		public void setBrojFiksnogTelefona(String BrojFiksnogTelefona) {
 			this.BrojFiksnogTelefona = BrojFiksnogTelefona;
-		}
-
-		@XmlAccessorType(XmlAccessType.FIELD)
-		@XmlType(name = "", propOrder = {
-		    "Ime",
-		    "Prezime"
-		})
-		public static class PunoIme {
-			
-			@XmlElement(required = true, namespace = XMLNamespaceKonstante.NAMESPACE_COMMON_TYPES)
-			protected String Ime;
-			
-			@XmlElement(required = true, namespace = XMLNamespaceKonstante.NAMESPACE_COMMON_TYPES)
-			protected String Prezime;
-
-			public String getIme() {
-				return Ime;
-			}
-
-			public void setIme(String Ime) {
-				this.Ime = Ime;
-			}
-
-			public String getPrezime() {
-				return Prezime;
-			}
-
-			public void setPrezime(String Prezime) {
-				this.Prezime = Prezime;
-			}
 		}
 	}
 

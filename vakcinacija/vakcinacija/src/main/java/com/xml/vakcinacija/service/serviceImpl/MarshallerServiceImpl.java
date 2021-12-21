@@ -1,36 +1,38 @@
 package com.xml.vakcinacija.service.serviceImpl;
 
-import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 
 import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
+import javax.xml.bind.Marshaller;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
 import org.springframework.stereotype.Service;
 import org.xml.sax.SAXException;
 
-import com.xml.vakcinacija.service.UnmarshallerService;
+import com.xml.vakcinacija.service.MarshallerService;
 
 @Service
-public class UnmarshallerServiceImpl implements UnmarshallerService {
-	
+public class MarshallerServiceImpl implements MarshallerService {
+
 	@Override
-	public Object unmarshal(String xml, String contextPath, String xsdPutanja) throws SAXException {
+	public String marshall(Object objekat, String contextPath, String xsdPutanja) throws SAXException {
+		ByteArrayOutputStream rez = new ByteArrayOutputStream();
 		try {
 			JAXBContext context = JAXBContext.newInstance(contextPath);
-			Unmarshaller unmarshaller = context.createUnmarshaller();
+			Marshaller marshaller = context.createMarshaller();
 			SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
             Schema employeeSchema = sf.newSchema(new File(xsdPutanja));
-            unmarshaller.setSchema(employeeSchema);
-            return unmarshaller.unmarshal(new ByteArrayInputStream(xml.getBytes(StandardCharsets.UTF_8)));
+            marshaller.setSchema(employeeSchema);
+            marshaller.marshal(objekat, rez);
         } catch (JAXBException e) {
             System.out.println(e.getMessage());
         }
-		return null;
+		return new String(rez.toByteArray(), StandardCharsets.UTF_8);
 	}
+	
 }

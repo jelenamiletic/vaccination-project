@@ -3,10 +3,11 @@ package com.xml.vakcinacija.service.serviceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.xml.vakcinacija.model.Interesovanje;
+import com.xml.vakcinacija.model.interesovanje.Interesovanje;
 import com.xml.vakcinacija.repository.InteresovanjeRepository;
 import com.xml.vakcinacija.service.InteresovanjeService;
 import com.xml.vakcinacija.service.UnmarshallerService;
+import com.xml.vakcinacija.utils.ContextPutanjeKonstante;
 import com.xml.vakcinacija.utils.XSDPutanjeKonstante;
 
 @Service
@@ -20,25 +21,25 @@ public class InteresovanjeServiceImpl implements InteresovanjeService {
 
 	@Override
 	public void dodajNovoInteresovanje(String interesovanjeXML) throws Exception {
-		Interesovanje validanObjekat = (Interesovanje) unmarshallerService.unmarshal(interesovanjeXML, XSDPutanjeKonstante.XSD_INTERESOVANJE);
+		Interesovanje validanObjekat = (Interesovanje) unmarshallerService.unmarshal(interesovanjeXML, 
+				ContextPutanjeKonstante.CONTEXT_PUTANJA_INTERESOVANJE, XSDPutanjeKonstante.XSD_INTERESOVANJE);
 		if (validanObjekat != null) {
-			Interesovanje pronadjenoInteresovanje = this.pronadjiInteresovanjePoJmbg(validanObjekat.getLicneInformacije().getJMBG());
-			
-			if (pronadjenoInteresovanje != null && pronadjenoInteresovanje.getLicneInformacije().getJMBG()
-					.equals(validanObjekat.getLicneInformacije().getJMBG())) {
+			String pronadjenoInteresovanjeXml = interesovanjeRepository.pronadjiInteresovanjeXmlPoJmbg(validanObjekat.getLicneInformacije().getJMBG());
+			if (pronadjenoInteresovanjeXml != null) {
 				System.out.println("Interesovanje sa ovim JMBG-om (" + validanObjekat.getLicneInformacije().getJMBG() + ") vec postoji!");
 				return;
 			}
-			interesovanjeRepository.save(interesovanjeXML, validanObjekat.getLicneInformacije().getJMBG());
+			interesovanjeRepository.saveInteresovanjeObjekat(validanObjekat);
 		}
 	}
 
 	@Override
+	public String pronadjiInteresovanjeXmlPoJmbg(String jmbg) throws Exception {
+		return interesovanjeRepository.pronadjiInteresovanjeXmlPoJmbg(jmbg);
+	}
+
+	@Override
 	public Interesovanje pronadjiInteresovanjePoJmbg(String jmbg) throws Exception {
-		String xml = interesovanjeRepository.pronadjiInteresovanjePoJMBG(jmbg);
-		if (xml != null) {
-			return (Interesovanje) unmarshallerService.unmarshal(xml, XSDPutanjeKonstante.XSD_INTERESOVANJE);
-		}
-		return null;
+		return interesovanjeRepository.pronadjiInteresovanjePoJmbg(jmbg);
 	}
 }

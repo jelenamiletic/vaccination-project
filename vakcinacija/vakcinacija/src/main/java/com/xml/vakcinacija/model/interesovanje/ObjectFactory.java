@@ -1,4 +1,4 @@
-package com.xml.vakcinacija.model;
+package com.xml.vakcinacija.model.interesovanje;
 
 import javax.xml.bind.annotation.XmlRegistry;
 
@@ -15,9 +15,5 @@ public class ObjectFactory {
 	
 	public Interesovanje.LicneInformacije createLicneInformacijeInteresovanje() {
 		return new Interesovanje.LicneInformacije();
-	}
-	
-	public Interesovanje.LicneInformacije.PunoIme createPunoImeInteresovanje() {
-		return new Interesovanje.LicneInformacije.PunoIme();
 	}
 }
