@@ -25,8 +25,8 @@ public class UnmarshallerServiceImpl implements UnmarshallerService {
 			JAXBContext context = JAXBContext.newInstance(contextPath);
 			Unmarshaller unmarshaller = context.createUnmarshaller();
 			SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-            Schema employeeSchema = sf.newSchema(new File(xsdPutanja));
-            unmarshaller.setSchema(employeeSchema);
+            Schema xsd = sf.newSchema(new File(xsdPutanja));
+            unmarshaller.setSchema(xsd);
             return unmarshaller.unmarshal(new ByteArrayInputStream(xml.getBytes(StandardCharsets.UTF_8)));
         } catch (JAXBException e) {
             System.out.println(e.getMessage());

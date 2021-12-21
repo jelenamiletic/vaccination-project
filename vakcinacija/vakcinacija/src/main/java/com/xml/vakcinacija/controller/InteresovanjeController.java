@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.xml.vakcinacija.model.interesovanje.Interesovanje;
+import com.xml.vakcinacija.model.interesovanje.ListaInteresovanja;
 import com.xml.vakcinacija.service.InteresovanjeService;
 
 @RestController
@@ -26,6 +27,13 @@ public class InteresovanjeController {
 		interesovanjeService.dodajNovoInteresovanje(interesovanjeXML);
 	}
 	
+	@GetMapping(value = "/pronadjiSve", produces = MediaType.APPLICATION_XML_VALUE)
+	public ResponseEntity<ListaInteresovanja> pronadjiSve() throws Exception {
+		ListaInteresovanja lista = new ListaInteresovanja();
+		lista.setInteresovanje(interesovanjeService.pronadjiSve());
+		return new ResponseEntity<>(lista, HttpStatus.OK);
+	}
+	
 	@GetMapping(value = "/pronadjiInteresovanjeXmlPoJmbg/{jmbg}", produces = MediaType.APPLICATION_XML_VALUE) 
 	public ResponseEntity<String> pronadjiInteresovanjeXmlPoJmbg(@PathVariable String jmbg) throws Exception {
 		return new ResponseEntity<>(interesovanjeService.pronadjiInteresovanjeXmlPoJmbg(jmbg), HttpStatus.OK);
@@ -35,5 +43,4 @@ public class InteresovanjeController {
 	public ResponseEntity<Interesovanje> pronadjiInteresovanjePoJmbg(@PathVariable String jmbg) throws Exception {
 		return new ResponseEntity<>(interesovanjeService.pronadjiInteresovanjePoJmbg(jmbg), HttpStatus.OK);
 	}
-	
 }

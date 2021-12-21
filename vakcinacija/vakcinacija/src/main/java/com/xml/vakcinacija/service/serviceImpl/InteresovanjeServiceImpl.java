@@ -1,5 +1,7 @@
 package com.xml.vakcinacija.service.serviceImpl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +33,11 @@ public class InteresovanjeServiceImpl implements InteresovanjeService {
 			}
 			interesovanjeRepository.saveInteresovanjeObjekat(validanObjekat);
 		}
+	}
+	
+	@Override
+	public List<Interesovanje> pronadjiSve() throws Exception {
+		return interesovanjeRepository.pronadjiSve();
 	}
 
 	@Override

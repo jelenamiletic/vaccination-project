@@ -1,5 +1,8 @@
 package com.xml.vakcinacija.repository;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.exist.xmldb.EXistResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -35,6 +38,34 @@ public class InteresovanjeRepository {
 		String xml = marshallerService.marshall(interesovanje, ContextPutanjeKonstante.CONTEXT_PUTANJA_INTERESOVANJE, 
 				XSDPutanjeKonstante.XSD_INTERESOVANJE);
 		ExistStore.save(XMLCollectionIdKonstante.COLLECTION_ID_INTERESOVANJE, interesovanje.getLicneInformacije().getJMBG(), xml);
+	}
+	
+	public List<Interesovanje> pronadjiSve() throws Exception {
+		String xPathIzraz = "//Interesovanje";
+        ResourceSet rezultat = ExistRetrieve.izvrsiXPathIzraz(XMLCollectionIdKonstante.COLLECTION_ID_INTERESOVANJE, 
+        		xPathIzraz, XMLNamespaceKonstante.NAMESPACE_INTERESOVANJE);
+        if (rezultat == null)
+            return null;
+
+        ResourceIterator i = rezultat.getIterator();
+        XMLResource res = null;
+        List<Interesovanje> listaInteresovanja = new ArrayList<Interesovanje>();
+
+        while (i.hasMoreResources()) {
+            res = (XMLResource) i.nextResource();
+            listaInteresovanja.add((Interesovanje) unmarshallerService.unmarshal(res.getContent().toString(), 
+            		ContextPutanjeKonstante.CONTEXT_PUTANJA_INTERESOVANJE, XSDPutanjeKonstante.XSD_INTERESOVANJE));
+        }
+
+        if (res != null) {
+            try {
+                ((EXistResource) res).freeResources();
+            } catch (XMLDBException exception) {
+                exception.printStackTrace();
+            }
+        }
+
+        return listaInteresovanja;
 	}
 	
 	public String pronadjiInteresovanjeXmlPoJmbg(String jmbg) throws Exception {

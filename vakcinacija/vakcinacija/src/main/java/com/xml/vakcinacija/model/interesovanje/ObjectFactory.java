@@ -16,4 +16,8 @@ public class ObjectFactory {
 	public Interesovanje.LicneInformacije createLicneInformacijeInteresovanje() {
 		return new Interesovanje.LicneInformacije();
 	}
+	
+	public ListaInteresovanja createListaInteresovanja() {
+        return new ListaInteresovanja();
+    }
 }
