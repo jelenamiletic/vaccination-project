@@ -97,9 +97,11 @@ public class InteresovanjeRepository {
 	
 	public Interesovanje pronadjiInteresovanjePoJmbg(String jmbg) throws Exception {
 		String xml = this.pronadjiInteresovanjeXmlPoJmbg(jmbg);
-		Interesovanje interesovanje = (Interesovanje) unmarshallerService.unmarshal(xml, 
+		if (xml != null) {
+			return (Interesovanje) unmarshallerService.unmarshal(xml, 
 				ContextPutanjeKonstante.CONTEXT_PUTANJA_INTERESOVANJE, 
 				XSDPutanjeKonstante.XSD_INTERESOVANJE);
-		return interesovanje;
+		}
+		return null;
 	}
 }

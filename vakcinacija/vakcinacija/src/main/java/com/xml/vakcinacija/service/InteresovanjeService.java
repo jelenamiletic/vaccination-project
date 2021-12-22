@@ -10,7 +10,5 @@ public interface InteresovanjeService {
 	
 	List<Interesovanje> pronadjiSve() throws Exception;
 	
-	String pronadjiInteresovanjeXmlPoJmbg(String jmbg) throws Exception;
-	
 	Interesovanje pronadjiInteresovanjePoJmbg(String jmbg) throws Exception;
 }

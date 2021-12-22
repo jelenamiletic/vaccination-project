@@ -33,12 +33,7 @@ public class InteresovanjeController {
 		lista.setInteresovanje(interesovanjeService.pronadjiSve());
 		return new ResponseEntity<>(lista, HttpStatus.OK);
 	}
-	
-	@GetMapping(value = "/pronadjiInteresovanjeXmlPoJmbg/{jmbg}", produces = MediaType.APPLICATION_XML_VALUE) 
-	public ResponseEntity<String> pronadjiInteresovanjeXmlPoJmbg(@PathVariable String jmbg) throws Exception {
-		return new ResponseEntity<>(interesovanjeService.pronadjiInteresovanjeXmlPoJmbg(jmbg), HttpStatus.OK);
-	}
-	
+
 	@GetMapping(value = "/pronadjiInteresovanjePoJmbg/{jmbg}", produces = MediaType.APPLICATION_XML_VALUE) 
 	public ResponseEntity<Interesovanje> pronadjiInteresovanjePoJmbg(@PathVariable String jmbg) throws Exception {
 		return new ResponseEntity<>(interesovanjeService.pronadjiInteresovanjePoJmbg(jmbg), HttpStatus.OK);

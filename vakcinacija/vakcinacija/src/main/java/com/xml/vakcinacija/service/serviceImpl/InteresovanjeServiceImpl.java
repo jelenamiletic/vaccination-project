@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.xml.vakcinacija.exception.InteresovanjeNijePronadjenoException;
+import com.xml.vakcinacija.exception.InteresovanjePostojiException;
 import com.xml.vakcinacija.model.interesovanje.Interesovanje;
 import com.xml.vakcinacija.repository.InteresovanjeRepository;
 import com.xml.vakcinacija.service.InteresovanjeService;
@@ -28,8 +30,7 @@ public class InteresovanjeServiceImpl implements InteresovanjeService {
 		if (validanObjekat != null) {
 			String pronadjenoInteresovanjeXml = interesovanjeRepository.pronadjiInteresovanjeXmlPoJmbg(validanObjekat.getLicneInformacije().getJMBG());
 			if (pronadjenoInteresovanjeXml != null) {
-				System.out.println("Interesovanje sa ovim JMBG-om (" + validanObjekat.getLicneInformacije().getJMBG() + ") vec postoji!");
-				return;
+				throw new InteresovanjePostojiException(validanObjekat.getLicneInformacije().getJMBG());
 			}
 			interesovanjeRepository.saveInteresovanjeObjekat(validanObjekat);
 		}
@@ -41,12 +42,11 @@ public class InteresovanjeServiceImpl implements InteresovanjeService {
 	}
 
 	@Override
-	public String pronadjiInteresovanjeXmlPoJmbg(String jmbg) throws Exception {
-		return interesovanjeRepository.pronadjiInteresovanjeXmlPoJmbg(jmbg);
-	}
-
-	@Override
 	public Interesovanje pronadjiInteresovanjePoJmbg(String jmbg) throws Exception {
-		return interesovanjeRepository.pronadjiInteresovanjePoJmbg(jmbg);
+		Interesovanje interesovanje = interesovanjeRepository.pronadjiInteresovanjePoJmbg(jmbg);
+		if (interesovanje == null) {
+			throw new InteresovanjeNijePronadjenoException(jmbg);
+		}
+		return interesovanje;
 	}
 }
