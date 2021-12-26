@@ -1,12 +1,11 @@
 package com.xml.vakcinacija.model.zahtev;
 
-import java.util.Date;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.datatype.XMLGregorianCalendar;
 
 import com.xml.vakcinacija.model.PunoIme;
 import com.xml.vakcinacija.model.Pol;
@@ -48,15 +47,15 @@ public class Zahtev {
 
 	@XmlAccessorType(XmlAccessType.FIELD)
 	@XmlType(name = "", propOrder = {
+		"PunoIme",
 	    "DatumRodjenja",
-	    "JMBG",
-	    "PunoIme",
 	    "Pol",
+	    "JMBG",
 	    "BrojPasosa"
 	})
 	public static class Podnosilac{
 		@XmlElement(required = true)
-		protected Date DatumRodjenja;
+		protected XMLGregorianCalendar DatumRodjenja;
 		
 		@XmlElement(required = true)
 		protected PunoIme PunoIme;
@@ -70,11 +69,11 @@ public class Zahtev {
 		@XmlElement(required = true)
 		protected Pol Pol;
 
-		public Date getDatumRodjenja() {
+		public XMLGregorianCalendar getDatumRodjenja() {
 			return DatumRodjenja;
 		}
 
-		public void setDatumRodjenja(Date datumRodjenja) {
+		public void setDatumRodjenja(XMLGregorianCalendar datumRodjenja) {
 			DatumRodjenja = datumRodjenja;
 		}
 
