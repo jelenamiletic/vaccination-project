@@ -49,7 +49,7 @@ public class Potvrda {
 	@XmlElement(required = true)
 	protected List<Potvrda.InformacijeOVakcinama> InformacijeOVakcinama;
 	
-	@XmlElement(required = true)
+	@XmlElement()
 	protected List<Potvrda.Vakcine> Vakcine;
 	
 	public Potvrda.LicneInformacije getLicneInformacije() {

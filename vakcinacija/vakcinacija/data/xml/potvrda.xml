@@ -12,21 +12,21 @@
         <po:Pol>Muski</po:Pol>
         <po:JMBG>3553355353532</po:JMBG>
     </po:LicneInformacije>
-    <po:InformacijeOVakcinacijama>
+    <po:InformacijeOVakcinama>
         <po:BrojDoze>1</po:BrojDoze>
         <po:DatumDavanja>2021-02-02</po:DatumDavanja>
         <po:Serija>PFI-55609</po:Serija>
-    </po:InformacijeOVakcinacijama>
-    <po:InformacijeOVakcinacijama>
+    </po:InformacijeOVakcinama>
+    <po:InformacijeOVakcinama>
         <po:BrojDoze>2</po:BrojDoze>
         <po:DatumDavanja>2021-03-02</po:DatumDavanja>
         <po:Serija>PFI-66609</po:Serija>
-    </po:InformacijeOVakcinacijama>
-    <po:InformacijeOVakcinacijama>
+    </po:InformacijeOVakcinama>
+    <po:InformacijeOVakcinama>
         <po:BrojDoze>3</po:BrojDoze>
         <po:DatumDavanja>2021-10-02</po:DatumDavanja>
         <po:Serija>SINO-76609</po:Serija>
-    </po:InformacijeOVakcinacijama>
+    </po:InformacijeOVakcinama>
     <po:ZdravstvenaUstanova>DOM ZDRAVLJA NOVI SAD</po:ZdravstvenaUstanova>
     <po:VakcinaPrveDveDoze>Pfizer-BioNTech</po:VakcinaPrveDveDoze>
     <po:Vakcine>

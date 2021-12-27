@@ -1,8 +1,5 @@
 package com.xml.vakcinacija.model.potvrda;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.xml.bind.annotation.XmlRegistry;
 
 @XmlRegistry
@@ -20,12 +17,12 @@ public class ObjectFactory {
 		return new Potvrda.LicneInformacije();
 	}
 	
-	public List<Potvrda.InformacijeOVakcinama> createInformacijeOVakcinamaPotvrda() {
-		return new ArrayList<>();
+	public Potvrda.InformacijeOVakcinama createInformacijeOVakcinama() {
+		return new Potvrda.InformacijeOVakcinama();
 	}
 	
-	public List<Potvrda.Vakcine> createVakcinePotvrda() {
-		return new ArrayList<>();
+	public Potvrda.Vakcine createVakcine() {
+		return new Potvrda.Vakcine();
 	}
 	
 	public ListaPotvrda createListaPotvrda() {

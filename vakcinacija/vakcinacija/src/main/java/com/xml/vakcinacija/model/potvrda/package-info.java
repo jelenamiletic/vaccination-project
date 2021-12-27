@@ -1,5 +1,5 @@
 @XmlSchema( 
-		   namespace = XMLNamespaceKonstante.NAMESPACE_ZAHTEV,
+		   namespace = XMLNamespaceKonstante.NAMESPACE_POTVRDA,
 		   elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED,
 		   xmlns = {@javax.xml.bind.annotation.XmlNs(prefix = "po", namespaceURI=XMLNamespaceKonstante.NAMESPACE_POTVRDA),
 				   	@javax.xml.bind.annotation.XmlNs(prefix = "ct", namespaceURI=XMLNamespaceKonstante.NAMESPACE_COMMON_TYPES),
