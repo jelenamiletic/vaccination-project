@@ -36,7 +36,7 @@ public class ExistRetrieve {
             if (col == null) {
                 return null;
             }
-            XPathQueryService xpathService = (XPathQueryService) col.getService("XPathQueryService", "1.0");
+            XPathQueryService xpathService = (XPathQueryService) col.getService("XPathQueryService", "2.0");
             xpathService.setProperty("indent", "yes");
 
             xpathService.setNamespace("", namespace);

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<in:Interesovanje
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:in="http:///www.ftn.uns.ac.rs/vakcinacija/interesovanje"
+    xmlns:ct="http:///www.ftn.uns.ac.rs/vakcinacija/commonTypes" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:addr="http://www.ftn.uns.ac.rs/rdf/interesovanje"
+    xmlns:pred="http://www.ftn.uns.ac.rs/rdf/interesovanje/predicate/"
+    vocab="http://www.ftn.uns.ac.rs/rdf/interesovanje/" 
+    about="http://www.ftn.uns.ac.rs/rdf/interesovanje/1153355353511"
+    >
+    <in:LicneInformacije>
+        <in:Drzavljanstvo property="pred:drzavljanstvo" datatype="xs:string">Drzаvljаnin Republike Srbije</in:Drzavljanstvo>
+        <in:JMBG property="pred:jmbg" datatype="xs:string">1153355353511</in:JMBG>
+        <in:PunoIme>
+            <ct:Ime>Pera</ct:Ime>
+            <ct:Prezime>Markuza</ct:Prezime>
+        </in:PunoIme>
+        <in:AdresaElektronskePoste property="pred:email" datatype="xs:string">test@gmail.com</in:AdresaElektronskePoste>
+        <in:BrojMobilnogTelefona property="pred:brojMobilnogTelefona" datatype="xs:string">0635678901</in:BrojMobilnogTelefona>
+        <in:BrojFiksnogTelefona property="pred:brojFiksongTelefona" datatype="xs:string">015518556</in:BrojFiksnogTelefona>
+    </in:LicneInformacije>
+    <in:OpstinaPrimanja property="pred:opstinaPrimanja" datatype="xs:string">Sabac</in:OpstinaPrimanja>
+    <in:Vakcina property="pred:vakcina" datatype="xs:string">Pfizer-BioNTech</in:Vakcina>
+    <in:DavalacKrvi property="pred:davalacKrvi" datatype="xs:boolean">false</in:DavalacKrvi>
+</in:Interesovanje>

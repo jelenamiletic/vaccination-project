@@ -111,7 +111,7 @@
                                     <xs:sequence>
                                         <xs:element name = "VakcineInfo">
                                             <xs:complexType>
-                                                <xs:sequence minOccurs = "2" maxOccurs="unbounded">
+                                                <xs:sequence minOccurs = "1" maxOccurs="unbounded">
                                                     <xs:element name = "NazivVakcine" type = "ct:Proizvodjac"/>
                                                     <xs:element name = "DatumDavanjaVakcine" type = "xs:date"/>
                                                     <xs:element name = "NacinDavanjeVakcine" type = "xs:string" fixed = "IM"/>

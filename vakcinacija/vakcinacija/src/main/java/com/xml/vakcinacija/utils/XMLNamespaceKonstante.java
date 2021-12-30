@@ -9,4 +9,6 @@ public class XMLNamespaceKonstante {
 	public static final String NAMESPACE_SERTIFIKAT = "http:///www.ftn.uns.ac.rs/vakcinacija/sertifikat";
 	public static final String NAMESPACE_ZAHTEV = "http:///www.ftn.uns.ac.rs/vakcinacija/zahtev";
 	public static final String NAMESPACE_COMMON_TYPES = "http:///www.ftn.uns.ac.rs/vakcinacija/commonTypes";
+	
+	public static final String PREDICATE = "http://ftn.uns.ac.rs/vakcinacija/predicate/";
 }

@@ -1,5 +1,7 @@
 package com.xml.vakcinacija.controller;
 
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.xml.sax.SAXException;
 
 import com.xml.vakcinacija.model.interesovanje.Interesovanje;
 import com.xml.vakcinacija.model.interesovanje.ListaInteresovanja;
@@ -37,5 +40,15 @@ public class InteresovanjeController {
 	@GetMapping(value = "/pronadjiInteresovanjePoJmbg/{jmbg}", produces = MediaType.APPLICATION_XML_VALUE) 
 	public ResponseEntity<Interesovanje> pronadjiInteresovanjePoJmbg(@PathVariable String jmbg) throws Exception {
 		return new ResponseEntity<>(interesovanjeService.pronadjiInteresovanjePoJmbg(jmbg), HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/upisiMetapodatke")
+	public void upisiMetapodatke(@RequestBody String xml) throws SAXException {
+		interesovanjeService.upisiMetapodatke(xml);
+	}
+	
+	@GetMapping(value = "/nabaviMetaPodatkeXmlPoJmbg/{jmbg}")
+	public void nabaviMetaPodatkeXmlPoJmbg(@PathVariable String jmbg) throws IOException {
+		interesovanjeService.nabaviMetaPodatkeXmlPoJmbg(jmbg);
 	}
 }

@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<sparql xmlns="http://www.w3.org/2005/sparql-results#">
+  <head>
+    <variable name="s"/>
+    <variable name="p"/>
+    <variable name="o"/>
+  </head>
+  <results>
+    <result>
+      <binding name="s">
+        <uri>http://www.ftn.uns.ac.rs/rdf/interesovanje/1153355353511</uri>
+      </binding>
+      <binding name="p">
+        <uri>http://www.ftn.uns.ac.rs/rdf/interesovanje/predicate/email</uri>
+      </binding>
+      <binding name="o">
+        <literal datatype="http://www.w3.org/2001/XMLSchemastring">test@gmail.com</literal>
+      </binding>
+    </result>
+    <result>
+      <binding name="s">
+        <uri>http://www.ftn.uns.ac.rs/rdf/interesovanje/1153355353511</uri>
+      </binding>
+      <binding name="p">
+        <uri>http://www.ftn.uns.ac.rs/rdf/interesovanje/predicate/vakcina</uri>
+      </binding>
+      <binding name="o">
+        <literal datatype="http://www.w3.org/2001/XMLSchemastring">Pfizer-BioNTech</literal>
+      </binding>
+    </result>
+    <result>
+      <binding name="s">
+        <uri>http://www.ftn.uns.ac.rs/rdf/interesovanje/1153355353511</uri>
+      </binding>
+      <binding name="p">
+        <uri>http://www.ftn.uns.ac.rs/rdf/interesovanje/predicate/opstinaPrimanja</uri>
+      </binding>
+      <binding name="o">
+        <literal datatype="http://www.w3.org/2001/XMLSchemastring">Sabac</literal>
+      </binding>
+    </result>
+    <result>
+      <binding name="s">
+        <uri>http://www.ftn.uns.ac.rs/rdf/interesovanje/1153355353511</uri>
+      </binding>
+      <binding name="p">
+        <uri>http://www.ftn.uns.ac.rs/rdf/interesovanje/predicate/brojFiksongTelefona</uri>
+      </binding>
+      <binding name="o">
+        <literal datatype="http://www.w3.org/2001/XMLSchemastring">015518556</literal>
+      </binding>
+    </result>
+    <result>
+      <binding name="s">
+        <uri>http://www.ftn.uns.ac.rs/rdf/interesovanje/1153355353511</uri>
+      </binding>
+      <binding name="p">
+        <uri>http://www.ftn.uns.ac.rs/rdf/interesovanje/predicate/brojMobilnogTelefona</uri>
+      </binding>
+      <binding name="o">
+        <literal datatype="http://www.w3.org/2001/XMLSchemastring">0635678901</literal>
+      </binding>
+    </result>
+    <result>
+      <binding name="s">
+        <uri>http://www.ftn.uns.ac.rs/rdf/interesovanje/1153355353511</uri>
+      </binding>
+      <binding name="p">
+        <uri>http://www.ftn.uns.ac.rs/rdf/interesovanje/predicate/jmbg</uri>
+      </binding>
+      <binding name="o">
+        <literal datatype="http://www.w3.org/2001/XMLSchemastring">1153355353511</literal>
+      </binding>
+    </result>
+    <result>
+      <binding name="s">
+        <uri>http://www.ftn.uns.ac.rs/rdf/interesovanje/1153355353511</uri>
+      </binding>
+      <binding name="p">
+        <uri>http://www.ftn.uns.ac.rs/rdf/interesovanje/predicate/drzavljanstvo</uri>
+      </binding>
+      <binding name="o">
+        <literal datatype="http://www.w3.org/2001/XMLSchemastring">Drzаvljаnin Republike Srbije</literal>
+      </binding>
+    </result>
+    <result>
+      <binding name="s">
+        <uri>http://www.ftn.uns.ac.rs/rdf/interesovanje/1153355353511</uri>
+      </binding>
+      <binding name="p">
+        <uri>http://www.ftn.uns.ac.rs/rdf/interesovanje/predicate/davalacKrvi</uri>
+      </binding>
+      <binding name="o">
+        <literal datatype="http://www.w3.org/2001/XMLSchemaboolean">false</literal>
+      </binding>
+    </result>
+  </results>
+</sparql>
