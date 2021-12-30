@@ -2,9 +2,12 @@ package com.xml.vakcinacija.model.interesovanje;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.XmlValue;
 
 import com.xml.vakcinacija.model.Proizvodjac;
 import com.xml.vakcinacija.model.PunoIme;
@@ -23,13 +26,20 @@ public class Interesovanje {
     protected Interesovanje.LicneInformacije LicneInformacije;
 	
 	@XmlElement(required = true)
-	protected String OpstinaPrimanja;
+	protected OpstinaPrimanja OpstinaPrimanja;
 	
 	@XmlElement(required = true)
-	protected Proizvodjac Vakcina;
+	protected Vakcina Vakcina;
 	
 	@XmlElement(required = true)
 	protected boolean DavalacKrvi;
+	
+	@XmlAttribute(name = "about")
+	@XmlSchemaType(name = "anyURI")
+    protected String about;
+	
+    @XmlAttribute(name = "vocab")
+    protected String vocab;
 	
 	public Interesovanje.LicneInformacije getLicneInformacije() {
 		if (LicneInformacije == null) {
@@ -38,19 +48,19 @@ public class Interesovanje {
         return this.LicneInformacije;
 	}
 	
-	public String getOpstinaPrimanja() {
+	public OpstinaPrimanja getOpstinaPrimanja() {
 		return OpstinaPrimanja;
 	}
 
-	public void setOpstinaPrimanja(String OpstinaPrimanja) {
+	public void setOpstinaPrimanja(OpstinaPrimanja OpstinaPrimanja) {
 		this.OpstinaPrimanja = OpstinaPrimanja;
 	}
 
-	public Proizvodjac getVakcina() {
+	public Vakcina getVakcina() {
 		return Vakcina;
 	}
 
-	public void setVakcina(Proizvodjac Vakcina) {
+	public void setVakcina(Vakcina Vakcina) {
 		this.Vakcina = Vakcina;
 	}
 
@@ -60,6 +70,106 @@ public class Interesovanje {
 
 	public void setDavalacKrvi(boolean DavalacKrvi) {
 		this.DavalacKrvi = DavalacKrvi;
+	}
+	
+	public String getAbout() {
+		return about;
+	}
+
+	public void setAbout(String about) {
+		this.about = about;
+	}
+
+	public String getVocab() {
+		return vocab;
+	}
+
+	public void setVocab(String vocab) {
+		this.vocab = vocab;
+	}
+	
+	@XmlAccessorType(XmlAccessType.FIELD)
+	@XmlType(name = "", propOrder = {
+	    "value"
+	})
+	public static class OpstinaPrimanja {
+		
+		@XmlValue
+        protected String value;
+        @XmlAttribute(name = "property")
+        protected String property;
+        @XmlAttribute(name = "datatype")
+        protected String datatype;
+        
+		public String getValue() {
+			return value;
+		}
+		
+		public void setValue(String value) {
+			this.value = value;
+		}
+		
+		public String getProperty() {
+			if (property == null) {
+                return "pred:opstinaPrimanja";
+            } else {
+                return property;
+            }
+		}
+		
+		public void setProperty(String property) {
+			this.property = property;
+		}
+		
+		public String getDatatype() {
+			return datatype;
+		}
+		
+		public void setDatatype(String datatype) {
+			this.datatype = datatype;
+		}
+	}
+	
+	@XmlAccessorType(XmlAccessType.FIELD)
+	@XmlType(name = "", propOrder = {
+	    "value"
+	})
+	public static class Vakcina {
+		
+		@XmlValue
+        protected Proizvodjac value;
+        @XmlAttribute(name = "property")
+        protected String property;
+        @XmlAttribute(name = "datatype")
+        protected String datatype;
+        
+		public Proizvodjac getValue() {
+			return value;
+		}
+		
+		public void setValue(Proizvodjac value) {
+			this.value = value;
+		}
+		
+		public String getProperty() {
+			if (property == null) {
+                return "pred:vakcina";
+            } else {
+                return property;
+            }
+		}
+		
+		public void setProperty(String property) {
+			this.property = property;
+		}
+		
+		public String getDatatype() {
+			return datatype;
+		}
+		
+		public void setDatatype(String datatype) {
+			this.datatype = datatype;
+		}
 	}
 
 	@XmlAccessorType(XmlAccessType.FIELD)
@@ -77,19 +187,19 @@ public class Interesovanje {
 		protected PunoIme PunoIme;
 		
 		@XmlElement(required = true)
-		protected String Drzavljanstvo;
+		protected Drzavljanstvo Drzavljanstvo;
 		
 		@XmlElement(required = true)
-		protected String JMBG;
+		protected JMBG JMBG;
 		
 		@XmlElement(required = true)
-		protected String AdresaElektronskePoste;
+		protected AdresaElektronskePoste AdresaElektronskePoste;
 		
 		@XmlElement(required = true)
-		protected String BrojMobilnogTelefona;
+		protected BrojMobilnogTelefona BrojMobilnogTelefona;
 		
 		@XmlElement(required = true)
-		protected String BrojFiksnogTelefona;
+		protected BrojFiksnogTelefona BrojFiksnogTelefona;
 		
 		public PunoIme getPunoIme() {
 			if (PunoIme == null) {
@@ -98,45 +208,254 @@ public class Interesovanje {
 	        return this.PunoIme;
 		}
 		
-		public String getDrzavljanstvo() {
+		public Drzavljanstvo getDrzavljanstvo() {
 			return Drzavljanstvo;
 		}
 
-		public void setDrzavljanstvo(String Drzavljanstvo) {
+		public void setDrzavljanstvo(Drzavljanstvo Drzavljanstvo) {
 			this.Drzavljanstvo = Drzavljanstvo;
 		}
 
-		public String getJMBG() {
+		public JMBG getJMBG() {
 			return JMBG;
 		}
 
-		public void setJMBG(String JMBG) {
+		public void setJMBG(JMBG JMBG) {
 			this.JMBG = JMBG;
 		}
 
-		public String getAdresaElektronskePoste() {
+		public AdresaElektronskePoste getAdresaElektronskePoste() {
 			return AdresaElektronskePoste;
 		}
 
-		public void setAdresaElektronskePoste(String AdresaElektronskePoste) {
+		public void setAdresaElektronskePoste(AdresaElektronskePoste AdresaElektronskePoste) {
 			this.AdresaElektronskePoste = AdresaElektronskePoste;
 		}
 
-		public String getBrojMobilnogTelefona() {
+		public BrojMobilnogTelefona getBrojMobilnogTelefona() {
 			return BrojMobilnogTelefona;
 		}
 
-		public void setBrojMobilnogTelefona(String BrojMobilnogTelefona) {
+		public void setBrojMobilnogTelefona(BrojMobilnogTelefona BrojMobilnogTelefona) {
 			this.BrojMobilnogTelefona = BrojMobilnogTelefona;
 		}
 
-		public String getBrojFiksnogTelefona() {
+		public BrojFiksnogTelefona getBrojFiksnogTelefona() {
 			return BrojFiksnogTelefona;
 		}
 
-		public void setBrojFiksnogTelefona(String BrojFiksnogTelefona) {
+		public void setBrojFiksnogTelefona(BrojFiksnogTelefona BrojFiksnogTelefona) {
 			this.BrojFiksnogTelefona = BrojFiksnogTelefona;
 		}
+		
+		@XmlAccessorType(XmlAccessType.FIELD)
+		@XmlType(name = "", propOrder = {
+		    "value"
+		})
+		public static class Drzavljanstvo {
+			
+			@XmlValue
+	        protected String value;
+	        @XmlAttribute(name = "property")
+	        protected String property;
+	        @XmlAttribute(name = "datatype")
+	        protected String datatype;
+	        
+			public String getValue() {
+				return value;
+			}
+			
+			public void setValue(String value) {
+				this.value = value;
+			}
+			
+			public String getProperty() {
+				if (property == null) {
+	                return "pred:drzavljanstvo";
+	            } else {
+	                return property;
+	            }
+			}
+			
+			public void setProperty(String property) {
+				this.property = property;
+			}
+			
+			public String getDatatype() {
+				return datatype;
+			}
+			
+			public void setDatatype(String datatype) {
+				this.datatype = datatype;
+			}
+		}
+		
+		@XmlAccessorType(XmlAccessType.FIELD)
+		@XmlType(name = "", propOrder = {
+		    "value"
+		})
+		public static class JMBG {
+			
+			@XmlValue
+	        protected String value;
+	        @XmlAttribute(name = "property")
+	        protected String property;
+	        @XmlAttribute(name = "datatype")
+	        protected String datatype;
+	        
+			public String getValue() {
+				return value;
+			}
+			
+			public void setValue(String value) {
+				this.value = value;
+			}
+			
+			public String getProperty() {
+				if (property == null) {
+	                return "pred:jmbg";
+	            } else {
+	                return property;
+	            }
+			}
+			
+			public void setProperty(String property) {
+				this.property = property;
+			}
+			
+			public String getDatatype() {
+				return datatype;
+			}
+			
+			public void setDatatype(String datatype) {
+				this.datatype = datatype;
+			}
+		}
+		
+		@XmlAccessorType(XmlAccessType.FIELD)
+		@XmlType(name = "", propOrder = {
+		    "value"
+		})
+		public static class AdresaElektronskePoste {
+			
+			@XmlValue
+	        protected String value;
+	        @XmlAttribute(name = "property")
+	        protected String property;
+	        @XmlAttribute(name = "datatype")
+	        protected String datatype;
+	        
+			public String getValue() {
+				return value;
+			}
+			
+			public void setValue(String value) {
+				this.value = value;
+			}
+			
+			public String getProperty() {
+				if (property == null) {
+	                return "pred:email";
+	            } else {
+	                return property;
+	            }
+			}
+			
+			public void setProperty(String property) {
+				this.property = property;
+			}
+			
+			public String getDatatype() {
+				return datatype;
+			}
+			
+			public void setDatatype(String datatype) {
+				this.datatype = datatype;
+			}
+		}
+		
+		@XmlAccessorType(XmlAccessType.FIELD)
+		@XmlType(name = "", propOrder = {
+		    "value"
+		})
+		public static class BrojMobilnogTelefona {
+			
+			@XmlValue
+	        protected String value;
+	        @XmlAttribute(name = "property")
+	        protected String property;
+	        @XmlAttribute(name = "datatype")
+	        protected String datatype;
+	        
+			public String getValue() {
+				return value;
+			}
+			
+			public void setValue(String value) {
+				this.value = value;
+			}
+			
+			public String getProperty() {
+				if (property == null) {
+	                return "pred:brojMobilnogTelefona";
+	            } else {
+	                return property;
+	            }
+			}
+			
+			public void setProperty(String property) {
+				this.property = property;
+			}
+			
+			public String getDatatype() {
+				return datatype;
+			}
+			
+			public void setDatatype(String datatype) {
+				this.datatype = datatype;
+			}
+		}
+		
+		@XmlAccessorType(XmlAccessType.FIELD)
+		@XmlType(name = "", propOrder = {
+		    "value"
+		})
+		public static class BrojFiksnogTelefona {
+			
+			@XmlValue
+	        protected String value;
+	        @XmlAttribute(name = "property")
+	        protected String property;
+	        @XmlAttribute(name = "datatype")
+	        protected String datatype;
+	        
+			public String getValue() {
+				return value;
+			}
+			
+			public void setValue(String value) {
+				this.value = value;
+			}
+			
+			public String getProperty() {
+				if (property == null) {
+	                return "pred:brojFiksnogTelefona";
+	            } else {
+	                return property;
+	            }
+			}
+			
+			public void setProperty(String property) {
+				this.property = property;
+			}
+			
+			public String getDatatype() {
+				return datatype;
+			}
+			
+			public void setDatatype(String datatype) {
+				this.datatype = datatype;
+			}
+		}
 	}
-
 }

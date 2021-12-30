@@ -25,11 +25,9 @@ public class MarshallerServiceImpl implements MarshallerService {
 		try {
 			JAXBContext context = JAXBContext.newInstance(contextPath);
 			Marshaller marshaller = context.createMarshaller();
-			if (xsdPutanja != null) {
-				SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-	            Schema xsd = sf.newSchema(new File(xsdPutanja));
-	            marshaller.setSchema(xsd);
-			}
+			SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+            Schema xsd = sf.newSchema(new File(xsdPutanja));
+            marshaller.setSchema(xsd);
             marshaller.marshal(objekat, rez);
         } catch (JAXBException e) {
         	e.printStackTrace();

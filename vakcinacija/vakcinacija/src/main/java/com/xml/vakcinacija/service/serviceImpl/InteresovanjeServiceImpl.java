@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.xml.sax.SAXException;
 
 import com.xml.vakcinacija.exception.InteresovanjeNijePronadjenoException;
 import com.xml.vakcinacija.exception.InteresovanjePostojiException;
@@ -35,11 +34,18 @@ public class InteresovanjeServiceImpl implements InteresovanjeService {
 		Interesovanje validanObjekat = (Interesovanje) unmarshallerService.unmarshal(interesovanjeXML, 
 				ContextPutanjeKonstante.CONTEXT_PUTANJA_INTERESOVANJE, XSDPutanjeKonstante.XSD_INTERESOVANJE);
 		if (validanObjekat != null) {
-			String pronadjenoInteresovanjeXml = interesovanjeRepository.pronadjiInteresovanjeXmlPoJmbg(validanObjekat.getLicneInformacije().getJMBG());
+			String pronadjenoInteresovanjeXml = interesovanjeRepository.pronadjiInteresovanjeXmlPoJmbg(validanObjekat.getLicneInformacije().getJMBG().getValue());
 			if (pronadjenoInteresovanjeXml != null) {
-				throw new InteresovanjePostojiException(validanObjekat.getLicneInformacije().getJMBG());
+				throw new InteresovanjePostojiException(validanObjekat.getLicneInformacije().getJMBG().getValue());
 			}
 			interesovanjeRepository.saveInteresovanjeObjekat(validanObjekat);
+			
+			try {
+				rdfService.save(interesovanjeXML, "interesovanje_" + validanObjekat.getLicneInformacije().getJMBG().getValue(), 
+						NamedGraphURIKonstante.INTERESOVANJE_NAMED_GRAPH);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	
@@ -57,18 +63,6 @@ public class InteresovanjeServiceImpl implements InteresovanjeService {
 		return interesovanje;
 	}
 	
-	@Override
-	public void upisiMetapodatke(String xml) throws SAXException {
-		Interesovanje validanObjekat = (Interesovanje) unmarshallerService.unmarshal(xml, 
-				ContextPutanjeKonstante.CONTEXT_PUTANJA_INTERESOVANJE, null);
-		try {
-			rdfService.save(xml, "interesovanje_" + validanObjekat.getLicneInformacije().getJMBG(), 
-					NamedGraphURIKonstante.INTERESOVANJE_NAMED_GRAPH);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
 	@Override
 	public void nabaviMetaPodatkeXmlPoJmbg(String jmbg) throws IOException {
 		String query = String.format("?s ?p ?o. ?s <http://www.ftn.uns.ac.rs/rdf/interesovanje/predicate/jmbg> \"%s\"^^<http://www.w3.org/2001/XMLSchemastring>", jmbg);

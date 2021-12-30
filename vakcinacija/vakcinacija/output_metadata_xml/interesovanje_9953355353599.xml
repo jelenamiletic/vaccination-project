@@ -8,7 +8,7 @@
   <results>
     <result>
       <binding name="s">
-        <uri>http://www.ftn.uns.ac.rs/rdf/interesovanje/1153355353511</uri>
+        <uri>http://www.ftn.uns.ac.rs/rdf/interesovanje/9953355353599</uri>
       </binding>
       <binding name="p">
         <uri>http://www.ftn.uns.ac.rs/rdf/interesovanje/predicate/email</uri>
@@ -19,7 +19,7 @@
     </result>
     <result>
       <binding name="s">
-        <uri>http://www.ftn.uns.ac.rs/rdf/interesovanje/1153355353511</uri>
+        <uri>http://www.ftn.uns.ac.rs/rdf/interesovanje/9953355353599</uri>
       </binding>
       <binding name="p">
         <uri>http://www.ftn.uns.ac.rs/rdf/interesovanje/predicate/vakcina</uri>
@@ -30,7 +30,7 @@
     </result>
     <result>
       <binding name="s">
-        <uri>http://www.ftn.uns.ac.rs/rdf/interesovanje/1153355353511</uri>
+        <uri>http://www.ftn.uns.ac.rs/rdf/interesovanje/9953355353599</uri>
       </binding>
       <binding name="p">
         <uri>http://www.ftn.uns.ac.rs/rdf/interesovanje/predicate/opstinaPrimanja</uri>
@@ -41,7 +41,7 @@
     </result>
     <result>
       <binding name="s">
-        <uri>http://www.ftn.uns.ac.rs/rdf/interesovanje/1153355353511</uri>
+        <uri>http://www.ftn.uns.ac.rs/rdf/interesovanje/9953355353599</uri>
       </binding>
       <binding name="p">
         <uri>http://www.ftn.uns.ac.rs/rdf/interesovanje/predicate/brojFiksongTelefona</uri>
@@ -52,7 +52,7 @@
     </result>
     <result>
       <binding name="s">
-        <uri>http://www.ftn.uns.ac.rs/rdf/interesovanje/1153355353511</uri>
+        <uri>http://www.ftn.uns.ac.rs/rdf/interesovanje/9953355353599</uri>
       </binding>
       <binding name="p">
         <uri>http://www.ftn.uns.ac.rs/rdf/interesovanje/predicate/brojMobilnogTelefona</uri>
@@ -63,18 +63,18 @@
     </result>
     <result>
       <binding name="s">
-        <uri>http://www.ftn.uns.ac.rs/rdf/interesovanje/1153355353511</uri>
+        <uri>http://www.ftn.uns.ac.rs/rdf/interesovanje/9953355353599</uri>
       </binding>
       <binding name="p">
         <uri>http://www.ftn.uns.ac.rs/rdf/interesovanje/predicate/jmbg</uri>
       </binding>
       <binding name="o">
-        <literal datatype="http://www.w3.org/2001/XMLSchemastring">1153355353511</literal>
+        <literal datatype="http://www.w3.org/2001/XMLSchemastring">9953355353599</literal>
       </binding>
     </result>
     <result>
       <binding name="s">
-        <uri>http://www.ftn.uns.ac.rs/rdf/interesovanje/1153355353511</uri>
+        <uri>http://www.ftn.uns.ac.rs/rdf/interesovanje/9953355353599</uri>
       </binding>
       <binding name="p">
         <uri>http://www.ftn.uns.ac.rs/rdf/interesovanje/predicate/drzavljanstvo</uri>

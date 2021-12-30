@@ -12,27 +12,91 @@
                 <xs:element name="LicneInformacije">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element name="Drzavljanstvo">
-                                <xs:simpleType>
-                                    <xs:restriction base="xs:string">
-                                        <xs:enumeration value="Drzаvljаnin Republike Srbije"/>
-                                        <xs:enumeration value="Strani drzаvljаnin sa boravkom u RS"/>
-                                        <xs:enumeration value="Strani drzаvljаnin bez boravka u RS"/>
-                                    </xs:restriction>
-                                </xs:simpleType>
+                        	<xs:element name = "Drzavljanstvo">
+                        		<xs:complexType>
+								  <xs:simpleContent>
+								    <xs:extension base="in:Drzavljanstvo">
+								      <xs:attribute name="property" type = "xs:string"/>
+								      <xs:attribute name="datatype" type = "xs:string"/>
+								    </xs:extension>
+								  </xs:simpleContent>
+								</xs:complexType>
+                        	</xs:element>
+                            <xs:element name="JMBG">
+                            	<xs:complexType>
+								  <xs:simpleContent>
+								    <xs:extension base="ct:JMBG">
+								      <xs:attribute name="property" type = "xs:string"/>
+								      <xs:attribute name="datatype" type = "xs:string"/>
+								    </xs:extension>
+								  </xs:simpleContent>
+								</xs:complexType>
                             </xs:element>
-                            <xs:element name="JMBG" type="ct:JMBG"/>
                             <xs:element name="PunoIme" type="ct:PunoIme"/>
-                            <xs:element name="AdresaElektronskePoste" type="ct:Email"/>
-                            <xs:element name="BrojMobilnogTelefona" type="ct:BrojMobilnogTelefona"/>
-                            <xs:element name="BrojFiksnogTelefona" type = "ct:BrojFiksnogTelefona"/>
+                            <xs:element name="AdresaElektronskePoste">
+                            	<xs:complexType>
+								  <xs:simpleContent>
+								    <xs:extension base="ct:Email">
+								      <xs:attribute name="property" type = "xs:string"/>
+								      <xs:attribute name="datatype" type = "xs:string"/>
+								    </xs:extension>
+								  </xs:simpleContent>
+								</xs:complexType>
+                            </xs:element>
+                            <xs:element name="BrojMobilnogTelefona">
+                            	<xs:complexType>
+								  <xs:simpleContent>
+								    <xs:extension base="ct:BrojMobilnogTelefona">
+								      <xs:attribute name="property" type = "xs:string"/>
+								      <xs:attribute name="datatype" type = "xs:string"/>
+								    </xs:extension>
+								  </xs:simpleContent>
+								</xs:complexType>
+                            </xs:element>
+                            <xs:element name="BrojFiksnogTelefona">
+                            	<xs:complexType>
+								  <xs:simpleContent>
+								    <xs:extension base="ct:BrojFiksnogTelefona">
+								      <xs:attribute name="property" type = "xs:string"/>
+								      <xs:attribute name="datatype" type = "xs:string"/>
+								    </xs:extension>
+								  </xs:simpleContent>
+								</xs:complexType>
+                            </xs:element>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
-                <xs:element name="OpstinaPrimanja" type="ct:Opstina"/>
-                <xs:element name="Vakcina" type="ct:Proizvodjac"/>
+                <xs:element name="OpstinaPrimanja">
+                	<xs:complexType>
+					  <xs:simpleContent>
+					    <xs:extension base="ct:Opstina">
+					      <xs:attribute name="property" type = "xs:string"/>
+					      <xs:attribute name="datatype" type = "xs:string"/>
+					    </xs:extension>
+					  </xs:simpleContent>
+					</xs:complexType>
+                </xs:element>
+                <xs:element name="Vakcina">
+                	<xs:complexType>
+					  <xs:simpleContent>
+					    <xs:extension base="ct:Proizvodjac">
+					      <xs:attribute name="property" type = "xs:string"/>
+					      <xs:attribute name="datatype" type = "xs:string"/>
+					    </xs:extension>
+					  </xs:simpleContent>
+					</xs:complexType>
+                </xs:element>
                 <xs:element name="DavalacKrvi" type = "xs:boolean"/>
             </xs:sequence>
+            <xs:attribute name="about" type="xs:anyURI"/>
+    		<xs:attribute name="vocab" type="xs:string"/>
         </xs:complexType>
     </xs:element>
+    <xs:simpleType name="Drzavljanstvo">
+	    <xs:restriction base="xs:string">
+	        <xs:enumeration value="Drzаvljаnin Republike Srbije"/>
+	        <xs:enumeration value="Strani drzаvljаnin sa boravkom u RS"/>
+	        <xs:enumeration value="Strani drzаvljаnin bez boravka u RS"/>
+	    </xs:restriction>
+    </xs:simpleType>
 </xs:schema>

@@ -37,7 +37,7 @@ public class InteresovanjeRepository {
 	public void saveInteresovanjeObjekat(Interesovanje interesovanje) throws Exception {
 		String xml = marshallerService.marshall(interesovanje, ContextPutanjeKonstante.CONTEXT_PUTANJA_INTERESOVANJE, 
 				XSDPutanjeKonstante.XSD_INTERESOVANJE);
-		ExistStore.save(XMLCollectionIdKonstante.COLLECTION_ID_INTERESOVANJE, interesovanje.getLicneInformacije().getJMBG(), xml);
+		ExistStore.save(XMLCollectionIdKonstante.COLLECTION_ID_INTERESOVANJE, interesovanje.getLicneInformacije().getJMBG().getValue(), xml);
 	}
 	
 	public List<Interesovanje> pronadjiSve() throws Exception {
