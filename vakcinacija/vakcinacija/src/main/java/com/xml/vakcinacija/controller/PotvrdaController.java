@@ -1,5 +1,7 @@
 package com.xml.vakcinacija.controller;
 
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -37,5 +39,10 @@ public class PotvrdaController {
 	@GetMapping(value = "/pronadjiPotvrdaPoJmbg/{jmbg}", produces = MediaType.APPLICATION_XML_VALUE) 
 	public ResponseEntity<Potvrda> pronadjiPotvrdaPoJmbg(@PathVariable String jmbg) throws Exception {
 		return new ResponseEntity<>(potvrdaService.pronadjiPotvrdaPoJmbg(jmbg), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/nabaviMetaPodatkeXmlPoJmbg/{jmbg}")
+	public void nabaviMetaPodatkeXmlPoJmbg(@PathVariable String jmbg) throws IOException {
+		potvrdaService.nabaviMetaPodatkeXmlPoJmbg(jmbg);
 	}
 }

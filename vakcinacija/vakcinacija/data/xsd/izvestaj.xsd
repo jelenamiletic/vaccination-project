@@ -43,6 +43,8 @@
                 </xs:element>
             </xs:sequence>
             <xs:attribute name = "DatumIzdavanja" type = "xs:date"/>
+            <xs:attribute name="about" type="xs:anyURI"/>
+    		<xs:attribute name="vocab" type="xs:string"/>
         </xs:complexType>
         <xs:key name="RedniBrojKljuc">
             <xs:selector xpath="iz:KolicnaDozaPoRednomBroju"/>

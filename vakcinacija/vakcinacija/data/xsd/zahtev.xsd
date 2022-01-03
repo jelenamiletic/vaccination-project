@@ -20,6 +20,8 @@
                 </xs:element>
                 <xs:element name = "RazlogPodnosenja" type = "xs:string"/>
             </xs:sequence>
+            <xs:attribute name="about" type="xs:anyURI"/>
+    		<xs:attribute name="vocab" type="xs:string"/>
         </xs:complexType>
     </xs:element>
 </xs:schema>

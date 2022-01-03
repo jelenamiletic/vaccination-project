@@ -48,6 +48,8 @@
                 <xs:element name="DatumIzdavanja" type="xs:date"/>
                 <xs:element name="QR" type="xs:string"/>
             </xs:sequence>
+            <xs:attribute name="about" type="xs:anyURI"/>
+    		<xs:attribute name="vocab" type="xs:string"/>
         </xs:complexType>
         <xs:key name="BrojDozeKljuc">
             <xs:selector xpath="po:Vakcine"/>
