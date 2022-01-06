@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sa:Saglasnost xmlns:sa="http:///www.ftn.uns.ac.rs/vakcinacija/saglasnost"
+<sa:Saglasnost
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:sa="http:///www.ftn.uns.ac.rs/vakcinacija/saglasnost"
     xmlns:ct="http:///www.ftn.uns.ac.rs/vakcinacija/commonTypes" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
     xsi:schemaLocation="http:///www.ftn.uns.ac.rs/vakcinacija/saglasnost ../xsd/saglasnost.xsd">
     <sa:PacijentSaglasnost>

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<po:Sertifikat xmlns:po="http:///www.ftn.uns.ac.rs/vakcinacija/sertifikat"
+<po:Sertifikat
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:po="http:///www.ftn.uns.ac.rs/vakcinacija/sertifikat"
     xmlns:ct="http:///www.ftn.uns.ac.rs/vakcinacija/commonTypes" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
     xsi:schemaLocation="http:///www.ftn.uns.ac.rs/vakcinacija/sertifikat ../xsd/sertifikat.xsd">
     <po:BrojSertifikata>SERT-3848837820</po:BrojSertifikata>
