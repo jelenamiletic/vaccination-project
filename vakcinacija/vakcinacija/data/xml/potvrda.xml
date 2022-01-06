@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<po:Potvrda xmlns:po="http:///www.ftn.uns.ac.rs/vakcinacija/potvrda"
+<po:Potvrda
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:po="http:///www.ftn.uns.ac.rs/vakcinacija/potvrda"
     xmlns:ct="http:///www.ftn.uns.ac.rs/vakcinacija/commonTypes" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
     xsi:schemaLocation="http:///www.ftn.uns.ac.rs/vakcinacija/potvrda ../xsd/potvrda.xsd" >
     <po:Sifra>VAX-123</po:Sifra>

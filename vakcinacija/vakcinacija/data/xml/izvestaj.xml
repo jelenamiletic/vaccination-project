@@ -1,15 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<iz:Izvestaj xmlns:iz="http:///www.ftn.uns.ac.rs/vakcinacija/izvestaj" 
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http:///www.ftn.uns.ac.rs/vakcinacija/izvestaj ../xsd/izvestaj.xsd" 
-    iz:DatumIzdavanja = "2022-09-11">
+<iz:Izvestaj 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:iz="http:///www.ftn.uns.ac.rs/vakcinacija/izvestaj"  
+    xmlns:addr="http://www.ftn.uns.ac.rs/rdf/izvestaj"
+    xmlns:pred="http://www.ftn.uns.ac.rs/rdf/izvestaj/predicate/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http:///www.ftn.uns.ac.rs/vakcinacija/izvestaj ../xsd/izvestaj.xsd"
+    DatumIzdavanja = "2022-09-11"
+    vocab="http://www.ftn.uns.ac.rs/rdf/izvestaj/" 
+    about="http://www.ftn.uns.ac.rs/rdf/izvestaj/2021-08-01/2021-09-01">
     <iz:PeriodIzvestaja>
         <iz:OdDatum>2021-08-01</iz:OdDatum>
         <iz:DoDatum>2021-09-01</iz:DoDatum>
     </iz:PeriodIzvestaja>
-    <iz:BrojPodnetihDokumenata>2758</iz:BrojPodnetihDokumenata>
+    <iz:BrojPodnetihDokumenata property = "pred:brojPodnetihDokumenata" datatype = "xs:positiveInteger">2758</iz:BrojPodnetihDokumenata>
     <iz:ZahteviZaDigitalniSertifikat>
-        <iz:BrojPrimljenih>456</iz:BrojPrimljenih>
-        <iz:BrojIzdatih>428</iz:BrojIzdatih>
+        <iz:BrojPrimljenih property = "pred:brojPrimljenih" datatype = "xs:positiveInteger">456</iz:BrojPrimljenih>
+        <iz:BrojIzdatih property = "pred:brojIzdatih" datatype = "xs:positiveInteger">428</iz:BrojIzdatih>
     </iz:ZahteviZaDigitalniSertifikat>
     <iz:UkupanBrojDatihDoza>3225</iz:UkupanBrojDatihDoza>
     <iz:KolicnaDozaPoRednomBroju>
