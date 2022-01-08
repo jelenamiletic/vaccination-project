@@ -5,9 +5,12 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.XmlValue;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import com.xml.vakcinacija.model.Proizvodjac;
@@ -35,9 +38,10 @@ public class Potvrda {
 	protected String ZdravstvenaUstanova;
 	
 	@XmlElement(required = true)
-	protected Proizvodjac VakcinaPrveDveDoze;
+	protected VakcinaPrveDveDoze VakcinaPrveDveDoze;
 	
 	@XmlElement(required = true)
+	@XmlSchemaType(name = "date")
 	protected XMLGregorianCalendar DatumIzdavanja;
 	
 	@XmlElement(required = true)
@@ -51,6 +55,13 @@ public class Potvrda {
 	
 	@XmlElement()
 	protected List<Potvrda.Vakcine> Vakcine;
+	
+	@XmlAttribute(name = "about")
+	@XmlSchemaType(name = "anyURI")
+    protected String about;
+	
+    @XmlAttribute(name = "vocab")
+    protected String vocab;
 	
 	public Potvrda.LicneInformacije getLicneInformacije() {
 		if (LicneInformacije == null) {
@@ -101,11 +112,11 @@ public class Potvrda {
 		ZdravstvenaUstanova = zdravstvenaUstanova;
 	}
 
-	public Proizvodjac getVakcinaPrveDveDoze() {
+	public VakcinaPrveDveDoze getVakcinaPrveDveDoze() {
 		return VakcinaPrveDveDoze;
 	}
 
-	public void setVakcinaPrveDveDoze(Proizvodjac vakcinaPrveDveDoze) {
+	public void setVakcinaPrveDveDoze(VakcinaPrveDveDoze vakcinaPrveDveDoze) {
 		VakcinaPrveDveDoze = vakcinaPrveDveDoze;
 	}
 
@@ -125,6 +136,66 @@ public class Potvrda {
 		QR = qR;
 	}
 
+	public String getAbout() {
+		return about;
+	}
+
+	public void setAbout(String about) {
+		this.about = about;
+	}
+
+	public String getVocab() {
+		return vocab;
+	}
+
+	public void setVocab(String vocab) {
+		this.vocab = vocab;
+	}
+	
+	@XmlAccessorType(XmlAccessType.FIELD)
+	@XmlType(name = "", propOrder = {
+	    "value"
+	})
+	public static class VakcinaPrveDveDoze {
+		
+		@XmlValue
+        protected String value;
+        @XmlAttribute(name = "property")
+        protected String property;
+        @XmlAttribute(name = "datatype")
+        protected String datatype;
+        
+		public String getValue() {
+			return value;
+		}
+		
+		public void setValue(String value) {
+			this.value = value;
+		}
+		
+		public String getProperty() {
+			if (property == null) {
+                return "pred:VakcinaPrveDveDoze";
+            } else {
+                return property;
+            }
+		}
+		
+		public void setProperty(String property) {
+			this.property = property;
+		}
+		
+		public String getDatatype() {
+			return datatype;
+		}
+		
+		public void setDatatype(String datatype) {
+			this.datatype = datatype;
+		}
+	}
+
+
+
 	@XmlAccessorType(XmlAccessType.FIELD)
 	@XmlType(name = "", propOrder = {
 	    "PunoIme",
@@ -138,13 +209,14 @@ public class Potvrda {
 		protected PunoIme PunoIme;
 		
 		@XmlElement(required = true)
+		@XmlSchemaType(name = "date")
 		protected XMLGregorianCalendar DatumRodjenja;
 		
 		@XmlElement(required = true)
 		protected Pol Pol;
 		
 		@XmlElement(required = true)
-		protected String JMBG;
+		protected JMBG JMBG;
 
 		public PunoIme getPunoIme() {
 			if (PunoIme == null) {
@@ -173,12 +245,54 @@ public class Potvrda {
 			Pol = pol;
 		}
 
-		public String getJMBG() {
+		public JMBG getJMBG() {
 			return JMBG;
 		}
 
-		public void setJMBG(String jMBG) {
+		public void setJMBG(JMBG jMBG) {
 			JMBG = jMBG;
+		}
+		
+		@XmlAccessorType(XmlAccessType.FIELD)
+		@XmlType(name = "", propOrder = {
+		    "value"
+		})
+		public static class JMBG {
+			
+			@XmlValue
+	        protected String value;
+	        @XmlAttribute(name = "property")
+	        protected String property;
+	        @XmlAttribute(name = "datatype")
+	        protected String datatype;
+	        
+			public String getValue() {
+				return value;
+			}
+			
+			public void setValue(String value) {
+				this.value = value;
+			}
+			
+			public String getProperty() {
+				if (property == null) {
+	                return "pred:jmbg";
+	            } else {
+	                return property;
+	            }
+			}
+			
+			public void setProperty(String property) {
+				this.property = property;
+			}
+			
+			public String getDatatype() {
+				return datatype;
+			}
+			
+			public void setDatatype(String datatype) {
+				this.datatype = datatype;
+			}
 		}
 	}
 	
@@ -194,6 +308,7 @@ public class Potvrda {
 		protected int BrojDoze;
 		
 		@XmlElement(required = true)
+		@XmlSchemaType(name = "date")
 		protected XMLGregorianCalendar DatumDavanja;
 		
 		@XmlElement(required = true)

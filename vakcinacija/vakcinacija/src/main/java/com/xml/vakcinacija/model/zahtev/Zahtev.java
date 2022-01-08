@@ -2,9 +2,12 @@ package com.xml.vakcinacija.model.zahtev;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.XmlValue;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import com.xml.vakcinacija.model.PunoIme;
@@ -22,6 +25,13 @@ public class Zahtev {
 
 	@XmlElement(required = true)
 	protected String RazlogPodnosenja;
+	
+	@XmlAttribute(name = "about")
+	@XmlSchemaType(name = "anyURI")
+    protected String about;
+	
+    @XmlAttribute(name = "vocab")
+    protected String vocab;
 	
 	public Zahtev.Podnosilac getPodnosilac() {
 		if(this.Podnosilac == null) {
@@ -43,6 +53,22 @@ public class Zahtev {
 		RazlogPodnosenja = razlogPodnosenja;
 	}
 
+	public String getAbout() {
+		return about;
+	}
+
+	public void setAbout(String about) {
+		this.about = about;
+	}
+
+	public String getVocab() {
+		return vocab;
+	}
+
+	public void setVocab(String vocab) {
+		this.vocab = vocab;
+	}
+
 
 
 	@XmlAccessorType(XmlAccessType.FIELD)
@@ -55,16 +81,17 @@ public class Zahtev {
 	})
 	public static class Podnosilac{
 		@XmlElement(required = true)
+		@XmlSchemaType(name = "date")
 		protected XMLGregorianCalendar DatumRodjenja;
 		
 		@XmlElement(required = true)
 		protected PunoIme PunoIme;
 		
 		@XmlElement(required = true)
-		protected String JMBG;
+		protected JMBG JMBG;
 		
 		@XmlElement(required = true)
-		protected String BrojPasosa;
+		protected BrojPasosa BrojPasosa;
 		
 		@XmlElement(required = true)
 		protected Pol Pol;
@@ -88,19 +115,19 @@ public class Zahtev {
 			PunoIme = punoIme;
 		}
 
-		public String getJMBG() {
+		public JMBG getJMBG() {
 			return JMBG;
 		}
 
-		public void setJMBG(String jMBG) {
+		public void setJMBG(JMBG jMBG) {
 			JMBG = jMBG;
 		}
 
-		public String getBrojPasosa() {
+		public BrojPasosa getBrojPasosa() {
 			return BrojPasosa;
 		}
 
-		public void setBrojPasosa(String brojPasosa) {
+		public void setBrojPasosa(BrojPasosa brojPasosa) {
 			BrojPasosa = brojPasosa;
 		}
 
@@ -112,5 +139,88 @@ public class Zahtev {
 			Pol = pol;
 		}
 		
+		@XmlAccessorType(XmlAccessType.FIELD)
+		@XmlType(name = "", propOrder = {
+		    "value"
+		})
+		public static class JMBG {
+			
+			@XmlValue
+	        protected String value;
+	        @XmlAttribute(name = "property")
+	        protected String property;
+	        @XmlAttribute(name = "datatype")
+	        protected String datatype;
+	        
+			public String getValue() {
+				return value;
+			}
+			
+			public void setValue(String value) {
+				this.value = value;
+			}
+			
+			public String getProperty() {
+				if (property == null) {
+	                return "pred:jmbg";
+	            } else {
+	                return property;
+	            }
+			}
+			
+			public void setProperty(String property) {
+				this.property = property;
+			}
+			
+			public String getDatatype() {
+				return datatype;
+			}
+			
+			public void setDatatype(String datatype) {
+				this.datatype = datatype;
+			}
+		}
+		
+		@XmlAccessorType(XmlAccessType.FIELD)
+		@XmlType(name = "", propOrder = {
+		    "value"
+		})
+		public static class BrojPasosa {
+			
+			@XmlValue
+	        protected String value;
+	        @XmlAttribute(name = "property")
+	        protected String property;
+	        @XmlAttribute(name = "datatype")
+	        protected String datatype;
+	        
+			public String getValue() {
+				return value;
+			}
+			
+			public void setValue(String value) {
+				this.value = value;
+			}
+			
+			public String getProperty() {
+				if (property == null) {
+	                return "pred:BrojPasosa";
+	            } else {
+	                return property;
+	            }
+			}
+			
+			public void setProperty(String property) {
+				this.property = property;
+			}
+			
+			public String getDatatype() {
+				return datatype;
+			}
+			
+			public void setDatatype(String datatype) {
+				this.datatype = datatype;
+			}
+		}
 	}
 }

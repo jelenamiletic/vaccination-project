@@ -37,7 +37,7 @@ public class ZahtevRepository {
 	public void saveZahtevObjekat(Zahtev zahtev) throws Exception {
 		String xml = marshallerService.marshall(zahtev, ContextPutanjeKonstante.CONTEXT_PUTANJA_ZAHTEV, 
 				XSDPutanjeKonstante.XSD_ZAHTEV);
-		ExistStore.save(XMLCollectionIdKonstante.COLLECTION_ID_ZAHTEV, zahtev.getPodnosilac().getJMBG(), xml);
+		ExistStore.save(XMLCollectionIdKonstante.COLLECTION_ID_ZAHTEV, zahtev.getPodnosilac().getJMBG().getValue(), xml);
 	}
 	
 	public List<Zahtev> pronadjiSve() throws Exception {

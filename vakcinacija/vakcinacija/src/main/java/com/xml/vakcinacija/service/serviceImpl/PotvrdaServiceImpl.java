@@ -34,9 +34,9 @@ public class PotvrdaServiceImpl implements PotvrdaService{
 		Potvrda validanObjekat = (Potvrda) unmarshallerService.unmarshal(PotvrdaXML, 
 				ContextPutanjeKonstante.CONTEXT_PUTANJA_POTVRDA, XSDPutanjeKonstante.XSD_POTVRDA);
 		if (validanObjekat != null) {
-			String pronadjenPotvrdaXml = potvrdaRepository.pronadjiPotvrdaXmlPoJmbg(validanObjekat.getLicneInformacije().getJMBG());
+			String pronadjenPotvrdaXml = potvrdaRepository.pronadjiPotvrdaXmlPoJmbg(validanObjekat.getLicneInformacije().getJMBG().getValue());
 			if (pronadjenPotvrdaXml != null) {
-				throw new PotvrdaPostojiException(validanObjekat.getLicneInformacije().getJMBG());
+				throw new PotvrdaPostojiException(validanObjekat.getLicneInformacije().getJMBG().getValue());
 			}
 			potvrdaRepository.savePotvrdaObjekat(validanObjekat);
 		}

@@ -34,9 +34,9 @@ public class ZahtevServiceImpl implements ZahtevService{
 		Zahtev validanObjekat = (Zahtev) unmarshallerService.unmarshal(zahtevXML, 
 				ContextPutanjeKonstante.CONTEXT_PUTANJA_ZAHTEV, XSDPutanjeKonstante.XSD_ZAHTEV);
 		if (validanObjekat != null) {
-			String pronadjenZahtevXml = zahtevRepository.pronadjiZahtevXmlPoJmbg(validanObjekat.getPodnosilac().getJMBG());
+			String pronadjenZahtevXml = zahtevRepository.pronadjiZahtevXmlPoJmbg(validanObjekat.getPodnosilac().getJMBG().getValue());
 			if (pronadjenZahtevXml != null) {
-				throw new ZahtevPostojiException(validanObjekat.getPodnosilac().getJMBG());
+				throw new ZahtevPostojiException(validanObjekat.getPodnosilac().getJMBG().getValue());
 			}
 			zahtevRepository.saveZahtevObjekat(validanObjekat);
 		}

@@ -16,7 +16,16 @@
                             <xs:element name="PunoIme" type="ct:PunoIme"/>
                             <xs:element name="DatumRodjenja" type="xs:date"/>
                             <xs:element name="Pol" type="ct:Pol"/>
-                            <xs:element name="JMBG" type="ct:JMBG"/>
+                            <xs:element name="JMBG">
+                            	<xs:complexType>
+								  <xs:simpleContent>
+								    <xs:extension base="ct:JMBG">
+								      <xs:attribute name="property" type = "xs:string"/>
+								      <xs:attribute name="datatype" type = "xs:string"/>
+								    </xs:extension>
+								  </xs:simpleContent>
+								</xs:complexType>
+                            </xs:element>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
@@ -30,7 +39,16 @@
                     </xs:complexType>
                 </xs:element>
                 <xs:element name="ZdravstvenaUstanova" type="xs:string"/>
-                <xs:element name="VakcinaPrveDveDoze" type="ct:Proizvodjac"/>
+                <xs:element name="VakcinaPrveDveDoze">
+                	<xs:complexType>
+					  <xs:simpleContent>
+					    <xs:extension base="ct:Proizvodjac">
+					      <xs:attribute name="property" type = "xs:string"/>
+					      <xs:attribute name="datatype" type = "xs:string"/>
+					    </xs:extension>
+					  </xs:simpleContent>
+					</xs:complexType>
+                </xs:element>
                 <xs:element name="Vakcine" maxOccurs="unbounded" minOccurs="0">
                     <xs:complexType>
                         <xs:sequence>
@@ -41,7 +59,16 @@
                                     </xs:restriction>
                                 </xs:simpleType>
                             </xs:element>
-                            <xs:element name="Vakcina" type="ct:Proizvodjac"/>
+                            <xs:element name="Vakcina">
+	                            <xs:complexType>
+								  <xs:simpleContent>
+								    <xs:extension base="ct:Proizvodjac">
+								      <xs:attribute name="property" type = "xs:string"/>
+								      <xs:attribute name="datatype" type = "xs:string"/>
+								    </xs:extension>
+								  </xs:simpleContent>
+								</xs:complexType>
+                			</xs:element>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
