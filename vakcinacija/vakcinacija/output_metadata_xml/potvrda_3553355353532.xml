@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<sparql xmlns="http://www.w3.org/2005/sparql-results#">
+  <head>
+    <variable name="s"/>
+    <variable name="p"/>
+    <variable name="o"/>
+  </head>
+  <results>
+    <result>
+      <binding name="s">
+        <uri>http://www.ftn.uns.ac.rs/rdf/potvrda/3553355353532</uri>
+      </binding>
+      <binding name="p">
+        <uri>http://www.ftn.uns.ac.rs/rdf/potvrda/predicate/Vakcina</uri>
+      </binding>
+      <binding name="o">
+        <literal datatype="http://www.w3.org/2001/XMLSchemastring">Sinopharm</literal>
+      </binding>
+    </result>
+    <result>
+      <binding name="s">
+        <uri>http://www.ftn.uns.ac.rs/rdf/potvrda/3553355353532</uri>
+      </binding>
+      <binding name="p">
+        <uri>http://www.ftn.uns.ac.rs/rdf/potvrda/predicate/VakcinaPrveDveDoze</uri>
+      </binding>
+      <binding name="o">
+        <literal datatype="http://www.w3.org/2001/XMLSchemastring">Pfizer-BioNTech</literal>
+      </binding>
+    </result>
+  </results>
+</sparql>

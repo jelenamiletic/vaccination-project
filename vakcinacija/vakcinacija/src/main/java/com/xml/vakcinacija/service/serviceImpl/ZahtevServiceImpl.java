@@ -39,6 +39,13 @@ public class ZahtevServiceImpl implements ZahtevService{
 				throw new ZahtevPostojiException(validanObjekat.getPodnosilac().getJMBG().getValue());
 			}
 			zahtevRepository.saveZahtevObjekat(validanObjekat);
+			
+			try {
+				rdfService.save(zahtevXML, "zahtev_" + validanObjekat.getPodnosilac().getJMBG().getValue(), 
+						NamedGraphURIKonstante.ZAHTEV_NAMED_GRAPH);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 

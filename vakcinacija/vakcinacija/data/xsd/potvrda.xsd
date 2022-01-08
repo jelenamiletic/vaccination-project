@@ -2,8 +2,7 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:po="http:///www.ftn.uns.ac.rs/vakcinacija/potvrda"
     xmlns:ct="http:///www.ftn.uns.ac.rs/vakcinacija/commonTypes"
-    targetNamespace="http:///www.ftn.uns.ac.rs/vakcinacija/potvrda" elementFormDefault="qualified"
-    attributeFormDefault="qualified">
+    targetNamespace="http:///www.ftn.uns.ac.rs/vakcinacija/potvrda" elementFormDefault="qualified">
     <xs:import schemaLocation="CommonTypes.xsd"
         namespace="http:///www.ftn.uns.ac.rs/vakcinacija/commonTypes"/>
     <xs:element name="Potvrda">

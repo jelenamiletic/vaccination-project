@@ -350,7 +350,7 @@ public class Potvrda {
 		protected Integer BrojDoze;
 		
 		@XmlElement(required = true)
-		protected Proizvodjac Vakcina;
+		protected Vakcina Vakcina;
 
 		public Integer getBrojDoze() {
 			return BrojDoze;
@@ -360,12 +360,54 @@ public class Potvrda {
 			BrojDoze = brojDoze;
 		}
 
-		public Proizvodjac getVakcina() {
+		public Vakcina getVakcina() {
 			return Vakcina;
 		}
 
-		public void setVakcina(Proizvodjac vakcina) {
+		public void setVakcina(Vakcina vakcina) {
 			Vakcina = vakcina;
+		}
+		
+		@XmlAccessorType(XmlAccessType.FIELD)
+		@XmlType(name = "", propOrder = {
+		    "value"
+		})
+		public static class Vakcina {
+			
+			@XmlValue
+	        protected Proizvodjac value;
+	        @XmlAttribute(name = "property")
+	        protected String property;
+	        @XmlAttribute(name = "datatype")
+	        protected String datatype;
+	        
+			public Proizvodjac getValue() {
+				return value;
+			}
+			
+			public void setValue(Proizvodjac value) {
+				this.value = value;
+			}
+			
+			public String getProperty() {
+				if (property == null) {
+	                return "pred:Vakcina";
+	            } else {
+	                return property;
+	            }
+			}
+			
+			public void setProperty(String property) {
+				this.property = property;
+			}
+			
+			public String getDatatype() {
+				return datatype;
+			}
+			
+			public void setDatatype(String datatype) {
+				this.datatype = datatype;
+			}
 		}
 	}
 }

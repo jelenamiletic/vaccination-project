@@ -39,6 +39,13 @@ public class PotvrdaServiceImpl implements PotvrdaService{
 				throw new PotvrdaPostojiException(validanObjekat.getLicneInformacije().getJMBG().getValue());
 			}
 			potvrdaRepository.savePotvrdaObjekat(validanObjekat);
+			
+			try {
+				rdfService.save(PotvrdaXML, "potvrda_" + validanObjekat.getLicneInformacije().getJMBG().getValue(), 
+						NamedGraphURIKonstante.POTVRDA_NAMED_GRAPH);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -58,7 +65,7 @@ public class PotvrdaServiceImpl implements PotvrdaService{
 	
 	@Override
 	public void nabaviMetaPodatkeXmlPoJmbg(String jmbg) throws IOException {
-		String query = String.format("?s ?p ?o. ?s <http://www.ftn.uns.ac.rs/rdf/potvrda/predicate/jmbg> \"%s\"^^<http://www.w3.org/2001/XMLSchemastring>", jmbg);
+		String query = String.format("?s ?p ?o. FILTER (?s = <http://www.ftn.uns.ac.rs/rdf/potvrda/%s>)", jmbg);
 		rdfService.getMetadataXML(query, "potvrda_" + jmbg, NamedGraphURIKonstante.POTVRDA_NAMED_GRAPH);
 	}
 }
