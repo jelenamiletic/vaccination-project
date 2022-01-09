@@ -1,0 +1,44 @@
+package com.xml.vakcinacija.controller;
+
+import com.xml.vakcinacija.model.sertifikat.ListaSertifikata;
+import com.xml.vakcinacija.model.sertifikat.Sertifikat;
+import com.xml.vakcinacija.model.zahtev.ListaZahteva;
+import com.xml.vakcinacija.model.zahtev.Zahtev;
+import com.xml.vakcinacija.service.SertifikatService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
+
+@RestController
+@RequestMapping("/sertifikat")
+public class SertifikatController {
+
+    @Autowired
+    SertifikatService sertifikatService;
+
+    @PostMapping(value = "/dodajNoviSertifikat", consumes = MediaType.APPLICATION_XML_VALUE)
+    public void dodajNoviSertifikat(@RequestBody String sertifikatXML) throws Exception {
+        sertifikatService.dodajNoviSertifikat(sertifikatXML);
+    }
+
+    @GetMapping(value = "/pronadjiSve", produces = MediaType.APPLICATION_XML_VALUE)
+    public ResponseEntity<ListaSertifikata> pronadjiSve() throws Exception {
+        ListaSertifikata lista = new ListaSertifikata();
+        lista.setSertifikat(sertifikatService.pronadjiSve());
+        return new ResponseEntity<>(lista, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/pronadjiSertifikatPoJmbg/{jmbg}", produces = MediaType.APPLICATION_XML_VALUE)
+    public ResponseEntity<Sertifikat> pronadjiSertifikataPoJmbg(@PathVariable String jmbg) throws Exception {
+        return new ResponseEntity<>(sertifikatService.pronadjiSertifikatPoJmbg(jmbg), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/nabaviMetaPodatkeXmlPoJmbg/{jmbg}")
+    public void nabaviMetaPodatkeXmlPoJmbg(@PathVariable String jmbg) throws IOException {
+        sertifikatService.nabaviMetaPodatkeXmlPoJmbg(jmbg);
+    }
+}
