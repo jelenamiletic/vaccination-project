@@ -34,11 +34,12 @@ public class SaglasnostServiceImpl implements SaglasnostService {
 		Saglasnost validanObjekat = (Saglasnost) unmarshallerService.unmarshal(XML, 
 				ContextPutanjeKonstante.CONTEXT_PUTANJA_SAGLASNOST, XSDPutanjeKonstante.XSD_SAGLASNOST);
 		if (validanObjekat != null) {
-			String pronadjenaSaglasnostXml = saglasnostRepository.pronadjiSaglasnostXmlPoJmbg(validanObjekat.getPacijentSaglasnost().getLicneInformacije().getDrzavljanstvo().getRepublikaSrbija().getJMBG(), false);
+			String pronadjenaSaglasnostXml = saglasnostRepository.pronadjiSaglasnostXmlPoJmbg(validanObjekat.getPacijentSaglasnost().getLicneInformacije().getIdFromDrzavljanstvo(), false);
 			if (pronadjenaSaglasnostXml != null) {
-				throw new SaglasnostPostojiException(validanObjekat.getPacijentSaglasnost().getLicneInformacije().getDrzavljanstvo().getRepublikaSrbija().getJMBG());
+				throw new SaglasnostPostojiException(validanObjekat.getPacijentSaglasnost().getLicneInformacije().getDrzavljanstvo().getRepublikaSrbija().getJMBG().getValue());
 			}
 			saglasnostRepository.saveSaglasnostObjekat(validanObjekat);
+		
 			
 			try {
 				rdfService.save(XML, "saglasnost_" + validanObjekat.getPacijentSaglasnost().getLicneInformacije().getDrzavljanstvo().getRepublikaSrbija().getJMBG(), 
@@ -46,6 +47,7 @@ public class SaglasnostServiceImpl implements SaglasnostService {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			
 		}
 	}
 	
