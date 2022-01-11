@@ -3,12 +3,17 @@
 	xmlns:xs="http://www.w3.org/2001/XMLSchema"
 	xmlns:sa="http:///www.ftn.uns.ac.rs/vakcinacija/saglasnost"
     xmlns:ct="http:///www.ftn.uns.ac.rs/vakcinacija/commonTypes" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-    xsi:schemaLocation="http:///www.ftn.uns.ac.rs/vakcinacija/saglasnost ../xsd/saglasnost.xsd">
+    xsi:schemaLocation="http:///www.ftn.uns.ac.rs/vakcinacija/saglasnost ../xsd/saglasnost.xsd"
+    xmlns:addr="http://www.ftn.uns.ac.rs/rdf/saglasnost"
+    xmlns:pred="http://www.ftn.uns.ac.rs/rdf/saglasnost/predicate/"
+    vocab="http://www.ftn.uns.ac.rs/rdf/saglasnost/" 
+    about="http://www.ftn.uns.ac.rs/rdf/saglasnost/3344324343444"
+    >
     <sa:PacijentSaglasnost>
         <sa:LicneInformacije>
             <sa:Drzavljanstvo>
                 <sa:RepublikaSrbija>
-                    <sa:JMBG>3344324343444</sa:JMBG>
+                    <sa:JMBG property = "pred:jmbg" datatype = "xs:string">3344324343444</sa:JMBG>
                 </sa:RepublikaSrbija>
             </sa:Drzavljanstvo>
             <sa:PunoIme>
@@ -16,15 +21,15 @@
                 <ct:Prezime>Markovic</ct:Prezime>
             </sa:PunoIme>
             <sa:ImeRoditelja>Petar</sa:ImeRoditelja>
-            <sa:Pol>Muski</sa:Pol>
+            <sa:Pol property = "pred:pol" datatype = "xs:string">Muski</sa:Pol>
             <sa:DatumRodjenja>1999-07-10</sa:DatumRodjenja>
             <sa:MestoRodjenja>NS</sa:MestoRodjenja>
-            <sa:Adresa>Adresa</sa:Adresa>
-            <sa:Mesto>Mesto</sa:Mesto>
+            <sa:Adresa property = "pred:adresa" datatype = "xs:string">Adresa</sa:Adresa>
+            <sa:Mesto property = "pred:mesto" datatype = "xs:string">Mesto</sa:Mesto>
             <sa:Opstina>NS</sa:Opstina>
             <sa:BrojFiksnogTelefona>015421442</sa:BrojFiksnogTelefona>
             <sa:BrojMobilnogTelefona>0603234353</sa:BrojMobilnogTelefona>
-            <sa:Email>test@gmail.com</sa:Email>
+            <sa:Email property = "pred:email" datatype = "xs:string">test@gmail.com</sa:Email>
             <sa:RadniStatus>Student</sa:RadniStatus>
         </sa:LicneInformacije>
         <sa:Imunizacija>

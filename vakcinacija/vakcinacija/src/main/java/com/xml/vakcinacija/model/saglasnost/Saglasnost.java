@@ -2082,7 +2082,7 @@ public class Saglasnost {
             public static class Pol {
 
                 @XmlValue
-                protected Pol value;
+                protected com.xml.vakcinacija.model.Pol value;
                 @XmlAttribute(name = "property")
                 protected String property;
                 @XmlAttribute(name = "datatype")
@@ -2096,7 +2096,7 @@ public class Saglasnost {
                  *     {@link hajduk.Pol }
                  *     
                  */
-                public Pol getValue() {
+                public com.xml.vakcinacija.model.Pol getValue() {
                     return value;
                 }
 
@@ -2108,7 +2108,7 @@ public class Saglasnost {
                  *     {@link hajduk.Pol }
                  *     
                  */
-                public void setValue(Pol value) {
+                public void setValue(com.xml.vakcinacija.model.Pol value) {
                     this.value = value;
                 }
 

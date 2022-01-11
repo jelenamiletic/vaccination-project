@@ -13,11 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.xml.vakcinacija.model.interesovanje.Interesovanje;
-import com.xml.vakcinacija.model.interesovanje.ListaInteresovanja;
 import com.xml.vakcinacija.model.saglasnost.ListaSaglasnosti;
 import com.xml.vakcinacija.model.saglasnost.Saglasnost;
-import com.xml.vakcinacija.service.InteresovanjeService;
 import com.xml.vakcinacija.service.SaglasnostService;
 
 @RestController

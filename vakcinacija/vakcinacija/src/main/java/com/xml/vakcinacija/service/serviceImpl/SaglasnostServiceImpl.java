@@ -42,7 +42,8 @@ public class SaglasnostServiceImpl implements SaglasnostService {
 		
 			
 			try {
-				rdfService.save(XML, "saglasnost_" + validanObjekat.getPacijentSaglasnost().getLicneInformacije().getDrzavljanstvo().getRepublikaSrbija().getJMBG(), 
+				rdfService.save(XML, "saglasnost_" + 
+						validanObjekat.getPacijentSaglasnost().getLicneInformacije().getDrzavljanstvo().getRepublikaSrbija().getJMBG().getValue(), 
 						NamedGraphURIKonstante.SAGLASNOST_NAMED_GRAPH);
 			} catch (Exception e) {
 				e.printStackTrace();
