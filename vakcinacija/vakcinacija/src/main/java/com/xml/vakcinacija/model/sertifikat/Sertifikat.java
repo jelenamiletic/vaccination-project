@@ -200,8 +200,6 @@ public class Sertifikat {
             protected String value;
             @XmlAttribute(name = "property")
             protected String property;
-            @XmlAttribute(name = "datatype")
-            protected String datatype;
 
             public String getValue() {
                 return value;
@@ -221,14 +219,6 @@ public class Sertifikat {
 
             public void setProperty(String property) {
                 this.property = property;
-            }
-
-            public String getDatatype() {
-                return datatype;
-            }
-
-            public void setDatatype(String datatype) {
-                this.datatype = datatype;
             }
         }
 
