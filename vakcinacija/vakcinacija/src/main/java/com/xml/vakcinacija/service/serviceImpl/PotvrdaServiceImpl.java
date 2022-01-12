@@ -34,7 +34,8 @@ public class PotvrdaServiceImpl implements PotvrdaService{
 		Potvrda validanObjekat = (Potvrda) unmarshallerService.unmarshal(PotvrdaXML, 
 				ContextPutanjeKonstante.CONTEXT_PUTANJA_POTVRDA, XSDPutanjeKonstante.XSD_POTVRDA);
 		if (validanObjekat != null) {
-			String pronadjenPotvrdaXml = potvrdaRepository.pronadjiPotvrdaXmlPoJmbg(validanObjekat.getLicneInformacije().getJMBG().getValue());
+			String pronadjenPotvrdaXml = potvrdaRepository.pronadjiPotvrdaXmlPoJmbg(validanObjekat.getLicneInformacije().getJMBG().getValue(), 
+					validanObjekat.getInformacijeOVakcinama().get(validanObjekat.getInformacijeOVakcinama().size() - 1).getBrojDoze());
 			if (pronadjenPotvrdaXml != null) {
 				throw new PotvrdaPostojiException(validanObjekat.getLicneInformacije().getJMBG().getValue());
 			}
@@ -55,8 +56,8 @@ public class PotvrdaServiceImpl implements PotvrdaService{
 	}
 
 	@Override
-	public Potvrda pronadjiPotvrdaPoJmbg(String jmbg) throws Exception {
-		Potvrda potvrda = potvrdaRepository.pronadjiPotvrdaPoJmbg(jmbg);
+	public Potvrda pronadjiPotvrdaPoJmbg(String jmbg, int brojDoze) throws Exception {
+		Potvrda potvrda = potvrdaRepository.pronadjiPotvrdaPoJmbg(jmbg, brojDoze);
 		if (potvrda == null) {
 			throw new PotvrdaNijePronadjenoException(jmbg);
 		}
@@ -64,8 +65,8 @@ public class PotvrdaServiceImpl implements PotvrdaService{
 	}
 	
 	@Override
-	public void nabaviMetaPodatkeXmlPoJmbg(String jmbg) throws IOException {
-		String query = String.format("?s ?p ?o. FILTER (?s = <http://www.ftn.uns.ac.rs/rdf/potvrda/%s>)", jmbg);
+	public void nabaviMetaPodatkeXmlPoJmbg(String jmbg, int brojDoze) throws IOException {
+		String query = String.format("?s ?p ?o. FILTER (?s = <http://www.ftn.uns.ac.rs/rdf/potvrda/%s_%d>)", jmbg, brojDoze);
 		rdfService.getMetadataXML(query, "potvrda_" + jmbg, NamedGraphURIKonstante.POTVRDA_NAMED_GRAPH);
 	}
 }

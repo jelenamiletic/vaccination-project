@@ -11,7 +11,7 @@ void dodajNoviPotvrda(String PotvrdaXML) throws Exception;
 	
 	List<Potvrda> pronadjiSve() throws Exception;
 	
-	Potvrda pronadjiPotvrdaPoJmbg(String jmbg) throws Exception;
-	
-	void nabaviMetaPodatkeXmlPoJmbg(String jmbg) throws IOException;
+	void nabaviMetaPodatkeXmlPoJmbg(String jmbg, int brojDoze) throws IOException;
+
+	Potvrda pronadjiPotvrdaPoJmbg(String jmbg, int brojDoze) throws Exception;
 }

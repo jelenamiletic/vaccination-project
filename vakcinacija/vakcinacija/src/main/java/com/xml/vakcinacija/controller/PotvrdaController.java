@@ -36,13 +36,13 @@ public class PotvrdaController {
 		return new ResponseEntity<>(lista, HttpStatus.OK);
 	}
 
-	@GetMapping(value = "/pronadjiPotvrdaPoJmbg/{jmbg}", produces = MediaType.APPLICATION_XML_VALUE) 
-	public ResponseEntity<Potvrda> pronadjiPotvrdaPoJmbg(@PathVariable String jmbg) throws Exception {
-		return new ResponseEntity<>(potvrdaService.pronadjiPotvrdaPoJmbg(jmbg), HttpStatus.OK);
+	@GetMapping(value = "/pronadjiPotvrdaPoJmbg/{jmbg}/{brojDoze}", produces = MediaType.APPLICATION_XML_VALUE) 
+	public ResponseEntity<Potvrda> pronadjiPotvrdaPoJmbg(@PathVariable String jmbg, @PathVariable int brojDoze) throws Exception {
+		return new ResponseEntity<>(potvrdaService.pronadjiPotvrdaPoJmbg(jmbg, brojDoze), HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/nabaviMetaPodatkeXmlPoJmbg/{jmbg}")
-	public void nabaviMetaPodatkeXmlPoJmbg(@PathVariable String jmbg) throws IOException {
-		potvrdaService.nabaviMetaPodatkeXmlPoJmbg(jmbg);
+	@GetMapping(value = "/nabaviMetaPodatkeXmlPoJmbg/{jmbg}/{brojDoze}")
+	public void nabaviMetaPodatkeXmlPoJmbg(@PathVariable String jmbg, @PathVariable int brojDoze) throws IOException {
+		potvrdaService.nabaviMetaPodatkeXmlPoJmbg(jmbg, brojDoze);
 	}
 }

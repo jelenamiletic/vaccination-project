@@ -30,14 +30,15 @@ public class PotvrdaRepository {
 	@Autowired
 	private UnmarshallerService unmarshallerService;
 	
-	public void savePotvrdaXml(String xml, String jmbg) throws Exception {
-		ExistStore.save(XMLCollectionIdKonstante.COLLECTION_ID_POTVRDA, jmbg, xml);
+	public void savePotvrdaXml(String xml, String jmbg, int brojDoze) throws Exception {
+		ExistStore.save(XMLCollectionIdKonstante.COLLECTION_ID_POTVRDA, jmbg + "_" + brojDoze, xml);
     }
 	
 	public void savePotvrdaObjekat(Potvrda potvrda) throws Exception {
 		String xml = marshallerService.marshall(potvrda, ContextPutanjeKonstante.CONTEXT_PUTANJA_POTVRDA, 
 				XSDPutanjeKonstante.XSD_POTVRDA);
-		ExistStore.save(XMLCollectionIdKonstante.COLLECTION_ID_POTVRDA, potvrda.getLicneInformacije().getJMBG().getValue(), xml);
+		ExistStore.save(XMLCollectionIdKonstante.COLLECTION_ID_POTVRDA, potvrda.getLicneInformacije().getJMBG().getValue() + "_" + 
+				potvrda.getInformacijeOVakcinama().get(potvrda.getInformacijeOVakcinama().size()-1).getBrojDoze(), xml);
 	}
 	
 	public List<Potvrda> pronadjiSve() throws Exception {
@@ -68,8 +69,8 @@ public class PotvrdaRepository {
         return listaPotvrda;
 	}
 	
-	public String pronadjiPotvrdaXmlPoJmbg(String jmbg) throws Exception {
-        String xPathIzraz = String.format("/Potvrda[LicneInformacije/JMBG = '%s']" , jmbg);
+	public String pronadjiPotvrdaXmlPoJmbg(String jmbg, int brojDoze) throws Exception {
+        String xPathIzraz = String.format("/Potvrda[LicneInformacije/JMBG = '%s'] and /Potvrda[InformacijeOVakcinama[last()]/BrojDoze = '%d']" , jmbg, brojDoze);
         ResourceSet rezultat = ExistRetrieve.izvrsiXPathIzraz(XMLCollectionIdKonstante.COLLECTION_ID_POTVRDA, 
         		xPathIzraz, XMLNamespaceKonstante.NAMESPACE_POTVRDA);
         if (rezultat == null)
@@ -95,8 +96,8 @@ public class PotvrdaRepository {
         return potvrda;
     }
 	
-	public Potvrda pronadjiPotvrdaPoJmbg(String jmbg) throws Exception {
-		String xml = this.pronadjiPotvrdaXmlPoJmbg(jmbg);
+	public Potvrda pronadjiPotvrdaPoJmbg(String jmbg, int brojDoze) throws Exception {
+		String xml = this.pronadjiPotvrdaXmlPoJmbg(jmbg, brojDoze);
 		if (xml != null) {
 			return (Potvrda) unmarshallerService.unmarshal(xml, 
 				ContextPutanjeKonstante.CONTEXT_PUTANJA_POTVRDA, 
