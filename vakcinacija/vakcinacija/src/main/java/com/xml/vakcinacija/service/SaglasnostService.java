@@ -12,7 +12,7 @@ public interface SaglasnostService {
 	
 	List<Saglasnost> pronadjiSve() throws Exception;
 	
-	Saglasnost pronadjiSaglasnostPoJmbg(String jmbg) throws Exception;
+	Saglasnost pronadjiSaglasnostPoJmbgIliBrPasosa(String id) throws Exception;
 
-	void nabaviMetaPodatkeXmlPoJmbg(String jmbg) throws IOException;
+	void nabaviMetaPodatkeXmlPoId(String id) throws IOException;
 }

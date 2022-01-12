@@ -36,13 +36,13 @@ public class SaglasnostController {
 		return new ResponseEntity<>(lista, HttpStatus.OK);
 	}
 
-	@GetMapping(value = "/pronadjiSaglasnostPoJmbg/{jmbg}", produces = MediaType.APPLICATION_XML_VALUE) 
-	public ResponseEntity<Saglasnost> pronadjiSaglasnostPoJmbg(@PathVariable String jmbg) throws Exception {
-		return new ResponseEntity<>(saglasnostService.pronadjiSaglasnostPoJmbg(jmbg), HttpStatus.OK);
+	@GetMapping(value = "/pronadjiSaglasnostPoJmbgIliBrPasosa/{id}", produces = MediaType.APPLICATION_XML_VALUE) 
+	public ResponseEntity<Saglasnost> pronadjiSaglasnostPoJmbg(@PathVariable String id) throws Exception {
+		return new ResponseEntity<>(saglasnostService.pronadjiSaglasnostPoJmbgIliBrPasosa(id), HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/nabaviMetaPodatkeXmlPoJmbg/{jmbg}")
-	public void nabaviMetaPodatkeXmlPoJmbg(@PathVariable String jmbg) throws IOException {
-		saglasnostService.nabaviMetaPodatkeXmlPoJmbg(jmbg);
+	@GetMapping(value = "/nabaviMetaPodatkeXmlPoId/{id}")
+	public void nabaviMetaPodatkeXmlPoJmbg(@PathVariable String id) throws IOException {
+		saglasnostService.nabaviMetaPodatkeXmlPoId(id);
 	}
 }

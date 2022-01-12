@@ -34,16 +34,13 @@ public class SaglasnostServiceImpl implements SaglasnostService {
 		Saglasnost validanObjekat = (Saglasnost) unmarshallerService.unmarshal(XML, 
 				ContextPutanjeKonstante.CONTEXT_PUTANJA_SAGLASNOST, XSDPutanjeKonstante.XSD_SAGLASNOST);
 		if (validanObjekat != null) {
-			String pronadjenaSaglasnostXml = saglasnostRepository.pronadjiSaglasnostXmlPoJmbg(validanObjekat.getPacijentSaglasnost().getLicneInformacije().getIdFromDrzavljanstvo(), false);
-			if (pronadjenaSaglasnostXml != null) {
-				throw new SaglasnostPostojiException(validanObjekat.getPacijentSaglasnost().getLicneInformacije().getDrzavljanstvo().getRepublikaSrbija().getJMBG().getValue());
-			}
 			saglasnostRepository.saveSaglasnostObjekat(validanObjekat);
-		
+			
+			int indx = saglasnostRepository.getNextDocumentIndex(validanObjekat.getPacijentSaglasnost().getLicneInformacije().getIdFromDrzavljanstvo());
 			
 			try {
 				rdfService.save(XML, "saglasnost_" + 
-						validanObjekat.getPacijentSaglasnost().getLicneInformacije().getDrzavljanstvo().getRepublikaSrbija().getJMBG().getValue(), 
+						validanObjekat.getPacijentSaglasnost().getLicneInformacije().getIdFromDrzavljanstvo() + '_' + Integer.toString(indx), 
 						NamedGraphURIKonstante.SAGLASNOST_NAMED_GRAPH);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -58,17 +55,18 @@ public class SaglasnostServiceImpl implements SaglasnostService {
 	}
 
 	@Override
-	public Saglasnost pronadjiSaglasnostPoJmbg(String jmbg) throws Exception {
-		Saglasnost saglasnost = saglasnostRepository.pronadjiSaglasnostPoJmbg(jmbg);
+	public Saglasnost pronadjiSaglasnostPoJmbgIliBrPasosa(String id) throws Exception {
+		
+		Saglasnost saglasnost = saglasnostRepository.pronadjiSaglasnostPoJmbgIliBrPasosa(id);
 		if (saglasnost == null) {
-			throw new SaglasnostNijePronadjenaException(jmbg);
+			throw new SaglasnostNijePronadjenaException(id);
 		}
 		return saglasnost;
 	}
 	
 	@Override
-	public void nabaviMetaPodatkeXmlPoJmbg(String jmbg) throws IOException {
-		String query = String.format("?s ?p ?o. ?s <http://www.ftn.uns.ac.rs/rdf/saglasnost/predicate/jmbg> \"%s\"^^<http://www.w3.org/2001/XMLSchemastring>", jmbg);
-		rdfService.getMetadataXML(query, "saglasnost_" + jmbg, NamedGraphURIKonstante.SAGLASNOST_NAMED_GRAPH);
+	public void nabaviMetaPodatkeXmlPoId(String id) throws IOException {
+		String query = String.format("?s ?p ?o. ?s <http://www.ftn.uns.ac.rs/rdf/saglasnost/predicate/jmbg> \"%s\"^^<http://www.w3.org/2001/XMLSchemastring>", id);
+		rdfService.getMetadataXML(query, "saglasnost_" + id, NamedGraphURIKonstante.SAGLASNOST_NAMED_GRAPH);
 	}
 }
