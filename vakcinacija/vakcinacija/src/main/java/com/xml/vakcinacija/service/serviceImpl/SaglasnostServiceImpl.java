@@ -6,8 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.xml.vakcinacija.exception.SaglasnostNijePronadjenaException;
-import com.xml.vakcinacija.exception.SaglasnostPostojiException;
 import com.xml.vakcinacija.model.saglasnost.Saglasnost;
 import com.xml.vakcinacija.repository.SaglasnostRepository;
 import com.xml.vakcinacija.service.RDFService;
@@ -34,9 +32,7 @@ public class SaglasnostServiceImpl implements SaglasnostService {
 		Saglasnost validanObjekat = (Saglasnost) unmarshallerService.unmarshal(XML, 
 				ContextPutanjeKonstante.CONTEXT_PUTANJA_SAGLASNOST, XSDPutanjeKonstante.XSD_SAGLASNOST);
 		if (validanObjekat != null) {
-			saglasnostRepository.saveSaglasnostObjekat(validanObjekat);
-			
-			int indx = saglasnostRepository.getNextDocumentIndex(validanObjekat.getPacijentSaglasnost().getLicneInformacije().getIdFromDrzavljanstvo());
+			int indx = saglasnostRepository.saveSaglasnostObjekat(validanObjekat);
 			
 			try {
 				rdfService.save(XML, "saglasnost_" + 
@@ -55,18 +51,13 @@ public class SaglasnostServiceImpl implements SaglasnostService {
 	}
 
 	@Override
-	public Saglasnost pronadjiSaglasnostPoJmbgIliBrPasosa(String id) throws Exception {
-		
-		Saglasnost saglasnost = saglasnostRepository.pronadjiSaglasnostPoJmbgIliBrPasosa(id);
-		if (saglasnost == null) {
-			throw new SaglasnostNijePronadjenaException(id);
-		}
-		return saglasnost;
+	public List<Saglasnost> pronadjiSaglasnostPoJmbgIliBrPasosa(String id) throws Exception {
+		return saglasnostRepository.pronadjiSaglasnostPoJmbgIliBrPasosa(id);
 	}
 	
 	@Override
 	public void nabaviMetaPodatkeXmlPoId(String id) throws IOException {
-		String query = String.format("?s ?p ?o. ?s <http://www.ftn.uns.ac.rs/rdf/saglasnost/predicate/jmbg> \"%s\"^^<http://www.w3.org/2001/XMLSchemastring>", id);
+		String query = String.format("?s ?p ?o. FILTER (?s = <http://www.ftn.uns.ac.rs/rdf/saglasnost/%s>)", id);
 		rdfService.getMetadataXML(query, "saglasnost_" + id, NamedGraphURIKonstante.SAGLASNOST_NAMED_GRAPH);
 	}
 }

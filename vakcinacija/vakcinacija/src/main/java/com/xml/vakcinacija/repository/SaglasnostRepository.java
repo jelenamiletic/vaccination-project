@@ -34,37 +34,34 @@ public class SaglasnostRepository {
 		ExistStore.save(XMLCollectionIdKonstante.COLLECTION_ID_SAGLASNOST, id, xml);
     }
 	
-	public void saveSaglasnostObjekat(Saglasnost saglasnost) throws Exception {
+	public int saveSaglasnostObjekat(Saglasnost saglasnost) throws Exception {
 		String xml = marshallerService.marshall(saglasnost, ContextPutanjeKonstante.CONTEXT_PUTANJA_SAGLASNOST, 
 				XSDPutanjeKonstante.XSD_SAGLASNOST);
 		String id = saglasnost.getPacijentSaglasnost().getLicneInformacije().getIdFromDrzavljanstvo();
 		int index = getNextDocumentIndex(id);
-		
 		ExistStore.save(XMLCollectionIdKonstante.COLLECTION_ID_SAGLASNOST, id + '_' + Integer.toString(index), xml);
+		return index;
 	}
 	
 	public int getNextDocumentIndex(String id) {
 	        int index = 1;
 	        String fullId = id + "_" + index;
-	        String resourceContent = "";
-        	boolean jmbg = false;
-    		if(id.length() == 13)
-    		{
-    			jmbg = true;
-    		}
+	        String doc = "";
     		
 	        try {
-	            resourceContent = pronadjiSaglasnostXmlPoFullId(fullId, jmbg);
+	            doc = ExistRetrieve.nabaviResurs(XMLCollectionIdKonstante.COLLECTION_ID_SAGLASNOST, fullId);
 
-	        } catch (Exception ignored) {
+	        } catch (Exception e) {
+	        	e.printStackTrace();
 	        }
-	        while (!resourceContent.equals("")) {
+	        while (!doc.equals("")) {
 	            index++;
 	            fullId = id + "_" + index;
 	            try {
-	            	resourceContent = pronadjiSaglasnostXmlPoFullId(fullId, jmbg);
+	            	doc = ExistRetrieve.nabaviResurs(XMLCollectionIdKonstante.COLLECTION_ID_SAGLASNOST, fullId);
 
-	            } catch (Exception ignored) {
+	            } catch (Exception e) {
+	            	e.printStackTrace();
 	            }
 	        }
 	        return index;
@@ -98,7 +95,7 @@ public class SaglasnostRepository {
         return listaSaglasnosti;
 	}
 	
-	public String pronadjiSaglasnostXmlPoFullId(String id, boolean jmbg) throws Exception {
+	public List<Saglasnost> pronadjiSaglasnostXmlPoFullId(String id, boolean jmbg) throws Exception {
         String xPathIzraz;
         
         if (jmbg) 
@@ -120,11 +117,12 @@ public class SaglasnostRepository {
 
         ResourceIterator i = rezultat.getIterator();
         XMLResource res = null;
-        String saglasnost = null;
+        List<Saglasnost> listaSaglasnosti = new ArrayList<Saglasnost>();
 
-        if (i.hasMoreResources()) {
+        while (i.hasMoreResources()) {
             res = (XMLResource) i.nextResource();
-            saglasnost = res.getContent().toString();
+            listaSaglasnosti.add((Saglasnost) unmarshallerService.unmarshal(res.getContent().toString(), 
+            		ContextPutanjeKonstante.CONTEXT_PUTANJA_SAGLASNOST, XSDPutanjeKonstante.XSD_SAGLASNOST));
         }
 
         if (res != null) {
@@ -135,26 +133,16 @@ public class SaglasnostRepository {
             }
         }
 
-        return saglasnost;
+        return listaSaglasnosti;
     }
 	
-	public Saglasnost pronadjiSaglasnostPoJmbgIliBrPasosa(String id) throws Exception {
-		
-		int indx = getNextDocumentIndex(id) - 1;
-		
+	public List<Saglasnost> pronadjiSaglasnostPoJmbgIliBrPasosa(String id) throws Exception {
 		boolean jmbg = false;
 		
 		if(id.length() == 13)
 		{
 			jmbg = true;
 		}
-		
-		String xml = this.pronadjiSaglasnostXmlPoFullId(id + "_" + Integer.toString(indx), jmbg);
-		if (xml != null) {
-			return (Saglasnost) unmarshallerService.unmarshal(xml, 
-				ContextPutanjeKonstante.CONTEXT_PUTANJA_SAGLASNOST, 
-				XSDPutanjeKonstante.XSD_SAGLASNOST);
-		}
-		return null;
+		return this.pronadjiSaglasnostXmlPoFullId(id, jmbg);
 	}
 }

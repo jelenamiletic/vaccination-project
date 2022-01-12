@@ -62,4 +62,52 @@ public class ExistRetrieve {
         }
         return result;
 	}
+	
+	public static String nabaviResurs(String collectionId, String documentId) throws Exception {
+		AuthenticationUtilities.ConnectionProperties conn = AuthenticationUtilities.loadProperties();
+		
+		Collection col = null;
+        XMLResource res = null;
+        String document = "";
+        
+        System.out.println("\t- collection ID: " + collectionId);
+        
+    	System.out.println("[INFO] Loading driver class: " + conn.driver);
+        Class<?> cl = Class.forName(conn.driver);
+        
+        Database database = (Database) cl.getDeclaredConstructor().newInstance();
+        database.setProperty("create-database", "true");
+        
+        DatabaseManager.registerDatabase(database);
+        
+        try {
+        	col = DatabaseManager.getCollection(conn.uri + collectionId);
+        	col.setProperty("indent", "yes");
+        	res = (XMLResource) col.getResource(documentId + ".xml");
+        	
+        	if (res != null) {
+        		document = (String) res.getContent();
+        	}
+        	
+        } finally {
+            //don't forget to clean up!
+            
+            if(res != null) {
+                try { 
+                	((EXistResource)res).freeResources(); 
+                } catch (XMLDBException xe) {
+                	xe.printStackTrace();
+                }
+            }
+            
+            if(col != null) {
+                try { 
+                	col.close(); 
+                } catch (XMLDBException xe) {
+                	xe.printStackTrace();
+                }
+            }
+        }
+        return document;
+	}
 }

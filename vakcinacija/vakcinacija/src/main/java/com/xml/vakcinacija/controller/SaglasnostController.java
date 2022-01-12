@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.xml.vakcinacija.model.saglasnost.ListaSaglasnosti;
-import com.xml.vakcinacija.model.saglasnost.Saglasnost;
 import com.xml.vakcinacija.service.SaglasnostService;
 
 @RestController
@@ -37,8 +36,10 @@ public class SaglasnostController {
 	}
 
 	@GetMapping(value = "/pronadjiSaglasnostPoJmbgIliBrPasosa/{id}", produces = MediaType.APPLICATION_XML_VALUE) 
-	public ResponseEntity<Saglasnost> pronadjiSaglasnostPoJmbg(@PathVariable String id) throws Exception {
-		return new ResponseEntity<>(saglasnostService.pronadjiSaglasnostPoJmbgIliBrPasosa(id), HttpStatus.OK);
+	public ResponseEntity<ListaSaglasnosti> pronadjiSaglasnostPoJmbg(@PathVariable String id) throws Exception {
+		ListaSaglasnosti lista = new ListaSaglasnosti();
+		lista.setSaglasnost(saglasnostService.pronadjiSaglasnostPoJmbgIliBrPasosa(id));
+		return new ResponseEntity<>(lista, HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/nabaviMetaPodatkeXmlPoId/{id}")

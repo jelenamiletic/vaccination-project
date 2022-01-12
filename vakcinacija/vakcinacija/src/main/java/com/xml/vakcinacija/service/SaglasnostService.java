@@ -3,7 +3,6 @@ package com.xml.vakcinacija.service;
 import java.io.IOException;
 import java.util.List;
 
-import com.xml.vakcinacija.model.interesovanje.Interesovanje;
 import com.xml.vakcinacija.model.saglasnost.Saglasnost;
 
 public interface SaglasnostService {
@@ -12,7 +11,7 @@ public interface SaglasnostService {
 	
 	List<Saglasnost> pronadjiSve() throws Exception;
 	
-	Saglasnost pronadjiSaglasnostPoJmbgIliBrPasosa(String id) throws Exception;
+	List<Saglasnost> pronadjiSaglasnostPoJmbgIliBrPasosa(String id) throws Exception;
 
 	void nabaviMetaPodatkeXmlPoId(String id) throws IOException;
 }
