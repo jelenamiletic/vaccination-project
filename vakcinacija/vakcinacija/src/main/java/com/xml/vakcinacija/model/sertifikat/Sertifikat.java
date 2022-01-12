@@ -4,7 +4,6 @@ import com.xml.vakcinacija.model.Pol;
 import com.xml.vakcinacija.model.Proizvodjac;
 import com.xml.vakcinacija.model.PunoIme;
 import com.xml.vakcinacija.model.RezultatTesta;
-import com.xml.vakcinacija.model.potvrda.Potvrda;
 
 import javax.xml.bind.annotation.*;
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -27,7 +26,7 @@ public class Sertifikat {
     protected String BrojSertifikata;
 
     @XmlElement(required = true)
-    @XmlSchemaType(name = "date")
+    @XmlSchemaType(name = "dateTime")
     protected XMLGregorianCalendar DatumVremeIzdavanja;
 
     @XmlElement(required = true)
@@ -380,11 +379,11 @@ public class Sertifikat {
         protected String ProizvodjacTesta;
 
         @XmlElement(required = true)
-        @XmlSchemaType(name = "date")
+        @XmlSchemaType(name = "dateTime")
         protected XMLGregorianCalendar DatumVremeUzorkovanja;
 
         @XmlElement(required = true)
-        @XmlSchemaType(name = "date")
+        @XmlSchemaType(name = "dateTime")
         protected XMLGregorianCalendar DatumVremeIzdavanjaRezultata;
 
         @XmlElement(required = true)
