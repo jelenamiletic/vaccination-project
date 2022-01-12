@@ -82,15 +82,15 @@
                             </xs:element>
                             <xs:element name="Laboratorija" type="xs:string"/>
                         </xs:sequence>
-                        <xs:attribute name="about" type="xs:anyURI"/>
-    					<xs:attribute name="vocab" type="xs:string"/>
                     </xs:complexType>
                 </xs:element>
             </xs:sequence>
+            <xs:attribute name="about" type="xs:anyURI"/>
+            <xs:attribute name="vocab" type="xs:string"/>
         </xs:complexType>
         <xs:key name="BrojDozeKljuc">
-            <xs:selector xpath="po:Vakcinacija"/>
-            <xs:field xpath="po:BrojDoze"/>
+            <xs:selector xpath="se:Vakcinacija"/>
+            <xs:field xpath="se:BrojDoze"/>
         </xs:key>
     </xs:element>
 </xs:schema>

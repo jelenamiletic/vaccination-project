@@ -27,7 +27,7 @@ public class Sertifikat {
     protected String BrojSertifikata;
 
     @XmlElement(required = true)
-    @XmlSchemaType(name = "date")
+    @XmlSchemaType(name = "dateTime")
     protected XMLGregorianCalendar DatumVremeIzdavanja;
 
     @XmlElement(required = true)
@@ -201,8 +201,6 @@ public class Sertifikat {
             protected String value;
             @XmlAttribute(name = "property")
             protected String property;
-            @XmlAttribute(name = "datatype")
-            protected String datatype;
 
             public String getValue() {
                 return value;
@@ -222,14 +220,6 @@ public class Sertifikat {
 
             public void setProperty(String property) {
                 this.property = property;
-            }
-
-            public String getDatatype() {
-                return datatype;
-            }
-
-            public void setDatatype(String datatype) {
-                this.datatype = datatype;
             }
         }
 
@@ -380,11 +370,11 @@ public class Sertifikat {
         protected String ProizvodjacTesta;
 
         @XmlElement(required = true)
-        @XmlSchemaType(name = "date")
+        @XmlSchemaType(name = "dateTime")
         protected XMLGregorianCalendar DatumVremeUzorkovanja;
 
         @XmlElement(required = true)
-        @XmlSchemaType(name = "date")
+        @XmlSchemaType(name = "dateTime")
         protected XMLGregorianCalendar DatumVremeIzdavanjaRezultata;
 
         @XmlElement(required = true)
