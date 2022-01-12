@@ -2,8 +2,6 @@ package com.xml.vakcinacija.controller;
 
 import com.xml.vakcinacija.model.sertifikat.ListaSertifikata;
 import com.xml.vakcinacija.model.sertifikat.Sertifikat;
-import com.xml.vakcinacija.model.zahtev.ListaZahteva;
-import com.xml.vakcinacija.model.zahtev.Zahtev;
 import com.xml.vakcinacija.service.SertifikatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

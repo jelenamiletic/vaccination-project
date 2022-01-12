@@ -1,8 +1,6 @@
 package com.xml.vakcinacija.service.serviceImpl;
 
-import com.xml.vakcinacija.exception.PotvrdaPostojiException;
 import com.xml.vakcinacija.exception.SertifikatNijePronadjenException;
-import com.xml.vakcinacija.model.potvrda.Potvrda;
 import com.xml.vakcinacija.model.sertifikat.Sertifikat;
 import com.xml.vakcinacija.repository.SertifikatRepository;
 import com.xml.vakcinacija.service.RDFService;

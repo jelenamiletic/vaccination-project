@@ -1,7 +1,5 @@
 package com.xml.vakcinacija.model.sertifikat;
 
-import com.xml.vakcinacija.model.zahtev.Zahtev;
-
 import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +20,7 @@ public class ListaSertifikata {
         return this.Sertifikat;
     }
 
-    public void setSertifikat(List<Sertifikat> sertifikat) {
+    public void setSertifikat(List<Sertifikat> Sertifikat) {
         this.Sertifikat = Sertifikat;
     }
 
