@@ -34,16 +34,16 @@ public class PotvrdaServiceImpl implements PotvrdaService{
 		Potvrda validanObjekat = (Potvrda) unmarshallerService.unmarshal(PotvrdaXML, 
 				ContextPutanjeKonstante.CONTEXT_PUTANJA_POTVRDA, XSDPutanjeKonstante.XSD_POTVRDA);
 		if (validanObjekat != null) {
-			String pronadjenPotvrdaXml = potvrdaRepository.pronadjiPotvrdaXmlPoJmbg(validanObjekat.getLicneInformacije().getJMBG().getValue(), 
-					validanObjekat.getInformacijeOVakcinama().get(validanObjekat.getInformacijeOVakcinama().size() - 1).getBrojDoze());
+			int brojDoze = validanObjekat.getInformacijeOVakcinama().get(validanObjekat.getInformacijeOVakcinama().size() - 1).getBrojDoze();
+			String pronadjenPotvrdaXml = potvrdaRepository.pronadjiPotvrdaXmlPoJmbg(validanObjekat.getLicneInformacije().getJMBG().getValue(), brojDoze);
 			if (pronadjenPotvrdaXml != null) {
 				throw new PotvrdaPostojiException(validanObjekat.getLicneInformacije().getJMBG().getValue());
 			}
 			potvrdaRepository.savePotvrdaObjekat(validanObjekat);
 			
 			try {
-				rdfService.save(PotvrdaXML, "potvrda_" + validanObjekat.getLicneInformacije().getJMBG().getValue(), 
-						NamedGraphURIKonstante.POTVRDA_NAMED_GRAPH);
+				rdfService.save(PotvrdaXML, "potvrda_" + validanObjekat.getLicneInformacije().getJMBG().getValue() 
+						+ "_" + brojDoze, NamedGraphURIKonstante.POTVRDA_NAMED_GRAPH);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -67,6 +67,6 @@ public class PotvrdaServiceImpl implements PotvrdaService{
 	@Override
 	public void nabaviMetaPodatkeXmlPoJmbg(String jmbg, int brojDoze) throws IOException {
 		String query = String.format("?s ?p ?o. FILTER (?s = <http://www.ftn.uns.ac.rs/rdf/potvrda/%s_%d>)", jmbg, brojDoze);
-		rdfService.getMetadataXML(query, "potvrda_" + jmbg, NamedGraphURIKonstante.POTVRDA_NAMED_GRAPH);
+		rdfService.getMetadataXML(query, "potvrda_" + jmbg + "_" + brojDoze, NamedGraphURIKonstante.POTVRDA_NAMED_GRAPH);
 	}
 }

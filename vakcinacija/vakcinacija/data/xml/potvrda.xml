@@ -7,7 +7,7 @@
     xmlns:addr="http://www.ftn.uns.ac.rs/rdf/potvrda"
     xmlns:pred="http://www.ftn.uns.ac.rs/rdf/potvrda/predicate/"
     vocab="http://www.ftn.uns.ac.rs/rdf/potvrda/" 
-    about="http://www.ftn.uns.ac.rs/rdf/potvrda/3553355353532">
+    about="http://www.ftn.uns.ac.rs/rdf/potvrda/3553355353532_1">
     <po:Sifra>VAX-123</po:Sifra>
     <po:LicneInformacije>
         <po:PunoIme>
@@ -16,29 +16,15 @@
         </po:PunoIme>
         <po:DatumRodjenja>1990-08-01</po:DatumRodjenja>
         <po:Pol>Muski</po:Pol>
-        <po:JMBG>3553355353532</po:JMBG>
+        <po:JMBG property = "pred:jmbg" datatype = "xs:string">3553355353532</po:JMBG>
     </po:LicneInformacije>
     <po:InformacijeOVakcinama>
         <po:BrojDoze>1</po:BrojDoze>
         <po:DatumDavanja>2021-02-02</po:DatumDavanja>
         <po:Serija>PFI-55609</po:Serija>
     </po:InformacijeOVakcinama>
-    <po:InformacijeOVakcinama>
-        <po:BrojDoze>2</po:BrojDoze>
-        <po:DatumDavanja>2021-03-02</po:DatumDavanja>
-        <po:Serija>PFI-66609</po:Serija>
-    </po:InformacijeOVakcinama>
-    <po:InformacijeOVakcinama>
-        <po:BrojDoze>3</po:BrojDoze>
-        <po:DatumDavanja>2021-10-02</po:DatumDavanja>
-        <po:Serija>SINO-76609</po:Serija>
-    </po:InformacijeOVakcinama>
     <po:ZdravstvenaUstanova>DOM ZDRAVLJA NOVI SAD</po:ZdravstvenaUstanova>
     <po:VakcinaPrveDveDoze property = "pred:VakcinaPrveDveDoze" datatype = "xs:string">Pfizer-BioNTech</po:VakcinaPrveDveDoze>
-    <po:Vakcine>
-        <po:BrojDoze>3</po:BrojDoze>
-        <po:Vakcina property = "pred:Vakcina" datatype = "xs:string">Sinopharm</po:Vakcina>
-    </po:Vakcine>
     <po:DatumIzdavanja>2021-05-05</po:DatumIzdavanja>
     <po:QR>http://www.ftn.uns.ac.rs/</po:QR>
 </po:Potvrda>

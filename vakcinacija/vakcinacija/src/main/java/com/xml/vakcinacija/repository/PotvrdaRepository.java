@@ -70,7 +70,7 @@ public class PotvrdaRepository {
 	}
 	
 	public String pronadjiPotvrdaXmlPoJmbg(String jmbg, int brojDoze) throws Exception {
-        String xPathIzraz = String.format("/Potvrda[LicneInformacije/JMBG = '%s'] and /Potvrda[InformacijeOVakcinama[last()]/BrojDoze = '%d']" , jmbg, brojDoze);
+        String xPathIzraz = String.format("/Potvrda[LicneInformacije/JMBG = '%s'and count(InformacijeOVakcinama/BrojDoze) = %d]" , jmbg, brojDoze);
         ResourceSet rezultat = ExistRetrieve.izvrsiXPathIzraz(XMLCollectionIdKonstante.COLLECTION_ID_POTVRDA, 
         		xPathIzraz, XMLNamespaceKonstante.NAMESPACE_POTVRDA);
         if (rezultat == null)
