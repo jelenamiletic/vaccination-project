@@ -27,6 +27,7 @@ public class Sertifikat {
     protected String BrojSertifikata;
 
     @XmlElement(required = true)
+    @XmlSchemaType(name = "date")
     protected XMLGregorianCalendar DatumVremeIzdavanja;
 
     @XmlElement(required = true)
@@ -40,6 +41,13 @@ public class Sertifikat {
 
     @XmlElement()
     protected List<Sertifikat.Test> Test;
+
+    @XmlAttribute(name = "about")
+    @XmlSchemaType(name = "anyURI")
+    protected String about;
+
+    @XmlAttribute(name = "vocab")
+    protected String vocab;
 
     public String getBrojSertifikata() {
         return BrojSertifikata;
@@ -98,6 +106,23 @@ public class Sertifikat {
         Test = test;
     }
 
+    public String getAbout() {
+        return about;
+    }
+
+    public void setAbout(String about) {
+        this.about = about;
+    }
+
+    public String getVocab() {
+        return vocab;
+    }
+
+    public void setVocab(String vocab) {
+        this.vocab = vocab;
+    }
+
+
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "", propOrder = {
             "PunoIme",
@@ -118,10 +143,10 @@ public class Sertifikat {
         protected com.xml.vakcinacija.model.Pol Pol;
 
         @XmlElement(required = true)
-        protected String JMBG;
+        protected JMBG JMBG;
 
         @XmlElement(required = true)
-        protected String BrojPasosa;
+        protected BrojPasosa BrojPasosa;
 
         public PunoIme getPunoIme() {
             if (PunoIme == null) {
@@ -150,21 +175,107 @@ public class Sertifikat {
             Pol = pol;
         }
 
-        public String getJMBG() {
+        public JMBG getJMBG() {
             return JMBG;
         }
 
-        public void setJMBG(String jMBG) {
+        public void setJMBG(JMBG jMBG) {
             JMBG = jMBG;
         }
 
-        public String getBrojPasosa() {
+        public BrojPasosa getBrojPasosa() {
             return BrojPasosa;
         }
 
-        public void setBrojPasosa(String brojPasosa) {
+        public void setBrojPasosa(BrojPasosa brojPasosa) {
             BrojPasosa = brojPasosa;
         }
+
+        @XmlAccessorType(XmlAccessType.FIELD)
+        @XmlType(name = "", propOrder = {
+                "value"
+        })
+        public static class JMBG {
+
+            @XmlValue
+            protected String value;
+            @XmlAttribute(name = "property")
+            protected String property;
+            @XmlAttribute(name = "datatype")
+            protected String datatype;
+
+            public String getValue() {
+                return value;
+            }
+
+            public void setValue(String value) {
+                this.value = value;
+            }
+
+            public String getProperty() {
+                if (property == null) {
+                    return "pred:jmbg";
+                } else {
+                    return property;
+                }
+            }
+
+            public void setProperty(String property) {
+                this.property = property;
+            }
+
+            public String getDatatype() {
+                return datatype;
+            }
+
+            public void setDatatype(String datatype) {
+                this.datatype = datatype;
+            }
+        }
+
+        @XmlAccessorType(XmlAccessType.FIELD)
+        @XmlType(name = "", propOrder = {
+                "value"
+        })
+        public static class BrojPasosa {
+
+            @XmlValue
+            protected String value;
+            @XmlAttribute(name = "property")
+            protected String property;
+            @XmlAttribute(name = "datatype")
+            protected String datatype;
+
+            public String getValue() {
+                return value;
+            }
+
+            public void setValue(String value) {
+                this.value = value;
+            }
+
+            public String getProperty() {
+                if (property == null) {
+                    return "pred:brojPasosa";
+                } else {
+                    return property;
+                }
+            }
+
+            public void setProperty(String value) {
+                this.property = value;
+            }
+
+            public String getDatatype() {
+                return datatype;
+            }
+
+            public void setDatatype(String value) {
+                this.datatype = value;
+            }
+
+        }
+
     }
 
     @XmlAccessorType(XmlAccessType.FIELD)
@@ -185,6 +296,7 @@ public class Sertifikat {
         protected Proizvodjac TipVakcine;
 
         @XmlElement(required = true)
+        @XmlSchemaType(name = "date")
         protected XMLGregorianCalendar DatumDavanja;
 
         @XmlElement(required = true)
@@ -268,9 +380,11 @@ public class Sertifikat {
         protected String ProizvodjacTesta;
 
         @XmlElement(required = true)
+        @XmlSchemaType(name = "date")
         protected XMLGregorianCalendar DatumVremeUzorkovanja;
 
         @XmlElement(required = true)
+        @XmlSchemaType(name = "date")
         protected XMLGregorianCalendar DatumVremeIzdavanjaRezultata;
 
         @XmlElement(required = true)

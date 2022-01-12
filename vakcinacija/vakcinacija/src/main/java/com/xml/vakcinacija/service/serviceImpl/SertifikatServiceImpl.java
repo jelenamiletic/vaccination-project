@@ -33,7 +33,15 @@ public class SertifikatServiceImpl implements SertifikatService {
         Sertifikat validanObjekat = (Sertifikat) unmarshallerService.unmarshal(SertifikatXML,
                 ContextPutanjeKonstante.CONTEXT_PUTANJA_SERTIFIKAT, XSDPutanjeKonstante.XSD_SERTIFIKAT);
         if (validanObjekat != null) {
+            String pronadjenSertifikatXml = sertifikatRepository.pronadjiSertifikatXmlPoJmbg(validanObjekat.getLicneInformacije().getJMBG().getValue());
             sertifikatRepository.saveSertifikatObjekat(validanObjekat);
+
+            try {
+                rdfService.save(SertifikatXML, "sertifikat_" + validanObjekat.getLicneInformacije().getJMBG().getValue()
+                        , NamedGraphURIKonstante.POTVRDA_NAMED_GRAPH);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -53,7 +61,7 @@ public class SertifikatServiceImpl implements SertifikatService {
 
     @Override
     public void nabaviMetaPodatkeXmlPoJmbg(String jmbg) throws IOException {
-        String query = String.format("?s ?p ?o. ?s <http://www.ftn.uns.ac.rs/rdf/sertifikat/predicate/jmbg> \"%s\"^^<http://www.w3.org/2001/XMLSchemastring>", jmbg);
+        String query = String.format("?s ?p ?o. ?s FILTER (?s = <http://www.ftn.uns.ac.rs/rdf/sertifikat/%s_%d>)", jmbg);
         rdfService.getMetadataXML(query, "sertifikat_" + jmbg, NamedGraphURIKonstante.SERTIFIKAT_NAMED_GRAPH);
     }
 }

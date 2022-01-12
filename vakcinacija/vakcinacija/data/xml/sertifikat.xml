@@ -1,38 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<po:Sertifikat
+<se:Sertifikat
 	xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	xmlns:po="http:///www.ftn.uns.ac.rs/vakcinacija/sertifikat"
-    xmlns:ct="http:///www.ftn.uns.ac.rs/vakcinacija/commonTypes" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-    xsi:schemaLocation="http:///www.ftn.uns.ac.rs/vakcinacija/sertifikat ../xsd/sertifikat.xsd">
-    <po:BrojSertifikata>SERT-3848837820</po:BrojSertifikata>
-    <po:DatumVremeIzdavanja>2021-11-26T21:32:52</po:DatumVremeIzdavanja>
-    <po:QR>http://www.ftn.uns.ac.rs/</po:QR>
-    <po:LicneInformacije>
-        <po:PunoIme>
+	xmlns:se="http:///www.ftn.uns.ac.rs/vakcinacija/sertifikat" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ct="http:///www.ftn.uns.ac.rs/vakcinacija/commonTypes"
+    xsi:schemaLocation="http:///www.ftn.uns.ac.rs/vakcinacija/sertifikat  ../xsd/sertifikat.xsd"
+    xmlns:addr="http://www.ftn.uns.ac.rs/rdf/sertifikat"
+    xmlns:pred="http://www.ftn.uns.ac.rs/rdf/sertifikat/predicate/"
+    vocab="http://www.ftn.uns.ac.rs/rdf/sertifikat/"
+    about="http://www.ftn.uns.ac.rs/rdf/sertifikat/3344324343448"
+>
+    <se:BrojSertifikata>SERT-3848837820</se:BrojSertifikata>
+    <se:DatumVremeIzdavanja>2021-11-26T21:32:52</se:DatumVremeIzdavanja>
+    <se:QR>http://www.ftn.uns.ac.rs/</se:QR>
+    <se:LicneInformacije>
+        <se:PunoIme>
             <ct:Ime>Petar</ct:Ime>
             <ct:Prezime>Markovic</ct:Prezime>
-        </po:PunoIme>
-        <po:DatumRodjenja>1990-08-01</po:DatumRodjenja>
-        <po:Pol>Muski</po:Pol>
-        <po:JMBG>3553355353532</po:JMBG>
-        <po:BrojPasosa>040503921</po:BrojPasosa>
-    </po:LicneInformacije>
-    <po:Vakcinacija>
-        <po:BrojDoze>1</po:BrojDoze>
-        <po:TipVakcine>Pfizer-BioNTech</po:TipVakcine>
-        <po:DatumDavanja>2021-08-02</po:DatumDavanja>
-        <po:Proizvodjac>BIONTECH MANUFACTURING GMBH</po:Proizvodjac>
-        <po:Serija>PFI-55609</po:Serija>
-        <po:ZdravstvenaUstanova>DOM ZDRAVLJA NOVI SAD</po:ZdravstvenaUstanova>
-    </po:Vakcinacija>
+        </se:PunoIme>
+        <se:DatumRodjenja>1990-08-01</se:DatumRodjenja>
+        <se:Pol>Muski</se:Pol>
+        <se:JMBG property = "pred:jmbg" datatype = "xs:string">3553355353532</se:JMBG>
+        <se:BrojPasosa property = "pred:brojPasosa" datatype = "xs:string">040503921</se:BrojPasosa>
+    </se:LicneInformacije>
+    <se:Vakcinacija>
+        <se:BrojDoze>1</se:BrojDoze>
+        <se:TipVakcine property = "pred:tipVakcine" datatype = "xs:string">Pfizer-BioNTech</se:TipVakcine>
+        <se:DatumDavanja>2021-08-02</se:DatumDavanja>
+        <se:Proizvodjac>BIONTECH MANUFACTURING GMBH</se:Proizvodjac>
+        <se:Serija>PFI-55609</se:Serija>
+        <se:ZdravstvenaUstanova>DOM ZDRAVLJA NOVI SAD</se:ZdravstvenaUstanova>
+    </se:Vakcinacija>
     
-    <po:Test>
-        <po:ImeTesta>SARS-CoV-2 RT</po:ImeTesta>
-        <po:VrstaUzorka>Krv</po:VrstaUzorka>
-        <po:ProizvodjacTesta>BIONTECH MANUFACTURING GMBH</po:ProizvodjacTesta>
-        <po:DatumVremeUzorkovanja>2021-11-26T21:32:52</po:DatumVremeUzorkovanja>
-        <po:DatumVremeIzdavanjaRezultata>2021-11-26T21:32:52</po:DatumVremeIzdavanjaRezultata>
-        <po:Rezultat>Negativan</po:Rezultat>
-        <po:Laboratorija>Dom Zdravlja Zvezdara</po:Laboratorija>
-    </po:Test>  
-</po:Sertifikat>
+    <se:Test>
+        <se:ImeTesta>SARS-CoV-2 RT</se:ImeTesta>
+        <se:VrstaUzorka>Krv</se:VrstaUzorka>
+        <se:ProizvodjacTesta>BIONTECH MANUFACTURING GMBH</se:ProizvodjacTesta>
+        <se:DatumVremeUzorkovanja>2021-11-26T21:32:52</se:DatumVremeUzorkovanja>
+        <se:DatumVremeIzdavanjaRezultata>2021-11-26T21:32:52</se:DatumVremeIzdavanjaRezultata>
+        <se:Rezultat property = "pred:rezultat" datatype = "xs:string">Negativan</se:Rezultat>
+        <se:Laboratorija>Dom Zdravlja Zvezdara</se:Laboratorija>
+    </se:Test>  
+</se:Sertifikat>

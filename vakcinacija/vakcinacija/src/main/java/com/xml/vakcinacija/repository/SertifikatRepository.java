@@ -35,7 +35,7 @@ public class SertifikatRepository {
     public void saveSertifikatObjekat(Sertifikat sertifikat) throws Exception {
         String xml = marshallerService.marshall(sertifikat, ContextPutanjeKonstante.CONTEXT_PUTANJA_SERTIFIKAT,
                 XSDPutanjeKonstante.XSD_SERTIFIKAT);
-        ExistStore.save(XMLCollectionIdKonstante.COLLECTION_ID_SERTIFIKAT, sertifikat.getLicneInformacije().getJMBG(), xml);
+        ExistStore.save(XMLCollectionIdKonstante.COLLECTION_ID_SERTIFIKAT, sertifikat.getLicneInformacije().getJMBG().getValue(), xml);
     }
 
     public List<Sertifikat> pronadjiSve() throws Exception {
