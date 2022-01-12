@@ -1,9 +1,7 @@
 package com.xml.vakcinacija.repository;
 
-
 import com.xml.vakcinacija.exist.ExistRetrieve;
 import com.xml.vakcinacija.exist.ExistStore;
-import com.xml.vakcinacija.model.potvrda.Potvrda;
 import com.xml.vakcinacija.model.sertifikat.Sertifikat;
 import com.xml.vakcinacija.service.MarshallerService;
 import com.xml.vakcinacija.service.UnmarshallerService;
