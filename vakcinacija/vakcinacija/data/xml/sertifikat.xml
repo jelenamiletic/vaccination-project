@@ -7,8 +7,7 @@
     xmlns:addr="http://www.ftn.uns.ac.rs/rdf/sertifikat"
     xmlns:pred="http://www.ftn.uns.ac.rs/rdf/sertifikat/predicate/"
     vocab="http://www.ftn.uns.ac.rs/rdf/sertifikat/"
-    about="http://www.ftn.uns.ac.rs/rdf/sertifikat/3344324343448"
->
+    about="http://www.ftn.uns.ac.rs/rdf/sertifikat/3553355353532">
     <se:BrojSertifikata>SERT-3848837820</se:BrojSertifikata>
     <se:DatumVremeIzdavanja>2021-11-02T21:32:52</se:DatumVremeIzdavanja>
     <se:QR>http://www.ftn.uns.ac.rs/</se:QR>
@@ -30,7 +29,6 @@
         <se:Serija>PFI-55609</se:Serija>
         <se:ZdravstvenaUstanova>DOM ZDRAVLJA NOVI SAD</se:ZdravstvenaUstanova>
     </se:Vakcinacija>
-    
     <se:Test>
         <se:ImeTesta>SARS-CoV-2 RT</se:ImeTesta>
         <se:VrstaUzorka>Krv</se:VrstaUzorka>

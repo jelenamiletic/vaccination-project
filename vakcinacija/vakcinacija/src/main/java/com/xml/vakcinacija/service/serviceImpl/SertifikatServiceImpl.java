@@ -1,6 +1,7 @@
 package com.xml.vakcinacija.service.serviceImpl;
 
 import com.xml.vakcinacija.exception.SertifikatNijePronadjenException;
+import com.xml.vakcinacija.exception.SertifikatPostojiException;
 import com.xml.vakcinacija.model.sertifikat.Sertifikat;
 import com.xml.vakcinacija.repository.SertifikatRepository;
 import com.xml.vakcinacija.service.RDFService;
@@ -34,11 +35,14 @@ public class SertifikatServiceImpl implements SertifikatService {
                 ContextPutanjeKonstante.CONTEXT_PUTANJA_SERTIFIKAT, XSDPutanjeKonstante.XSD_SERTIFIKAT);
         if (validanObjekat != null) {
             String pronadjenSertifikatXml = sertifikatRepository.pronadjiSertifikatXmlPoJmbg(validanObjekat.getLicneInformacije().getJMBG().getValue());
+            if (pronadjenSertifikatXml != null) {
+            	throw new SertifikatPostojiException(validanObjekat.getLicneInformacije().getJMBG().getValue());
+            }
             sertifikatRepository.saveSertifikatObjekat(validanObjekat);
 
             try {
-                rdfService.save(SertifikatXML, "sertifikat_" + validanObjekat.getLicneInformacije().getJMBG().getValue()
-                        , NamedGraphURIKonstante.POTVRDA_NAMED_GRAPH);
+                rdfService.save(SertifikatXML, "sertifikat_" + validanObjekat.getLicneInformacije().getJMBG().getValue(), 
+                		NamedGraphURIKonstante.SERTIFIKAT_NAMED_GRAPH);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -61,7 +65,7 @@ public class SertifikatServiceImpl implements SertifikatService {
 
     @Override
     public void nabaviMetaPodatkeXmlPoJmbg(String jmbg) throws IOException {
-        String query = String.format("?s ?p ?o. ?s FILTER (?s = <http://www.ftn.uns.ac.rs/rdf/sertifikat/%s_%d>)", jmbg);
+        String query = String.format("?s ?p ?o. FILTER (?s = <http://www.ftn.uns.ac.rs/rdf/sertifikat/%s>)", jmbg);
         rdfService.getMetadataXML(query, "sertifikat_" + jmbg, NamedGraphURIKonstante.SERTIFIKAT_NAMED_GRAPH);
     }
 }

@@ -61,7 +61,6 @@
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
-
                 <xs:element name="Test">
                     <xs:complexType>
                         <xs:sequence maxOccurs="unbounded">

@@ -4,7 +4,6 @@ import com.xml.vakcinacija.model.Pol;
 import com.xml.vakcinacija.model.Proizvodjac;
 import com.xml.vakcinacija.model.PunoIme;
 import com.xml.vakcinacija.model.RezultatTesta;
-import com.xml.vakcinacija.model.potvrda.Potvrda;
 
 import javax.xml.bind.annotation.*;
 import javax.xml.datatype.XMLGregorianCalendar;
