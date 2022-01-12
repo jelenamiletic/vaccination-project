@@ -42,7 +42,7 @@ public class PotvrdaServiceImpl implements PotvrdaService{
 			potvrdaRepository.savePotvrdaObjekat(validanObjekat);
 			
 			try {
-				rdfService.save(PotvrdaXML, "potvrda_" + validanObjekat.getLicneInformacije().getJMBG().getValue() 
+				rdfService.save(PotvrdaXML, "potvrda_" + validanObjekat.getLicneInformacije().getJMBG().getValue()
 						+ "_" + brojDoze, NamedGraphURIKonstante.POTVRDA_NAMED_GRAPH);
 			} catch (Exception e) {
 				e.printStackTrace();

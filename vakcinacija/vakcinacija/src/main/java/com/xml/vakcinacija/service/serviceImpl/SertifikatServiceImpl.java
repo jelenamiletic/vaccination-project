@@ -38,12 +38,12 @@ public class SertifikatServiceImpl implements SertifikatService {
             String pronadjenSertifikatXml = sertifikatRepository.pronadjiSertifikatXmlPoJmbg(validanObjekat.getLicneInformacije().getJMBG().getValue());
             sertifikatRepository.saveSertifikatObjekat(validanObjekat);
 
-//            try {
-//                rdfService.save(SertifikatXML, "sertifikat_" + validanObjekat.getLicneInformacije().getJMBG().getValue()
-//                        , NamedGraphURIKonstante.POTVRDA_NAMED_GRAPH);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
+            try {
+                rdfService.save(SertifikatXML, "sertifikat_" + validanObjekat.getLicneInformacije().getJMBG().getValue()
+                        , NamedGraphURIKonstante.POTVRDA_NAMED_GRAPH);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 

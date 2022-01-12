@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <se:Sertifikat
 	xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	xmlns:se="http:///www.ftn.uns.ac.rs/vakcinacija/sertifikat"
-    xmlns:addr="http://www.ftn.uns.ac.rs/rdf/sertifikat"
-    xmlns:pred="http://www.ftn.uns.ac.rs/rdf/sertifikat/predicate/"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:se="http:///www.ftn.uns.ac.rs/vakcinacija/sertifikat" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ct="http:///www.ftn.uns.ac.rs/vakcinacija/commonTypes"
     xsi:schemaLocation="http:///www.ftn.uns.ac.rs/vakcinacija/sertifikat  ../xsd/sertifikat.xsd"
+    xmlns:addr="http://www.ftn.uns.ac.rs/rdf/sertifikat"
+    xmlns:pred="http://www.ftn.uns.ac.rs/rdf/sertifikat/predicate/"
     vocab="http://www.ftn.uns.ac.rs/rdf/sertifikat/"
     about="http://www.ftn.uns.ac.rs/rdf/sertifikat/3344324343448"
 >
