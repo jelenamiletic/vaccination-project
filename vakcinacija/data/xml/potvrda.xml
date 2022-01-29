@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<po:Potvrda
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:po="http:///www.ftn.uns.ac.rs/vakcinacija/potvrda"
+    xmlns:ct="http:///www.ftn.uns.ac.rs/vakcinacija/commonTypes" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http:///www.ftn.uns.ac.rs/vakcinacija/potvrda ../xsd/potvrda.xsd" 
+    xmlns:addr="http://www.ftn.uns.ac.rs/rdf/potvrda"
+    xmlns:pred="http://www.ftn.uns.ac.rs/rdf/potvrda/predicate/"
+    vocab="http://www.ftn.uns.ac.rs/rdf/potvrda/" 
+    about="http://www.ftn.uns.ac.rs/rdf/potvrda/3553355353532_1">
+    <po:Sifra>VAX-123</po:Sifra>
+    <po:LicneInformacije>
+        <po:PunoIme>
+            <ct:Ime>Petar</ct:Ime>
+            <ct:Prezime>Markovic</ct:Prezime>
+        </po:PunoIme>
+        <po:DatumRodjenja>1990-08-01</po:DatumRodjenja>
+        <po:Pol>Muski</po:Pol>
+        <po:JMBG property = "pred:jmbg" datatype = "xs:string">3553355353532</po:JMBG>
+    </po:LicneInformacije>
+    <po:InformacijeOVakcinama>
+        <po:BrojDoze>1</po:BrojDoze>
+        <po:DatumDavanja>2021-02-02</po:DatumDavanja>
+        <po:Serija>PFI-55609</po:Serija>
+    </po:InformacijeOVakcinama>
+    <po:ZdravstvenaUstanova>DOM ZDRAVLJA NOVI SAD</po:ZdravstvenaUstanova>
+    <po:VakcinaPrveDveDoze property = "pred:VakcinaPrveDveDoze" datatype = "xs:string">Pfizer-BioNTech</po:VakcinaPrveDveDoze>
+    <po:DatumIzdavanja>2021-05-05</po:DatumIzdavanja>
+    <po:QR>http://www.ftn.uns.ac.rs/</po:QR>
+</po:Potvrda>

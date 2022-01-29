@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<sparql xmlns="http://www.w3.org/2005/sparql-results#">
+  <head>
+    <variable name="s"/>
+    <variable name="p"/>
+    <variable name="o"/>
+  </head>
+  <results>
+    <result>
+      <binding name="s">
+        <uri>http://www.ftn.uns.ac.rs/rdf/izvestaj/2021-08-01/2021-09-01</uri>
+      </binding>
+      <binding name="p">
+        <uri>http://www.ftn.uns.ac.rs/rdf/izvestaj/predicate/brojIzdatih</uri>
+      </binding>
+      <binding name="o">
+        <literal datatype="http://www.w3.org/2001/XMLSchemapositiveInteger">428</literal>
+      </binding>
+    </result>
+    <result>
+      <binding name="s">
+        <uri>http://www.ftn.uns.ac.rs/rdf/izvestaj/2021-08-01/2021-09-01</uri>
+      </binding>
+      <binding name="p">
+        <uri>http://www.ftn.uns.ac.rs/rdf/izvestaj/predicate/brojPrimljenih</uri>
+      </binding>
+      <binding name="o">
+        <literal datatype="http://www.w3.org/2001/XMLSchemapositiveInteger">456</literal>
+      </binding>
+    </result>
+    <result>
+      <binding name="s">
+        <uri>http://www.ftn.uns.ac.rs/rdf/izvestaj/2021-08-01/2021-09-01</uri>
+      </binding>
+      <binding name="p">
+        <uri>http://www.ftn.uns.ac.rs/rdf/izvestaj/predicate/brojPodnetihDokumenata</uri>
+      </binding>
+      <binding name="o">
+        <literal datatype="http://www.w3.org/2001/XMLSchemapositiveInteger">2758</literal>
+      </binding>
+    </result>
+  </results>
+</sparql>

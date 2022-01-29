@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<za:Zahtev
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:za="http:///www.ftn.uns.ac.rs/vakcinacija/zahtev" xmlns:ct="http:///www.ftn.uns.ac.rs/vakcinacija/commonTypes"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http:///www.ftn.uns.ac.rs/vakcinacija/zahtev ../xsd/zahtev.xsd"
+    xmlns:addr="http://www.ftn.uns.ac.rs/rdf/zahtev"
+    xmlns:pred="http://www.ftn.uns.ac.rs/rdf/zahtev/predicate/"
+    vocab="http://www.ftn.uns.ac.rs/rdf/zahtev/" 
+    about="http://www.ftn.uns.ac.rs/rdf/zahtev/9231414241223">
+    <za:Podnosilac>
+        <za:PunoIme>
+            <ct:Ime>Daniel</ct:Ime>
+            <ct:Prezime>Bozanic</ct:Prezime>
+        </za:PunoIme>
+        <za:DatumRodjenja>1999-07-10</za:DatumRodjenja>
+        <za:Pol>Muski</za:Pol>
+        <za:JMBG property = "pred:jmbg" datatype = "xs:string">9231414241223</za:JMBG>
+        <za:BrojPasosa property = "pred:BrojPasosa" datatype = "xs:string">124422489</za:BrojPasosa>
+    </za:Podnosilac>
+    <za:RazlogPodnosenja>Neki random razlog</za:RazlogPodnosenja>
+</za:Zahtev>

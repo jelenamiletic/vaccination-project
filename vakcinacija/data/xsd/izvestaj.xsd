@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:iz="http:///www.ftn.uns.ac.rs/vakcinacija/izvestaj"
+    xmlns:ct="http:///www.ftn.uns.ac.rs/vakcinacija/commonTypes"
+    targetNamespace="http:///www.ftn.uns.ac.rs/vakcinacija/izvestaj" elementFormDefault="qualified">
+    <xs:import schemaLocation="CommonTypes.xsd"
+               namespace="http:///www.ftn.uns.ac.rs/vakcinacija/commonTypes" />
+    <xs:element name="Izvestaj">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name = "PeriodIzvestaja">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name = "OdDatum" type = "xs:date"/>
+                            <xs:element name = "DoDatum" type = "xs:date"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name = "BrojPodnetihDokumenata">
+                	<xs:complexType>
+				  		<xs:simpleContent>
+				    		<xs:extension base="iz:BrojPodnetihDokumenata">
+						      <xs:attribute name="property" type = "xs:string"/>
+						      <xs:attribute name="datatype" type = "xs:string"/>
+				    		</xs:extension>
+				  		</xs:simpleContent>
+					</xs:complexType>
+                </xs:element>
+                <xs:element name = "ZahteviZaDigitalniSertifikat">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name = "BrojPrimljenih">
+                            	<xs:complexType>
+							  		<xs:simpleContent>
+							    		<xs:extension base="iz:BrojPrimljenih">
+									      <xs:attribute name="property" type = "xs:string"/>
+									      <xs:attribute name="datatype" type = "xs:string"/>
+							    		</xs:extension>
+							  		</xs:simpleContent>
+								</xs:complexType>
+                            </xs:element>
+                            <xs:element name = "BrojIzdatih">
+                            	<xs:complexType>
+							  		<xs:simpleContent>
+							    		<xs:extension base="iz:BrojIzdatih">
+									      <xs:attribute name="property" type = "xs:string"/>
+									      <xs:attribute name="datatype" type = "xs:string"/>
+							    		</xs:extension>
+							  		</xs:simpleContent>
+								</xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name = "UkupanBrojDatihDoza" type = "xs:positiveInteger"/>
+                <xs:element name = "KolicnaDozaPoRednomBroju" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name = "RedniBroj" type = "xs:positiveInteger"/>
+                            <xs:element name = "BrojDatihDoza" type = "xs:positiveInteger"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name = "RaspodelaDozaPoProizvodjacu" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name = "Proizvodjac" type = "ct:Proizvodjac"/>
+                            <xs:element name = "BrojDatihDoza" type = "xs:positiveInteger"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute name="about" type="xs:anyURI"/>
+    		<xs:attribute name="vocab" type="xs:string"/>
+            <xs:attribute name = "DatumIzdavanja" type = "xs:date"/>
+        </xs:complexType>
+        <xs:key name="RedniBrojKljuc">
+            <xs:selector xpath="iz:KolicnaDozaPoRednomBroju"/>
+            <xs:field xpath="iz:RedniBroj"/>
+        </xs:key>
+        <xs:key name="ProizvodjacKljuc">
+            <xs:selector xpath="iz:RaspodelaDozaPoProizvodjacu"/>
+            <xs:field xpath="iz:Proizvodjac"/>
+        </xs:key>
+    </xs:element>
+    <xs:simpleType name="BrojPodnetihDokumenata">
+    	<xs:restriction base = "xs:positiveInteger"/>
+    </xs:simpleType>
+    <xs:simpleType name = "BrojPrimljenih">
+    	<xs:restriction base = "xs:positiveInteger"/>
+    </xs:simpleType>
+    <xs:simpleType name = "BrojIzdatih">
+    	<xs:restriction base = "xs:positiveInteger"/>
+    </xs:simpleType>
+</xs:schema>
