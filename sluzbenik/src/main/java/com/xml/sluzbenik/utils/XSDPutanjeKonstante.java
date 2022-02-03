@@ -8,4 +8,6 @@ public class XSDPutanjeKonstante {
 	public static final String XSD_SAGLASNOST = "data/xsd/saglasnost.xsd";
 	public static final String XSD_SERTIFIKAT = "data/xsd/sertifikat.xsd";
 	public static final String XSD_ZAHTEV = "data/xsd/zahtev.xsd";
+	
+	public static final String XSD_SLUZBENIK = "data/xsd/sluzbenik.xsd";
 }
