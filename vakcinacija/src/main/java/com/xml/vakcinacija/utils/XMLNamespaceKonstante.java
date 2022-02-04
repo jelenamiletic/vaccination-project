@@ -9,5 +9,9 @@ public class XMLNamespaceKonstante {
 	public static final String NAMESPACE_ZAHTEV = "http:///www.ftn.uns.ac.rs/vakcinacija/zahtev";
 	public static final String NAMESPACE_COMMON_TYPES = "http:///www.ftn.uns.ac.rs/vakcinacija/commonTypes";
 	
+	public static final String NAMESPACE_GRADJANIN = "http:///www.ftn.uns.ac.rs/vakcinacija/gradjanin";
+	public static final String NAMESPACE_ZDRAVSTVENI_RADNIK = "http:///www.ftn.uns.ac.rs/vakcinacija/zdravstveniRadnik";
+	public static final String NAMESPACE_SLUZBENIK = "http:///www.ftn.uns.ac.rs/vakcinacija/sluzbenik";
+	
 	public static final String PREDICATE = "http://ftn.uns.ac.rs/vakcinacija/predicate/";
 }

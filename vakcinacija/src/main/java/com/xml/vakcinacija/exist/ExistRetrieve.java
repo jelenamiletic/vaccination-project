@@ -10,6 +10,7 @@ import org.xmldb.api.modules.XMLResource;
 import org.xmldb.api.modules.XPathQueryService;
 
 import com.xml.vakcinacija.utils.AuthenticationUtilities;
+import com.xml.vakcinacija.utils.XMLNamespaceKonstante;
 
 public class ExistRetrieve {
 
@@ -40,6 +41,7 @@ public class ExistRetrieve {
             xpathService.setProperty("indent", "yes");
 
             xpathService.setNamespace("", namespace);
+            xpathService.setNamespace("ct", XMLNamespaceKonstante.NAMESPACE_COMMON_TYPES);
             result = xpathService.query(xpathExp);
         } finally {
             //don't forget to clean up!

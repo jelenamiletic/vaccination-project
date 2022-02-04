@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,11 +26,13 @@ public class IzvestajController {
 	private IzvestajService izvestajService;
 
 	@PostMapping(value = "/dodajNoviIzvestaj", consumes = MediaType.APPLICATION_XML_VALUE)
+	@PreAuthorize("hasRole('ROLE_SLUZBENIK')")
 	public void dodajNoviIzvestaj(@RequestBody String izvestajXML) throws Exception {
 		izvestajService.dodajNoviIzvestaj(izvestajXML);
 	}
 	
 	@GetMapping(value = "/pronadjiSve", produces = MediaType.APPLICATION_XML_VALUE)
+	@PreAuthorize("hasRole('ROLE_SLUZBENIK')")
 	public ResponseEntity<ListaIzvestaja> pronadjiSve() throws Exception {
 		ListaIzvestaja lista = new ListaIzvestaja();
 		lista.setIzvestaj(izvestajService.pronadjiSve());
@@ -37,11 +40,13 @@ public class IzvestajController {
 	}
 	
 	@GetMapping(value = "/pronadjiIzvestaj/{odDatum}/{doDatum}", produces = MediaType.APPLICATION_XML_VALUE)
+	@PreAuthorize("hasRole('ROLE_SLUZBENIK')")
 	public ResponseEntity<Izvestaj> pronadjiIzvestaj(@PathVariable String odDatum, @PathVariable String doDatum) throws Exception {
 		return new ResponseEntity<>(izvestajService.pronadjiIzvestaj(odDatum, doDatum), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/nabaviMetaPodatkeXmlPoDatumima/{odDatum}/{doDatum}")
+	@PreAuthorize("hasRole('ROLE_SLUZBENIK')")
 	public void nabaviMetaPodatkeXmlPoDatumima(@PathVariable String odDatum, @PathVariable String doDatum) throws IOException {
 		izvestajService.nabaviMetaPodatkeXmlPoDatumima(odDatum, doDatum);
 	}

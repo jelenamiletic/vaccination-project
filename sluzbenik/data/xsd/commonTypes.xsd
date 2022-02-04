@@ -57,6 +57,11 @@
             <xs:element name = "Prezime" type = "xs:string"/>
         </xs:sequence>
     </xs:complexType>
+    <xs:complexType name="Role">
+        <xs:sequence>
+            <xs:element name = "RoleName" type = "xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
     <xs:simpleType name = "RezultatTesta">
         <xs:restriction base = "xs:string">
             <xs:enumeration value="Pozitivan"/>

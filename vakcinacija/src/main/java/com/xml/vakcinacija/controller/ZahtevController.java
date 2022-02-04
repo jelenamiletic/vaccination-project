@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,23 +26,27 @@ public class ZahtevController {
 	ZahtevService zahtevService;
 	
 	@PostMapping(value = "/dodajNoviZahtev", consumes = MediaType.APPLICATION_XML_VALUE)
+	@PreAuthorize("hasRole('ROLE_GRADJANIN')")
 	public void dodajNoviZahtev(@RequestBody String zahtevXML) throws Exception {
 		zahtevService.dodajNoviZahtev(zahtevXML);
 	}
 	
 	@GetMapping(value = "/pronadjiSve", produces = MediaType.APPLICATION_XML_VALUE)
+	@PreAuthorize("hasRole('ROLE_SLUZBENIK')")
 	public ResponseEntity<ListaZahteva> pronadjiSve() throws Exception {
 		ListaZahteva lista = new ListaZahteva();
 		lista.setZahtev(zahtevService.pronadjiSve());
 		return new ResponseEntity<>(lista, HttpStatus.OK);
 	}
 
-	@GetMapping(value = "/pronadjiZahtevPoJmbg/{jmbg}", produces = MediaType.APPLICATION_XML_VALUE) 
+	@GetMapping(value = "/pronadjiZahtevPoJmbg/{jmbg}", produces = MediaType.APPLICATION_XML_VALUE)
+	@PreAuthorize("hasAnyRole('ROLE_GRADJANIN', 'ROLE_SLUZBENIK')")
 	public ResponseEntity<Zahtev> pronadjiZahtevPoJmbg(@PathVariable String jmbg) throws Exception {
 		return new ResponseEntity<>(zahtevService.pronadjiZahtevPoJmbg(jmbg), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/nabaviMetaPodatkeXmlPoJmbg/{jmbg}")
+	@PreAuthorize("hasAnyRole('ROLE_GRADJANIN', 'ROLE_SLUZBENIK')")
 	public void nabaviMetaPodatkeXmlPoJmbg(@PathVariable String jmbg) throws IOException {
 		zahtevService.nabaviMetaPodatkeXmlPoJmbg(jmbg);
 	}

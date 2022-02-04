@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:zd="http:///www.ftn.uns.ac.rs/vakcinacija/zdravstveniRadnik"
+    xmlns:ct="http:///www.ftn.uns.ac.rs/vakcinacija/commonTypes"
+    targetNamespace="http:///www.ftn.uns.ac.rs/vakcinacija/zdravstveniRadnik" elementFormDefault="qualified">
+    <xs:import schemaLocation="CommonTypes.xsd"
+               namespace="http:///www.ftn.uns.ac.rs/vakcinacija/commonTypes" />
+   <xs:element name="ZdravstveniRadnik">
+        <xs:complexType>
+        	<xs:complexContent>
+       			<xs:extension base="ct:Korisnik">
+	        		<xs:sequence>
+	        			<xs:element name = "ZdravstvenaUstanova" type = "xs:string"/>
+        				<xs:element name = "Punkt" type = "xs:positiveInteger"/>
+	        		</xs:sequence>
+        		</xs:extension>
+        	</xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:gr="http:///www.ftn.uns.ac.rs/vakcinacija/gradjanin"
+    xmlns:ct="http:///www.ftn.uns.ac.rs/vakcinacija/commonTypes"
+    targetNamespace="http:///www.ftn.uns.ac.rs/vakcinacija/gradjanin" elementFormDefault="qualified">
+    <xs:import schemaLocation="CommonTypes.xsd"
+               namespace="http:///www.ftn.uns.ac.rs/vakcinacija/commonTypes" />
+    <xs:element name="Gradjanin">
+        <xs:complexType>
+        	<xs:complexContent>
+       			<xs:extension base="ct:Korisnik">
+	        		<xs:sequence>
+	        			<xs:element name = "Pol" type = "ct:Pol"/>
+		        		<xs:element name = "Drzavljanstvo">
+		        			<xs:simpleType>
+							    <xs:restriction base="xs:string">
+							        <xs:enumeration value="Drzаvljаnin Republike Srbije"/>
+							        <xs:enumeration value="Strani drzаvljаnin sa boravkom u RS"/>
+							        <xs:enumeration value="Strani drzаvljаnin bez boravka u RS"/>
+							    </xs:restriction>
+						    </xs:simpleType>
+		        		</xs:element>
+	        		</xs:sequence>
+        		</xs:extension>
+        	</xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -19,11 +20,13 @@ public class SertifikatController {
     SertifikatService sertifikatService;
 
     @PostMapping(value = "/dodajNoviSertifikat", consumes = MediaType.APPLICATION_XML_VALUE)
+    @PreAuthorize("hasRole('ROLE_SLUZBENIK')")
     public void dodajNoviSertifikat(@RequestBody String sertifikatXML) throws Exception {
         sertifikatService.dodajNoviSertifikat(sertifikatXML);
     }
 
     @GetMapping(value = "/pronadjiSve", produces = MediaType.APPLICATION_XML_VALUE)
+    @PreAuthorize("hasRole('ROLE_SLUZBENIK')")
     public ResponseEntity<ListaSertifikata> pronadjiSve() throws Exception {
         ListaSertifikata lista = new ListaSertifikata();
         lista.setSertifikat(sertifikatService.pronadjiSve());
@@ -31,11 +34,13 @@ public class SertifikatController {
     }
 
     @GetMapping(value = "/pronadjiSertifikatPoJmbg/{jmbg}", produces = MediaType.APPLICATION_XML_VALUE)
+    @PreAuthorize("hasAnyRole('ROLE_GRADJANIN', 'ROLE_SLUZBENIK')")
     public ResponseEntity<Sertifikat> pronadjiSertifikataPoJmbg(@PathVariable String jmbg) throws Exception {
         return new ResponseEntity<>(sertifikatService.pronadjiSertifikatPoJmbg(jmbg), HttpStatus.OK);
     }
 
     @GetMapping(value = "/nabaviMetaPodatkeXmlPoJmbg/{jmbg}")
+    @PreAuthorize("hasAnyRole('ROLE_GRADJANIN', 'ROLE_SLUZBENIK')")
     public void nabaviMetaPodatkeXmlPoJmbg(@PathVariable String jmbg) throws IOException {
         sertifikatService.nabaviMetaPodatkeXmlPoJmbg(jmbg);
     }
