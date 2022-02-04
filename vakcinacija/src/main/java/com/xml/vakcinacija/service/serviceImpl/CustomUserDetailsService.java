@@ -9,7 +9,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.xml.vakcinacija.model.Korisnik;
 import com.xml.vakcinacija.model.PunoIme;
 import com.xml.vakcinacija.model.Role;
 import com.xml.vakcinacija.model.gradjanin.Gradjanin;
@@ -29,8 +28,8 @@ public class CustomUserDetailsService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String email) {
 		try {
-			List<Korisnik> korisnici = korisnikRepository.pronadjiSve();
-			if (korisnici == null || korisnici.isEmpty()) {
+			List<ZdravstveniRadnik> zdravstveniRadnici = korisnikRepository.pronadjiSveZdravstveneRadnike();
+			if (zdravstveniRadnici == null || zdravstveniRadnici.isEmpty()) {
 				PunoIme punoIme = new PunoIme();
 				punoIme.setIme("Petar");
 				punoIme.setPrezime("Petruza");

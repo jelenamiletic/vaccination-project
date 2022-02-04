@@ -48,55 +48,59 @@ public class KorisnikRepository {
 		}
 	}
 	
-	public List<Korisnik> pronadjiSve() throws Exception {
+	public List<Gradjanin> pronadjiSveGradjane() throws Exception {
 		String xPathIzraz = "//Gradjanin";
-        ResourceSet rezultat1 = ExistRetrieve.izvrsiXPathIzraz(XMLCollectionIdKonstante.COLLECTION_ID_GRADJANIN, 
+        ResourceSet rezultat = ExistRetrieve.izvrsiXPathIzraz(XMLCollectionIdKonstante.COLLECTION_ID_GRADJANIN, 
         		xPathIzraz, XMLNamespaceKonstante.NAMESPACE_GRADJANIN);
-        xPathIzraz = "//ZdravstveniRadnik";
-        ResourceSet rezultat2 = ExistRetrieve.izvrsiXPathIzraz(XMLCollectionIdKonstante.COLLECTION_ID_ZDRAVSTVENI_RADNINK, 
-        		xPathIzraz, XMLNamespaceKonstante.NAMESPACE_ZDRAVSTVENI_RADNIK);
-        List<Korisnik> korisnici = new ArrayList<Korisnik>();
+        List<Gradjanin> gradjani = new ArrayList<Gradjanin>();
         
-        if (rezultat1 == null && rezultat2 == null)
+        if (rezultat == null)
             return null;
 
-        if (rezultat1 != null) {
-	        ResourceIterator i = rezultat1.getIterator();
-	        XMLResource res = null;
-	        while (i.hasMoreResources()) {
-	            res = (XMLResource) i.nextResource();
-	            korisnici.add((Korisnik) unmarshallerService.unmarshal(res.getContent().toString(), 
-	            		ContextPutanjeKonstante.CONTEXT_PUTANJA_GRADJANIN, XSDPutanjeKonstante.XSD_GRADJANIN));
-	        }
+        ResourceIterator i = rezultat.getIterator();
+        XMLResource res = null;
+        while (i.hasMoreResources()) {
+            res = (XMLResource) i.nextResource();
+            gradjani.add((Gradjanin) unmarshallerService.unmarshal(res.getContent().toString(), 
+            		ContextPutanjeKonstante.CONTEXT_PUTANJA_GRADJANIN, XSDPutanjeKonstante.XSD_GRADJANIN));
+        }
+
+        if (res != null) {
+            try {
+                ((EXistResource) res).freeResources();
+            } catch (XMLDBException exception) {
+                exception.printStackTrace();
+            }
+        }
+        return gradjani;
+	}
 	
-	        if (res != null) {
-	            try {
-	                ((EXistResource) res).freeResources();
-	            } catch (XMLDBException exception) {
-	                exception.printStackTrace();
-	            }
-	        }
+	public List<ZdravstveniRadnik> pronadjiSveZdravstveneRadnike() throws Exception {
+		String xPathIzraz = "//ZdravstveniRadnik";
+        ResourceSet rezultat = ExistRetrieve.izvrsiXPathIzraz(XMLCollectionIdKonstante.COLLECTION_ID_ZDRAVSTVENI_RADNINK, 
+        		xPathIzraz, XMLNamespaceKonstante.NAMESPACE_ZDRAVSTVENI_RADNIK);
+        List<ZdravstveniRadnik> zdravstveniRadnici = new ArrayList<ZdravstveniRadnik>();
+        
+		if (rezultat == null)
+            return null;
+		
+		ResourceIterator i = rezultat.getIterator();
+        XMLResource res = null;
+        while (i.hasMoreResources()) {
+            res = (XMLResource) i.nextResource();
+            zdravstveniRadnici.add((ZdravstveniRadnik) unmarshallerService.unmarshal(res.getContent().toString(), 
+            		ContextPutanjeKonstante.CONTEXT_PUTANJA_GRADJANIN, XSDPutanjeKonstante.XSD_GRADJANIN));
+        }
+
+        if (res != null) {
+            try {
+                ((EXistResource) res).freeResources();
+            } catch (XMLDBException exception) {
+                exception.printStackTrace();
+            }
         }
         
-        if (rezultat2 != null) {
-	        ResourceIterator i = rezultat2.getIterator();
-	        XMLResource res = null;
-	
-	        while (i.hasMoreResources()) {
-	            res = (XMLResource) i.nextResource();
-	            korisnici.add((Korisnik) unmarshallerService.unmarshal(res.getContent().toString(), 
-	            		ContextPutanjeKonstante.CONTEXT_PUTANJA_ZDRAVSTVENI_RADNIK, XSDPutanjeKonstante.XSD_ZDRAVSTVENI_RADNIK));
-	        }
-	
-	        if (res != null) {
-	            try {
-	                ((EXistResource) res).freeResources();
-	            } catch (XMLDBException exception) {
-	                exception.printStackTrace();
-	            }
-	        }
-        }
-        return korisnici;
+        return zdravstveniRadnici;
 	}
 
 	public Gradjanin pronadjiGradjanina(String email) throws Exception {
