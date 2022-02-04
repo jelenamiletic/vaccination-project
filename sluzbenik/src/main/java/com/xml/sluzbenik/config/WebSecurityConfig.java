@@ -14,12 +14,13 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.web.client.RestTemplate;
 
 import com.xml.sluzbenik.security.RestAuthenticationEntryPoint;
 import com.xml.sluzbenik.security.TokenAuthenticationFilter;
+import com.xml.sluzbenik.security.TokenUtils;
 import com.xml.sluzbenik.service.serviceImpl.CustomUserDetailsService;
 import com.xml.sluzbenik.utils.RoleKonstante;
-import com.xml.sluzbenik.utils.TokenUtils;
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -28,6 +29,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	public static PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
+	}
+	
+	@Bean
+	public RestTemplate restTemplate() {
+	    return new RestTemplate();
 	}
 
 	@Autowired
@@ -56,11 +62,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 			.exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint).and()
 			.authorizeRequests().antMatchers("/auth/login").permitAll()
-				.antMatchers("/auth/kreirajPrvogSluzbenika").permitAll()
-				.antMatchers("/izvestaj/dodajNoviIzvestaj").hasAuthority(RoleKonstante.ROLE_SLUZBENIK)
-				.antMatchers("/izvestaj/pronadjiSve").hasAuthority(RoleKonstante.ROLE_SLUZBENIK)
-				.antMatchers("/izvestaj/pronadjiIzvestaj/{odDatum}/{doDatum}").hasAuthority(RoleKonstante.ROLE_SLUZBENIK)
-				.antMatchers("/izvestaj/nabaviMetaPodatkeXmlPoDatumima/{odDatum}/{doDatum}").hasAuthority(RoleKonstante.ROLE_SLUZBENIK)
+				.antMatchers
+				(
+						"/izvestaj/dodajNoviIzvestaj", 
+						"/izvestaj/pronadjiSve", 
+						"/izvestaj/pronadjiSve", 
+						"/izvestaj/pronadjiIzvestaj/{odDatum}/{doDatum}", 
+						"/izvestaj/nabaviMetaPodatkeXmlPoDatumima/{odDatum}/{doDatum}"
+				).hasAuthority(RoleKonstante.ROLE_SLUZBENIK)
+				.antMatchers
+				(
+						"/sluzbenik/pronadjiSluzbenika/{email}"
+				).hasAuthority(RoleKonstante.ROLE_SLUZBENIK)				
 			.anyRequest().authenticated().and()
 			.cors().and()
 			.addFilterBefore(new TokenAuthenticationFilter(tokenUtils, customUserDetailsService), BasicAuthenticationFilter.class);

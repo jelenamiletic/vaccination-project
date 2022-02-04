@@ -78,11 +78,11 @@ public class IzvestajRepository {
 
         ResourceIterator i = rezultat.getIterator();
         XMLResource res = null;
-        String interesovanje = null;
+        String izvestaj = null;
 
         if (i.hasMoreResources()) {
             res = (XMLResource) i.nextResource();
-            interesovanje = res.getContent().toString();
+            izvestaj = res.getContent().toString();
         }
 
         if (res != null) {
@@ -93,7 +93,7 @@ public class IzvestajRepository {
             }
         }
 
-        return interesovanje;
+        return izvestaj;
     }
 	
 	public Izvestaj pronadjiIzvestaj(String odDatum, String doDatum) throws Exception {

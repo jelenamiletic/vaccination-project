@@ -13,8 +13,8 @@ import javax.xml.bind.annotation.XmlType;
         "email",
         "role"
 })
-@XmlRootElement(name = "UserTokenState")
-public class UserTokenState {
+@XmlRootElement(name = "Token")
+public class Token {
 
 	@XmlElement
 	protected String accessToken;
@@ -28,14 +28,14 @@ public class UserTokenState {
 	@XmlElement
 	protected String role;
 
-    public UserTokenState() {
+    public Token() {
         this.accessToken = null;
         this.expiresIn = null;
         this.email = null;
         this.role = null;
     }
 
-    public UserTokenState(String accessToken, long expiresIn, String email, String role) {
+    public Token(String accessToken, long expiresIn, String email, String role) {
         this.accessToken = accessToken;
         this.expiresIn = expiresIn;
         this.email = email;

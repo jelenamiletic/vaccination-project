@@ -77,11 +77,11 @@ public class SluzbenikRepository {
 
         ResourceIterator i = rezultat.getIterator();
         XMLResource res = null;
-        String interesovanje = null;
+        String sluzbenik = null;
 
         if (i.hasMoreResources()) {
             res = (XMLResource) i.nextResource();
-            interesovanje = res.getContent().toString();
+            sluzbenik = res.getContent().toString();
         }
 
         if (res != null) {
@@ -92,7 +92,7 @@ public class SluzbenikRepository {
             }
         }
 
-        return interesovanje;
+        return sluzbenik;
     }
 	
 	public Sluzbenik pronadjiSluzbenika(String email) throws Exception {

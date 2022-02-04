@@ -1,14 +1,14 @@
-package com.xml.sluzbenik.controller;
+package com.xml.vakcinacija.controller;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.xml.sluzbenik.model.sluzbenik.Sluzbenik;
-import com.xml.sluzbenik.security.JwtAuthenticationRequest;
-import com.xml.sluzbenik.security.Token;
-import com.xml.sluzbenik.security.TokenUtils;
+import com.xml.vakcinacija.model.Korisnik;
+import com.xml.vakcinacija.security.JwtAuthenticationRequest;
+import com.xml.vakcinacija.security.Token;
+import com.xml.vakcinacija.security.TokenUtils;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -40,11 +40,11 @@ public class AuthenticationController {
 
 			SecurityContextHolder.getContext().setAuthentication(authentication);
 
-			Sluzbenik sluzbenik = (Sluzbenik) authentication.getPrincipal();
-			String jwt = tokenUtils.generateToken(sluzbenik.getUsername());
+			Korisnik korisnik = (Korisnik) authentication.getPrincipal();
+			String jwt = tokenUtils.generateToken(korisnik.getUsername());
 			int expiresIn = tokenUtils.getExpiredIn();
 
-			return ResponseEntity.ok(new Token(jwt, expiresIn, sluzbenik.getUsername(), sluzbenik.getRoles().get(0).getRoleName()));
+			return ResponseEntity.ok(new Token(jwt, expiresIn, korisnik.getUsername(), korisnik.getRoles().get(0).getRoleName()));
 		} catch (DisabledException de) {
 			return new ResponseEntity<Token>(HttpStatus.FORBIDDEN);
 		} catch (BadCredentialsException bdc) {

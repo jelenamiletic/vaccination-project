@@ -1,4 +1,4 @@
-package com.xml.sluzbenik.security;
+package com.xml.vakcinacija.security;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

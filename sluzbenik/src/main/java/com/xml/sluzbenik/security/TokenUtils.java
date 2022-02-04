@@ -1,4 +1,4 @@
-package com.xml.sluzbenik.utils;
+package com.xml.sluzbenik.security;
 
 import java.sql.Timestamp;
 import java.util.Date;
