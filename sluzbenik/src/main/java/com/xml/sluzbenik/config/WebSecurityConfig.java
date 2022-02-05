@@ -69,11 +69,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 						"/izvestaj/pronadjiSve", 
 						"/izvestaj/pronadjiIzvestaj/{odDatum}/{doDatum}", 
 						"/izvestaj/nabaviMetaPodatkeXmlPoDatumima/{odDatum}/{doDatum}"
-				).hasAuthority(RoleKonstante.ROLE_SLUZBENIK)
-				.antMatchers
-				(
-						"/sluzbenik/pronadjiSluzbenika/{email}"
-				).hasAuthority(RoleKonstante.ROLE_SLUZBENIK)				
+				).hasAuthority(RoleKonstante.ROLE_SLUZBENIK)			
 			.anyRequest().authenticated().and()
 			.cors().and()
 			.addFilterBefore(new TokenAuthenticationFilter(tokenUtils, customUserDetailsService), BasicAuthenticationFilter.class);

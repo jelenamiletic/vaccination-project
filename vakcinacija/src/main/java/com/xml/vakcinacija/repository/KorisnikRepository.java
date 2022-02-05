@@ -89,7 +89,7 @@ public class KorisnikRepository {
         while (i.hasMoreResources()) {
             res = (XMLResource) i.nextResource();
             zdravstveniRadnici.add((ZdravstveniRadnik) unmarshallerService.unmarshal(res.getContent().toString(), 
-            		ContextPutanjeKonstante.CONTEXT_PUTANJA_GRADJANIN, XSDPutanjeKonstante.XSD_GRADJANIN));
+            		ContextPutanjeKonstante.CONTEXT_PUTANJA_ZDRAVSTVENI_RADNIK, XSDPutanjeKonstante.XSD_ZDRAVSTVENI_RADNIK));
         }
 
         if (res != null) {

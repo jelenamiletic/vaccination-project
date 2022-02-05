@@ -13,6 +13,7 @@ import com.xml.vakcinacija.security.TokenUtils;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -45,6 +46,8 @@ public class AuthenticationController {
 			int expiresIn = tokenUtils.getExpiredIn();
 
 			return ResponseEntity.ok(new Token(jwt, expiresIn, korisnik.getUsername(), korisnik.getRoles().get(0).getRoleName()));
+		} catch (InternalAuthenticationServiceException iase) {
+			return new ResponseEntity<Token>(HttpStatus.NOT_FOUND);
 		} catch (DisabledException de) {
 			return new ResponseEntity<Token>(HttpStatus.FORBIDDEN);
 		} catch (BadCredentialsException bdc) {

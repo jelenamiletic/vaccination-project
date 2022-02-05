@@ -92,6 +92,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/zahtev/pronadjiSve").hasAuthority(RoleKonstante.ROLE_SLUZBENIK)
 				.antMatchers("/zahtev/pronadjiZahtevPoJmbg/{jmbg}").hasAnyAuthority(RoleKonstante.ROLE_GRADJANIN, RoleKonstante.ROLE_SLUZBENIK)
 				.antMatchers("/zahtev/nabaviMetaPodatkeXmlPoJmbg/{jmbg}").hasAnyAuthority(RoleKonstante.ROLE_GRADJANIN, RoleKonstante.ROLE_SLUZBENIK)
+				
+				// Gradjanin controller
+				.antMatchers("/gradjanin/registracija").permitAll()
 			.anyRequest().authenticated().and()
 			.cors().and()
 			.addFilterBefore(new TokenAuthenticationFilter(tokenUtils, customUserDetailsService), BasicAuthenticationFilter.class);
