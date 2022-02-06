@@ -38,6 +38,7 @@ public class InteresovanjeServiceImpl implements InteresovanjeService {
 			if (pronadjenoInteresovanjeXml != null) {
 				throw new InteresovanjePostojiException(validanObjekat.getLicneInformacije().getJMBG().getValue());
 			}
+			validanObjekat.setDatumPodnosenja();
 			interesovanjeRepository.saveInteresovanjeObjekat(validanObjekat);
 			
 			try {

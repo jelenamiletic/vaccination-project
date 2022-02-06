@@ -82,7 +82,7 @@ public class Interesovanje {
 		return DatumPodnosenja;
 	}
 
-	public void setDatumPodnosenja(XMLGregorianCalendar datumPodnosenja) throws DatatypeConfigurationException {
+	public void setDatumPodnosenja() throws DatatypeConfigurationException {
 		GregorianCalendar c = new GregorianCalendar();
 		c.setTime(new Date());
 		XMLGregorianCalendar date2 = DatatypeFactory.newInstance().newXMLGregorianCalendar(c);

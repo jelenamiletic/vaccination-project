@@ -38,6 +38,7 @@ public class ZahtevServiceImpl implements ZahtevService{
 			if (pronadjenZahtevXml != null) {
 				throw new ZahtevPostojiException(validanObjekat.getPodnosilac().getJMBG().getValue());
 			}
+			validanObjekat.setDatumPodnosenja();
 			zahtevRepository.saveZahtevObjekat(validanObjekat);
 			
 			try {
