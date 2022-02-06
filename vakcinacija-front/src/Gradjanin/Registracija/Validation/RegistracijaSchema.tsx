@@ -17,5 +17,6 @@ export const registracijaSchema = yup.object().shape({
 	JMBG: yup
 		.string()
 		.required("JMBG je obavezno polje!")
-		.test("len", "JMBG mora imati 13 karaktera!", (val) => val?.length === 13),
+		.test("len", "JMBG mora imati 13 karaktera!", (val) => val?.length === 13)
+		.matches(/^\d+$/, "JMBG mora da sadrzi samo brojevne vrednosti!"),
 });
