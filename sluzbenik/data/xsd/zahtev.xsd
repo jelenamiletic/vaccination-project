@@ -37,6 +37,7 @@
                     </xs:complexType>
                 </xs:element>
                 <xs:element name = "RazlogPodnosenja" type = "xs:string"/>
+                <xs:element name = "DatumPodnosenja" type = "xs:date" minOccurs = "0"/>
             </xs:sequence>
             <xs:attribute name="about" type="xs:anyURI"/>
     		<xs:attribute name="vocab" type="xs:string"/>

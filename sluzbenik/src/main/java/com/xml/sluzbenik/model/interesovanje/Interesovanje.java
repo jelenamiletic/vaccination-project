@@ -1,5 +1,8 @@
 package com.xml.sluzbenik.model.interesovanje;
 
+import java.util.Date;
+import java.util.GregorianCalendar;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -8,6 +11,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
 
 import com.xml.sluzbenik.model.Proizvodjac;
 import com.xml.sluzbenik.model.PunoIme;
@@ -17,7 +23,8 @@ import com.xml.sluzbenik.model.PunoIme;
         "LicneInformacije", 
         "OpstinaPrimanja", 
         "Vakcina", 
-        "DavalacKrvi"
+        "DavalacKrvi",
+        "DatumPodnosenja"
 })
 @XmlRootElement(name = "Interesovanje")
 public class Interesovanje {
@@ -33,6 +40,9 @@ public class Interesovanje {
 	
 	@XmlElement(required = true)
 	protected boolean DavalacKrvi;
+	
+	@XmlElement
+	protected XMLGregorianCalendar DatumPodnosenja;
 	
 	@XmlAttribute(name = "about")
 	@XmlSchemaType(name = "anyURI")
@@ -66,6 +76,17 @@ public class Interesovanje {
 
 	public boolean isDavalacKrvi() {
 		return DavalacKrvi;
+	}
+	
+	public XMLGregorianCalendar getDatumPodnosenja() {
+		return DatumPodnosenja;
+	}
+
+	public void setDatumPodnosenja(XMLGregorianCalendar datumPodnosenja) throws DatatypeConfigurationException {
+		GregorianCalendar c = new GregorianCalendar();
+		c.setTime(new Date());
+		XMLGregorianCalendar date2 = DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
+		DatumPodnosenja = date2;
 	}
 
 	public void setDavalacKrvi(boolean DavalacKrvi) {

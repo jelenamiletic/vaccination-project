@@ -87,6 +87,7 @@
 					</xs:complexType>
                 </xs:element>
                 <xs:element name="DavalacKrvi" type = "xs:boolean"/>
+                <xs:element name = "DatumPodnosenja" type = "xs:date" minOccurs = "0"/>
             </xs:sequence>
             <xs:attribute name="about" type="xs:anyURI"/>
     		<xs:attribute name="vocab" type="xs:string"/>
@@ -94,9 +95,9 @@
     </xs:element>
     <xs:simpleType name="Drzavljanstvo">
 	    <xs:restriction base="xs:string">
-	        <xs:enumeration value="Drzаvljаnin Republike Srbije"/>
-	        <xs:enumeration value="Strani drzаvljаnin sa boravkom u RS"/>
-	        <xs:enumeration value="Strani drzаvljаnin bez boravka u RS"/>
+	        <xs:enumeration value="Drzavljаnin Republike Srbije"/>
+	        <xs:enumeration value="Strani drzavljаnin sa boravkom u RS"/>
+	        <xs:enumeration value="Strani drzavljаnin bez boravka u RS"/>
 	    </xs:restriction>
     </xs:simpleType>
 </xs:schema>
