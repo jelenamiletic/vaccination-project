@@ -29,7 +29,7 @@ function App() {
 						</Route>
 						<Route
 							path="/interesovanje"
-							element={<ProtectedRoute roles={"ROLE_GRADJANIN"} />}
+							element={<ProtectedRoute roles={["ROLE_GRADJANIN"]} />}
 						>
 							<Route path="/interesovanje" element={<Interesovanje />} />
 						</Route>
