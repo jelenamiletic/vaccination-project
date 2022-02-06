@@ -19,19 +19,17 @@ function App() {
 						<Route path="/login" element={<Login />} />
 						<Route
 							path="/profil"
-							element={<ProtectedRoute role={"ROLE_GRADJANIN"} />}
-						>
-							<Route path="/profil" element={<Profil />} />
-						</Route>
-						<Route
-							path="/profil"
-							element={<ProtectedRoute role={"ROLE_ZDRAVSTVENI_RADNIK"} />}
+							element={
+								<ProtectedRoute
+									roles={["ROLE_GRADJANIN", "ROLE_ZDRAVSTVENI_RADNIK"]}
+								/>
+							}
 						>
 							<Route path="/profil" element={<Profil />} />
 						</Route>
 						<Route
 							path="/interesovanje"
-							element={<ProtectedRoute role={"ROLE_GRADJANIN"} />}
+							element={<ProtectedRoute roles={"ROLE_GRADJANIN"} />}
 						>
 							<Route path="/interesovanje" element={<Interesovanje />} />
 						</Route>
