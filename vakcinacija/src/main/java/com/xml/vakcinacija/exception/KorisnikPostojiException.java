@@ -4,7 +4,7 @@ public class KorisnikPostojiException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 	
-	public KorisnikPostojiException(String email) {
-	    super("Korisnik sa ovim email-om (" + email + ") " + "vec postoji!");
+	public KorisnikPostojiException() {
+	    super("Korisnik sa istim JMBG-om ili email-om vec postoji u sistemu!");
 	}
 }

@@ -25,9 +25,9 @@ public class GradjaninServiceImpl implements GradjaninService {
 
 	@Override
 	public void registracija(Gradjanin gradjanin) throws Exception {
-		Gradjanin postoji = korisnikRepository.pronadjiGradjanina(gradjanin.getEmail().toLowerCase());
+		Gradjanin postoji = korisnikRepository.pronadjiGradjanina(gradjanin.getEmail().toLowerCase(), gradjanin.getJMBG());
 		if (postoji != null) {
-			throw new KorisnikPostojiException(postoji.getEmail().toLowerCase());
+			throw new KorisnikPostojiException();
 		}
 		gradjanin.setLozinka(passwordEncoder.encode(gradjanin.getLozinka()));
 		List<Role> roles = new ArrayList<Role>();

@@ -46,6 +46,7 @@ const Registracija = () => {
 						</ct:PunoIme>
 						<ct:Email>${gradjanin.Email}</ct:Email>
 						<ct:Lozinka>${gradjanin.Lozinka}</ct:Lozinka>
+						<ct:JMBG>${gradjanin.JMBG}</ct:JMBG>
 						<gr:Pol>${gradjanin.Pol}</gr:Pol>
 						<gr:Drzavljanstvo>${gradjanin.Drzavljanstvo}</gr:Drzavljanstvo>
 					</gr:Gradjanin>`;
@@ -121,6 +122,17 @@ const Registracija = () => {
 								innerRef={register}
 							/>
 							<FormFeedback>{errors.Lozinka?.message}</FormFeedback>
+						</FormGroup>
+						<FormGroup>
+							<Label>JMBG</Label>
+							<Input
+								type="text"
+								name="JMBG"
+								placeholder="JMBG"
+								invalid={errors.JMBG?.message}
+								innerRef={register}
+							/>
+							<FormFeedback>{errors.JMBG?.message}</FormFeedback>
 						</FormGroup>
 						<Label>Muski</Label>
 						<Input

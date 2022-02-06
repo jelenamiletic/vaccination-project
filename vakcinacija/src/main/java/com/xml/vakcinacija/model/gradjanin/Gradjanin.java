@@ -17,7 +17,7 @@ import com.xml.vakcinacija.model.Pol;
 @XmlRootElement(name = "Gradjanin")
 public class Gradjanin extends Korisnik {
 	private static final long serialVersionUID = 1L;
-
+	
 	@XmlElement(required = true)
 	protected Pol Pol;
 	

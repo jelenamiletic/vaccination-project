@@ -3,4 +3,5 @@ export interface Token {
 	expiresIn: number;
 	email: string;
 	role: string;
+	jmbg: string;
 }

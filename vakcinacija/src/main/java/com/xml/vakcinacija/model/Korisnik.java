@@ -28,6 +28,7 @@ import javax.xml.bind.annotation.XmlAccessType;
         "PunoIme",
         "Email",
         "Lozinka",
+        "JMBG",
         "Enabled",
         "Roles",
         "lastPasswordResetDate",
@@ -44,6 +45,9 @@ public abstract class Korisnik implements UserDetails {
 	
 	@XmlElement(required = true, namespace = XMLNamespaceKonstante.NAMESPACE_COMMON_TYPES)
 	protected String Lozinka;
+	
+	@XmlElement(required = true, namespace = XMLNamespaceKonstante.NAMESPACE_COMMON_TYPES)
+	protected String JMBG;
 	
 	@XmlElement(namespace = XMLNamespaceKonstante.NAMESPACE_COMMON_TYPES)
 	protected boolean Enabled;
@@ -82,7 +86,15 @@ public abstract class Korisnik implements UserDetails {
         this.setLastPasswordResetDate(date2);
 		Lozinka = lozinka;
 	}
-	
+
+	public String getJMBG() {
+		return JMBG;
+	}
+
+	public void setJMBG(String jMBG) {
+		JMBG = jMBG;
+	}
+
 	public void setEnabled(boolean enabled) {
 		Enabled = enabled;
 	}

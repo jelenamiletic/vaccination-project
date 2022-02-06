@@ -11,7 +11,8 @@ import javax.xml.bind.annotation.XmlType;
         "accessToken",
         "expiresIn",
         "email",
-        "role"
+        "role",
+        "jmbg"
 })
 @XmlRootElement(name = "Token")
 public class Token {
@@ -27,19 +28,24 @@ public class Token {
 	
 	@XmlElement
 	protected String role;
+	
+	@XmlElement
+	protected String jmbg;
 
     public Token() {
         this.accessToken = null;
         this.expiresIn = null;
         this.email = null;
         this.role = null;
+        this.jmbg = null;
     }
 
-    public Token(String accessToken, long expiresIn, String email, String role) {
+    public Token(String accessToken, long expiresIn, String email, String role, String jmbg) {
         this.accessToken = accessToken;
         this.expiresIn = expiresIn;
         this.email = email;
         this.role = role;
+        this.jmbg = jmbg;
     }
 
     public String getAccessToken() {
@@ -72,5 +78,13 @@ public class Token {
 
 	public void setRole(String role) {
 		this.role = role;
+	}
+
+	public String getJmbg() {
+		return jmbg;
+	}
+
+	public void setJmbg(String jmbg) {
+		this.jmbg = jmbg;
 	}
 }

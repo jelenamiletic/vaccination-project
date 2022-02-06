@@ -5,6 +5,7 @@ export interface Gradjanin {
 	Prezime: string;
 	Email: string;
 	Lozinka: string;
+	JMBG: string;
 	Enabled: boolean;
 	Roles: Array<Role>;
 	lastPasswordResetDate: Date;

@@ -37,6 +37,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 				zdravstveniRadnik.setPunoIme(punoIme);
 				zdravstveniRadnik.setEmail("zdrav@gmail.com");
 				zdravstveniRadnik.setLozinka(passwordEncoder.encode("123"));
+				zdravstveniRadnik.setJMBG("1234567890123");
 				List<Role> roles = new ArrayList<Role>();
 				Role role = new Role();
 				role.setRoleName(RoleKonstante.ROLE_ZDRAVSTVENI_RADNIK);
@@ -51,11 +52,10 @@ public class CustomUserDetailsService implements UserDetailsService {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		Gradjanin gradjanin = null;
 		// Gradjanin
+		Gradjanin gradjanin = null;
 		try {
-			gradjanin = korisnikRepository.pronadjiGradjanina(email.toLowerCase());
+			gradjanin = korisnikRepository.pronadjiGradjanina(email.toLowerCase(), null);
 			if (gradjanin != null) {
 				return gradjanin;
 			}

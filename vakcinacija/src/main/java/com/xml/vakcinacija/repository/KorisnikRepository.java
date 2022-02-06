@@ -103,8 +103,8 @@ public class KorisnikRepository {
         return zdravstveniRadnici;
 	}
 
-	public Gradjanin pronadjiGradjanina(String email) throws Exception {
-		String xPathIzraz = String.format("/Gradjanin[ct:Email = '%s']", email);
+	public Gradjanin pronadjiGradjanina(String email, String jmbg) throws Exception {
+		String xPathIzraz = String.format("/Gradjanin[ct:Email = '%1$s' or ct:JMBG = %2$s]", email, jmbg);
 		String xml = this.pronadjiKorisnikaXml(XMLCollectionIdKonstante.COLLECTION_ID_GRADJANIN, xPathIzraz, 
 				XMLNamespaceKonstante.NAMESPACE_GRADJANIN);
 		if (xml != null) {

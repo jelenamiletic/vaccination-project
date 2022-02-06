@@ -45,7 +45,8 @@ public class AuthenticationController {
 			String jwt = tokenUtils.generateToken(korisnik.getUsername());
 			int expiresIn = tokenUtils.getExpiredIn();
 
-			return ResponseEntity.ok(new Token(jwt, expiresIn, korisnik.getUsername(), korisnik.getRoles().get(0).getRoleName()));
+			return ResponseEntity.ok(new Token(jwt, expiresIn, korisnik.getUsername(), 
+					korisnik.getRoles().get(0).getRoleName(), korisnik.getJMBG()));
 		} catch (InternalAuthenticationServiceException iase) {
 			return new ResponseEntity<Token>(HttpStatus.NOT_FOUND);
 		} catch (DisabledException de) {
