@@ -9,7 +9,6 @@ import {
 	CardBody,
 	FormFeedback,
 } from "reactstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
 import { registracijaSchema } from "./Validation/RegistracijaSchema";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";

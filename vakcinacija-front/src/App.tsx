@@ -7,6 +7,7 @@ import Login from "./Auth/Login";
 import Interesovanje from "./Gradjanin/Interesovanje/Interesovanje";
 import Profil from "./Profil";
 import ProtectedRoute from "./ProtectedRoute";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
 	return (

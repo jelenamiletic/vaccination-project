@@ -43,7 +43,7 @@ const Login = () => {
 						<Password>${jwtRequest.Lozinka}</Password>
 				    </JwtAuthenticationRequest>`;
 		axios
-			.post("http://localhost:8080/auth/login", xml, {
+			.post("http://localhost:8081/auth/login", xml, {
 				headers: {
 					"Content-Type": "application/xml",
 					"Access-Control-Allow-Origin": "*",
@@ -54,16 +54,14 @@ const Login = () => {
 				const result = parser.parse(res.data);
 				const token: Token = result.Token;
 				authService.storeToken(token);
-				if (
-					authService.getRole() === "ROLE_GRADJANIN" ||
-					authService.getRole() === "ROLE_ZDRAVSTVENI_RADNIK"
-				) {
+				if (authService.getRole() === "ROLE_SLUZBENIK") {
 					navigate("/profil");
 				}
 			})
 			.catch((err: any) => {
 				let message = "";
 				if (err.response.status === 404) {
+					console.log("AAAAAAAAAAAAA");
 					message = "Pogresni kredencijali!";
 				}
 				toast.error(message, {
