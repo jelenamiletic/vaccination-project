@@ -51,12 +51,12 @@
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
-                <xs:element name = "UkupanBrojDatihDoza" type = "xs:positiveInteger"/>
+                <xs:element name = "UkupanBrojDatihDoza" type = "xs:integer"/>
                 <xs:element name = "KolicnaDozaPoRednomBroju" maxOccurs="unbounded">
                     <xs:complexType>
                         <xs:sequence>
                             <xs:element name = "RedniBroj" type = "xs:positiveInteger"/>
-                            <xs:element name = "BrojDatihDoza" type = "xs:positiveInteger"/>
+                            <xs:element name = "BrojDatihDoza" type = "xs:integer"/>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
@@ -64,7 +64,7 @@
                     <xs:complexType>
                         <xs:sequence>
                             <xs:element name = "Proizvodjac" type = "ct:Proizvodjac"/>
-                            <xs:element name = "BrojDatihDoza" type = "xs:positiveInteger"/>
+                            <xs:element name = "BrojDatihDoza" type = "xs:integer"/>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
@@ -83,12 +83,12 @@
         </xs:key>
     </xs:element>
     <xs:simpleType name="BrojPodnetihDokumenata">
-    	<xs:restriction base = "xs:positiveInteger"/>
+    	<xs:restriction base = "xs:integer"/>
     </xs:simpleType>
     <xs:simpleType name = "BrojPrimljenih">
-    	<xs:restriction base = "xs:positiveInteger"/>
+    	<xs:restriction base = "xs:integer"/>
     </xs:simpleType>
     <xs:simpleType name = "BrojIzdatih">
-    	<xs:restriction base = "xs:positiveInteger"/>
+    	<xs:restriction base = "xs:integer"/>
     </xs:simpleType>
 </xs:schema>

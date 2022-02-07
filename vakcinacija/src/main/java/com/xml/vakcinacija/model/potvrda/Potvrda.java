@@ -159,17 +159,17 @@ public class Potvrda {
 	public static class VakcinaPrveDveDoze {
 		
 		@XmlValue
-        protected String value;
+        protected Proizvodjac value;
         @XmlAttribute(name = "property")
         protected String property;
         @XmlAttribute(name = "datatype")
         protected String datatype;
         
-		public String getValue() {
+		public Proizvodjac getValue() {
 			return value;
 		}
 		
-		public void setValue(String value) {
+		public void setValue(Proizvodjac value) {
 			this.value = value;
 		}
 		

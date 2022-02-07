@@ -12,10 +12,10 @@
         <iz:OdDatum>2021-08-01</iz:OdDatum>
         <iz:DoDatum>2021-09-01</iz:DoDatum>
     </iz:PeriodIzvestaja>
-    <iz:BrojPodnetihDokumenata property = "pred:brojPodnetihDokumenata" datatype = "xs:positiveInteger">2758</iz:BrojPodnetihDokumenata>
+    <iz:BrojPodnetihDokumenata property = "pred:brojPodnetihDokumenata" datatype = "xs:integer">2758</iz:BrojPodnetihDokumenata>
     <iz:ZahteviZaDigitalniSertifikat>
-        <iz:BrojPrimljenih property = "pred:brojPrimljenih" datatype = "xs:positiveInteger">456</iz:BrojPrimljenih>
-        <iz:BrojIzdatih property = "pred:brojIzdatih" datatype = "xs:positiveInteger">428</iz:BrojIzdatih>
+        <iz:BrojPrimljenih property = "pred:brojPrimljenih" datatype = "xs:integer">456</iz:BrojPrimljenih>
+        <iz:BrojIzdatih property = "pred:brojIzdatih" datatype = "xs:integer">428</iz:BrojIzdatih>
     </iz:ZahteviZaDigitalniSertifikat>
     <iz:UkupanBrojDatihDoza>3225</iz:UkupanBrojDatihDoza>
     <iz:KolicnaDozaPoRednomBroju>

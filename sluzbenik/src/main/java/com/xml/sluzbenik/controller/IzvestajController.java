@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.xml.sluzbenik.model.Period;
 import com.xml.sluzbenik.model.izvestaj.Izvestaj;
 import com.xml.sluzbenik.model.izvestaj.ListaIzvestaja;
 import com.xml.sluzbenik.service.IzvestajService;
@@ -25,10 +26,10 @@ public class IzvestajController {
 	@Autowired
 	private IzvestajService izvestajService;
 
-	@PostMapping(value = "/dodajNoviIzvestaj", consumes = MediaType.APPLICATION_XML_VALUE)
+	@PostMapping(value = "/dodajNoviIzvestaj", consumes = MediaType.APPLICATION_XML_VALUE, produces = MediaType.APPLICATION_XML_VALUE)
 	@PreAuthorize("hasRole('ROLE_SLUZBENIK')")
-	public void dodajNoviIzvestaj(@RequestBody String izvestajXML) throws Exception {
-		izvestajService.dodajNoviIzvestaj(izvestajXML);
+	public ResponseEntity<Izvestaj> dodajNoviIzvestaj(@RequestBody Period period) throws Exception {
+		return new ResponseEntity<>(izvestajService.dodajNoviIzvestaj(period), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/pronadjiSve", produces = MediaType.APPLICATION_XML_VALUE)
