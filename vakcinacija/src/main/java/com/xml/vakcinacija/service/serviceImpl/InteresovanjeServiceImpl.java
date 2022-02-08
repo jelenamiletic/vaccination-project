@@ -4,10 +4,12 @@ import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.xml.vakcinacija.exception.InteresovanjeNijePronadjenoException;
 import com.xml.vakcinacija.exception.InteresovanjePostojiException;
+import com.xml.vakcinacija.model.gradjanin.Gradjanin;
 import com.xml.vakcinacija.model.interesovanje.Interesovanje;
 import com.xml.vakcinacija.repository.InteresovanjeRepository;
 import com.xml.vakcinacija.service.InteresovanjeService;
@@ -39,6 +41,11 @@ public class InteresovanjeServiceImpl implements InteresovanjeService {
 				throw new InteresovanjePostojiException(validanObjekat.getLicneInformacije().getJMBG().getValue());
 			}
 			validanObjekat.setDatumPodnosenja();
+			Gradjanin gradjanin = (Gradjanin) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			
+			validanObjekat.getLicneInformacije().getDrzavljanstvo().setValue(gradjanin.getDrzavljanstvo());
+			validanObjekat.getLicneInformacije().getPunoIme().setIme(gradjanin.getPunoIme().getIme());
+			validanObjekat.getLicneInformacije().getPunoIme().setPrezime(gradjanin.getPunoIme().getPrezime());
 			interesovanjeRepository.saveInteresovanjeObjekat(validanObjekat);
 			
 			try {
