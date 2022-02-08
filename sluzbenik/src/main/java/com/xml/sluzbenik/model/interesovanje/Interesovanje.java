@@ -1,5 +1,6 @@
 package com.xml.sluzbenik.model.interesovanje;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -12,6 +13,7 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
 import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeConstants;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
@@ -85,7 +87,8 @@ public class Interesovanje {
 	public void setDatumPodnosenja() throws DatatypeConfigurationException {
 		GregorianCalendar c = new GregorianCalendar();
 		c.setTime(new Date());
-		XMLGregorianCalendar date2 = DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
+		XMLGregorianCalendar date2 = DatatypeFactory.newInstance().newXMLGregorianCalendarDate(c.get(Calendar.YEAR), 
+				c.get(Calendar.MONTH)+1, c.get(Calendar.DAY_OF_MONTH), DatatypeConstants.FIELD_UNDEFINED);
 		DatumPodnosenja = date2;
 	}
 

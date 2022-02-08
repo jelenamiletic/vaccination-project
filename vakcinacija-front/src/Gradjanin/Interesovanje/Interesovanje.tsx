@@ -4,11 +4,21 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { Button, Card, CardBody, CardTitle, Form, FormFeedback, FormGroup, Input, Label } from "reactstrap";
+import {
+	Button,
+	Card,
+	CardBody,
+	CardTitle,
+	Form,
+	FormFeedback,
+	FormGroup,
+	Input,
+	Label,
+} from "reactstrap";
 import { InteresovanjeXML } from "../../Models/Interesovanje";
 import GradjaninNavbar from "../../Navbars/GradjaninNavbar";
 import { interesovanjeSchema } from "./Validation/InteresovanjeSchema";
-import {getJMBG, getEmail} from "../../Auth/AuthService";
+import { getJMBG, getEmail } from "../../Auth/AuthService";
 
 const Interesovanje = () => {
 	const customId = "interesovanje";
@@ -37,18 +47,26 @@ const Interesovanje = () => {
 						vocab="http://www.ftn.uns.ac.rs/rdf/interesovanje/" 
 						about="http://www.ftn.uns.ac.rs/rdf/interesovanje/${getJMBG()}">
 						<in:LicneInformacije>
-							<in:Drzavljanstvo  property="pred:drzavljanstvo" datatype="xs:string">Drzavljаnin Republike Srbije</in:Drzavljanstvo>
+							<in:Drzavljanstvo  property="pred:drzavljanstvo" datatype="xs:string">Drzavljanin Republike Srbije</in:Drzavljanstvo>
 							<in:JMBG property="pred:jmbg" datatype="xs:string">${getJMBG()}</in:JMBG>
 							<in:PunoIme>
 								<ct:Ime></ct:Ime>
 								<ct:Prezime></ct:Prezime>
 							</in:PunoIme>
 							<in:AdresaElektronskePoste property="pred:email" datatype="xs:string">${getEmail()}</in:AdresaElektronskePoste>
-							<in:BrojMobilnogTelefona property="pred:brojMobilnogTelefona" datatype="xs:string">${interesovanje.BrojMobilnog}</in:BrojMobilnogTelefona>
-							<in:BrojFiksnogTelefona property="pred:brojFiksongTelefona" datatype="xs:string">${interesovanje.BrojFiksnog}</in:BrojFiksnogTelefona>
+							<in:BrojMobilnogTelefona property="pred:brojMobilnogTelefona" datatype="xs:string">${
+								interesovanje.BrojMobilnog
+							}</in:BrojMobilnogTelefona>
+							<in:BrojFiksnogTelefona property="pred:brojFiksongTelefona" datatype="xs:string">${
+								interesovanje.BrojFiksnog
+							}</in:BrojFiksnogTelefona>
 						</in:LicneInformacije>
-						<in:OpstinaPrimanja property="pred:opstinaPrimanja" datatype="xs:string">${interesovanje.OpstinaPrimanja}</in:OpstinaPrimanja>
-						<in:Vakcina property="pred:vakcina" datatype="xs:string">${interesovanje.Vakcina}</in:Vakcina>
+						<in:OpstinaPrimanja property="pred:opstinaPrimanja" datatype="xs:string">${
+							interesovanje.OpstinaPrimanja
+						}</in:OpstinaPrimanja>
+						<in:Vakcina property="pred:vakcina" datatype="xs:string">${
+							interesovanje.Vakcina
+						}</in:Vakcina>
 						<in:DavalacKrvi>${davalacValue}</in:DavalacKrvi>
 					</in:Interesovanje>`;
 		axios
@@ -123,7 +141,7 @@ const Interesovanje = () => {
 							/>
 							<FormFeedback>{errors.BrojFiksnog?.message}</FormFeedback>
 						</FormGroup>
-						<Label style={{ display: "block"}}>Davalac krvi</Label>
+						<Label style={{ display: "block" }}>Davalac krvi</Label>
 						<Label>Da</Label>
 						<Input
 							className="ml-2"
@@ -133,8 +151,7 @@ const Interesovanje = () => {
 							value="1"
 							innerRef={register}
 							onChange={() => setDavalacValue(true)}
-						>
-						</Input>
+						></Input>
 						<span className="pl-5">
 							<Label>Ne</Label>
 							<Input
@@ -145,14 +162,13 @@ const Interesovanje = () => {
 								value="0"
 								innerRef={register}
 								onChange={() => setDavalacValue(false)}
-							>
-							</Input>
+							></Input>
 						</span>
 						<Button
 							className="registruj-login-btn"
 							color="primary"
 							type="button"
-							style={{ display: "block"}}
+							style={{ display: "block" }}
 							onClick={handleSubmit(podnosenjeInteresovanja)}
 						>
 							Podnosi interesovanje

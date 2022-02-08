@@ -95,9 +95,9 @@
     </xs:element>
     <xs:simpleType name="Drzavljanstvo">
 	    <xs:restriction base="xs:string">
-	        <xs:enumeration value="Drzavljаnin Republike Srbije"/>
-	        <xs:enumeration value="Strani drzavljаnin sa boravkom u RS"/>
-	        <xs:enumeration value="Strani drzavljаnin bez boravka u RS"/>
+	        <xs:enumeration value="Drzavljanin Republike Srbije"/>
+	        <xs:enumeration value="Strani drzavljanin sa boravkom u RS"/>
+	        <xs:enumeration value="Strani drzavljanin bez boravka u RS"/>
 	    </xs:restriction>
     </xs:simpleType>
 </xs:schema>
