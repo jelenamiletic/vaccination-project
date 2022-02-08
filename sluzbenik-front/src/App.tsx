@@ -5,8 +5,9 @@ import Login from "./Auth/Login";
 import Glavna from "./Glavna";
 import ProtectedRoute from "./ProtectedRoute";
 import Profil from "./Profil";
-import Izvestaji from "./Sluzbenik/Izvestaji";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap-daterangepicker/daterangepicker.css";
+import Izvestaji from "./Sluzbenik/Izvestaji/Izvestaji";
 
 function App() {
 	return (

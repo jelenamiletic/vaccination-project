@@ -1,0 +1,20 @@
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:h="http://www.w3.org/1999/xhtml">
+<rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/sertifikat/5483355353509">
+<pred:jmbg xmlns:pred="http://www.ftn.uns.ac.rs/rdf/sertifikat/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">5483355353509</pred:jmbg>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/sertifikat/5483355353509">
+<pred:brojPasosa xmlns:pred="http://www.ftn.uns.ac.rs/rdf/sertifikat/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">040503921</pred:brojPasosa>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/sertifikat/5483355353509">
+<pred:tipVakcine xmlns:pred="http://www.ftn.uns.ac.rs/rdf/sertifikat/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">Sinopharm</pred:tipVakcine>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/sertifikat/5483355353509">
+<pred:tipVakcine xmlns:pred="http://www.ftn.uns.ac.rs/rdf/sertifikat/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">Sinopharm</pred:tipVakcine>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/sertifikat/5483355353509">
+<pred:tipVakcine xmlns:pred="http://www.ftn.uns.ac.rs/rdf/sertifikat/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">Pfizer-BioNTech</pred:tipVakcine>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/sertifikat/5483355353509">
+<pred:rezultat xmlns:pred="http://www.ftn.uns.ac.rs/rdf/sertifikat/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">Negativan</pred:rezultat>
+</rdf:Description>
+</rdf:RDF>

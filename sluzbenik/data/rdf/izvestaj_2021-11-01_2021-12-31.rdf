@@ -1,0 +1,11 @@
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:h="http://www.w3.org/1999/xhtml">
+<rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/izvestaj/2021-11-01/2021-12-31">
+<pred:brojPodnetihDokumenata xmlns:pred="http://ftn.uns.ac.rs/vakcinacija/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemainteger">0</pred:brojPodnetihDokumenata>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/izvestaj/2021-11-01/2021-12-31">
+<pred:brojPrimljenih xmlns:pred="http://ftn.uns.ac.rs/vakcinacija/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemainteger">3</pred:brojPrimljenih>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/izvestaj/2021-11-01/2021-12-31">
+<pred:brojIzdatih xmlns:pred="http://ftn.uns.ac.rs/vakcinacija/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemainteger">1</pred:brojIzdatih>
+</rdf:Description>
+</rdf:RDF>

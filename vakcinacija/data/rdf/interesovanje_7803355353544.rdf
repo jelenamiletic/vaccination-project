@@ -1,0 +1,23 @@
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:h="http://www.w3.org/1999/xhtml">
+<rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/interesovanje/7803355353544">
+<pred:drzavljanstvo xmlns:pred="http://www.ftn.uns.ac.rs/rdf/interesovanje/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">Drzavljаnin Republike Srbije</pred:drzavljanstvo>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/interesovanje/7803355353544">
+<pred:jmbg xmlns:pred="http://www.ftn.uns.ac.rs/rdf/interesovanje/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">7803355353544</pred:jmbg>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/interesovanje/7803355353544">
+<pred:email xmlns:pred="http://www.ftn.uns.ac.rs/rdf/interesovanje/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">harkuza@gmail.com</pred:email>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/interesovanje/7803355353544">
+<pred:brojMobilnogTelefona xmlns:pred="http://www.ftn.uns.ac.rs/rdf/interesovanje/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">0635678901</pred:brojMobilnogTelefona>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/interesovanje/7803355353544">
+<pred:brojFiksongTelefona xmlns:pred="http://www.ftn.uns.ac.rs/rdf/interesovanje/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">015518556</pred:brojFiksongTelefona>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/interesovanje/7803355353544">
+<pred:opstinaPrimanja xmlns:pred="http://www.ftn.uns.ac.rs/rdf/interesovanje/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">Sabac</pred:opstinaPrimanja>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/interesovanje/7803355353544">
+<pred:vakcina xmlns:pred="http://www.ftn.uns.ac.rs/rdf/interesovanje/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">Pfizer-BioNTech</pred:vakcina>
+</rdf:Description>
+</rdf:RDF>
