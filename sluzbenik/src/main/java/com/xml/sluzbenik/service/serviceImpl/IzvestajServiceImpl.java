@@ -49,7 +49,6 @@ import com.xml.sluzbenik.security.TokenBasedAuthentication;
 import com.xml.sluzbenik.service.IzvestajService;
 import com.xml.sluzbenik.service.MarshallerService;
 import com.xml.sluzbenik.service.RDFService;
-import com.xml.sluzbenik.service.UnmarshallerService;
 import com.xml.sluzbenik.utils.ContextPutanjeKonstante;
 import com.xml.sluzbenik.utils.NamedGraphURIKonstante;
 import com.xml.sluzbenik.utils.XSDPutanjeKonstante;
@@ -59,9 +58,6 @@ public class IzvestajServiceImpl implements IzvestajService {
 	
 	@Autowired
 	private MarshallerService marshallerService;
-	
-	@Autowired
-	private UnmarshallerService unmarshallerService;
 	
 	@Autowired
 	private RDFService rdfService;
@@ -79,12 +75,6 @@ public class IzvestajServiceImpl implements IzvestajService {
 		String odDoDatumiStr = odDatumStr + "_" + doDatumStr;
 		if (period.getOdDatum().toGregorianCalendar().compareTo(period.getDoDatum().toGregorianCalendar()) > 0) {
 			throw new NevalidanRedosledDatumaException(odDatumStr, doDatumStr);
-		}
-		String pronadjenIzvestajXml = izvestajRepository.pronadjiIzvestajXml(odDatumStr, doDatumStr);
-		if (pronadjenIzvestajXml != null) {
-			Izvestaj izvestaj = (Izvestaj) unmarshallerService.unmarshal(pronadjenIzvestajXml, ContextPutanjeKonstante.CONTEXT_PUTANJA_IZVESTAJ, 
-					XSDPutanjeKonstante.XSD_IZVESTAJ);
-			return izvestaj;
 		}
 		Izvestaj izvestaj = formirajIzvestaj(period);
 		izvestaj.setVocab("http://www.ftn.uns.ac.rs/rdf/izvestaj/");
