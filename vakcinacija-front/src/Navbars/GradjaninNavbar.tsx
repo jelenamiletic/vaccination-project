@@ -22,6 +22,9 @@ const GradjaninNavbar = () => {
 							<Link to="/interesovanje">Interesovanje</Link>
 						</NavItem>
 						<NavItem>
+							<Link to="/saglasnost">Saglasnosti</Link>
+						</NavItem>
+						<NavItem>
 							<Link to="/login" onClick={logout}>
 								Logout
 							</Link>

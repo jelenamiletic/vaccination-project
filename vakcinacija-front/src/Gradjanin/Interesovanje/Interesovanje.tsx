@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -23,8 +23,13 @@ import { getJMBG, getEmail } from "../../Auth/AuthService";
 const Interesovanje = () => {
 	const customId = "interesovanje";
 	const [davalacValue, setDavalacValue] = useState(false);
+	const [vecIma, setVecIma] = useState(false);
 
 	const navigate = useNavigate();
+
+	useEffect(() => {
+		proveriDalIma();
+	}, [])
 
 	const {
 		register,
@@ -34,6 +39,15 @@ const Interesovanje = () => {
 		resolver: yupResolver(interesovanjeSchema),
 		mode: "onChange",
 	});
+
+	const proveriDalIma = () => {
+		axios.get('http://localhost:8080/interesovanje/pronadjiInteresovanjePoJmbg/' + getJMBG())
+		.then((res: any) => {
+			setVecIma(true);
+		}).catch((err: any) => {
+			setVecIma(false);
+		})
+	}
 
 	const podnosenjeInteresovanja = (interesovanje: InteresovanjeXML) => {
 		let xml = `<in:Interesovanje
@@ -91,10 +105,12 @@ const Interesovanje = () => {
 	return (
 		<div>
 			<GradjaninNavbar />
-			<Card
+			{
+				!vecIma &&
+				<Card
 				className="card-login-registracija"
 				style={{ backgroundColor: "#DEEDE6", borderColor: "black" }}
-			>
+				>
 				<CardBody>
 					<CardTitle tag="h2">Interesovanje</CardTitle>
 					<Form className="form-login-registracija">
@@ -176,6 +192,18 @@ const Interesovanje = () => {
 					</Form>
 				</CardBody>
 			</Card>
+			}
+			{	vecIma && 
+					<Card
+					className="card-login-registracija"
+					style={{ backgroundColor: "#DEEDE6", borderColor: "black" }}
+					>
+						<CardBody>
+						<CardTitle tag="h2">Interesovanje</CardTitle>
+						<Label>Vec ste popunili formu za interesovanje</Label>
+						</CardBody>
+					</Card>
+			}
 		</div>
 	);
 };

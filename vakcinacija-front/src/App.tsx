@@ -8,6 +8,7 @@ import Interesovanje from "./Gradjanin/Interesovanje/Interesovanje";
 import Profil from "./Profil";
 import ProtectedRoute from "./ProtectedRoute";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Saglasnost from "./Gradjanin/Saglasnost/Saglasnost";
 
 function App() {
 	return (
@@ -33,6 +34,12 @@ function App() {
 							element={<ProtectedRoute roles={["ROLE_GRADJANIN"]} />}
 						>
 							<Route path="/interesovanje" element={<Interesovanje />} />
+						</Route>
+						<Route
+							path="/saglasnost"
+							element={<ProtectedRoute roles={["ROLE_GRADJANIN"]} />}
+						>
+							<Route path="/saglasnost" element={<Saglasnost />} />
 						</Route>
 					</Routes>
 				</Fragment>
