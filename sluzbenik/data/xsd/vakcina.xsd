@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:va="http:///www.ftn.uns.ac.rs/vakcinacija/vakcina"
+    xmlns:ct="http:///www.ftn.uns.ac.rs/vakcinacija/commonTypes"
+    targetNamespace="http:///www.ftn.uns.ac.rs/vakcinacija/vakcina" elementFormDefault="qualified">
+    <xs:import schemaLocation="CommonTypes.xsd"
+        namespace="http:///www.ftn.uns.ac.rs/vakcinacija/commonTypes"/>
+    <xs:element name="Vakcina">
+        <xs:complexType>
+        	<xs:sequence>
+        		<xs:element name = "Naziv" type = "ct:Proizvodjac"/>
+        		<xs:element name = "Kolicina" type = "xs:int"/>
+        	</xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

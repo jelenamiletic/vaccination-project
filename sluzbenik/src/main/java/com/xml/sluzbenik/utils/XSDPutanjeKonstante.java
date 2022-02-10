@@ -10,4 +10,5 @@ public class XSDPutanjeKonstante {
 	public static final String XSD_ZAHTEV = "data/xsd/zahtev.xsd";
 	
 	public static final String XSD_SLUZBENIK = "data/xsd/sluzbenik.xsd";
+	public static final String XSD_VAKCINA = "data/xsd/vakcina.xsd";
 }

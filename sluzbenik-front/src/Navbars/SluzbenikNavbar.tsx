@@ -22,6 +22,9 @@ const SluzbenikNavbar = () => {
 							<Link to="/izvestaji">Izvestaji</Link>
 						</NavItem>
 						<NavItem>
+							<Link to="/vakcine">Vakcine</Link>
+						</NavItem>
+						<NavItem>
 							<Link to="/login" onClick={logout}>
 								Logout
 							</Link>
