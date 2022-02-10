@@ -1,0 +1,14 @@
+.div-tabela {
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	border: 10px solid black;
+	max-width: 1000px;
+	margin-bottom: 1em;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 100px;
+	padding: 1em;
+}
+
+.tabela-header {
+	font-weight: 600;
+}

@@ -8,6 +8,7 @@ import Profil from "./Profil";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-daterangepicker/daterangepicker.css";
 import Izvestaji from "./Sluzbenik/Izvestaji/Izvestaji";
+import Vakcine from "./Sluzbenik/Vakcine/Vakcine";
 
 function App() {
 	return (
@@ -28,6 +29,12 @@ function App() {
 							element={<ProtectedRoute roles={["ROLE_SLUZBENIK"]} />}
 						>
 							<Route path="/izvestaji" element={<Izvestaji />} />
+						</Route>
+						<Route
+							path="/vakcine"
+							element={<ProtectedRoute roles={["ROLE_SLUZBENIK"]} />}
+						>
+							<Route path="/vakcine" element={<Vakcine />} />
 						</Route>
 					</Routes>
 				</Fragment>

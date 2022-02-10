@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import com.xml.sluzbenik.model.sluzbenik.Sluzbenik;
+import com.xml.sluzbenik.model.Korisnik;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -92,10 +93,16 @@ public class TokenUtils {
 	}
 	
 	public Boolean validateToken(String token, UserDetails userDetails) {
-		Sluzbenik user = (Sluzbenik) userDetails;
+		Timestamp timestamp = null;
+		if (userDetails instanceof Sluzbenik) {
+			Sluzbenik sluz = (Sluzbenik) userDetails;
+			timestamp = new Timestamp(sluz.getLastPasswordResetDate().toGregorianCalendar().getTimeInMillis());
+		} else {
+			Korisnik user = (Korisnik) userDetails;
+			timestamp = new Timestamp(user.getLastPasswordResetDate().toGregorianCalendar().getTimeInMillis());
+		}
 		final String username = getUsernameFromToken(token);
 		final Date created = getIssuedAtDateFromToken(token);
-		Timestamp timestamp = new Timestamp(user.getLastPasswordResetDate().toGregorianCalendar().getTimeInMillis());
 		return (username != null
 			&& username.equals(userDetails.getUsername())
 			&& !isCreatedBeforeLastPasswordReset(created, timestamp));

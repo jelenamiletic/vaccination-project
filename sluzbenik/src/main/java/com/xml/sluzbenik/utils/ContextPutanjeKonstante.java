@@ -10,4 +10,8 @@ public class ContextPutanjeKonstante {
 	public static final String CONTEXT_PUTANJA_ZAHTEV = "com.xml.sluzbenik.model.zahtev"; 
 	
 	public static final String CONTEXT_PUTANJA_SLUZBENIK = "com.xml.sluzbenik.model.sluzbenik";
+	public static final String CONTEXT_PUTANJA_VAKCINA = "com.xml.sluzbenik.model.vakcina";
+	
+	public static final String CONTEXT_PUTANJA_GRADJANIN = "com.xml.sluzbenik.model.gradjanin";
+	public static final String CONTEXT_PUTANJA_ZDRAVSTVENI_RADNIK = "com.xml.sluzbenik.model.zdravstveni_radnik";
 }

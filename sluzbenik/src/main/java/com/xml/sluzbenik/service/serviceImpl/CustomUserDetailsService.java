@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -55,10 +54,6 @@ public class CustomUserDetailsService implements UserDetailsService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		if (sluzbenik == null) {
-			throw new UsernameNotFoundException(String.format("Sluzbenik sa email-om '%s' nije pronadjen.", sluzbenik));
-		} else {
-			return sluzbenik;
-		}
+		return sluzbenik;
 	}
 }
