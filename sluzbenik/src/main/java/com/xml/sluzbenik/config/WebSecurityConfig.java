@@ -68,7 +68,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 						"/izvestaj/pronadjiSve", 
 						"/izvestaj/pronadjiSve", 
 						"/izvestaj/pronadjiIzvestaj/{odDatum}/{doDatum}", 
-						"/izvestaj/nabaviMetaPodatkeXmlPoDatumima/{odDatum}/{doDatum}"
+						"/izvestaj/nabaviMetaPodatkeXmlPoDatumima/{odDatum}/{doDatum}",
+						"/izvestaj/generisiPdf/{odDatum}/{doDatum}"
 				).hasAuthority(RoleKonstante.ROLE_SLUZBENIK)
 				
 				.antMatchers("/vakcina/dobaviSve", "/vakcina/azurirajKolicinu").hasAuthority(RoleKonstante.ROLE_SLUZBENIK)

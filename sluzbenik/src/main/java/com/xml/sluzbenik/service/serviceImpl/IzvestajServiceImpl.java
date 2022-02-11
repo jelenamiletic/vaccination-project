@@ -1,5 +1,6 @@
 package com.xml.sluzbenik.service.serviceImpl;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -52,6 +53,7 @@ import com.xml.sluzbenik.service.RDFService;
 import com.xml.sluzbenik.utils.ContextPutanjeKonstante;
 import com.xml.sluzbenik.utils.NamedGraphURIKonstante;
 import com.xml.sluzbenik.utils.XSDPutanjeKonstante;
+import com.xml.sluzbenik.utils.XSLFOKonstante;
 
 @Service
 public class IzvestajServiceImpl implements IzvestajService {
@@ -67,6 +69,9 @@ public class IzvestajServiceImpl implements IzvestajService {
 	
 	@Autowired
 	private RestTemplate restTemplate;
+	
+	@Autowired
+	private PDFTransformerService pdfTransformerService;
 
 	@Override
 	public Izvestaj dodajNoviIzvestaj(Period period) throws Exception {
@@ -307,5 +312,14 @@ public class IzvestajServiceImpl implements IzvestajService {
 	public void nabaviMetaPodatkeXmlPoDatumima(String odDatum, String doDatum) throws IOException {
 		String query = String.format("?s ?p ?o. FILTER (?s = <http://www.ftn.uns.ac.rs/rdf/izvestaj/%1$s/%2$s>)", odDatum, doDatum);
 		rdfService.getMetadataXML(query, "izvestaj_" + odDatum + "_" + doDatum, NamedGraphURIKonstante.SLUZBENIK_NAMED_GRAPH);
+	}
+
+	@Override
+	public ByteArrayInputStream generisiPdf(String odDatum, String doDatum) throws Exception {
+		String izvestajXml = izvestajRepository.pronadjiIzvestajXml(odDatum, doDatum);
+		if (izvestajXml == null) {
+			throw new IzvestajNijePronadjenException(odDatum, doDatum);
+		}
+		return pdfTransformerService.generatePDF(izvestajXml, XSLFOKonstante.IZVESTAJ_XSL_FO);
 	}
 }

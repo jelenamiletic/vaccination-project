@@ -3,6 +3,7 @@ package com.xml.sluzbenik.controller;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -50,5 +51,11 @@ public class IzvestajController {
 	@PreAuthorize("hasRole('ROLE_SLUZBENIK')")
 	public void nabaviMetaPodatkeXmlPoDatumima(@PathVariable String odDatum, @PathVariable String doDatum) throws IOException {
 		izvestajService.nabaviMetaPodatkeXmlPoDatumima(odDatum, doDatum);
+	}
+	
+	@GetMapping(value = "/generisiPdf/{odDatum}/{doDatum}", produces = MediaType.APPLICATION_PDF_VALUE)
+	@PreAuthorize("hasRole('ROLE_SLUZBENIK')")
+	public ResponseEntity<InputStreamResource> generisiPdf(@PathVariable String odDatum, @PathVariable String doDatum) throws Exception {
+		return new ResponseEntity<>(new InputStreamResource(izvestajService.generisiPdf(odDatum, doDatum)), HttpStatus.OK);
 	}
 }

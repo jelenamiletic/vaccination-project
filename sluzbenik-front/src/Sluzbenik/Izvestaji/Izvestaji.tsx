@@ -9,6 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useState } from "react";
 import { XMLParser } from "fast-xml-parser";
 import { Izvestaj } from "../../Models/Izvestaj";
+import { saveAs } from "file-saver";
 Chart.register(...registerables);
 
 toast.configure();
@@ -19,6 +20,8 @@ const Izvestaji = () => {
 	const [podaciPoProizvodjacu, setPodaciPoProizvodjacu] = useState(Object);
 	const [podaciRedniBrojDoze, setPodaciRedniBrojDoze] = useState(Object);
 	const [activateSpinner, setActivateSpinner] = useState(false);
+	const [odaberiPeriodBtnPozicija, setOdaberiPeriodBtnPozicija] =
+		useState("12");
 
 	const poProizvodjacuLabele = [
 		"Pfizer-BioNTech",
@@ -107,6 +110,7 @@ const Izvestaji = () => {
 				});
 				setActivateSpinner(false);
 				setIzvestaj(iz);
+				setOdaberiPeriodBtnPozicija("4");
 			})
 			.catch((err: any) => {
 				toast.error(err.response.data, {
@@ -117,16 +121,65 @@ const Izvestaji = () => {
 			});
 	};
 
+	const downloadPdf = () => {
+		axios
+			.get(
+				`http://localhost:8081/izvestaj/generisiPdf/${
+					izvestaj!["iz:PeriodIzvestaja"]["iz:OdDatum"]
+				}/${izvestaj!["iz:PeriodIzvestaja"]["iz:DoDatum"]}`,
+				{
+					headers: {
+						"Access-Control-Allow-Origin": "*",
+					},
+					responseType: "blob",
+				}
+			)
+			.then((res: any) => {
+				let blob = new Blob([res.data], {
+					type: "application/pdf;charset=utf-8",
+				});
+				saveAs(
+					blob,
+					`izvestaj_${izvestaj!["iz:PeriodIzvestaja"]["iz:OdDatum"]}_${
+						izvestaj!["iz:PeriodIzvestaja"]["iz:DoDatum"]
+					}`
+				);
+			})
+			.catch((err: any) => {
+				toast.error(err.response.data, {
+					position: toast.POSITION.TOP_CENTER,
+					autoClose: false,
+					toastId: customId,
+				});
+			});
+	};
+
+	const downloadXHTML = () => {};
+
 	return (
 		<div>
 			<SluzbenikNavbar />
 			<Container>
 				<Row>
-					<Col className="pt-4">
+					<Col md={odaberiPeriodBtnPozicija} className="pt-4">
 						<DateRangePicker onCallback={formirajIzvestaj}>
 							<button className="btn btn-primary">Odaberi period</button>
 						</DateRangePicker>
 					</Col>
+					{izvestaj !== null && (
+						<Col md="4" style={{ paddingTop: "24px" }}>
+							<button className="btn btn-primary" onClick={downloadPdf}>
+								Izvestaj - PDF
+							</button>
+						</Col>
+					)}
+					{izvestaj !== null && (
+						<Col md="4" style={{ paddingTop: "24px" }}>
+							<button className="btn btn-primary" onClick={downloadXHTML}>
+								Izvestaj - XHTML
+							</button>
+						</Col>
+					)}
 				</Row>
 				{activateSpinner && (
 					<Row>
