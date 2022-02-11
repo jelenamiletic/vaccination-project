@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <fop version="1.0">
-    <renderers>
-    <renderer mime="application/pdf">
-     <fonts>                           
-        <font kerning="yes" embed-url="file:///C:/windows/fonts/arial.ttf">
-            <font-triplet name="Arial" style="normal" weight="normal"/>
-        </font>                     
-    </fonts>
-    </renderer>
-  </renderers>
+<renderers>
+  <renderer mime="application/pdf">
+     <fonts>
+        <auto-detect/>
+     </fonts>
+  </renderer>
+</renderers>
+
   <!-- Strict user configuration -->
   <strict-configuration>true</strict-configuration>
 
