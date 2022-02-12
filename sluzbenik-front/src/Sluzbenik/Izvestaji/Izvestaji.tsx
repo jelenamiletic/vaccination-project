@@ -154,7 +154,38 @@ const Izvestaji = () => {
 			});
 	};
 
-	const downloadXHTML = () => {};
+	const downloadXHTML = () => {
+		axios
+			.get(
+				`http://localhost:8081/izvestaj/generisiXHTML/${
+					izvestaj!["iz:PeriodIzvestaja"]["iz:OdDatum"]
+				}/${izvestaj!["iz:PeriodIzvestaja"]["iz:DoDatum"]}`,
+				{
+					headers: {
+						"Access-Control-Allow-Origin": "*",
+					},
+					responseType: "blob",
+				}
+			)
+			.then((res: any) => {
+				let blob = new Blob([res.data], {
+					type: "text/html;charset=utf-8",
+				});
+				saveAs(
+					blob,
+					`izvestaj_${izvestaj!["iz:PeriodIzvestaja"]["iz:OdDatum"]}_${
+						izvestaj!["iz:PeriodIzvestaja"]["iz:DoDatum"]
+					}`
+				);
+			})
+			.catch((err: any) => {
+				toast.error(err.response.data, {
+					position: toast.POSITION.TOP_CENTER,
+					autoClose: false,
+					toastId: customId,
+				});
+			});
+	};
 
 	return (
 		<div>

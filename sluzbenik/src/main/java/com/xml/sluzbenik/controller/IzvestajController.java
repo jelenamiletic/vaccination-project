@@ -58,4 +58,10 @@ public class IzvestajController {
 	public ResponseEntity<InputStreamResource> generisiPdf(@PathVariable String odDatum, @PathVariable String doDatum) throws Exception {
 		return new ResponseEntity<>(new InputStreamResource(izvestajService.generisiPdf(odDatum, doDatum)), HttpStatus.OK);
 	}
+	
+	@GetMapping(value = "/generisiXHTML/{odDatum}/{doDatum}", produces = MediaType.TEXT_HTML_VALUE)
+	@PreAuthorize("hasRole('ROLE_SLUZBENIK')")
+	public ResponseEntity<InputStreamResource> generisiXHTML(@PathVariable String odDatum, @PathVariable String doDatum) throws Exception {
+		return new ResponseEntity<>(new InputStreamResource(izvestajService.generisiXHTML(odDatum, doDatum)), HttpStatus.OK);
+	}
 }

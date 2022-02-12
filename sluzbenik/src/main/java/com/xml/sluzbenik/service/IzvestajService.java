@@ -19,4 +19,6 @@ public interface IzvestajService {
 	
 	ByteArrayInputStream generisiPdf(String odDatum, String doDatum) throws Exception;
 
+	ByteArrayInputStream generisiXHTML(String odDatum, String doDatum) throws Exception;
+
 }

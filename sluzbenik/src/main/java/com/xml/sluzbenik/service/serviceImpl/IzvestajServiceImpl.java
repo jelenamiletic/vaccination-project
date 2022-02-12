@@ -54,6 +54,7 @@ import com.xml.sluzbenik.utils.ContextPutanjeKonstante;
 import com.xml.sluzbenik.utils.NamedGraphURIKonstante;
 import com.xml.sluzbenik.utils.XSDPutanjeKonstante;
 import com.xml.sluzbenik.utils.XSLFOKonstante;
+import com.xml.sluzbenik.utils.XSLKonstante;
 
 @Service
 public class IzvestajServiceImpl implements IzvestajService {
@@ -72,6 +73,9 @@ public class IzvestajServiceImpl implements IzvestajService {
 	
 	@Autowired
 	private PDFTransformerService pdfTransformerService;
+	
+	@Autowired
+	private HTMLTransformerService htmlTransformerService;
 
 	@Override
 	public Izvestaj dodajNoviIzvestaj(Period period) throws Exception {
@@ -321,5 +325,14 @@ public class IzvestajServiceImpl implements IzvestajService {
 			throw new IzvestajNijePronadjenException(odDatum, doDatum);
 		}
 		return pdfTransformerService.generatePDF(izvestajXml, XSLFOKonstante.IZVESTAJ_XSL_FO);
+	}
+	
+	@Override
+	public ByteArrayInputStream generisiXHTML(String odDatum, String doDatum) throws Exception {
+		String izvestajXml = izvestajRepository.pronadjiIzvestajXml(odDatum, doDatum);
+		if (izvestajXml == null) {
+			throw new IzvestajNijePronadjenException(odDatum, doDatum);
+		}
+		return htmlTransformerService.generateHTML(izvestajXml, XSLKonstante.IZVESTAJ_XSL);
 	}
 }
