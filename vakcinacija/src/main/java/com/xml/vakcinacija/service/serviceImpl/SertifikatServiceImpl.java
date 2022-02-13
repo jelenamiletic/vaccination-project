@@ -1,5 +1,7 @@
 package com.xml.vakcinacija.service.serviceImpl;
 
+import com.xml.vakcinacija.utils.XSLFOKonstante;
+import com.xml.vakcinacija.utils.XSLKonstante;
 import com.xml.vakcinacija.exception.SertifikatNijePronadjenException;
 import com.xml.vakcinacija.exception.SertifikatPostojiException;
 import com.xml.vakcinacija.model.sertifikat.Sertifikat;
@@ -13,6 +15,7 @@ import com.xml.vakcinacija.utils.XSDPutanjeKonstante;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.List;
 
@@ -27,6 +30,12 @@ public class SertifikatServiceImpl implements SertifikatService {
 
     @Autowired
     private SertifikatRepository sertifikatRepository;
+    
+    @Autowired
+	private PDFTransformerService pdfTransformerService;
+	
+	@Autowired
+	private HTMLTransformerService htmlTransformerService;
 
 
     @Override
@@ -68,4 +77,22 @@ public class SertifikatServiceImpl implements SertifikatService {
         String query = String.format("?s ?p ?o. FILTER (?s = <http://www.ftn.uns.ac.rs/rdf/sertifikat/%s>)", jmbg);
         rdfService.getMetadataXML(query, "sertifikat_" + jmbg, NamedGraphURIKonstante.IMUNIZACIJA_NAMED_GRAPH);
     }
+    
+    @Override
+	public ByteArrayInputStream generisiPdf(String jmbg) throws Exception {
+		String sertifikatXml = sertifikatRepository.pronadjiSertifikatXmlPoJmbg(jmbg);
+		if (sertifikatXml == null) {
+			throw new SertifikatNijePronadjenException(jmbg);
+		}
+		return pdfTransformerService.generatePDF(sertifikatXml, XSLFOKonstante.SERTIFIKAT_XSL_FO);
+	}
+	
+	@Override
+	public ByteArrayInputStream generisiXHTML(String jmbg) throws Exception {
+		String sertifikatXml = sertifikatRepository.pronadjiSertifikatXmlPoJmbg(jmbg);
+		if (sertifikatXml == null) {
+			throw new SertifikatNijePronadjenException(jmbg);
+		}
+		return htmlTransformerService.generateHTML(sertifikatXml, XSLKonstante.SERTIFIKAT_XSL);
+	}
 }

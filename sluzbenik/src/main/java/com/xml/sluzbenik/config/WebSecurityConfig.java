@@ -75,6 +75,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				
 				.antMatchers("/vakcina/dobaviSve", "/vakcina/azurirajKolicinu").hasAuthority(RoleKonstante.ROLE_SLUZBENIK)
 				.antMatchers("/smanjiKolicinu/{nazivVakcine}").hasAuthority(RoleKonstante.ROLE_ZDRAVSTVENI_RADNIK)
+				
+				.antMatchers
+				(
+						"/odgovorNaZahtev//dobaviSveNeodobreneZahteve",
+						"/odgovorNaZahtev/promeniStatusZahteva/{jmbg}",
+						"/odgovorNaZahtev/dobaviPoslednjuPotvrduPoJmbg/{jmbg}",
+						"/odgovorNaZahtev/dodajNoviSertifikat"
+				).hasAuthority(RoleKonstante.ROLE_SLUZBENIK)
 			.anyRequest().authenticated().and()
 			.cors().and()
 			.addFilterBefore(new TokenAuthenticationFilter(tokenUtils, customUserDetailsService), BasicAuthenticationFilter.class);
@@ -87,5 +95,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		web.ignoring().antMatchers(HttpMethod.GET, "/", "/webjars/**", "/*.html", "favicon.ico", "/**/*.html",
 				"/**/*.css", "/**/*.js");
 	}
-
 }

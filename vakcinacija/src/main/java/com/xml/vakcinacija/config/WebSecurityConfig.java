@@ -74,6 +74,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/potvrda/pronadjiSve").hasAuthority(RoleKonstante.ROLE_SLUZBENIK)
 				.antMatchers("/potvrda/pronadjiPotvrdaPoJmbg/{jmbg}/{brojDoze}").hasAnyAuthority(RoleKonstante.ROLE_GRADJANIN, RoleKonstante.ROLE_SLUZBENIK)
 				.antMatchers("/potvrda/nabaviMetaPodatkeXmlPoJmbg/{jmbg}/{brojDoze}").hasAnyAuthority(RoleKonstante.ROLE_GRADJANIN, RoleKonstante.ROLE_SLUZBENIK)
+				.antMatchers("/potvrda/dobaviPoslednjuPotvrduPoJmbg/{jmbg}").hasAuthority(RoleKonstante.ROLE_SLUZBENIK)
 				
 				// Saglasnost controller
 				.antMatchers("/saglasnost/dodajNovuSaglasnost").hasAuthority(RoleKonstante.ROLE_GRADJANIN)

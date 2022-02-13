@@ -96,8 +96,45 @@ public class PotvrdaRepository {
         return potvrda;
     }
 	
+	public String dobaviPoslednjuPotvrduXmlPoJmbg(String jmbg) throws Exception {
+        String xPathIzraz = String.format("/Potvrda[LicneInformacije/JMBG = '%s' and InformacijeOVakcinama/BrojDoze = max(InformacijeOVakcinama/BrojDoze)]", jmbg);
+        ResourceSet rezultat = ExistRetrieve.izvrsiXPathIzraz(XMLCollectionIdKonstante.COLLECTION_ID_POTVRDA, 
+        		xPathIzraz, XMLNamespaceKonstante.NAMESPACE_POTVRDA);
+        if (rezultat == null)
+            return null;
+
+        ResourceIterator i = rezultat.getIterator();
+        XMLResource res = null;
+        String potvrda = null;
+
+        if (i.hasMoreResources()) {
+            res = (XMLResource) i.nextResource();
+            potvrda = res.getContent().toString();
+        }
+
+        if (res != null) {
+            try {
+                ((EXistResource) res).freeResources();
+            } catch (XMLDBException exception) {
+                exception.printStackTrace();
+            }
+        }
+
+        return potvrda;
+    }
+	
 	public Potvrda pronadjiPotvrdaPoJmbg(String jmbg, int brojDoze) throws Exception {
 		String xml = this.pronadjiPotvrdaXmlPoJmbg(jmbg, brojDoze);
+		if (xml != null) {
+			return (Potvrda) unmarshallerService.unmarshal(xml, 
+				ContextPutanjeKonstante.CONTEXT_PUTANJA_POTVRDA, 
+				XSDPutanjeKonstante.XSD_POTVRDA);
+		}
+		return null;
+	}
+	
+	public Potvrda dobaviPoslednjuPotvrduPoJmbg(String jmbg) throws Exception {
+		String xml = this.dobaviPoslednjuPotvrduXmlPoJmbg(jmbg);
 		if (xml != null) {
 			return (Potvrda) unmarshallerService.unmarshal(xml, 
 				ContextPutanjeKonstante.CONTEXT_PUTANJA_POTVRDA, 
