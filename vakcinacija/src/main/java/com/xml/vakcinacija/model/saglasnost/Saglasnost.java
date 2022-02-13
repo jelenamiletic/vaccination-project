@@ -293,6 +293,8 @@ public class Saglasnost {
     protected Saglasnost.PacijentSaglasnost pacijentSaglasnost;
     @XmlElement(name = "ZdravstveniRadnikSaglasnost", namespace = "http:///www.ftn.uns.ac.rs/vakcinacija/saglasnost")
     protected Saglasnost.ZdravstveniRadnikSaglasnost zdravstveniRadnikSaglasnost;
+    @XmlElement(name = "DatumPodnosenja", namespace = "http:///www.ftn.uns.ac.rs/vakcinacija/saglasnost", required = true)
+    protected XMLGregorianCalendar DatumPodnosenja;
     @XmlAttribute(name = "about")
     @XmlSchemaType(name = "anyURI")
     protected String about;
@@ -346,8 +348,16 @@ public class Saglasnost {
     public void setZdravstveniRadnikSaglasnost(Saglasnost.ZdravstveniRadnikSaglasnost value) {
         this.zdravstveniRadnikSaglasnost = value;
     }
+    
+    public XMLGregorianCalendar getDatumPodnosenja() {
+		return DatumPodnosenja;
+	}
 
-    /**
+	public void setDatumPodnosenja(XMLGregorianCalendar datumPodnosenja) {
+		DatumPodnosenja = datumPodnosenja;
+	}
+
+	/**
      * Gets the value of the about property.
      * 
      * @return

@@ -191,7 +191,8 @@
                                         <xs:element name = "TrajneKontraindikacije" type = "xs:string" minOccurs = "0"/>
                                     </xs:sequence>
                                 </xs:complexType>
-                            </xs:element>  
+                            </xs:element>
+                            <xs:element name = "DatumPodnosenja" type = "xs:date"/> 
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
