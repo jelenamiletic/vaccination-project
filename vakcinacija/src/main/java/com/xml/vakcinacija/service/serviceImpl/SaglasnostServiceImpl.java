@@ -56,6 +56,23 @@ public class SaglasnostServiceImpl implements SaglasnostService {
 	}
 	
 	@Override
+	public Saglasnost pronadjiNajnovijuSaglasnostPoJmbgIliBrPasosa(String id) throws Exception {
+		List<Saglasnost> saglasnosti = saglasnostRepository.pronadjiSaglasnostPoJmbgIliBrPasosa(id);
+		if(saglasnosti.size() == 0)
+		{
+			return null;
+		}
+		
+		Saglasnost najnovija = saglasnosti.get(0);
+		for (Saglasnost saglasnost : saglasnosti) {
+			if(saglasnost.getDatumPodnosenja().toGregorianCalendar().compareTo(najnovija.getDatumPodnosenja().toGregorianCalendar()) > 0) {
+				najnovija = saglasnost;
+			}
+		}
+		return najnovija;
+	}
+	
+	@Override
 	public void nabaviMetaPodatkeXmlPoId(String id) throws IOException {
 		String query = String.format("?s ?p ?o. FILTER (?s = <http://www.ftn.uns.ac.rs/rdf/saglasnost/%s>)", id);
 		rdfService.getMetadataXML(query, "saglasnost_" + id, NamedGraphURIKonstante.IMUNIZACIJA_NAMED_GRAPH);

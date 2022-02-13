@@ -284,7 +284,8 @@ import com.xml.sluzbenik.model.PunoIme;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
     "pacijentSaglasnost",
-    "zdravstveniRadnikSaglasnost"
+    "zdravstveniRadnikSaglasnost",
+    "DatumPodnosenja"
 })
 @XmlRootElement(name = "Saglasnost", namespace = "http:///www.ftn.uns.ac.rs/vakcinacija/saglasnost")
 public class Saglasnost {
