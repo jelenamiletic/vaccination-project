@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.xml.vakcinacija.exception.ZahtevNijePronadjenoException;
 import com.xml.vakcinacija.exception.ZahtevPostojiException;
+import com.xml.vakcinacija.model.OdgovorNaZahtev;
 import com.xml.vakcinacija.model.zahtev.Zahtev;
 import com.xml.vakcinacija.repository.ZahtevRepository;
 import com.xml.vakcinacija.service.RDFService;
@@ -62,6 +63,25 @@ public class ZahtevServiceImpl implements ZahtevService{
 			throw new ZahtevNijePronadjenoException(jmbg);
 		}
 		return zahtev;
+	}
+	
+	@Override
+	public List<Zahtev> dobaviSveNeodobreneZahteve() throws Exception {
+		return zahtevRepository.pronadjiNeodobreneZahteve();
+	}
+
+	@Override
+	public void promeniStatusZahteva(String jmbg, OdgovorNaZahtev odgovorNaZahtev) throws Exception {
+		if (odgovorNaZahtev.getRazlogOdbijanja() == null) {
+			Zahtev zahtev = zahtevRepository.pronadjiZahtevPoJmbg(jmbg);
+			if (zahtev == null) {
+				throw new ZahtevNijePronadjenoException(jmbg);
+			}
+			zahtev.setOdobren(true);
+			zahtevRepository.saveZahtevObjekat(zahtev);
+		} else {
+			zahtevRepository.izbrisiZahtev(jmbg);
+		}
 	}
 
 	@Override

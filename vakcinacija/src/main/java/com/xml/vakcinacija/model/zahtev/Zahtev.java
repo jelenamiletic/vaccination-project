@@ -24,6 +24,7 @@ import com.xml.vakcinacija.model.Pol;
 @XmlType(name = "", propOrder = {
         "Podnosilac", 
         "RazlogPodnosenja",
+        "Odobren",
         "DatumPodnosenja"
 })
 @XmlRootElement(name = "Zahtev")
@@ -33,6 +34,9 @@ public class Zahtev {
 
 	@XmlElement(required = true)
 	protected String RazlogPodnosenja;
+	
+	@XmlElement(required = true)
+	protected boolean Odobren;
 	
 	@XmlElement
 	protected XMLGregorianCalendar DatumPodnosenja;
@@ -64,6 +68,14 @@ public class Zahtev {
 		RazlogPodnosenja = razlogPodnosenja;
 	}
 	
+	public boolean isOdobren() {
+		return Odobren;
+	}
+
+	public void setOdobren(boolean odobren) {
+		Odobren = odobren;
+	}
+
 	public XMLGregorianCalendar getDatumPodnosenja() {
 		return DatumPodnosenja;
 	}
