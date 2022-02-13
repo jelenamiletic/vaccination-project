@@ -29,7 +29,7 @@ const Zahtev = () => {
     EditorState.createEmpty()
   	);
 
-	const editor = useRef(null);
+	const editor =  useRef<any>(null);
 	function focusEditor() {
 		if (editor && editor.current) {
 			editor.current.focus();
@@ -61,15 +61,15 @@ const Zahtev = () => {
 						about="http://www.ftn.uns.ac.rs/rdf/zahtev/${getJMBG()}">
 						<za:Podnosilac>
 							<za:PunoIme>
-								<ct:Ime>${zahtev.Ime}</ct:Ime>
-								<ct:Prezime>${zahtev.Prezime}</ct:Prezime>
+								<ct:Ime></ct:Ime>
+								<ct:Prezime></ct:Prezime>
 							</za:PunoIme>
 							<za:DatumRodjenja>${zahtev.DatumRodjenja}</za:DatumRodjenja>
 							<za:Pol>${zahtev.Pol}</za:Pol>
 							<za:JMBG property = "pred:jmbg" datatype = "xs:string">${getJMBG()}</za:JMBG>
 							<za:BrojPasosa property = "pred:BrojPasosa" datatype = "xs:string">${zahtev.BrojPasosa}</za:BrojPasosa>
 						</za:Podnosilac>
-						<za:RazlogPodnosenja>${''}</za:RazlogPodnosenja>
+						<za:RazlogPodnosenja>${editorState.getCurrentContent().getPlainText('\u0001')}</za:RazlogPodnosenja>
 					</za:Zahtev>`;
 		axios
 			.post("http://localhost:8080/zahtev/dodajNoviZahtev", xml, {
@@ -98,28 +98,6 @@ const Zahtev = () => {
 					<CardTitle tag="h2">Zahtev za zeleni sertifikat</CardTitle>
 					<Form className="form-login-registracija">
 						<FormGroup>
-							<Label>Ime</Label>
-							<Input
-								type="text"
-								name="ime"
-								placeholder="Ime"
-								invalid={errors.Ime?.message}
-								innerRef={register}
-							/>
-							<FormFeedback>{errors.Ime?.message}</FormFeedback>
-						</FormGroup>
-						<FormGroup>
-							<Label>Prezime</Label>
-							<Input
-								type="text"
-								name="prezime"
-								placeholder="prezime"
-								invalid={errors.Prezime?.message}
-								innerRef={register}
-							/>
-							<FormFeedback>{errors.Prezime?.message}</FormFeedback>
-						</FormGroup>
-						<FormGroup>
 							<Label>Pol</Label>
 							<Input type="select" name="Pol" innerRef={register}>
 								<option>Muski</option>
@@ -141,7 +119,7 @@ const Zahtev = () => {
 							<Input
 								type="text"
 								name="DatumRodjenja"
-								placeholder="DD/MM/YYYY"
+								placeholder="YYYY-MM-DD"
 								invalid={errors.DatumRodjenja?.message}
 								innerRef={register}
 							/>

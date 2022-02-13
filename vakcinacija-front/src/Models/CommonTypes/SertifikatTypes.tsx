@@ -2,7 +2,7 @@ export interface Vakcinacija {
 	BrojDoze: number;
 	Proizvodjac: string;
     TipVakcine: string;
-	DatumDavanja: Date;
+	DatumDavanja: string;
 	Serija: string;
 	ZdravstvenaUstanova: string;
 }
@@ -11,8 +11,8 @@ export interface Test {
 	ImeTesta: string;
 	VrstaUzorka: string;
     ProizvodjacTesta: string;
-	DatumVremeUzorkovanja: Date;
-	DatumVremeIzdavanjaRezultata: Date;
+	DatumVremeUzorkovanja: string;
+	DatumVremeIzdavanjaRezultata: string;
 	Rezultat: RezultatTesta;
 	Laboratorija: string;
 }

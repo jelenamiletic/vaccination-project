@@ -6,5 +6,4 @@ export interface ZahtevXML {
 	BrojPasosa: string;
 	JMBG: string;
 	RazlogPodnosenja: string;
-	DatumPodnosenja: Date;
 }
