@@ -9,6 +9,8 @@ public interface SaglasnostService {
 
 	void dodajNovuSaglasnost(String XML) throws Exception;
 	
+	void izmeniSaglasnost(String XML) throws Exception;
+	
 	List<Saglasnost> pronadjiSve() throws Exception;
 	
 	List<Saglasnost> pronadjiSaglasnostPoJmbgIliBrPasosa(String id) throws Exception;

@@ -46,6 +46,15 @@ public class SaglasnostServiceImpl implements SaglasnostService {
 	}
 	
 	@Override
+	public void izmeniSaglasnost(String XML) throws Exception {
+		Saglasnost validanObjekat = (Saglasnost) unmarshallerService.unmarshal(XML, 
+				ContextPutanjeKonstante.CONTEXT_PUTANJA_SAGLASNOST, XSDPutanjeKonstante.XSD_SAGLASNOST);
+		if (validanObjekat != null) {
+			saglasnostRepository.editSaglasnostObjekat(validanObjekat);			
+		}
+	}
+	
+	@Override
 	public List<Saglasnost> pronadjiSve() throws Exception {
 		return saglasnostRepository.pronadjiSve();
 	}

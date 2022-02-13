@@ -61,44 +61,113 @@ const EvidencijaVakcinacije = () => {
 			})
 	}
 
-	const podnosenjeEvidencijeVakcinacije = (interesovanje: InteresovanjeXML) => {
-		let xml = `<in:Interesovanje
-						xmlns:xs="http://www.w3.org/2001/XMLSchema"
-						xmlns:in="http:///www.ftn.uns.ac.rs/vakcinacija/interesovanje"
-						xmlns:ct="http:///www.ftn.uns.ac.rs/vakcinacija/commonTypes" 
-						xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-						xmlns:addr="http://www.ftn.uns.ac.rs/rdf/interesovanje"
-						xmlns:pred="http://www.ftn.uns.ac.rs/rdf/interesovanje/predicate/"
-						xsi:schemaLocation="http:///www.ftn.uns.ac.rs/vakcinacija/interesovanje ../xsd/interesovanje.xsd"
-						vocab="http://www.ftn.uns.ac.rs/rdf/interesovanje/" 
-						about="http://www.ftn.uns.ac.rs/rdf/interesovanje/${getJMBG()}">
-						<in:LicneInformacije>
-							<in:Drzavljanstvo  property="pred:drzavljanstvo" datatype="xs:string">Drzavljanin Republike Srbije</in:Drzavljanstvo>
-							<in:JMBG property="pred:jmbg" datatype="xs:string">${getJMBG()}</in:JMBG>
-							<in:PunoIme>
-								<ct:Ime></ct:Ime>
-								<ct:Prezime></ct:Prezime>
-							</in:PunoIme>
-							<in:AdresaElektronskePoste property="pred:email" datatype="xs:string">${getEmail()}</in:AdresaElektronskePoste>
-							<in:BrojMobilnogTelefona property="pred:brojMobilnogTelefona" datatype="xs:string">${interesovanje.BrojMobilnog
-			}</in:BrojMobilnogTelefona>
-							<in:BrojFiksnogTelefona property="pred:brojFiksongTelefona" datatype="xs:string">${interesovanje.BrojFiksnog
-			}</in:BrojFiksnogTelefona>
-						</in:LicneInformacije>
-						<in:OpstinaPrimanja property="pred:opstinaPrimanja" datatype="xs:string">${interesovanje.OpstinaPrimanja
-			}</in:OpstinaPrimanja>
-						<in:Vakcina property="pred:vakcina" datatype="xs:string">${interesovanje.Vakcina
-			}</in:Vakcina>
-					</in:Interesovanje>`;
+	const podnosenjeEvidencijeVakcinacije = (saglasnost: any) => {
+
+		let prethodneVakcineXML = "";
+
+		console.log(pronadjenaSaglasnost)
+
+		if(pronadjenaSaglasnost!["sa:ZdravstveniRadnikSaglasnost"])
+			pronadjenaSaglasnost!["sa:ZdravstveniRadnikSaglasnost"]["sa:Obrazac"]["sa:VakcineInfo"].forEach(VakcineInfo => {
+				prethodneVakcineXML +=
+					`<sa:VakcineInfo>
+						<sa:NazivVakcine>${VakcineInfo["sa:NazivVakcine"]}</sa:NazivVakcine>
+						<sa:DatumDavanjaVakcine>${VakcineInfo["sa:DatumDavanjaVakcine"]}</sa:DatumDavanjaVakcine>
+						<sa:NacinDavanjeVakcine />
+						<sa:Ekstremitet>${VakcineInfo["sa:Ekstremitet"]}</sa:Ekstremitet>
+						<sa:SerijaVakcine>${VakcineInfo["sa:SerijaVakcine"]}</sa:SerijaVakcine>
+						<sa:Proizvodjac>${VakcineInfo["sa:Proizvodjac"]}</sa:Proizvodjac>
+						<sa:NezeljanaReakcija>${VakcineInfo["sa:NezeljanaReakcija"]}</sa:NezeljanaReakcija>
+					</sa:VakcineInfo>`
+			});
+
+		
+
+		let xml = `<?xml version="1.0" encoding="UTF-8"?>
+		<sa:Saglasnost
+			xmlns:xs="http://www.w3.org/2001/XMLSchema"
+			xmlns:sa="http:///www.ftn.uns.ac.rs/vakcinacija/saglasnost"
+			xmlns:ct="http:///www.ftn.uns.ac.rs/vakcinacija/commonTypes" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+			xsi:schemaLocation="http:///www.ftn.uns.ac.rs/vakcinacija/saglasnost ../xsd/saglasnost.xsd"
+			xmlns:addr="http://www.ftn.uns.ac.rs/rdf/saglasnost"
+			xmlns:pred="http://www.ftn.uns.ac.rs/rdf/saglasnost/predicate/"
+			vocab="http://www.ftn.uns.ac.rs/rdf/saglasnost/" 
+			about="http://www.ftn.uns.ac.rs/rdf/saglasnost/${pronadjenaSaglasnost!["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:Drzavljanstvo"]["sa:RepublikaSrbija"]["sa:JMBG"]}"
+			>
+			<sa:PacijentSaglasnost>
+				<sa:LicneInformacije>
+					<sa:Drzavljanstvo>
+						<sa:RepublikaSrbija>
+							<sa:JMBG property = "pred:jmbg" datatype = "xs:string">${pronadjenaSaglasnost!["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:Drzavljanstvo"]["sa:RepublikaSrbija"]["sa:JMBG"]}</sa:JMBG>
+						</sa:RepublikaSrbija>
+					</sa:Drzavljanstvo>
+					<sa:PunoIme>
+						<ct:Ime>${pronadjenaSaglasnost!["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:PunoIme"]["ct:Ime"]}</ct:Ime>
+						<ct:Prezime>${pronadjenaSaglasnost!["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:PunoIme"]["ct:Ime"]}</ct:Prezime>
+					</sa:PunoIme>
+					<sa:ImeRoditelja>${pronadjenaSaglasnost!["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:ImeRoditelja"]}</sa:ImeRoditelja>
+					<sa:Pol property = "pred:pol" datatype = "xs:string">${pronadjenaSaglasnost!["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:Pol"]}</sa:Pol>
+					<sa:DatumRodjenja>${pronadjenaSaglasnost!["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:DatumRodjenja"]}</sa:DatumRodjenja>
+					<sa:MestoRodjenja>${pronadjenaSaglasnost!["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:MestoRodjenja"]}</sa:MestoRodjenja>
+					<sa:Adresa property = "pred:adresa" datatype = "xs:string">${pronadjenaSaglasnost!["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:Adresa"]}</sa:Adresa>
+					<sa:Mesto property = "pred:mesto" datatype = "xs:string">${pronadjenaSaglasnost!["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:Mesto"]}</sa:Mesto>
+					<sa:Opstina>${pronadjenaSaglasnost!["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:Opstina"]}</sa:Opstina>
+					<sa:BrojFiksnogTelefona>${pronadjenaSaglasnost!["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:BrojFiksnogTelefona"]}</sa:BrojFiksnogTelefona>
+					<sa:BrojMobilnogTelefona>${pronadjenaSaglasnost!["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:BrojMobilnogTelefona"]}</sa:BrojMobilnogTelefona>
+					<sa:Email property = "pred:email" datatype = "xs:string">${pronadjenaSaglasnost!["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:Email"]}</sa:Email>
+					<sa:RadniStatus>${pronadjenaSaglasnost!["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:RadniStatus"]}</sa:RadniStatus>
+				</sa:LicneInformacije>
+				<sa:Imunizacija>
+					<sa:NazivImunoloskogLeka>${pronadjenaSaglasnost!["sa:PacijentSaglasnost"]["sa:Imunizacija"]["sa:NazivImunoloskogLeka"]}</sa:NazivImunoloskogLeka>
+				</sa:Imunizacija>
+			</sa:PacijentSaglasnost>
+			<sa:ZdravstveniRadnikSaglasnost>
+				<sa:ZdravstvenaUstanova>${saglasnost.ZdravstvenaUstanova}</sa:ZdravstvenaUstanova>
+				<sa:VakcinacijskiPunkt>${saglasnost.VakcinacijskiPunkt}</sa:VakcinacijskiPunkt>
+				<sa:LicneInformacijeLekara>
+					<sa:PunoIme>
+						<ct:Ime>${saglasnost.ImeLekara}</ct:Ime>
+						<ct:Prezime>${saglasnost.PrezimeLekara}</ct:Prezime>
+					</sa:PunoIme>
+					<sa:BrojTelefona>${saglasnost.BrojTelefonaLekara}</sa:BrojTelefona>
+				</sa:LicneInformacijeLekara>
+				<sa:Obrazac>
+
+					${prethodneVakcineXML}
+
+					<sa:VakcineInfo>
+						<sa:NazivVakcine>${saglasnost.NazivVakcine}</sa:NazivVakcine>
+						<sa:DatumDavanjaVakcine>${saglasnost.DatumDavanjaVakcine}</sa:DatumDavanjaVakcine>
+						<sa:NacinDavanjeVakcine />
+						<sa:Ekstremitet>${saglasnost.Ekstremitet}</sa:Ekstremitet>
+						<sa:SerijaVakcine>${saglasnost.SerijaVakcine}</sa:SerijaVakcine>
+						<sa:Proizvodjac>${saglasnost.Proizvodjac}</sa:Proizvodjac>
+						<sa:NezeljanaReakcija>${saglasnost.NezeljanaReakcija}</sa:NezeljanaReakcija>
+					</sa:VakcineInfo>
+
+					<sa:PrivremeneKontraindikacije>
+						<sa:DatumUtvrdjivanja>${saglasnost.DatumUtvrdjivanja}</sa:DatumUtvrdjivanja>
+						<sa:Dijagnoza>${saglasnost.Dijagnoza}</sa:Dijagnoza>
+					</sa:PrivremeneKontraindikacije>
+					<sa:TrajneKontraindikacije>${saglasnost.TrajneKontraindikacije}</sa:TrajneKontraindikacije>
+				</sa:Obrazac>
+			</sa:ZdravstveniRadnikSaglasnost>
+			<sa:DatumPodnosenja>${pronadjenaSaglasnost!["sa:DatumPodnosenja"]}</sa:DatumPodnosenja>
+		</sa:Saglasnost>`;
 		axios
-			.post("http://localhost:8080/interesovanje/dodajNovoInteresovanje", xml, {
+			.put("http://localhost:8080/saglasnost/promeniSaglasnost", xml, {
 				headers: {
 					"Content-Type": "application/xml",
 					"Access-Control-Allow-Origin": "*",
 				},
 			})
 			.then((res: any) => {
-				navigate("/profil");
+				toast.success("Uspesno evidentirana vakcinacija", {
+					position: toast.POSITION.TOP_CENTER,
+					autoClose: false,
+					toastId: customId,
+				});
+				//navigate("/profil");
 			})
 			.catch((err: any) => {
 				toast.error(err.response.data, {
@@ -197,7 +266,8 @@ const EvidencijaVakcinacije = () => {
 									<Input
 										type="text"
 										name="ZdravstvenaUstanova"
-										placeholder="Zdravstvena ustanova"
+										placeholder=""
+										innerRef={register}
 									/>
 								</FormGroup>
 								<FormGroup>
@@ -206,6 +276,7 @@ const EvidencijaVakcinacije = () => {
 										type="text"
 										name="VakcinacijskiPunkt"
 										placeholder=""
+										innerRef={register}
 									/>
 								</FormGroup>
 
@@ -217,6 +288,7 @@ const EvidencijaVakcinacije = () => {
 										type="text"
 										name="ImeLekara"
 										placeholder=""
+										innerRef={register}
 									/>
 								</FormGroup>
 								<FormGroup>
@@ -225,6 +297,7 @@ const EvidencijaVakcinacije = () => {
 										type="text"
 										name="PrezimeLekara"
 										placeholder=""
+										innerRef={register}
 									/>
 								</FormGroup>
 								<FormGroup>
@@ -233,6 +306,7 @@ const EvidencijaVakcinacije = () => {
 										type="text"
 										name="BrojTelefonaLekara"
 										placeholder=""
+										innerRef={register}
 									/>
 								</FormGroup>
 
@@ -240,7 +314,7 @@ const EvidencijaVakcinacije = () => {
 								<CardTitle tag="h3">Vakcina:</CardTitle>
 								<FormGroup>
 									<Label>Naziv Vakcine</Label>
-									<Input type="select" name="NazivVakcine">
+									<Input type="select" name="NazivVakcine" innerRef={register}>
 										<option>Pfizer-BioNTech</option>
 										<option>Sputnik V (Gamaleya истраживачки центар)</option>
 										<option>Sinopharm</option>
@@ -254,11 +328,12 @@ const EvidencijaVakcinacije = () => {
 										type="text"
 										name="DatumDavanjaVakcine"
 										placeholder=""
+										innerRef={register}
 									/>
 								</FormGroup>
 								<FormGroup>
 									<Label>Extremitet</Label>
-									<Input type="select" name="Extremitet">
+									<Input type="select" name="Extremitet" innerRef={register}>
 										<option>DR</option>
 										<option>LR</option>
 									</Input>
@@ -269,6 +344,7 @@ const EvidencijaVakcinacije = () => {
 										type="text"
 										name="SerijaVakcine"
 										placeholder=""
+										innerRef={register}
 									/>
 								</FormGroup>
 								<FormGroup>
@@ -277,6 +353,7 @@ const EvidencijaVakcinacije = () => {
 										type="text"
 										name="ProizvodjacVakcine"
 										placeholder=""
+										innerRef={register}
 									/>
 								</FormGroup>
 								<FormGroup>
@@ -285,6 +362,7 @@ const EvidencijaVakcinacije = () => {
 										type="text"
 										name="NezeljanaReakcija"
 										placeholder=""
+										innerRef={register}
 									/>
 								</FormGroup>
 
@@ -296,6 +374,7 @@ const EvidencijaVakcinacije = () => {
 										type="text"
 										name="DatumUtvrdjivanja"
 										placeholder=""
+										innerRef={register}
 									/>
 								</FormGroup>
 								<FormGroup>
@@ -304,6 +383,7 @@ const EvidencijaVakcinacije = () => {
 										type="text"
 										name="Dijagnoza"
 										placeholder=""
+										innerRef={register}
 									/>
 								</FormGroup>
 								<FormGroup>
@@ -312,6 +392,7 @@ const EvidencijaVakcinacije = () => {
 										type="text"
 										name="TrajneKontraindikacije"
 										placeholder=""
+										innerRef={register}
 									/>
 								</FormGroup>
 

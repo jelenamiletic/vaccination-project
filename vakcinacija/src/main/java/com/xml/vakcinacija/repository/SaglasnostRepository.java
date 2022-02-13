@@ -43,6 +43,15 @@ public class SaglasnostRepository {
 		return index;
 	}
 	
+	public int editSaglasnostObjekat(Saglasnost saglasnost) throws Exception {
+		String xml = marshallerService.marshall(saglasnost, ContextPutanjeKonstante.CONTEXT_PUTANJA_SAGLASNOST, 
+				XSDPutanjeKonstante.XSD_SAGLASNOST);
+		String id = saglasnost.getPacijentSaglasnost().getLicneInformacije().getIdFromDrzavljanstvo();
+		int index = getNextDocumentIndex(id) - 1;
+		ExistStore.save(XMLCollectionIdKonstante.COLLECTION_ID_SAGLASNOST, id + '_' + Integer.toString(index), xml);
+		return index;
+	}
+	
 	public int getNextDocumentIndex(String id) {
 	        int index = 1;
 	        String fullId = id + "_" + index;
