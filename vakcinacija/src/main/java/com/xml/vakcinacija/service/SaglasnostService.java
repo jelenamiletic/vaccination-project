@@ -12,6 +12,8 @@ public interface SaglasnostService {
 	List<Saglasnost> pronadjiSve() throws Exception;
 	
 	List<Saglasnost> pronadjiSaglasnostPoJmbgIliBrPasosa(String id) throws Exception;
+	
+	Saglasnost pronadjiNajnovijuSaglasnostPoJmbgIliBrPasosa(String id) throws Exception;
 
 	void nabaviMetaPodatkeXmlPoId(String id) throws IOException;
 }

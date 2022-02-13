@@ -14,6 +14,7 @@ import com.xml.vakcinacija.model.interesovanje.Interesovanje;
 import com.xml.vakcinacija.repository.InteresovanjeRepository;
 import com.xml.vakcinacija.service.InteresovanjeService;
 import com.xml.vakcinacija.service.RDFService;
+import com.xml.vakcinacija.service.TerminService;
 import com.xml.vakcinacija.service.UnmarshallerService;
 import com.xml.vakcinacija.utils.ContextPutanjeKonstante;
 import com.xml.vakcinacija.utils.NamedGraphURIKonstante;
@@ -30,6 +31,9 @@ public class InteresovanjeServiceImpl implements InteresovanjeService {
 	
 	@Autowired
 	private InteresovanjeRepository interesovanjeRepository;
+	
+	@Autowired
+	private TerminService terminService;
 
 	@Override
 	public void dodajNovoInteresovanje(String interesovanjeXML) throws Exception {
@@ -47,6 +51,10 @@ public class InteresovanjeServiceImpl implements InteresovanjeService {
 			validanObjekat.getLicneInformacije().getPunoIme().setIme(gradjanin.getPunoIme().getIme());
 			validanObjekat.getLicneInformacije().getPunoIme().setPrezime(gradjanin.getPunoIme().getPrezime());
 			interesovanjeRepository.saveInteresovanjeObjekat(validanObjekat);
+			
+			terminService.dodajNoviTermin(gradjanin.getJMBG(), 1);
+			
+			//TODO salji mejl
 			
 			try {
 				rdfService.save(interesovanjeXML, "interesovanje_" + validanObjekat.getLicneInformacije().getJMBG().getValue(), 

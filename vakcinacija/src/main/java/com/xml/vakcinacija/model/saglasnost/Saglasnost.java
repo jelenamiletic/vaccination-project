@@ -284,7 +284,8 @@ import com.xml.vakcinacija.model.PunoIme;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
     "pacijentSaglasnost",
-    "zdravstveniRadnikSaglasnost"
+    "zdravstveniRadnikSaglasnost",
+    "DatumPodnosenja"
 })
 @XmlRootElement(name = "Saglasnost", namespace = "http:///www.ftn.uns.ac.rs/vakcinacija/saglasnost")
 public class Saglasnost {
@@ -293,6 +294,8 @@ public class Saglasnost {
     protected Saglasnost.PacijentSaglasnost pacijentSaglasnost;
     @XmlElement(name = "ZdravstveniRadnikSaglasnost", namespace = "http:///www.ftn.uns.ac.rs/vakcinacija/saglasnost")
     protected Saglasnost.ZdravstveniRadnikSaglasnost zdravstveniRadnikSaglasnost;
+    @XmlElement(name = "DatumPodnosenja", namespace = "http:///www.ftn.uns.ac.rs/vakcinacija/saglasnost", required = true)
+    protected XMLGregorianCalendar DatumPodnosenja;
     @XmlAttribute(name = "about")
     @XmlSchemaType(name = "anyURI")
     protected String about;
@@ -346,8 +349,16 @@ public class Saglasnost {
     public void setZdravstveniRadnikSaglasnost(Saglasnost.ZdravstveniRadnikSaglasnost value) {
         this.zdravstveniRadnikSaglasnost = value;
     }
+    
+    public XMLGregorianCalendar getDatumPodnosenja() {
+		return DatumPodnosenja;
+	}
 
-    /**
+	public void setDatumPodnosenja(XMLGregorianCalendar datumPodnosenja) {
+		DatumPodnosenja = datumPodnosenja;
+	}
+
+	/**
      * Gets the value of the about property.
      * 
      * @return
@@ -2591,7 +2602,7 @@ public class Saglasnost {
         public static class Obrazac {
 
             @XmlElement(name = "VakcineInfo", namespace = "http:///www.ftn.uns.ac.rs/vakcinacija/saglasnost", required = true)
-            protected Saglasnost.ZdravstveniRadnikSaglasnost.Obrazac.VakcineInfo vakcineInfo;
+            protected List<Saglasnost.ZdravstveniRadnikSaglasnost.Obrazac.VakcineInfo> vakcineInfo;
             @XmlElement(name = "PrivremeneKontraindikacije", namespace = "http:///www.ftn.uns.ac.rs/vakcinacija/saglasnost", required = true)
             protected Saglasnost.ZdravstveniRadnikSaglasnost.Obrazac.PrivremeneKontraindikacije privremeneKontraindikacije;
             @XmlElement(name = "TrajneKontraindikacije", namespace = "http:///www.ftn.uns.ac.rs/vakcinacija/saglasnost")
@@ -2605,7 +2616,7 @@ public class Saglasnost {
              *     {@link Saglasnost.ZdravstveniRadnikSaglasnost.Obrazac.VakcineInfo }
              *     
              */
-            public Saglasnost.ZdravstveniRadnikSaglasnost.Obrazac.VakcineInfo getVakcineInfo() {
+            public List<Saglasnost.ZdravstveniRadnikSaglasnost.Obrazac.VakcineInfo> getVakcineInfo() {
                 return vakcineInfo;
             }
 
@@ -2617,7 +2628,7 @@ public class Saglasnost {
              *     {@link Saglasnost.ZdravstveniRadnikSaglasnost.Obrazac.VakcineInfo }
              *     
              */
-            public void setVakcineInfo(Saglasnost.ZdravstveniRadnikSaglasnost.Obrazac.VakcineInfo value) {
+            public void setVakcineInfo(List<Saglasnost.ZdravstveniRadnikSaglasnost.Obrazac.VakcineInfo> value) {
                 this.vakcineInfo = value;
             }
 

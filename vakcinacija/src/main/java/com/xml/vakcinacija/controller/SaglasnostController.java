@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.xml.vakcinacija.model.saglasnost.ListaSaglasnosti;
+import com.xml.vakcinacija.model.saglasnost.Saglasnost;
 import com.xml.vakcinacija.service.SaglasnostService;
 
 @RestController
@@ -31,7 +32,7 @@ public class SaglasnostController {
 	}
 	
 	@GetMapping(value = "/pronadjiSve", produces = MediaType.APPLICATION_XML_VALUE)
-	@PreAuthorize("hasRole('ROLE_SLUZBENIK')")
+	@PreAuthorize("hasAnyRole('ROLE_SLUZBENIK', 'ROLE_ZDRAVSTVENI_RADNIK')")
 	public ResponseEntity<ListaSaglasnosti> pronadjiSve() throws Exception {
 		ListaSaglasnosti lista = new ListaSaglasnosti();
 		lista.setSaglasnost(saglasnostService.pronadjiSve());
@@ -39,11 +40,17 @@ public class SaglasnostController {
 	}
 
 	@GetMapping(value = "/pronadjiSaglasnostPoJmbgIliBrPasosa/{id}", produces = MediaType.APPLICATION_XML_VALUE)
-	@PreAuthorize("hasAnyRole('ROLE_GRADJANIN', 'ROLE_SLUZBENIK')")
+	@PreAuthorize("hasAnyRole('ROLE_GRADJANIN', 'ROLE_SLUZBENIK', 'ROLE_ZDRAVSTVENI_RADNIK')")
 	public ResponseEntity<ListaSaglasnosti> pronadjiSaglasnostPoJmbg(@PathVariable String id) throws Exception {
 		ListaSaglasnosti lista = new ListaSaglasnosti();
 		lista.setSaglasnost(saglasnostService.pronadjiSaglasnostPoJmbgIliBrPasosa(id));
 		return new ResponseEntity<>(lista, HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/pronadjiNajnovijuSaglasnostPoJmbgIliBrPasosa/{id}", produces = MediaType.APPLICATION_XML_VALUE)
+	@PreAuthorize("hasAnyRole('ROLE_GRADJANIN', 'ROLE_SLUZBENIK', 'ROLE_ZDRAVSTVENI_RADNIK')")
+	public ResponseEntity<Saglasnost> pronadjiNajnovijuSaglasnostPoJmbg(@PathVariable String id) throws Exception {
+		return new ResponseEntity<>(saglasnostService.pronadjiNajnovijuSaglasnostPoJmbgIliBrPasosa(id), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/nabaviMetaPodatkeXmlPoId/{id}")

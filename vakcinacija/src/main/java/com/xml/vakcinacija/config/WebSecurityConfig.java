@@ -77,8 +77,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				
 				// Saglasnost controller
 				.antMatchers("/saglasnost/dodajNovuSaglasnost").hasAuthority(RoleKonstante.ROLE_GRADJANIN)
-				.antMatchers("/saglasnost/pronadjiSve").hasAuthority(RoleKonstante.ROLE_SLUZBENIK)
-				.antMatchers("/saglasnost/pronadjiSaglasnostPoJmbgIliBrPasosa/{id}").hasAnyAuthority(RoleKonstante.ROLE_GRADJANIN, RoleKonstante.ROLE_SLUZBENIK)
+				.antMatchers("/saglasnost/pronadjiSve").hasAnyAuthority(RoleKonstante.ROLE_SLUZBENIK, RoleKonstante.ROLE_ZDRAVSTVENI_RADNIK)
+				.antMatchers("/saglasnost/pronadjiSaglasnostPoJmbgIliBrPasosa/{id}").hasAnyAuthority(RoleKonstante.ROLE_GRADJANIN, RoleKonstante.ROLE_SLUZBENIK, RoleKonstante.ROLE_ZDRAVSTVENI_RADNIK)
 				.antMatchers("/saglasnost/nabaviMetaPodatkeXmlPoId/{id}").hasAnyAuthority(RoleKonstante.ROLE_GRADJANIN, RoleKonstante.ROLE_SLUZBENIK)
 				
 				// Sertifikat controller
