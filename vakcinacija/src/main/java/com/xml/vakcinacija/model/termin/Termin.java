@@ -5,11 +5,12 @@ import javax.xml.bind.annotation.*;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Termin", propOrder = {
+@XmlType(name = "", propOrder = {
         "jmbg",
         "datum",
         "izvrseno",
         "brojDoze",
+        "vakcina"
 })
 @XmlRootElement(name = "termin")
 public class Termin {
@@ -24,17 +25,20 @@ public class Termin {
     private boolean izvrseno;
     @XmlElement(required = true, name = "broj_doze")
     private int brojDoze;
+    @XmlElement(required = true, name = "vakcina")
+    private String vakcina;
     
     public Termin() {
     	
     }
 
-    public Termin(XMLGregorianCalendar datum, String jmbg, boolean izvrseno, int brojDoze) {
+    public Termin(XMLGregorianCalendar datum, String jmbg, boolean izvrseno, int brojDoze, String vakcina) {
 		super();
 		this.datum = datum;
 		this.jmbg = jmbg;
 		this.izvrseno = izvrseno;
 		this.brojDoze = brojDoze;
+		this.vakcina = vakcina;
 	}
 
 	public XMLGregorianCalendar getDatum() {

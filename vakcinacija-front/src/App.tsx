@@ -49,6 +49,7 @@ function App() {
 							element={<ProtectedRoute roles={["ROLE_GRADJANIN"]} />}
 						>
 							<Route path="/zahtev" element={<Zahtev />} />
+						</Route>
 						<Route
 							path="/evidencija-vakcinacije"
 							element={<ProtectedRoute roles={["ROLE_ZDRAVSTVENI_RADNIK"]} />}

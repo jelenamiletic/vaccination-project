@@ -6,22 +6,22 @@ import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-        "Termin"
+        "termin"
 })
 @XmlRootElement(name = "ListaTermina")
 public class ListaTermina {
-    @XmlElement(name = "Termin")
-    protected List<Termin> Termin;
+    @XmlElement(name = "termin")
+    protected List<Termin> termin;
 
     public List<Termin> getTermin() {
-        if (Termin == null) {
-            Termin = new ArrayList<Termin>();
+        if (termin == null) {
+            termin = new ArrayList<Termin>();
         }
-        return this.Termin;
+        return this.termin;
     }
 
     public void setTermin(List<Termin> Termin) {
-        this.Termin = Termin;
+        this.termin = Termin;
     }
 
 }

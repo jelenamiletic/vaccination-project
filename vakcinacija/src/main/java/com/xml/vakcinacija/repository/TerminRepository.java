@@ -40,9 +40,9 @@ public class TerminRepository {
 	}
 	
 	public List<Termin> pronadjiSve() throws Exception {
-		String xPathIzraz = "//Termin";
+		String xPathIzraz = "//termin";
         ResourceSet rezultat = ExistRetrieve.izvrsiXPathIzraz(XMLCollectionIdKonstante.COLLECTION_ID_TERMIN, 
-        		xPathIzraz, XMLNamespaceKonstante.NAMESPACE_TERMIN);
+        		xPathIzraz, "");
         if (rezultat == null)
             return null;
 
@@ -68,15 +68,17 @@ public class TerminRepository {
 	}
 	
 	public List<Termin> pronadjiSvePoJmbg(String jmbg) throws Exception {
-		String xPathIzraz = String.format("//Termin[jmbg = '%s']", jmbg);
+		String xPathIzraz = String.format("//termin[jmbg = '%s']", jmbg);
         ResourceSet rezultat = ExistRetrieve.izvrsiXPathIzraz(XMLCollectionIdKonstante.COLLECTION_ID_TERMIN, 
-        		xPathIzraz, XMLNamespaceKonstante.NAMESPACE_TERMIN);
+        		xPathIzraz, "");
         if (rezultat == null)
             return null;
 
         ResourceIterator i = rezultat.getIterator();
         XMLResource res = null;
         List<Termin> listaZahteva = new ArrayList<Termin>();
+        
+        System.out.println(rezultat.getSize());
 
         while (i.hasMoreResources()) {
             res = (XMLResource) i.nextResource();
@@ -96,9 +98,9 @@ public class TerminRepository {
 	}
 	
 	public String pronadjiTerminXmlPoJmbgIDozi(String jmbg, int brojDoze) throws Exception {
-        String xPathIzraz = String.format("/Termin[jmbg = '%s'and brojDoze = %d]" , jmbg, brojDoze);
+        String xPathIzraz = String.format("/termin[jmbg = '%s'and brojDoze = %d]" , jmbg, brojDoze);
         ResourceSet rezultat = ExistRetrieve.izvrsiXPathIzraz(XMLCollectionIdKonstante.COLLECTION_ID_TERMIN, 
-        		xPathIzraz, XMLNamespaceKonstante.NAMESPACE_TERMIN);
+        		xPathIzraz, "");
         if (rezultat == null)
             return null;
 

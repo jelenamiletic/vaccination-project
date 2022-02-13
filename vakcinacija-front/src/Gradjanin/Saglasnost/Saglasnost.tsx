@@ -18,21 +18,273 @@ import {
 import { InteresovanjeXML } from "../../Models/Interesovanje";
 import GradjaninNavbar from "../../Navbars/GradjaninNavbar";
 import { getJMBG, getEmail } from "../../Auth/AuthService";
+import { Termin } from "../../Models/Termin";
+import { XMLParser } from "fast-xml-parser";
+import { PacijentSaglasnost } from "../../Models/Saglasnost/utils/PacijentSaglasnost";
+import { saglasnostSchema } from "./Validation/SaglasnostSchema";
 
 const Saglasnost = () => {
 	const customId = "saglasnost";
+	const [termin, setTermin] = useState<Termin | null>(null);
+	const [vecIzvrseno, setIzvrseno] = useState(false);
+	const [postoji, setPostoji] = useState(false);
 
 	const navigate = useNavigate();
 
 	useEffect(() => {
+		getNajnovijiTermin();
 	}, [])
+
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm({
+		resolver: yupResolver(saglasnostSchema),
+		mode: "onChange",
+	});
+
+	const getNajnovijiTermin = () => {
+		axios.get('http://localhost:8080/termin/pronadjiAktuelniTerminPoJmbg/' + getJMBG())
+		.then((res: any) => {
+			const parser = new XMLParser();
+			const result = parser.parse(res.data);
+			const t: Termin = result.termin;
+			setPostoji(true);
+			setTermin(t);
+			if(t.izvrseno){
+				setIzvrseno(true);
+			}
+		})
+		.catch((err: any) => {
+			toast.error(err.response.data, {
+				position: toast.POSITION.TOP_CENTER,
+				autoClose: false,
+				toastId: customId,
+			});
+		})
+	}
+
+	const slanjeSaglasnosti = (saglasnost : any) => {
+		console.log(saglasnost)
+		const xml = `<sa:Saglasnost
+			xmlns:xs="http://www.w3.org/2001/XMLSchema"
+			xmlns:sa="http:///www.ftn.uns.ac.rs/vakcinacija/saglasnost"
+			xmlns:ct="http:///www.ftn.uns.ac.rs/vakcinacija/commonTypes" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+			xsi:schemaLocation="http:///www.ftn.uns.ac.rs/vakcinacija/saglasnost ../xsd/saglasnost.xsd"
+			xmlns:addr="http://www.ftn.uns.ac.rs/rdf/saglasnost"
+			xmlns:pred="http://www.ftn.uns.ac.rs/rdf/saglasnost/predicate/"
+			vocab="http://www.ftn.uns.ac.rs/rdf/saglasnost/"
+			>
+			<sa:PacijentSaglasnost>
+				<sa:LicneInformacije>
+					<sa:Drzavljanstvo>
+						<sa:RepublikaSrbija>
+							<sa:JMBG property = "pred:jmbg" datatype = "xs:string">${getJMBG()}</sa:JMBG>
+						</sa:RepublikaSrbija>
+					</sa:Drzavljanstvo>
+					<sa:PunoIme>
+						<ct:Ime></ct:Ime>
+						<ct:Prezime></ct:Prezime>
+					</sa:PunoIme>
+					<sa:ImeRoditelja>${saglasnost.ImeRoditelja}</sa:ImeRoditelja>
+					<sa:Pol property = "pred:pol" datatype = "xs:string"></sa:Pol>
+					<sa:DatumRodjenja>${saglasnost.DatumRodjenja}</sa:DatumRodjenja>
+					<sa:MestoRodjenja>${saglasnost.MestoRodjenja}</sa:MestoRodjenja>
+					<sa:Adresa property = "pred:adresa" datatype = "xs:string">${saglasnost.Adresa}</sa:Adresa>
+					<sa:Mesto property = "pred:mesto" datatype = "xs:string">${saglasnost.Mesto}</sa:Mesto>
+					<sa:Opstina>${saglasnost.Opstina}</sa:Opstina>
+					<sa:BrojFiksnogTelefona>${saglasnost.BrojFiksnog}</sa:BrojFiksnogTelefona>
+					<sa:BrojMobilnogTelefona>${saglasnost.BrojMobilnog}</sa:BrojMobilnogTelefona>
+					<sa:Email property = "pred:email" datatype = "xs:string">${getEmail()}</sa:Email>
+					<sa:RadniStatus>${saglasnost.RadniStatus}</sa:RadniStatus>
+				</sa:LicneInformacije>
+				<sa:Imunizacija>
+					<sa:NazivImunoloskogLeka>${termin?.vakcina}</sa:NazivImunoloskogLeka>
+				</sa:Imunizacija>
+			</sa:PacijentSaglasnost>
+			<sa:DatumPodnosenja>${termin?.datum}</sa:DatumPodnosenja> 
+		</sa:Saglasnost>`
+
+			axios
+			.post("http://localhost:8080/saglasnost/dodajNovuSaglasnost", xml, {
+				headers: {
+					"Content-Type": "application/xml",
+					"Access-Control-Allow-Origin": "*",
+				},
+			})
+			.then((res: any) => {
+				navigate("/profil");
+			})
+			.catch((err: any) => {
+				toast.error(err.response.data, {
+					position: toast.POSITION.TOP_CENTER,
+					autoClose: false,
+					toastId: customId,
+				});
+			});
+
+	}
 
 	
 
 	return (
 		<div>
 			<GradjaninNavbar />
-			
+			{
+				!vecIzvrseno && postoji &&
+				<Card
+					className="card-login-registracija"
+					style={{ backgroundColor: "#DEEDE6", borderColor: "black" }}
+					>
+						<CardBody>
+							<CardTitle tag="h2">Saglasnost</CardTitle>
+							<Form className="form-login-registracija">
+
+								<FormGroup>
+									<Label>Ime roditelja</Label>
+									<Input
+										type="text"
+										name="ImeRoditelja"
+										placeholder="Ime roditelja"
+										invalid={errors.ImeRoditelja?.message}
+										innerRef={register}
+									/>
+									<FormFeedback>{errors.ImeRoditelja?.message}</FormFeedback>
+								</FormGroup>
+								
+								<FormGroup>
+									<Label>Broj mobilnog telefona</Label>
+									<Input
+										type="text"
+										name="BrojMobilnog"
+										placeholder="06xxxxxxxx"
+										invalid={errors.BrojMobilnog?.message}
+										innerRef={register}
+									/>
+									<FormFeedback>{errors.BrojMobilnog?.message}</FormFeedback>
+								</FormGroup>
+								
+								<FormGroup>
+									<Label>Broj fiksnog telefona</Label>
+									<Input
+										type="text"
+										name="BrojFiksnog"
+										placeholder="0xxxxxxxx"
+										invalid={errors.BrojFiksnog?.message}
+										innerRef={register}
+									/>
+									<FormFeedback>{errors.BrojFiksnog?.message}</FormFeedback>
+								</FormGroup>
+								
+								<FormGroup>
+									<Label>Datum rodjenja</Label>
+									<Input
+										type="text"
+										name="DatumRodjenja"
+										placeholder="YYYY-MM-DD"
+										invalid={errors.DatumRodjenja?.message}
+										innerRef={register}
+									/>
+									<FormFeedback>{errors.DatumRodjenja?.message}</FormFeedback>
+								</FormGroup>
+
+								<FormGroup>
+									<Label>Mesto rodjenja</Label>
+									<Input
+										type="text"
+										name="MestoRodjenja"
+										placeholder="Mesto rodjenja"
+										invalid={errors.MestoRodjenja?.message}
+										innerRef={register}
+									/>
+									<FormFeedback>{errors.MestoRodjenja?.message}</FormFeedback>
+								</FormGroup>
+								
+								<FormGroup>
+									<Label>Mesto</Label>
+									<Input
+										type="text"
+										name="Mesto"
+										placeholder="Mesto"
+										invalid={errors.Mesto?.message}
+										innerRef={register}
+									/>
+									<FormFeedback>{errors.Mesto?.message}</FormFeedback>
+								</FormGroup>
+								
+								<FormGroup>
+									<Label>Opstina</Label>
+									<Input
+										type="text"
+										name="Opstina"
+										placeholder="Opstina"
+										invalid={errors.Opstina?.message}
+										innerRef={register}
+									/>
+									<FormFeedback>{errors.Opstina?.message}</FormFeedback>
+								</FormGroup>
+								
+								<FormGroup>
+									<Label>Adresa</Label>
+									<Input
+										type="text"
+										name="Adresa"
+										placeholder="Adresa"
+										invalid={errors.Adresa?.message}
+										innerRef={register}
+									/>
+									<FormFeedback>{errors.Adresa?.message}</FormFeedback>
+								</FormGroup>
+								
+								<FormGroup>
+									<Label>Radni Status</Label>
+									<Input
+										type="text"
+										name="RadniStatus"
+										placeholder="Radni status"
+										invalid={errors.RadniStatus?.message}
+										innerRef={register}
+									/>
+									<FormFeedback>{errors.RadniStatus?.message}</FormFeedback>
+								</FormGroup>
+								
+								<Button
+									className="registruj-login-btn"
+									color="primary"
+									type="button"
+									onClick={handleSubmit(slanjeSaglasnosti)}
+									>
+										Podnosi saglasnost
+								</Button>
+							</Form>
+						</CardBody>
+				</Card>
+			}
+			{
+				vecIzvrseno && postoji &&
+				<Card
+					className="card-login-registracija"
+					style={{ backgroundColor: "#DEEDE6", borderColor: "black" }}
+					>
+						<CardBody>
+							<CardTitle tag="h2">Saglasnost</CardTitle>
+							<Label>Vec ste popunili sve saglasnosti</Label>
+						</CardBody>
+				</Card>
+			}
+			{
+				!postoji &&
+				<Card
+					className="card-login-registracija"
+					style={{ backgroundColor: "#DEEDE6", borderColor: "black" }}
+					>
+						<CardBody>
+							<CardTitle tag="h2">Saglasnost</CardTitle>
+							<Label>Nemate saglasnost, popunite prvo interesovanje</Label>
+						</CardBody>
+				</Card>
+			}
 		</div>
 	);
 };

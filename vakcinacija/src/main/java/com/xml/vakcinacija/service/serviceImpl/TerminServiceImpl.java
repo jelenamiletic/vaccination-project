@@ -31,7 +31,7 @@ public class TerminServiceImpl implements TerminService{
 	private TerminRepository terminRepository;
 
 	@Override
-	public Termin dodajNoviTermin(String jmbg, int brojDoze) throws Exception {
+	public Termin dodajNoviTermin(String jmbg, int brojDoze, String vakcina) throws Exception {
 		List<Termin> termini = getSveTermine().stream()
                 .sorted((a1, a2) -> {
                     XMLGregorianCalendar c1 = a1.getDatum();
@@ -48,7 +48,7 @@ public class TerminServiceImpl implements TerminService{
 			datum = termini.get(termini.size() - 1).getDatum().toGregorianCalendar();
 			datum.add(Calendar.MINUTE, Termin.DUZINA_VAKCINACIJE);
 		}
-		Termin termin = new Termin(DatatypeFactory.newInstance().newXMLGregorianCalendar(datum), jmbg, false, brojDoze);
+		Termin termin = new Termin(DatatypeFactory.newInstance().newXMLGregorianCalendar(datum), jmbg, false, brojDoze, vakcina);
 		terminRepository.saveTerminObjekat(termin);
 		
 		return termin;
