@@ -4,10 +4,12 @@ import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.xml.vakcinacija.exception.ZahtevNijePronadjenoException;
 import com.xml.vakcinacija.exception.ZahtevPostojiException;
+import com.xml.vakcinacija.model.gradjanin.Gradjanin;
 import com.xml.vakcinacija.model.zahtev.Zahtev;
 import com.xml.vakcinacija.repository.ZahtevRepository;
 import com.xml.vakcinacija.service.RDFService;
@@ -39,6 +41,10 @@ public class ZahtevServiceImpl implements ZahtevService{
 				throw new ZahtevPostojiException(validanObjekat.getPodnosilac().getJMBG().getValue());
 			}
 			validanObjekat.setDatumPodnosenja();
+			Gradjanin gradjanin = (Gradjanin) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			
+			validanObjekat.getPodnosilac().getPunoIme().setIme(gradjanin.getPunoIme().getIme());
+			validanObjekat.getPodnosilac().getPunoIme().setPrezime(gradjanin.getPunoIme().getPrezime());
 			zahtevRepository.saveZahtevObjekat(validanObjekat);
 			
 			try {
