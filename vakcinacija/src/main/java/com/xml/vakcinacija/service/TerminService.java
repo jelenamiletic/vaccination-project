@@ -15,4 +15,8 @@ public interface TerminService {
 	Termin getTerminPoJmbgIDozi(String jmbg, int brojDoze) throws Exception;
 
 	Termin dodajNoviTermin(String jmbg, int brojDoze, String vakcina) throws Exception;
+	
+	void postaviPopunjenaSaglasnost(String jmbg, int brojDoze) throws Exception;
+	
+	void postaviIzvrseno(String jmbg, int brojDoze) throws Exception;
 }

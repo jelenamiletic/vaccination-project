@@ -15,12 +15,10 @@ import {
 	Input,
 	Label,
 } from "reactstrap";
-import { InteresovanjeXML } from "../../Models/Interesovanje";
 import GradjaninNavbar from "../../Navbars/GradjaninNavbar";
 import { getJMBG, getEmail } from "../../Auth/AuthService";
 import { Termin } from "../../Models/Termin";
 import { XMLParser } from "fast-xml-parser";
-import { PacijentSaglasnost } from "../../Models/Saglasnost/utils/PacijentSaglasnost";
 import { saglasnostSchema } from "./Validation/SaglasnostSchema";
 
 const Saglasnost = () => {
@@ -52,21 +50,21 @@ const Saglasnost = () => {
 			const t: Termin = result.termin;
 			setPostoji(true);
 			setTermin(t);
-			if(t.izvrseno){
+			if(t.popunjenaSaglasnost){
 				setIzvrseno(true);
 			}
 		})
 		.catch((err: any) => {
-			toast.error(err.response.data, {
-				position: toast.POSITION.TOP_CENTER,
-				autoClose: false,
-				toastId: customId,
-			});
+			setPostoji(false);
+			// toast.error(err.response.data, {
+			// 	position: toast.POSITION.TOP_CENTER,
+			// 	autoClose: false,
+			// 	toastId: customId,
+			// });
 		})
 	}
 
 	const slanjeSaglasnosti = (saglasnost : any) => {
-		console.log(saglasnost)
 		const xml = `<sa:Saglasnost
 			xmlns:xs="http://www.w3.org/2001/XMLSchema"
 			xmlns:sa="http:///www.ftn.uns.ac.rs/vakcinacija/saglasnost"
@@ -88,7 +86,7 @@ const Saglasnost = () => {
 						<ct:Prezime></ct:Prezime>
 					</sa:PunoIme>
 					<sa:ImeRoditelja>${saglasnost.ImeRoditelja}</sa:ImeRoditelja>
-					<sa:Pol property = "pred:pol" datatype = "xs:string"></sa:Pol>
+					<sa:Pol property = "pred:pol" datatype = "xs:string">Muski</sa:Pol>
 					<sa:DatumRodjenja>${saglasnost.DatumRodjenja}</sa:DatumRodjenja>
 					<sa:MestoRodjenja>${saglasnost.MestoRodjenja}</sa:MestoRodjenja>
 					<sa:Adresa property = "pred:adresa" datatype = "xs:string">${saglasnost.Adresa}</sa:Adresa>
@@ -132,7 +130,7 @@ const Saglasnost = () => {
 		<div>
 			<GradjaninNavbar />
 			{
-				!vecIzvrseno && postoji &&
+				!vecIzvrseno && postoji && termin &&
 				<Card
 					className="card-login-registracija"
 					style={{ backgroundColor: "#DEEDE6", borderColor: "black" }}

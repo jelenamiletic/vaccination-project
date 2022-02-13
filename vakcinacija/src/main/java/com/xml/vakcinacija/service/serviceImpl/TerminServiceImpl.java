@@ -48,7 +48,7 @@ public class TerminServiceImpl implements TerminService{
 			datum = termini.get(termini.size() - 1).getDatum().toGregorianCalendar();
 			datum.add(Calendar.MINUTE, Termin.DUZINA_VAKCINACIJE);
 		}
-		Termin termin = new Termin(DatatypeFactory.newInstance().newXMLGregorianCalendar(datum), jmbg, false, brojDoze, vakcina);
+		Termin termin = new Termin(DatatypeFactory.newInstance().newXMLGregorianCalendar(datum), jmbg, brojDoze, vakcina);
 		terminRepository.saveTerminObjekat(termin);
 		
 		return termin;
@@ -91,6 +91,25 @@ public class TerminServiceImpl implements TerminService{
 			termini = new ArrayList<Termin>();
 		}
 		return termini;
+	}
+
+	@Override
+	public void postaviPopunjenaSaglasnost(String jmbg, int brojDoze) throws Exception {
+		Termin termin = getTerminPoJmbgIDozi(jmbg, brojDoze);
+		if(termin == null)
+			return;
+		termin.setPopunjenaSaglasnost(true);
+		terminRepository.saveTerminObjekat(termin);
+	}
+
+	@Override
+	public void postaviIzvrseno(String jmbg, int brojDoze) throws Exception {
+		Termin termin = getTerminPoJmbgIDozi(jmbg, brojDoze);
+		if(termin == null)
+			return;
+		termin.setIzvrseno(true);
+		terminRepository.saveTerminObjekat(termin);
+		
 	}
 	
 	

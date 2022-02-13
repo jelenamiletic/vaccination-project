@@ -4,12 +4,15 @@ import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import com.xml.vakcinacija.model.gradjanin.Gradjanin;
 import com.xml.vakcinacija.model.saglasnost.Saglasnost;
 import com.xml.vakcinacija.repository.SaglasnostRepository;
 import com.xml.vakcinacija.service.RDFService;
 import com.xml.vakcinacija.service.SaglasnostService;
+import com.xml.vakcinacija.service.TerminService;
 import com.xml.vakcinacija.service.UnmarshallerService;
 import com.xml.vakcinacija.utils.ContextPutanjeKonstante;
 import com.xml.vakcinacija.utils.NamedGraphURIKonstante;
@@ -26,13 +29,23 @@ public class SaglasnostServiceImpl implements SaglasnostService {
 	
 	@Autowired
 	private SaglasnostRepository saglasnostRepository;
+	
+	@Autowired
+	private TerminService terminService;
 
 	@Override
 	public void dodajNovuSaglasnost(String XML) throws Exception {
 		Saglasnost validanObjekat = (Saglasnost) unmarshallerService.unmarshal(XML, 
 				ContextPutanjeKonstante.CONTEXT_PUTANJA_SAGLASNOST, XSDPutanjeKonstante.XSD_SAGLASNOST);
 		if (validanObjekat != null) {
+			Gradjanin gradjanin = (Gradjanin) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			
+			validanObjekat.getPacijentSaglasnost().getLicneInformacije().getPunoIme().setIme(gradjanin.getPunoIme().getIme());
+			validanObjekat.getPacijentSaglasnost().getLicneInformacije().getPunoIme().setPrezime(gradjanin.getPunoIme().getPrezime());
+			validanObjekat.getPacijentSaglasnost().getLicneInformacije().getPol().setValue(gradjanin.getPol());
 			int indx = saglasnostRepository.saveSaglasnostObjekat(validanObjekat);
+			
+			terminService.postaviPopunjenaSaglasnost(gradjanin.getJMBG(), 1);
 			
 			try {
 				rdfService.save(XML, "saglasnost_" + 

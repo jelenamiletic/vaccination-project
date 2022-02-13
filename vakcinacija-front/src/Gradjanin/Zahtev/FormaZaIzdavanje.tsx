@@ -65,7 +65,7 @@ const Zahtev = () => {
 								<ct:Prezime></ct:Prezime>
 							</za:PunoIme>
 							<za:DatumRodjenja>${zahtev.DatumRodjenja}</za:DatumRodjenja>
-							<za:Pol>${zahtev.Pol}</za:Pol>
+							<za:Pol>Muski</za:Pol>
 							<za:JMBG property = "pred:jmbg" datatype = "xs:string">${getJMBG()}</za:JMBG>
 							<za:BrojPasosa property = "pred:BrojPasosa" datatype = "xs:string">${zahtev.BrojPasosa}</za:BrojPasosa>
 						</za:Podnosilac>
@@ -93,17 +93,13 @@ const Zahtev = () => {
 	return (
 		<>
 			<GradjaninNavbar />
-			<Card>
+			<Card
+				className="card-login-registracija"
+				style={{ backgroundColor: "#DEEDE6", borderColor: "black" }}
+				>
 				<CardBody>
 					<CardTitle tag="h2">Zahtev za zeleni sertifikat</CardTitle>
 					<Form className="form-login-registracija">
-						<FormGroup>
-							<Label>Pol</Label>
-							<Input type="select" name="Pol" innerRef={register}>
-								<option>Muski</option>
-								<option>Zenski</option>
-							</Input>
-						</FormGroup>
 						<FormGroup>
 							<Label>Broj pasosa</Label>
 							<Input

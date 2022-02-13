@@ -98,7 +98,7 @@ public class TerminRepository {
 	}
 	
 	public String pronadjiTerminXmlPoJmbgIDozi(String jmbg, int brojDoze) throws Exception {
-        String xPathIzraz = String.format("/termin[jmbg = '%s'and brojDoze = %d]" , jmbg, brojDoze);
+        String xPathIzraz = String.format("//termin[jmbg = '%s'and broj_doze = %d]" , jmbg, brojDoze);
         ResourceSet rezultat = ExistRetrieve.izvrsiXPathIzraz(XMLCollectionIdKonstante.COLLECTION_ID_TERMIN, 
         		xPathIzraz, "");
         if (rezultat == null)

@@ -10,12 +10,12 @@ import javax.xml.datatype.XMLGregorianCalendar;
         "datum",
         "izvrseno",
         "brojDoze",
-        "vakcina"
+        "vakcina",
+        "popunjenaSaglasnost"
 })
 @XmlRootElement(name = "termin")
 public class Termin {
     public static final int DUZINA_VAKCINACIJE = 15;
-    public static final SimpleDateFormat formatter = new SimpleDateFormat("yyyy_MM_dd_hh_mm");
     @XmlElement(required = true, name = "datum")
     @XmlSchemaType(name = "dateTime")
     protected XMLGregorianCalendar datum;
@@ -23,6 +23,8 @@ public class Termin {
     private String jmbg;
     @XmlElement(required = true, name = "izvrseno")
     private boolean izvrseno;
+    @XmlElement(required = true, name = "popunjenaSaglasnost")
+    private boolean popunjenaSaglasnost;
     @XmlElement(required = true, name = "broj_doze")
     private int brojDoze;
     @XmlElement(required = true, name = "vakcina")
@@ -32,11 +34,12 @@ public class Termin {
     	
     }
 
-    public Termin(XMLGregorianCalendar datum, String jmbg, boolean izvrseno, int brojDoze, String vakcina) {
+    public Termin(XMLGregorianCalendar datum, String jmbg, int brojDoze, String vakcina) {
 		super();
 		this.datum = datum;
 		this.jmbg = jmbg;
-		this.izvrseno = izvrseno;
+		this.izvrseno = false;
+		this.popunjenaSaglasnost = false;
 		this.brojDoze = brojDoze;
 		this.vakcina = vakcina;
 	}
@@ -77,7 +80,19 @@ public class Termin {
 		return DUZINA_VAKCINACIJE;
 	}
 
-	public static SimpleDateFormat getFormatter() {
-		return formatter;
+	public boolean isPopunjenaSaglasnost() {
+		return popunjenaSaglasnost;
+	}
+
+	public void setPopunjenaSaglasnost(boolean popunjenaSaglasnost) {
+		this.popunjenaSaglasnost = popunjenaSaglasnost;
+	}
+
+	public String getVakcina() {
+		return vakcina;
+	}
+
+	public void setVakcina(String vakcina) {
+		this.vakcina = vakcina;
 	}
 }

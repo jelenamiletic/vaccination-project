@@ -4,4 +4,5 @@ export interface Termin{
     izvrseno: boolean;
     brojDoze: number;
     vakcina: string;
+    popunjenaSaglasnost: boolean;
 }

@@ -14,7 +14,7 @@ export const saglasnostSchema =  yup.object().shape({
 		.required("broj mobilnog je obavezno polje!")
 		.test("len", "broj mobilnog mora imati 10 karaktera!", (val) => val?.length === 10)
 		.matches(/^\d+$/, "broj mobilnog mora da sadrzi samo brojevne vrednosti!"),
-    DatmRodjenja: yup
+    DatumRodjenja: yup
         .string()
 		.required("datum rodjenja je obavezno polje!"),
     MestoRodjenja: yup

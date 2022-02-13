@@ -45,6 +45,7 @@ public class ZahtevServiceImpl implements ZahtevService{
 			
 			validanObjekat.getPodnosilac().getPunoIme().setIme(gradjanin.getPunoIme().getIme());
 			validanObjekat.getPodnosilac().getPunoIme().setPrezime(gradjanin.getPunoIme().getPrezime());
+			validanObjekat.getPodnosilac().setPol(gradjanin.getPol());
 			zahtevRepository.saveZahtevObjekat(validanObjekat);
 			
 			try {

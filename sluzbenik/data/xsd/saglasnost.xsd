@@ -195,7 +195,7 @@
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
-                <xs:element name = "DatumPodnosenja" type = "xs:date"/> 
+                <xs:element name = "DatumPodnosenja" type = "xs:dateTime"/> 
             </xs:sequence>
             <xs:attribute name="about" type="xs:anyURI"/>
     		<xs:attribute name="vocab" type="xs:string"/>
