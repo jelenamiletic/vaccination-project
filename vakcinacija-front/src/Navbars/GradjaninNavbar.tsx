@@ -25,6 +25,9 @@ const GradjaninNavbar = () => {
 							<Link to="/saglasnost">Saglasnosti</Link>
 						</NavItem>
 						<NavItem>
+							<Link to="/zahtev">Zahtev za sertifikat</Link>
+						</NavItem>
+						<NavItem>
 							<Link to="/login" onClick={logout}>
 								Logout
 							</Link>
