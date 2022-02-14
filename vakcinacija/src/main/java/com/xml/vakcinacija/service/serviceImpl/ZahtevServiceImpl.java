@@ -13,7 +13,6 @@ import javax.mail.internet.MimeMultipart;
 import javax.mail.util.ByteArrayDataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import com.xml.vakcinacija.exception.ZahtevNijePronadjenoException;
@@ -112,7 +111,7 @@ public class ZahtevServiceImpl implements ZahtevService{
 			
 			MimeMessage message = emailSenderService.createMimeMessage();
 			InternetAddress sender = new InternetAddress("mrs_isa_2021_t15_5@hotmail.com");
-	        InternetAddress recipient = new InternetAddress("radicey714@diolang.com");
+	        InternetAddress recipient = new InternetAddress(gradjanin.getEmail());
 			message.setRecipient(Message.RecipientType.TO, recipient);
 			message.setSubject("Odgovor na zahtev");
 			message.setSender(sender);
@@ -132,17 +131,30 @@ public class ZahtevServiceImpl implements ZahtevService{
 		    attachment.setFileName("Sertifikat.pdf");
 		    mimeMultipart.addBodyPart(attachment);
 		    
+		    MimeBodyPart attachment1 = new MimeBodyPart();
+		    ByteArrayDataSource ds1 = new ByteArrayDataSource(
+		    		sertifikatService.generisiXHTML(sertifikat.getLicneInformacije().getJMBG().getValue()), "text/html"); 
+		    attachment1.setDataHandler(new DataHandler(ds1));
+		    attachment1.setFileName("Sertifikat.htm");
+		    mimeMultipart.addBodyPart(attachment1);
+		    
 		    message.setContent(mimeMultipart);
 			Transport.send(message);
 		} else {
-			zahtevRepository.izbrisiZahtev(odgovorNaZahtev.getJMBG());
 			MimeMessage message = emailSenderService.createMimeMessage();
-			MimeMessageHelper helper = new MimeMessageHelper(message, true);
-			helper.setTo("hank.moen59@ethereal.email");
-			helper.setSubject("Odgovor na zahtev");
-			helper.setFrom("mrs_isa_2021_t15_5@hotmail.com");
-			helper.setText(odgovorNaZahtev.getRazlogOdbijanja());
-			emailSenderService.sendEmail(message);
+			InternetAddress sender = new InternetAddress("mrs_isa_2021_t15_5@hotmail.com");
+	        InternetAddress recipient = new InternetAddress(gradjanin.getEmail());
+			message.setRecipient(Message.RecipientType.TO, recipient);
+			message.setSubject("Odgovor na zahtev");
+			message.setSender(sender);
+			
+		    MimeMultipart mimeMultipart = new MimeMultipart();
+		    
+		    MimeBodyPart textBodyPart = new MimeBodyPart();
+	        textBodyPart.setText(odgovorNaZahtev.getRazlogOdbijanja());
+	        mimeMultipart.addBodyPart(textBodyPart); 
+		    message.setContent(mimeMultipart);
+			Transport.send(message);
 		}
 	}
 
