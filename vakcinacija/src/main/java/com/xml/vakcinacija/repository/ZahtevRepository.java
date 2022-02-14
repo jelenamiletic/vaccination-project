@@ -11,6 +11,7 @@ import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.XMLResource;
 
+import com.xml.vakcinacija.exist.ExistDelete;
 import com.xml.vakcinacija.exist.ExistRetrieve;
 import com.xml.vakcinacija.exist.ExistStore;
 import com.xml.vakcinacija.model.zahtev.Zahtev;
@@ -42,6 +43,34 @@ public class ZahtevRepository {
 	
 	public List<Zahtev> pronadjiSve() throws Exception {
 		String xPathIzraz = "//Zahtev";
+        ResourceSet rezultat = ExistRetrieve.izvrsiXPathIzraz(XMLCollectionIdKonstante.COLLECTION_ID_ZAHTEV, 
+        		xPathIzraz, XMLNamespaceKonstante.NAMESPACE_ZAHTEV);
+        if (rezultat == null)
+            return null;
+
+        ResourceIterator i = rezultat.getIterator();
+        XMLResource res = null;
+        List<Zahtev> listaZahteva = new ArrayList<Zahtev>();
+
+        while (i.hasMoreResources()) {
+            res = (XMLResource) i.nextResource();
+            listaZahteva.add((Zahtev) unmarshallerService.unmarshal(res.getContent().toString(), 
+            		ContextPutanjeKonstante.CONTEXT_PUTANJA_ZAHTEV, XSDPutanjeKonstante.XSD_ZAHTEV));
+        }
+
+        if (res != null) {
+            try {
+                ((EXistResource) res).freeResources();
+            } catch (XMLDBException exception) {
+                exception.printStackTrace();
+            }
+        }
+
+        return listaZahteva;
+	}
+	
+	public List<Zahtev> pronadjiNeodobreneZahteve() throws Exception {
+		String xPathIzraz = String.format("/Zahtev[Odobren = '%s']" , false);
         ResourceSet rezultat = ExistRetrieve.izvrsiXPathIzraz(XMLCollectionIdKonstante.COLLECTION_ID_ZAHTEV, 
         		xPathIzraz, XMLNamespaceKonstante.NAMESPACE_ZAHTEV);
         if (rezultat == null)
@@ -103,5 +132,9 @@ public class ZahtevRepository {
 				XSDPutanjeKonstante.XSD_ZAHTEV);
 		}
 		return null;
+	}
+	
+	public void izbrisiZahtev(String jmbg) throws Exception {
+		ExistDelete.izbrisiResurs(XMLCollectionIdKonstante.COLLECTION_ID_ZAHTEV, jmbg);
 	}
 }

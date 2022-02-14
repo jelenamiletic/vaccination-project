@@ -65,6 +65,15 @@ public class PotvrdaServiceImpl implements PotvrdaService{
 	}
 	
 	@Override
+	public Potvrda dobaviPoslednjuPotvrduPoJmbg(String jmbg) throws Exception {
+		Potvrda potvrda = potvrdaRepository.dobaviPoslednjuPotvrduPoJmbg(jmbg);
+		if (potvrda == null) {
+			throw new PotvrdaNijePronadjenoException(jmbg);
+		}
+		return potvrda;
+	}
+	
+	@Override
 	public void nabaviMetaPodatkeXmlPoJmbg(String jmbg, int brojDoze) throws IOException {
 		String query = String.format("?s ?p ?o. FILTER (?s = <http://www.ftn.uns.ac.rs/rdf/potvrda/%s_%d>)", jmbg, brojDoze);
 		rdfService.getMetadataXML(query, "potvrda_" + jmbg + "_" + brojDoze, NamedGraphURIKonstante.IMUNIZACIJA_NAMED_GRAPH);
