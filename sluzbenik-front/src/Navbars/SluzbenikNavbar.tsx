@@ -25,6 +25,9 @@ const SluzbenikNavbar = () => {
 							<Link to="/vakcine">Vakcine</Link>
 						</NavItem>
 						<NavItem>
+							<Link to="/dokumenti">Dokumenti</Link>
+						</NavItem>
+						<NavItem>
 							<Link to="/login" onClick={logout}>
 								Logout
 							</Link>
