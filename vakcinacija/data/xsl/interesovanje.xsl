@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:in="http:///www.ftn.uns.ac.rs/vakcinacija/interesovanje"
+    xmlns:ct="http:///www.ftn.uns.ac.rs/vakcinacija/commonTypes"
     version="2.0">
     <xsl:template match="/">
         <html>
@@ -54,12 +55,12 @@
         	</head>
         	<body>
         		<h1 id = "naslov">Iskazivanje interesovanja za vakcinisanje protiv COVID-19</h1>
-        		<p style = "padding-top:10px">I
+        		<p style = "padding-top:10px">
                    Gradjanin je: <xsl:value-of select="//in:LicneInformacije/in:Drzavljanstvo/text()"/>
                 </p>
                 
                 <p style = "padding-top:10px;">
-                	JMBG
+                	JMBG:
                 </p>
                 
                 <p style = "padding-top:10px;">
@@ -67,23 +68,23 @@
                 </p>
                 
                 <p style = "padding-top:10px;">
-                	Ime
+                	Ime:
                 </p>
                 
                 <p style = "padding-top:10px;">
-                	<xsl:value-of select="//in:LicneInformacije/in:PunoIme/in:Ime/text()"/>
+                	<xsl:value-of select="//in:LicneInformacije/in:PunoIme/ct:Ime/text()"/>
                 </p>
                 
                 <p style = "padding-top:10px;">
-                	Prezime
+                	Prezime:
                 </p>
                 
                 <p style = "padding-top:10px;">
-                	<xsl:value-of select="//in:LicneInformacije/in:PunoIme/in:Prezime/text()"/>
+                	<xsl:value-of select="//in:LicneInformacije/in:PunoIme/ct:Prezime/text()"/>
                 </p>
                 
                 <p style = "padding-top:10px;">
-                	Adresa elektronske poste
+                	Adresa elektronske poste:
                 </p>
                 
                 <p style = "padding-top:10px;">
@@ -91,7 +92,7 @@
                 </p>
                 
                 <p style = "padding-top:10px;">
-                	Broj Mobilnog telefona
+                	Broj Mobilnog telefona:
                 </p>
                 
                 <p style = "padding-top:10px;">
@@ -99,7 +100,7 @@
                 </p>
                 
                 <p style = "padding-top:10px;">
-                	Broj fiksnog telefona
+                	Broj fiksnog telefona:
                 </p>
                 
                 <p style = "padding-top:10px;">
@@ -107,7 +108,7 @@
                 </p>
                 
                 <p style = "padding-top:10px;">
-                	Opstina primanja
+                	Opstina primanja:
                 </p>
                 
                 <p style = "padding-top:10px;">
@@ -115,7 +116,7 @@
                 </p>
                 
                 <p style = "padding-top:10px;">
-                	Tip vakcina
+                	Tip vakcina:
                 </p>
                 
                 <p style = "padding-top:10px;">
@@ -123,15 +124,7 @@
                 </p>
                 
                 <p style = "padding-top:10px;">
-                	Opstina primanja
-                </p>
-                
-                <p style = "padding-top:10px;">
-                	<xsl:value-of select="//in:OpstinaPrimanja/text()"/>
-                </p>
-                
-                <p style = "padding-top:10px;">
-                	Davalac krvi
+                	Davalac krvi:
                 </p>
                 <p style = "padding-top:10px;">
                 	<xsl:choose>

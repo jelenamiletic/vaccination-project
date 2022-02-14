@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.List;
 
+import com.xml.vakcinacija.model.OdgovorNaZahtev;
 import com.xml.vakcinacija.model.zahtev.Zahtev;
 
 public interface ZahtevService {
@@ -19,4 +20,9 @@ public interface ZahtevService {
 	ByteArrayInputStream generisiPdf(String jmbg) throws Exception;
 
 	ByteArrayInputStream generisiXHTML(String jmbg) throws Exception;
+  
+	List<Zahtev> dobaviSveNeodobreneZahteve() throws Exception;
+	
+	void promeniStatusZahteva(OdgovorNaZahtev odgovorNaZahtev) throws Exception;
+
 }

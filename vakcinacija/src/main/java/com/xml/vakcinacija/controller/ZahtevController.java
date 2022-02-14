@@ -11,10 +11,12 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.xml.vakcinacija.model.OdgovorNaZahtev;
 import com.xml.vakcinacija.model.zahtev.ListaZahteva;
 import com.xml.vakcinacija.model.zahtev.Zahtev;
 import com.xml.vakcinacija.service.ZahtevService;
@@ -24,7 +26,7 @@ import com.xml.vakcinacija.service.ZahtevService;
 public class ZahtevController {
 
 	@Autowired
-	ZahtevService zahtevService;
+	private ZahtevService zahtevService;
 	
 	@PostMapping(value = "/dodajNoviZahtev", consumes = MediaType.APPLICATION_XML_VALUE)
 	@PreAuthorize("hasRole('ROLE_GRADJANIN')")
@@ -44,6 +46,20 @@ public class ZahtevController {
 	@PreAuthorize("hasAnyRole('ROLE_GRADJANIN', 'ROLE_SLUZBENIK')")
 	public ResponseEntity<Zahtev> pronadjiZahtevPoJmbg(@PathVariable String jmbg) throws Exception {
 		return new ResponseEntity<>(zahtevService.pronadjiZahtevPoJmbg(jmbg), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/dobaviSveNeodobreneZahteve", produces = MediaType.APPLICATION_XML_VALUE)
+	@PreAuthorize("hasRole('ROLE_SLUZBENIK')")
+	public ResponseEntity<ListaZahteva> dobaviSveNeodobreneZahteve() throws Exception {
+		ListaZahteva lista = new ListaZahteva();
+		lista.setZahtev(zahtevService.dobaviSveNeodobreneZahteve());
+		return new ResponseEntity<>(lista, HttpStatus.OK);
+	}
+	
+	@PutMapping(value = "/promeniStatusZahteva")
+	@PreAuthorize("hasRole('ROLE_SLUZBENIK')")
+	public void promeniStatusZahteva(@RequestBody OdgovorNaZahtev odgovorNaZahtev) throws Exception {
+		zahtevService.promeniStatusZahteva(odgovorNaZahtev);
 	}
 	
 	@GetMapping(value = "/nabaviMetaPodatkeXmlPoJmbg/{jmbg}")

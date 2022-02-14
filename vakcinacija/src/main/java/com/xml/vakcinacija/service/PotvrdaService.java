@@ -14,4 +14,6 @@ public interface PotvrdaService {
 	void nabaviMetaPodatkeXmlPoJmbg(String jmbg, int brojDoze) throws IOException;
 
 	Potvrda pronadjiPotvrdaPoJmbg(String jmbg, int brojDoze) throws Exception;
+	
+	Potvrda dobaviPoslednjuPotvrduPoJmbg(String jmbg) throws Exception;
 }
