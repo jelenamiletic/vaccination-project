@@ -65,7 +65,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 			try {
 				JAXBContext context = JAXBContext.newInstance(Gradjanin.class);
 				Unmarshaller unmarshaller = context.createUnmarshaller();
-				g = (Gradjanin) unmarshaller.unmarshal(new ByteArrayInputStream(zdravstveniRadnikXml.getBytes(StandardCharsets.UTF_8)));
+				g = (Gradjanin) unmarshaller.unmarshal(new ByteArrayInputStream(gradjaninXml.getBytes(StandardCharsets.UTF_8)));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

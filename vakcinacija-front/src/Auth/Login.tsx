@@ -42,6 +42,7 @@ const Login = () => {
 						<Email>${jwtRequest.Email}</Email>
 						<Password>${jwtRequest.Lozinka}</Password>
 				    </JwtAuthenticationRequest>`;
+
 		axios
 			.post("http://localhost:8080/auth/login", xml, {
 				headers: {

@@ -13,6 +13,7 @@ import javax.mail.internet.MimeMultipart;
 import javax.mail.util.ByteArrayDataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.xml.vakcinacija.exception.ZahtevNijePronadjenoException;
@@ -20,6 +21,7 @@ import com.xml.vakcinacija.exception.ZahtevPostojiException;
 import com.xml.vakcinacija.model.OdgovorNaZahtev;
 import com.xml.vakcinacija.model.gradjanin.Gradjanin;
 import com.xml.vakcinacija.model.sertifikat.Sertifikat;
+
 import com.xml.vakcinacija.model.zahtev.Zahtev;
 import com.xml.vakcinacija.repository.KorisnikRepository;
 import com.xml.vakcinacija.repository.SertifikatRepository;
@@ -67,6 +69,11 @@ public class ZahtevServiceImpl implements ZahtevService{
 				throw new ZahtevPostojiException(validanObjekat.getPodnosilac().getJMBG().getValue());
 			}
 			validanObjekat.setDatumPodnosenja();
+			Gradjanin gradjanin = (Gradjanin) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			
+			validanObjekat.getPodnosilac().getPunoIme().setIme(gradjanin.getPunoIme().getIme());
+			validanObjekat.getPodnosilac().getPunoIme().setPrezime(gradjanin.getPunoIme().getPrezime());
+			validanObjekat.getPodnosilac().setPol(gradjanin.getPol());
 			zahtevRepository.saveZahtevObjekat(validanObjekat);
 			
 			try {

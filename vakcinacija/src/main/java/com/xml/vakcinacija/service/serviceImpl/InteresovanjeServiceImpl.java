@@ -1,5 +1,6 @@
 package com.xml.vakcinacija.service.serviceImpl;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.List;
 
@@ -14,10 +15,12 @@ import com.xml.vakcinacija.model.interesovanje.Interesovanje;
 import com.xml.vakcinacija.repository.InteresovanjeRepository;
 import com.xml.vakcinacija.service.InteresovanjeService;
 import com.xml.vakcinacija.service.RDFService;
+import com.xml.vakcinacija.service.TerminService;
 import com.xml.vakcinacija.service.UnmarshallerService;
 import com.xml.vakcinacija.utils.ContextPutanjeKonstante;
 import com.xml.vakcinacija.utils.NamedGraphURIKonstante;
 import com.xml.vakcinacija.utils.XSDPutanjeKonstante;
+import com.xml.vakcinacija.utils.XSLKonstante;
 
 @Service
 public class InteresovanjeServiceImpl implements InteresovanjeService {
@@ -30,6 +33,12 @@ public class InteresovanjeServiceImpl implements InteresovanjeService {
 	
 	@Autowired
 	private InteresovanjeRepository interesovanjeRepository;
+	
+	@Autowired
+	private TerminService terminService;
+	
+	@Autowired
+	private HTMLTransformerService htmlTransformerService;
 
 	@Override
 	public void dodajNovoInteresovanje(String interesovanjeXML) throws Exception {
@@ -47,6 +56,10 @@ public class InteresovanjeServiceImpl implements InteresovanjeService {
 			validanObjekat.getLicneInformacije().getPunoIme().setIme(gradjanin.getPunoIme().getIme());
 			validanObjekat.getLicneInformacije().getPunoIme().setPrezime(gradjanin.getPunoIme().getPrezime());
 			interesovanjeRepository.saveInteresovanjeObjekat(validanObjekat);
+			
+			terminService.dodajNoviTermin(gradjanin.getJMBG(), 1, validanObjekat.getVakcina().getValue().toString());
+			
+			//TODO salji mejl
 			
 			try {
 				rdfService.save(interesovanjeXML, "interesovanje_" + validanObjekat.getLicneInformacije().getJMBG().getValue(), 
@@ -75,5 +88,14 @@ public class InteresovanjeServiceImpl implements InteresovanjeService {
 	public void nabaviMetaPodatkeXmlPoJmbg(String jmbg) throws IOException {
 		String query = String.format("?s ?p ?o. ?s <http://www.ftn.uns.ac.rs/rdf/interesovanje/predicate/jmbg> \"%s\"^^<http://www.w3.org/2001/XMLSchemastring>", jmbg);
 		rdfService.getMetadataXML(query, "interesovanje_" + jmbg, NamedGraphURIKonstante.IMUNIZACIJA_NAMED_GRAPH);
+	}
+
+	@Override
+	public ByteArrayInputStream generisiXHTML(String jmbg) throws Exception {
+		String interesovanje = interesovanjeRepository.pronadjiInteresovanjeXmlPoJmbg(jmbg);
+		if (interesovanje == null) {
+			throw new Exception();
+		}
+		return htmlTransformerService.generateHTML(interesovanje, XSLKonstante.INTERESOVANJE_XSL);
 	}
 }

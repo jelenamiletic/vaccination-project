@@ -1,0 +1,23 @@
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:h="http://www.w3.org/1999/xhtml">
+<rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/interesovanje/2323232323232">
+<pred:drzavljanstvo xmlns:pred="http://www.ftn.uns.ac.rs/rdf/interesovanje/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">Drzavljanin Republike Srbije</pred:drzavljanstvo>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/interesovanje/2323232323232">
+<pred:jmbg xmlns:pred="http://www.ftn.uns.ac.rs/rdf/interesovanje/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">2323232323232</pred:jmbg>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/interesovanje/2323232323232">
+<pred:email xmlns:pred="http://www.ftn.uns.ac.rs/rdf/interesovanje/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">alberto@alberto.com</pred:email>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/interesovanje/2323232323232">
+<pred:brojMobilnogTelefona xmlns:pred="http://www.ftn.uns.ac.rs/rdf/interesovanje/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">0606095154</pred:brojMobilnogTelefona>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/interesovanje/2323232323232">
+<pred:brojFiksongTelefona xmlns:pred="http://www.ftn.uns.ac.rs/rdf/interesovanje/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">201201212</pred:brojFiksongTelefona>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/interesovanje/2323232323232">
+<pred:opstinaPrimanja xmlns:pred="http://www.ftn.uns.ac.rs/rdf/interesovanje/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">NS</pred:opstinaPrimanja>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/interesovanje/2323232323232">
+<pred:vakcina xmlns:pred="http://www.ftn.uns.ac.rs/rdf/interesovanje/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">Sinopharm</pred:vakcina>
+</rdf:Description>
+</rdf:RDF>

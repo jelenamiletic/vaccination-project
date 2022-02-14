@@ -160,11 +160,11 @@
                             <xs:element name = "Obrazac">
                                 <xs:complexType>
                                     <xs:sequence>
-                                        <xs:element name = "VakcineInfo">
+                                        <xs:element name = "VakcineInfo" minOccurs = "1" maxOccurs="unbounded">
                                             <xs:complexType>
-                                                <xs:sequence minOccurs = "1" maxOccurs="unbounded">
+                                                <xs:sequence>
                                                     <xs:element name = "NazivVakcine" type = "ct:Proizvodjac"/>
-                                                    <xs:element name = "DatumDavanjaVakcine" type = "xs:date"/>
+                                                    <xs:element name = "DatumDavanjaVakcine" type = "xs:dateTime"/>
                                                     <xs:element name = "NacinDavanjeVakcine" type = "xs:string" fixed = "IM"/>
                                                     <xs:element name = "Ekstremitet">
                                                         <xs:simpleType>
@@ -191,10 +191,11 @@
                                         <xs:element name = "TrajneKontraindikacije" type = "xs:string" minOccurs = "0"/>
                                     </xs:sequence>
                                 </xs:complexType>
-                            </xs:element>  
+                            </xs:element>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
+                <xs:element name = "DatumPodnosenja" type = "xs:dateTime"/> 
             </xs:sequence>
             <xs:attribute name="about" type="xs:anyURI"/>
     		<xs:attribute name="vocab" type="xs:string"/>

@@ -19,6 +19,7 @@ import { InteresovanjeXML } from "../../Models/Interesovanje";
 import GradjaninNavbar from "../../Navbars/GradjaninNavbar";
 import { interesovanjeSchema } from "./Validation/InteresovanjeSchema";
 import { getJMBG, getEmail } from "../../Auth/AuthService";
+import { saveAs } from "file-saver";
 
 const Interesovanje = () => {
 	const customId = "interesovanje";
@@ -48,6 +49,35 @@ const Interesovanje = () => {
 			setVecIma(false);
 		})
 	}
+
+	const downloadXHTML = () => {
+		axios
+			.get(
+				`http://localhost:8081/interesovanje/generisiXHTML/${ getJMBG }`,
+				{
+					headers: {
+						"Access-Control-Allow-Origin": "*",
+					},
+					responseType: "blob",
+				}
+			)
+			.then((res: any) => {
+				let blob = new Blob([res.data], {
+					type: "text/html;charset=utf-8",
+				});
+				saveAs(
+					blob,
+					getJMBG()
+				);
+			})
+			.catch((err: any) => {
+				toast.error(err.response.data, {
+					position: toast.POSITION.TOP_CENTER,
+					autoClose: false,
+					toastId: customId,
+				});
+			});
+	};
 
 	const podnosenjeInteresovanja = (interesovanje: InteresovanjeXML) => {
 		let xml = `<in:Interesovanje
@@ -201,6 +231,15 @@ const Interesovanje = () => {
 						<CardBody>
 						<CardTitle tag="h2">Interesovanje</CardTitle>
 						<Label>Vec ste popunili formu za interesovanje</Label>
+						<Button
+							className="registruj-login-btn"
+							color="primary"
+							type="button"
+							style={{ display: "block" }}
+							onClick={() => downloadXHTML()}
+						>
+							Skidanje XHTML
+						</Button>
 						</CardBody>
 					</Card>
 			}
