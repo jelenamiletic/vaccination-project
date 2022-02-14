@@ -3,6 +3,7 @@ package com.xml.vakcinacija.controller;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -49,5 +50,11 @@ public class InteresovanjeController {
 	@PreAuthorize("hasAnyRole('ROLE_GRADJANIN', 'ROLE_SLUZBENIK')")
 	public void nabaviMetaPodatkeXmlPoJmbg(@PathVariable String jmbg) throws IOException {
 		interesovanjeService.nabaviMetaPodatkeXmlPoJmbg(jmbg);
+	}
+	
+	@GetMapping(value = "/generisiXhtml/{jmbg}", produces = MediaType.TEXT_HTML_VALUE)
+	@PreAuthorize("hasAnyRole('ROLE_GRADJANIN', 'ROLE_SLUZBENIK')")
+	public ResponseEntity<InputStreamResource> generisiXHTML(@PathVariable String jmbg) throws Exception {
+		return new ResponseEntity<>(new InputStreamResource(interesovanjeService.generisiXHTML(jmbg)), HttpStatus.OK);
 	}
 }

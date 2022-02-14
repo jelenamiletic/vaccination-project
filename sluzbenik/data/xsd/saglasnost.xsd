@@ -164,7 +164,7 @@
                                             <xs:complexType>
                                                 <xs:sequence minOccurs = "1" maxOccurs="unbounded">
                                                     <xs:element name = "NazivVakcine" type = "ct:Proizvodjac"/>
-                                                    <xs:element name = "DatumDavanjaVakcine" type = "xs:date"/>
+                                                    <xs:element name = "DatumDavanjaVakcine" type = "xs:dateTime"/>
                                                     <xs:element name = "NacinDavanjeVakcine" type = "xs:string" fixed = "IM"/>
                                                     <xs:element name = "Ekstremitet">
                                                         <xs:simpleType>
