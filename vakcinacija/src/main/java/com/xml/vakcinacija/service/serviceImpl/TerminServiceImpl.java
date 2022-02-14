@@ -18,8 +18,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.xml.vakcinacija.utils.ContextPutanjeKonstante;
+import com.xml.vakcinacija.utils.XSDPutanjeKonstante;
 import com.xml.vakcinacija.model.termin.Termin;
 import com.xml.vakcinacija.repository.TerminRepository;
+import com.xml.vakcinacija.security.TokenBasedAuthentication;
+import com.xml.vakcinacija.service.MarshallerService;
 import com.xml.vakcinacija.service.RDFService;
 import com.xml.vakcinacija.service.TerminService;
 import com.xml.vakcinacija.service.UnmarshallerService;
@@ -29,6 +33,9 @@ public class TerminServiceImpl implements TerminService{
 
 	@Autowired
 	private UnmarshallerService unmarshallerService;
+	
+	@Autowired
+	private MarshallerService marshallerService;
 	
 	@Autowired
 	private RDFService rdfService;
@@ -41,14 +48,14 @@ public class TerminServiceImpl implements TerminService{
 
 	@Override
 	public Termin dodajNoviTermin(String jmbg, int brojDoze, String vakcina) throws Exception {
-//		TokenBasedAuthentication a = (TokenBasedAuthentication) SecurityContextHolder.getContext().getAuthentication();
-//		HttpHeaders headers = new HttpHeaders();
-//		
-//		headers.setBearerAuth(a.getToken());
-//		headers.set("Gradjanin", userDetails);
-//		
-//		ResponseEntity<Boolean> response = restTemplate.exchange(
-//                "http://localhost:8081/vakcina/proveriSmanjiKolicinu/" + vakcina, HttpMethod.PUT, new HttpEntity<Object>(), Boolean.class);
+		TokenBasedAuthentication a = (TokenBasedAuthentication) SecurityContextHolder.getContext().getAuthentication();
+		HttpHeaders headers = new HttpHeaders();
+		String userDetails = marshallerService.marshall(a.getPrincipal(), ContextPutanjeKonstante.CONTEXT_PUTANJA_GRADJANIN, XSDPutanjeKonstante.XSD_GRADJANIN);
+		headers.setBearerAuth(a.getToken());
+		headers.set("Gradjanin", userDetails);
+		
+		ResponseEntity<Boolean> response = restTemplate.exchange(
+                "http://localhost:8081/vakcina/proveriSmanjiKolicinu/" + vakcina, HttpMethod.PUT, new HttpEntity<Object>(headers), Boolean.class);
 		
 		List<Termin> termini = getSveTermine().stream()
                 .sorted((a1, a2) -> {
