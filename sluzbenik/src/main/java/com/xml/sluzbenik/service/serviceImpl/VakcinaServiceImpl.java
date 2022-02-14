@@ -31,4 +31,15 @@ public class VakcinaServiceImpl implements VakcinaService {
 		vakcina.setKolicina(vakcina.getKolicina() - 1);
 		vakcinaRepository.saveVakcinaObjekat(vakcina);
 	}
+
+	@Override
+	public boolean proveriISmanji(String nazivVakcine) throws Exception {
+		Vakcina vakcina = vakcinaRepository.pronadjiVakcinu(nazivVakcine);
+		if(vakcina.getKolicina() > 0) {
+			vakcina.setKolicina(vakcina.getKolicina() - 1);
+			vakcinaRepository.saveVakcinaObjekat(vakcina);
+			return true;
+		}
+		return false;
+	}
 }

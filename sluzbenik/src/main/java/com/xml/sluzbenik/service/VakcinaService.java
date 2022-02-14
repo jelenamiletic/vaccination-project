@@ -11,4 +11,6 @@ public interface VakcinaService {
 	void azurirajKolicinu(Vakcina vakcina) throws Exception;
 
 	void smanjiKolicinu(String nazivVakcine) throws Exception;
+	
+	boolean proveriISmanji(String nazivVakcine) throws Exception;
 }

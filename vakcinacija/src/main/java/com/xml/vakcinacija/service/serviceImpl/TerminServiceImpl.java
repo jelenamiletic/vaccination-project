@@ -10,7 +10,13 @@ import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import com.xml.vakcinacija.model.termin.Termin;
 import com.xml.vakcinacija.repository.TerminRepository;
@@ -29,9 +35,21 @@ public class TerminServiceImpl implements TerminService{
 	
 	@Autowired
 	private TerminRepository terminRepository;
+	
+	@Autowired
+	private RestTemplate restTemplate;
 
 	@Override
 	public Termin dodajNoviTermin(String jmbg, int brojDoze, String vakcina) throws Exception {
+//		TokenBasedAuthentication a = (TokenBasedAuthentication) SecurityContextHolder.getContext().getAuthentication();
+//		HttpHeaders headers = new HttpHeaders();
+//		
+//		headers.setBearerAuth(a.getToken());
+//		headers.set("Gradjanin", userDetails);
+//		
+//		ResponseEntity<Boolean> response = restTemplate.exchange(
+//                "http://localhost:8081/vakcina/proveriSmanjiKolicinu/" + vakcina, HttpMethod.PUT, new HttpEntity<Object>(), Boolean.class);
+		
 		List<Termin> termini = getSveTermine().stream()
                 .sorted((a1, a2) -> {
                     XMLGregorianCalendar c1 = a1.getDatum();

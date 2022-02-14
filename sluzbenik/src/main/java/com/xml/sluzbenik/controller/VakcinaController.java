@@ -42,4 +42,10 @@ public class VakcinaController {
 	public void smanjiKolicinu(@PathVariable String nazivVakcine) throws Exception {
 		vakcinaService.smanjiKolicinu(nazivVakcine);
 	}
+	
+	@PutMapping(value = "/proveriSmanjiKolicinu/{nazivVakcine}")
+	@PreAuthorize("hasAnyRole('ROLE_GRADJANIN', 'ROLE_ZDRAVSTVENI_RADNIK')")
+	public Boolean proveriSmanjiKolicinu(@PathVariable String nazivVakcine) throws Exception {
+		return vakcinaService.proveriISmanji(nazivVakcine);
+	}
 }

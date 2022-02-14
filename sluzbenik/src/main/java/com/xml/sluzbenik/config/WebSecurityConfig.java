@@ -74,7 +74,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				).hasAuthority(RoleKonstante.ROLE_SLUZBENIK)
 				
 				.antMatchers("/vakcina/dobaviSve", "/vakcina/azurirajKolicinu").hasAuthority(RoleKonstante.ROLE_SLUZBENIK)
-				.antMatchers("/smanjiKolicinu/{nazivVakcine}").hasAuthority(RoleKonstante.ROLE_ZDRAVSTVENI_RADNIK)
+				.antMatchers("/smanjiKolicinu/{nazivVakcine}").hasAnyAuthority(RoleKonstante.ROLE_GRADJANIN, RoleKonstante.ROLE_ZDRAVSTVENI_RADNIK)
 			.anyRequest().authenticated().and()
 			.cors().and()
 			.addFilterBefore(new TokenAuthenticationFilter(tokenUtils, customUserDetailsService), BasicAuthenticationFilter.class);
