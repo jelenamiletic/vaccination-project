@@ -136,8 +136,8 @@ const EvidencijaVakcinacije = () => {
 					${prethodneVakcineXML}
 
 					<sa:VakcineInfo>
-						<sa:NazivVakcine>${saglasnost.NazivVakcine}</sa:NazivVakcine>
-						<sa:DatumDavanjaVakcine>${saglasnost.DatumDavanjaVakcine}</sa:DatumDavanjaVakcine>
+						<sa:NazivVakcine>${pronadjenaSaglasnost["sa:PacijentSaglasnost"]["sa:Imunizacija"]["sa:NazivImunoloskogLeka"]}</sa:NazivVakcine>
+						<sa:DatumDavanjaVakcine>${pronadjenaSaglasnost!["sa:DatumPodnosenja"]}</sa:DatumDavanjaVakcine>
 						<sa:NacinDavanjeVakcine />
 						<sa:Ekstremitet>${saglasnost.Ekstremitet}</sa:Ekstremitet>
 						<sa:SerijaVakcine>${saglasnost.SerijaVakcine}</sa:SerijaVakcine>
@@ -282,7 +282,7 @@ const EvidencijaVakcinacije = () => {
 
 
 								<CardTitle tag="h3">Lekar:</CardTitle>
-								<FormGroup>
+								{/* <FormGroup>
 									<Label>Ime</Label>
 									<Input
 										type="text"
@@ -299,7 +299,7 @@ const EvidencijaVakcinacije = () => {
 										placeholder=""
 										innerRef={register}
 									/>
-								</FormGroup>
+								</FormGroup> */}
 								<FormGroup>
 									<Label>Broj telefona</Label>
 									<Input
@@ -312,7 +312,7 @@ const EvidencijaVakcinacije = () => {
 
 
 								<CardTitle tag="h3">Vakcina:</CardTitle>
-								<FormGroup>
+								{/* <FormGroup>
 									<Label>Naziv Vakcine</Label>
 									<Input type="select" name="NazivVakcine" innerRef={register}>
 										<option>Pfizer-BioNTech</option>
@@ -330,7 +330,7 @@ const EvidencijaVakcinacije = () => {
 										placeholder=""
 										innerRef={register}
 									/>
-								</FormGroup>
+								</FormGroup> */}
 								<FormGroup>
 									<Label>Extremitet</Label>
 									<Input type="select" name="Extremitet" innerRef={register}>

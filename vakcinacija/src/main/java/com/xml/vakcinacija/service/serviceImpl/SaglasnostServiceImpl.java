@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import com.xml.vakcinacija.model.gradjanin.Gradjanin;
 import com.xml.vakcinacija.model.saglasnost.Saglasnost;
+import com.xml.vakcinacija.model.saglasnost.Saglasnost.ZdravstveniRadnikSaglasnost.Obrazac.VakcineInfo;
+import com.xml.vakcinacija.model.zdravstveni_radnik.ZdravstveniRadnik;
 import com.xml.vakcinacija.repository.SaglasnostRepository;
 import com.xml.vakcinacija.service.RDFService;
 import com.xml.vakcinacija.service.SaglasnostService;
@@ -63,6 +65,16 @@ public class SaglasnostServiceImpl implements SaglasnostService {
 		Saglasnost validanObjekat = (Saglasnost) unmarshallerService.unmarshal(XML, 
 				ContextPutanjeKonstante.CONTEXT_PUTANJA_SAGLASNOST, XSDPutanjeKonstante.XSD_SAGLASNOST);
 		if (validanObjekat != null) {
+//			List<VakcineInfo> info = validanObjekat.getZdravstveniRadnikSaglasnost().getObrazac().getVakcineInfo();
+//			
+//			if(info.size() > 0) {
+//				info.get(info.size() - 1).
+//			}
+			
+			ZdravstveniRadnik radnik = (ZdravstveniRadnik) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			validanObjekat.getZdravstveniRadnikSaglasnost().getLicneInformacijeLekara().getPunoIme().setIme(radnik.getPunoIme().getIme());
+			validanObjekat.getZdravstveniRadnikSaglasnost().getLicneInformacijeLekara().getPunoIme().setPrezime(radnik.getPunoIme().getPrezime());
+			
 			saglasnostRepository.editSaglasnostObjekat(validanObjekat);			
 		}
 	}

@@ -11,8 +11,8 @@ export interface LicneInformacije {
     "sa:Adresa": string;
     "sa:Mesto": string;
     "sa:Opstina": string;
-    "sa:BrojFiksnogTelefona": number;
-    "sa:BrojMobilnogTelefona": number;
+    "sa:BrojFiksnogTelefona": string;
+    "sa:BrojMobilnogTelefona": string;
     "sa:Email": string;
     "sa:RadniStatus": string;
 }
