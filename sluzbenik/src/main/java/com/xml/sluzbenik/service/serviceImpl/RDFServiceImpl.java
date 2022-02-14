@@ -1,5 +1,6 @@
 package com.xml.sluzbenik.service.serviceImpl;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -10,6 +11,7 @@ import java.util.Iterator;
 
 import javax.xml.transform.TransformerException;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryExecutionFactory;
 import org.apache.jena.query.QuerySolution;
@@ -76,7 +78,7 @@ public class RDFServiceImpl implements RDFService {
 	}
 	
 	@Override
-	public void getMetadataXML(String sparkql, String fileName, String namedGraphUri) throws IOException {
+	public ByteArrayInputStream getMetadataJSON(String sparkql, String fileName, String namedGraphUri) throws IOException {
 		RDFDBAuthenticationUtilities.ConnectionProperties conn = RDFDBAuthenticationUtilities.loadProperties();
 		// Querying the first named graph with a simple SPARQL query
 		System.out.println("[INFO] Selecting the triples from the named graph \"" + namedGraphUri + "\".");
@@ -119,13 +121,17 @@ public class RDFServiceImpl implements RDFService {
 		// Query the collection, dump output response as XML
 		results = query.execSelect();
 		
-		String xmlFile = "output_metadata_xml/" + fileName + ".xml";
+		String xmlFile = "output_metadata_json/" + fileName + ".json";
 		
-		ResultSetFormatter.outputAsXML(new FileOutputStream(xmlFile), results);
-		
-		query.close() ;
+		ResultSetFormatter.outputAsJSON(new FileOutputStream(xmlFile), results);
 		
 		System.out.println("[INFO] End.");
+		
+		query.close();
+		
+		File readJsonFile = new File(xmlFile);
+		byte[] bytes = FileUtils.readFileToByteArray(readJsonFile);
+		return new ByteArrayInputStream(bytes);
 	}
 
 }

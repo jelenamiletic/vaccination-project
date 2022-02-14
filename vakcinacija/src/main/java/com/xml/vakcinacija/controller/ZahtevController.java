@@ -3,6 +3,7 @@ package com.xml.vakcinacija.controller;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -61,9 +62,9 @@ public class ZahtevController {
 		zahtevService.promeniStatusZahteva(odgovorNaZahtev);
 	}
 	
-	@GetMapping(value = "/nabaviMetaPodatkeXmlPoJmbg/{jmbg}")
+	@GetMapping(value = "/nabaviMetaPodatkeJSONPoJmbg/{jmbg}")
 	@PreAuthorize("hasAnyRole('ROLE_GRADJANIN', 'ROLE_SLUZBENIK')")
-	public void nabaviMetaPodatkeXmlPoJmbg(@PathVariable String jmbg) throws IOException {
-		zahtevService.nabaviMetaPodatkeXmlPoJmbg(jmbg);
+	public ResponseEntity<InputStreamResource> nabaviMetaPodatkeJSONPoJmbg(@PathVariable String jmbg) throws IOException {
+		return new ResponseEntity<>(new InputStreamResource(zahtevService.nabaviMetaPodatkeJSONPoJmbg(jmbg)), HttpStatus.OK);
 	}
 }

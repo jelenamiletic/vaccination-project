@@ -46,10 +46,10 @@ public class InteresovanjeController {
 		return new ResponseEntity<>(interesovanjeService.pronadjiInteresovanjePoJmbg(jmbg), HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/nabaviMetaPodatkeXmlPoJmbg/{jmbg}")
+	@GetMapping(value = "/nabaviMetaPodatkeJSONPoJmbg/{jmbg}")
 	@PreAuthorize("hasAnyRole('ROLE_GRADJANIN', 'ROLE_SLUZBENIK')")
-	public void nabaviMetaPodatkeXmlPoJmbg(@PathVariable String jmbg) throws IOException {
-		interesovanjeService.nabaviMetaPodatkeXmlPoJmbg(jmbg);
+	public ResponseEntity<InputStreamResource> nabaviMetaPodatkeJSONPoJmbg(@PathVariable String jmbg) throws IOException {
+		return new ResponseEntity<>(new InputStreamResource(interesovanjeService.nabaviMetaPodatkeJSONPoJmbg(jmbg)), HttpStatus.OK); 
 	}
 	
 	@GetMapping(value = "/generisiXhtml/{jmbg}", produces = MediaType.TEXT_HTML_VALUE)

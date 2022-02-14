@@ -1,5 +1,6 @@
 package com.xml.vakcinacija.service.serviceImpl;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.List;
 
@@ -165,8 +166,8 @@ public class ZahtevServiceImpl implements ZahtevService{
 	}
 
 	@Override
-	public void nabaviMetaPodatkeXmlPoJmbg(String jmbg) throws IOException {
+	public ByteArrayInputStream nabaviMetaPodatkeJSONPoJmbg(String jmbg) throws IOException {
 		String query = String.format("?s ?p ?o. ?s <http://www.ftn.uns.ac.rs/rdf/zahtev/predicate/jmbg> \"%s\"^^<http://www.w3.org/2001/XMLSchemastring>", jmbg);
-		rdfService.getMetadataXML(query, "zahtev_" + jmbg, NamedGraphURIKonstante.IMUNIZACIJA_NAMED_GRAPH);
+		return rdfService.getMetadataJSON(query, "zahtev_" + jmbg, NamedGraphURIKonstante.IMUNIZACIJA_NAMED_GRAPH);
 	}
 }

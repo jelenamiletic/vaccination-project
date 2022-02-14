@@ -87,7 +87,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/interesovanje/dodajNovoInteresovanje").hasAuthority(RoleKonstante.ROLE_GRADJANIN)
 				.antMatchers("/interesovanje/pronadjiSve").hasAuthority(RoleKonstante.ROLE_SLUZBENIK)
 				.antMatchers("/interesovanje/pronadjiInteresovanjePoJmbg/{jmbg}").hasAnyAuthority(RoleKonstante.ROLE_GRADJANIN, RoleKonstante.ROLE_SLUZBENIK)
-				.antMatchers("/interesovanje/nabaviMetaPodatkeXmlPoJmbg/{jmbg}").hasAnyAuthority(RoleKonstante.ROLE_GRADJANIN, RoleKonstante.ROLE_SLUZBENIK)
+				.antMatchers("/interesovanje/nabaviMetaPodatkeJSONPoJmbg/{jmbg}").hasAnyAuthority(RoleKonstante.ROLE_GRADJANIN, RoleKonstante.ROLE_SLUZBENIK)
 				.antMatchers("/interesovanje/generisiXhtml/{jmbg}").hasAnyAuthority(RoleKonstante.ROLE_GRADJANIN, RoleKonstante.ROLE_SLUZBENIK)
 				.antMatchers("/interesovanje/generisiPdf/{jmbg}").hasAnyAuthority(RoleKonstante.ROLE_GRADJANIN, RoleKonstante.ROLE_SLUZBENIK)
 				
@@ -95,7 +95,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/potvrda/dodajNovuPotvrdu").hasAuthority(RoleKonstante.ROLE_ZDRAVSTVENI_RADNIK)
 				.antMatchers("/potvrda/pronadjiSve").hasAuthority(RoleKonstante.ROLE_SLUZBENIK)
 				.antMatchers("/potvrda/pronadjiPotvrdaPoJmbg/{jmbg}/{brojDoze}").hasAnyAuthority(RoleKonstante.ROLE_GRADJANIN, RoleKonstante.ROLE_SLUZBENIK)
-				.antMatchers("/potvrda/nabaviMetaPodatkeXmlPoJmbg/{jmbg}/{brojDoze}").hasAnyAuthority(RoleKonstante.ROLE_GRADJANIN, RoleKonstante.ROLE_SLUZBENIK)
+				.antMatchers("/potvrda/nabaviMetaPodatkeJSONPoJmbg/{jmbg}/{brojDoze}").hasAnyAuthority(RoleKonstante.ROLE_GRADJANIN, RoleKonstante.ROLE_SLUZBENIK)
 				.antMatchers("/potvrda/dobaviPoslednjuPotvrduPoJmbg/{jmbg}").hasAuthority(RoleKonstante.ROLE_SLUZBENIK)
 				
 				// Saglasnost controller
@@ -103,13 +103,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/saglasnost/promeniSaglasnost").hasAuthority(RoleKonstante.ROLE_ZDRAVSTVENI_RADNIK)
 				.antMatchers("/saglasnost/pronadjiSve").hasAnyAuthority(RoleKonstante.ROLE_SLUZBENIK, RoleKonstante.ROLE_ZDRAVSTVENI_RADNIK)
 				.antMatchers("/saglasnost/pronadjiSaglasnostPoJmbgIliBrPasosa/{id}").hasAnyAuthority(RoleKonstante.ROLE_GRADJANIN, RoleKonstante.ROLE_SLUZBENIK, RoleKonstante.ROLE_ZDRAVSTVENI_RADNIK)
-				.antMatchers("/saglasnost/nabaviMetaPodatkeXmlPoId/{id}").hasAnyAuthority(RoleKonstante.ROLE_GRADJANIN, RoleKonstante.ROLE_SLUZBENIK)
+				.antMatchers("/saglasnost/nabaviMetaPodatkeJSONPoId/{id}").hasAnyAuthority(RoleKonstante.ROLE_GRADJANIN, RoleKonstante.ROLE_SLUZBENIK)
 				
 				// Sertifikat controller
 				.antMatchers("/sertifikat/dodajNoviSertifikat").hasAuthority(RoleKonstante.ROLE_SLUZBENIK)
 				.antMatchers("/sertifikat/pronadjiSve").hasAuthority(RoleKonstante.ROLE_SLUZBENIK)
 				.antMatchers("/sertifikat/pronadjiSertifikatPoJmbg/{jmbg}").hasAnyAuthority(RoleKonstante.ROLE_GRADJANIN, RoleKonstante.ROLE_SLUZBENIK)
-				.antMatchers("/sertifikat/nabaviMetaPodatkeXmlPoJmbg/{jmbg}").hasAnyAuthority(RoleKonstante.ROLE_GRADJANIN, RoleKonstante.ROLE_SLUZBENIK)
+				.antMatchers("/sertifikat/nabaviMetaPodatkeJSONPoJmbg/{jmbg}").hasAnyAuthority(RoleKonstante.ROLE_GRADJANIN, RoleKonstante.ROLE_SLUZBENIK)
 				
 				// Zahtev controller
 				.antMatchers("/zahtev/dodajNoviZahtev").hasAuthority(RoleKonstante.ROLE_GRADJANIN)
@@ -117,7 +117,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/zahtev/pronadjiZahtevPoJmbg/{jmbg}").hasAnyAuthority(RoleKonstante.ROLE_GRADJANIN, RoleKonstante.ROLE_SLUZBENIK)
 				.antMatchers("/zahtev/dobaviSveNeodobreneZahteve").hasAuthority(RoleKonstante.ROLE_SLUZBENIK)
 				.antMatchers("/zahtev/promeniStatusZahteva").hasAuthority(RoleKonstante.ROLE_SLUZBENIK)
-				.antMatchers("/zahtev/nabaviMetaPodatkeXmlPoJmbg/{jmbg}").hasAnyAuthority(RoleKonstante.ROLE_GRADJANIN, RoleKonstante.ROLE_SLUZBENIK)
+				.antMatchers("/zahtev/nabaviMetaPodatkeJSONPoJmbg/{jmbg}").hasAnyAuthority(RoleKonstante.ROLE_GRADJANIN, RoleKonstante.ROLE_SLUZBENIK)
 				
 				// Gradjanin controller
 				.antMatchers("/gradjanin/registracija").permitAll()

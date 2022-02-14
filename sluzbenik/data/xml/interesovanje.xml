@@ -11,7 +11,7 @@
     about="http://www.ftn.uns.ac.rs/rdf/interesovanje/1153355353511"
     >
     <in:LicneInformacije>
-        <in:Drzavljanstvo property="pred:drzavljanstvo" datatype="xs:string">Drzavljаnin Republike Srbije</in:Drzavljanstvo>
+        <in:Drzavljanstvo property="pred:drzavljanstvo" datatype="xs:string">Drzavljanin Republike Srbije</in:Drzavljanstvo>
         <in:JMBG property="pred:jmbg" datatype="xs:string">1153355353511</in:JMBG>
         <in:PunoIme>
             <ct:Ime>Pera</ct:Ime>

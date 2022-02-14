@@ -73,9 +73,9 @@ public class SertifikatServiceImpl implements SertifikatService {
     }
 
     @Override
-    public void nabaviMetaPodatkeXmlPoJmbg(String jmbg) throws IOException {
+    public ByteArrayInputStream nabaviMetaPodatkeJSONPoJmbg(String jmbg) throws IOException {
         String query = String.format("?s ?p ?o. FILTER (?s = <http://www.ftn.uns.ac.rs/rdf/sertifikat/%s>)", jmbg);
-        rdfService.getMetadataXML(query, "sertifikat_" + jmbg, NamedGraphURIKonstante.IMUNIZACIJA_NAMED_GRAPH);
+        return rdfService.getMetadataJSON(query, "sertifikat_" + jmbg, NamedGraphURIKonstante.IMUNIZACIJA_NAMED_GRAPH);
     }
     
     @Override

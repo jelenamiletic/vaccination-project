@@ -49,14 +49,16 @@
         <sa:Obrazac>
             <sa:VakcineInfo>
                 <sa:NazivVakcine>Pfizer-BioNTech</sa:NazivVakcine>
-                <sa:DatumDavanjaVakcine>2021-03-10</sa:DatumDavanjaVakcine>
+                <sa:DatumDavanjaVakcine>2021-03-10T00:00:00</sa:DatumDavanjaVakcine>
                 <sa:NacinDavanjeVakcine/>
                 <sa:Ekstremitet>DR</sa:Ekstremitet>
                 <sa:SerijaVakcine>Prva</sa:SerijaVakcine>
                 <sa:Proizvodjac>Pfizer-BioNTech</sa:Proizvodjac>
                 <sa:NezeljanaReakcija>random</sa:NezeljanaReakcija>
+             </sa:VakcineInfo>
+             <sa:VakcineInfo>
                 <sa:NazivVakcine>Pfizer-BioNTech</sa:NazivVakcine>
-                <sa:DatumDavanjaVakcine>2021-03-10</sa:DatumDavanjaVakcine>
+                <sa:DatumDavanjaVakcine>2021-03-10T00:00:00</sa:DatumDavanjaVakcine>
                 <sa:NacinDavanjeVakcine/>
                 <sa:Ekstremitet>DR</sa:Ekstremitet>
                 <sa:SerijaVakcine>Prva</sa:SerijaVakcine>
@@ -70,4 +72,5 @@
             <sa:TrajneKontraindikacije>asdf</sa:TrajneKontraindikacije>
         </sa:Obrazac>
     </sa:ZdravstveniRadnikSaglasnost>
+    <sa:DatumPodnosenja>2021-03-10T00:00:00</sa:DatumPodnosenja>
 </sa:Saglasnost>
