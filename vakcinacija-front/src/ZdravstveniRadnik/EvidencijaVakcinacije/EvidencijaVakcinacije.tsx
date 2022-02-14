@@ -68,21 +68,35 @@ const EvidencijaVakcinacije = () => {
 
 		console.log(pronadjenaSaglasnost)
 
-		if(pronadjenaSaglasnost!["sa:ZdravstveniRadnikSaglasnost"])
-			pronadjenaSaglasnost!["sa:ZdravstveniRadnikSaglasnost"]["sa:Obrazac"]["sa:VakcineInfo"].forEach(VakcineInfo => {
+		if (pronadjenaSaglasnost!["sa:ZdravstveniRadnikSaglasnost"]) {
+			if (Array.isArray(pronadjenaSaglasnost!["sa:ZdravstveniRadnikSaglasnost"]["sa:Obrazac"]["sa:VakcineInfo"])) {
+				pronadjenaSaglasnost!["sa:ZdravstveniRadnikSaglasnost"]["sa:Obrazac"]["sa:VakcineInfo"].forEach(VakcineInfo => {
+					prethodneVakcineXML +=
+						`<sa:VakcineInfo>
+							<sa:NazivVakcine>${VakcineInfo["sa:NazivVakcine"]}</sa:NazivVakcine>
+							<sa:DatumDavanjaVakcine>${VakcineInfo["sa:DatumDavanjaVakcine"]}</sa:DatumDavanjaVakcine>
+							<sa:NacinDavanjeVakcine />
+							<sa:Ekstremitet>${VakcineInfo["sa:Ekstremitet"]}</sa:Ekstremitet>
+							<sa:SerijaVakcine>${VakcineInfo["sa:SerijaVakcine"]}</sa:SerijaVakcine>
+							<sa:Proizvodjac>${VakcineInfo["sa:Proizvodjac"]}</sa:Proizvodjac>
+							<sa:NezeljanaReakcija>${VakcineInfo["sa:NezeljanaReakcija"]}</sa:NezeljanaReakcija>
+						</sa:VakcineInfo>`
+				});
+			}
+			else {
 				prethodneVakcineXML +=
 					`<sa:VakcineInfo>
-						<sa:NazivVakcine>${VakcineInfo["sa:NazivVakcine"]}</sa:NazivVakcine>
-						<sa:DatumDavanjaVakcine>${VakcineInfo["sa:DatumDavanjaVakcine"]}</sa:DatumDavanjaVakcine>
+						<sa:NazivVakcine>${pronadjenaSaglasnost!["sa:ZdravstveniRadnikSaglasnost"]["sa:Obrazac"]["sa:VakcineInfo"]["sa:NazivVakcine"]}</sa:NazivVakcine>
+						<sa:DatumDavanjaVakcine>${pronadjenaSaglasnost!["sa:ZdravstveniRadnikSaglasnost"]["sa:Obrazac"]["sa:VakcineInfo"]["sa:DatumDavanjaVakcine"]}</sa:DatumDavanjaVakcine>
 						<sa:NacinDavanjeVakcine />
-						<sa:Ekstremitet>${VakcineInfo["sa:Ekstremitet"]}</sa:Ekstremitet>
-						<sa:SerijaVakcine>${VakcineInfo["sa:SerijaVakcine"]}</sa:SerijaVakcine>
-						<sa:Proizvodjac>${VakcineInfo["sa:Proizvodjac"]}</sa:Proizvodjac>
-						<sa:NezeljanaReakcija>${VakcineInfo["sa:NezeljanaReakcija"]}</sa:NezeljanaReakcija>
+						<sa:Ekstremitet>${pronadjenaSaglasnost!["sa:ZdravstveniRadnikSaglasnost"]["sa:Obrazac"]["sa:VakcineInfo"]["sa:Ekstremitet"]}</sa:Ekstremitet>
+						<sa:SerijaVakcine>${pronadjenaSaglasnost!["sa:ZdravstveniRadnikSaglasnost"]["sa:Obrazac"]["sa:VakcineInfo"]["sa:SerijaVakcine"]}</sa:SerijaVakcine>
+						<sa:Proizvodjac>${pronadjenaSaglasnost!["sa:ZdravstveniRadnikSaglasnost"]["sa:Obrazac"]["sa:VakcineInfo"]["sa:Proizvodjac"]}</sa:Proizvodjac>
+						<sa:NezeljanaReakcija>${pronadjenaSaglasnost!["sa:ZdravstveniRadnikSaglasnost"]["sa:Obrazac"]["sa:VakcineInfo"]["sa:NezeljanaReakcija"]}</sa:NezeljanaReakcija>
 					</sa:VakcineInfo>`
-			});
+			}
+		}
 
-		
 
 		let xml = `<?xml version="1.0" encoding="UTF-8"?>
 		<sa:Saglasnost
@@ -162,13 +176,59 @@ const EvidencijaVakcinacije = () => {
 					"Access-Control-Allow-Origin": "*",
 				},
 			})
+			.catch((err: any) => {
+				toast.error(err.response.data, {
+					position: toast.POSITION.TOP_CENTER,
+					autoClose: false,
+					toastId: customId,
+				});
+			});
+
+		let xml_potvrda = `<?xml version="1.0" encoding="UTF-8"?>
+		<po:Potvrda
+			xmlns:xs="http://www.w3.org/2001/XMLSchema"
+			xmlns:po="http:///www.ftn.uns.ac.rs/vakcinacija/potvrda"
+			xmlns:ct="http:///www.ftn.uns.ac.rs/vakcinacija/commonTypes" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+			xsi:schemaLocation="http:///www.ftn.uns.ac.rs/vakcinacija/potvrda ../xsd/potvrda.xsd" 
+			xmlns:addr="http://www.ftn.uns.ac.rs/rdf/potvrda"
+			xmlns:pred="http://www.ftn.uns.ac.rs/rdf/potvrda/predicate/"
+			vocab="http://www.ftn.uns.ac.rs/rdf/potvrda/" 
+			about="http://www.ftn.uns.ac.rs/rdf/potvrda/${pronadjenaSaglasnost!["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:Drzavljanstvo"]["sa:RepublikaSrbija"]["sa:JMBG"]}">
+			<po:Sifra></po:Sifra>
+			<po:LicneInformacije>
+				<po:PunoIme>
+					<ct:Ime>${pronadjenaSaglasnost!["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:PunoIme"]["ct:Ime"]}</ct:Ime>
+					<ct:Prezime>${pronadjenaSaglasnost!["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:PunoIme"]["ct:Prezime"]}</ct:Prezime>
+				</po:PunoIme>
+				<po:DatumRodjenja>${pronadjenaSaglasnost!["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:DatumRodjenja"]}</po:DatumRodjenja>
+				<po:Pol>${pronadjenaSaglasnost!["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:Pol"]}</po:Pol>
+				<po:JMBG property = "pred:jmbg" datatype = "xs:string">${pronadjenaSaglasnost!["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:Drzavljanstvo"]["sa:RepublikaSrbija"]["sa:JMBG"]}</po:JMBG>
+			</po:LicneInformacije>
+			<po:InformacijeOVakcinama>
+				<po:BrojDoze>${pronadjenaSaglasnost!["sa:ZdravstveniRadnikSaglasnost"]["sa:Obrazac"]["sa:VakcineInfo"].length + 1}</po:BrojDoze>
+				<po:DatumDavanja>${new Date(new Date().toString().split('GMT')[0]+' UTC').toISOString().split('.')[0]}</po:DatumDavanja>
+				<po:Serija>${saglasnost.SerijaVakcine}</po:Serija>
+			</po:InformacijeOVakcinama>
+			<po:ZdravstvenaUstanova>${saglasnost.ZdravstvenaUstanova}</po:ZdravstvenaUstanova>
+			<po:VakcinaPrveDveDoze property = "pred:VakcinaPrveDveDoze" datatype = "xs:string">${pronadjenaSaglasnost!["sa:PacijentSaglasnost"]["sa:Imunizacija"]["sa:NazivImunoloskogLeka"]}</po:VakcinaPrveDveDoze>
+			<po:DatumIzdavanja>${pronadjenaSaglasnost!["sa:DatumPodnosenja"]}</po:DatumIzdavanja>
+			<po:QR>http://www.ftn.uns.ac.rs/</po:QR>
+		</po:Potvrda>`;
+		console.log(xml_potvrda)
+		axios
+			.post("http://localhost:8080/potvrda/dodajNovuPotvrdu", xml_potvrda, {
+				headers: {
+					"Content-Type": "application/xml",
+					"Access-Control-Allow-Origin": "*",
+				},
+			})
 			.then((res: any) => {
 				toast.success("Uspesno evidentirana vakcinacija", {
 					position: toast.POSITION.TOP_CENTER,
 					autoClose: false,
 					toastId: customId,
 				});
-				//navigate("/profil");
+				navigate("/profil");
 			})
 			.catch((err: any) => {
 				toast.error(err.response.data, {

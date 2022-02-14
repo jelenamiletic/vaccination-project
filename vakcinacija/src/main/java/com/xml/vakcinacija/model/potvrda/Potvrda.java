@@ -41,7 +41,7 @@ public class Potvrda {
 	protected VakcinaPrveDveDoze VakcinaPrveDveDoze;
 	
 	@XmlElement(required = true)
-	@XmlSchemaType(name = "date")
+    @XmlSchemaType(name = "dateTime")
 	protected XMLGregorianCalendar DatumIzdavanja;
 	
 	@XmlElement(required = true)
@@ -308,7 +308,7 @@ public class Potvrda {
 		protected int BrojDoze;
 		
 		@XmlElement(required = true)
-		@XmlSchemaType(name = "date")
+	    @XmlSchemaType(name = "dateTime")
 		protected XMLGregorianCalendar DatumDavanja;
 		
 		@XmlElement(required = true)

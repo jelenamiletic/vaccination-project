@@ -22,9 +22,6 @@ const ZdravstveniRadnikNavbar = () => {
 							<Link to="/evidencija-vakcinacije">Evidencija vakcinacije</Link>
 						</NavItem>
 						<NavItem>
-							<Link to="/potvrda-vakcinacije">Izdavanje potvrde</Link>
-						</NavItem>
-						<NavItem>
 							<Link to="/login" onClick={logout}>
 								Logout
 							</Link>
