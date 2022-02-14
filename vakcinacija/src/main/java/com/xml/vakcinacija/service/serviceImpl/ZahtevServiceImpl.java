@@ -3,16 +3,31 @@ package com.xml.vakcinacija.service.serviceImpl;
 import java.io.IOException;
 import java.util.List;
 
+import javax.activation.DataHandler;
+import javax.mail.Message;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
+import javax.mail.util.ByteArrayDataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.xml.vakcinacija.exception.ZahtevNijePronadjenoException;
 import com.xml.vakcinacija.exception.ZahtevPostojiException;
+import com.xml.vakcinacija.model.OdgovorNaZahtev;
 import com.xml.vakcinacija.model.gradjanin.Gradjanin;
+import com.xml.vakcinacija.model.sertifikat.Sertifikat;
+
 import com.xml.vakcinacija.model.zahtev.Zahtev;
+import com.xml.vakcinacija.repository.KorisnikRepository;
+import com.xml.vakcinacija.repository.SertifikatRepository;
 import com.xml.vakcinacija.repository.ZahtevRepository;
 import com.xml.vakcinacija.service.RDFService;
+import com.xml.vakcinacija.service.SertifikatService;
 import com.xml.vakcinacija.service.UnmarshallerService;
 import com.xml.vakcinacija.service.ZahtevService;
 import com.xml.vakcinacija.utils.ContextPutanjeKonstante;
@@ -30,6 +45,19 @@ public class ZahtevServiceImpl implements ZahtevService{
 	
 	@Autowired
 	private ZahtevRepository zahtevRepository;
+	
+	@Autowired
+	private SertifikatRepository sertifikatRepository;
+	
+	@Autowired
+	private KorisnikRepository korisnikRepository;
+	
+	@Autowired
+	private EmailSenderService emailSenderService;
+	
+	@Autowired
+	private SertifikatService sertifikatService;
+	
 
 	@Override
 	public void dodajNoviZahtev(String zahtevXML) throws Exception {
@@ -69,6 +97,72 @@ public class ZahtevServiceImpl implements ZahtevService{
 			throw new ZahtevNijePronadjenoException(jmbg);
 		}
 		return zahtev;
+	}
+	
+	@Override
+	public List<Zahtev> dobaviSveNeodobreneZahteve() throws Exception {
+		return zahtevRepository.pronadjiNeodobreneZahteve();
+	}
+
+	@Override
+	public void promeniStatusZahteva(OdgovorNaZahtev odgovorNaZahtev) throws Exception {
+		Gradjanin gradjanin = korisnikRepository.pronadjiGradjanina(null, odgovorNaZahtev.getJMBG());
+		if (odgovorNaZahtev.getRazlogOdbijanja() == null) {
+			Zahtev zahtev = zahtevRepository.pronadjiZahtevPoJmbg(odgovorNaZahtev.getJMBG());
+			if (zahtev == null) {
+				throw new ZahtevNijePronadjenoException(odgovorNaZahtev.getJMBG());
+			}
+			zahtev.setOdobren(true);
+			zahtevRepository.saveZahtevObjekat(zahtev);
+			Sertifikat sertifikat = sertifikatRepository.pronadjiSertifikatPoJmbg(odgovorNaZahtev.getJMBG());
+			
+			MimeMessage message = emailSenderService.createMimeMessage();
+			InternetAddress sender = new InternetAddress("mrs_isa_2021_t15_5@hotmail.com");
+	        InternetAddress recipient = new InternetAddress(gradjanin.getEmail());
+			message.setRecipient(Message.RecipientType.TO, recipient);
+			message.setSubject("Odgovor na zahtev");
+			message.setSender(sender);
+			
+		    MimeMultipart mimeMultipart = new MimeMultipart();
+		    
+		    MimeBodyPart textBodyPart = new MimeBodyPart();
+	        textBodyPart.setText("Postovani " + gradjanin.getPunoIme().getIme() + ",\n"
+	        		+ "\tVas zahtev za digitalni zeleni serfifikat je odobren. "
+	        		+ "\tU prilogu nalazi se sertifikat u PDF i XHTML formatu.");
+	        mimeMultipart.addBodyPart(textBodyPart);
+	        
+			MimeBodyPart attachment = new MimeBodyPart();
+		    ByteArrayDataSource ds = new ByteArrayDataSource(
+		    		sertifikatService.generisiPdf(sertifikat.getLicneInformacije().getJMBG().getValue()), "application/pdf"); 
+		    attachment.setDataHandler(new DataHandler(ds));
+		    attachment.setFileName("Sertifikat.pdf");
+		    mimeMultipart.addBodyPart(attachment);
+		    
+		    MimeBodyPart attachment1 = new MimeBodyPart();
+		    ByteArrayDataSource ds1 = new ByteArrayDataSource(
+		    		sertifikatService.generisiXHTML(sertifikat.getLicneInformacije().getJMBG().getValue()), "text/html"); 
+		    attachment1.setDataHandler(new DataHandler(ds1));
+		    attachment1.setFileName("Sertifikat.htm");
+		    mimeMultipart.addBodyPart(attachment1);
+		    
+		    message.setContent(mimeMultipart);
+			Transport.send(message);
+		} else {
+			MimeMessage message = emailSenderService.createMimeMessage();
+			InternetAddress sender = new InternetAddress("mrs_isa_2021_t15_5@hotmail.com");
+	        InternetAddress recipient = new InternetAddress(gradjanin.getEmail());
+			message.setRecipient(Message.RecipientType.TO, recipient);
+			message.setSubject("Odgovor na zahtev");
+			message.setSender(sender);
+			
+		    MimeMultipart mimeMultipart = new MimeMultipart();
+		    
+		    MimeBodyPart textBodyPart = new MimeBodyPart();
+	        textBodyPart.setText(odgovorNaZahtev.getRazlogOdbijanja());
+	        mimeMultipart.addBodyPart(textBodyPart); 
+		    message.setContent(mimeMultipart);
+			Transport.send(message);
+		}
 	}
 
 	@Override
