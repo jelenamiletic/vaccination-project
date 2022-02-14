@@ -3,6 +3,7 @@ package com.xml.vakcinacija.controller;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -65,5 +66,17 @@ public class ZahtevController {
 	@PreAuthorize("hasAnyRole('ROLE_GRADJANIN', 'ROLE_SLUZBENIK')")
 	public void nabaviMetaPodatkeXmlPoJmbg(@PathVariable String jmbg) throws IOException {
 		zahtevService.nabaviMetaPodatkeXmlPoJmbg(jmbg);
+	}
+	
+	@GetMapping(value = "/generisiPdf/{jmbg}", produces = MediaType.APPLICATION_PDF_VALUE)
+	@PreAuthorize("hasRole('ROLE_GRADJANIN')")
+	public ResponseEntity<InputStreamResource> generisiPdf(@PathVariable String jmbg) throws Exception {
+		return new ResponseEntity<>(new InputStreamResource(zahtevService.generisiPdf(jmbg)), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/generisiXHTML/{jmbg}", produces = MediaType.TEXT_HTML_VALUE)
+	@PreAuthorize("hasRole('ROLE_GRADJANIN')")
+	public ResponseEntity<InputStreamResource> generisiXHTML(@PathVariable String jmbg) throws Exception {
+		return new ResponseEntity<>(new InputStreamResource(zahtevService.generisiXHTML(jmbg)), HttpStatus.OK);
 	}
 }

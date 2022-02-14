@@ -38,6 +38,9 @@ public class InteresovanjeServiceImpl implements InteresovanjeService {
 	private TerminService terminService;
 	
 	@Autowired
+	private PDFTransformerService pdfTransformerService;
+	
+	@Autowired
 	private HTMLTransformerService htmlTransformerService;
 
 	@Override
@@ -97,5 +100,14 @@ public class InteresovanjeServiceImpl implements InteresovanjeService {
 			throw new Exception();
 		}
 		return htmlTransformerService.generateHTML(interesovanje, XSLKonstante.INTERESOVANJE_XSL);
+	}
+
+	@Override
+	public ByteArrayInputStream generisiPdf(String jmbg) throws Exception {
+		String interesovanje = interesovanjeRepository.pronadjiInteresovanjeXmlPoJmbg(jmbg);
+		if (interesovanje == null) {
+			throw new Exception();
+		}
+		return pdfTransformerService.generatePDF(interesovanje, com.xml.vakcinacija.utils.XSLFOKonstante.INTERESOVANJE_XSL_FO);
 	}
 }

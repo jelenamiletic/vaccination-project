@@ -53,7 +53,7 @@ const Interesovanje = () => {
 	const downloadXHTML = () => {
 		axios
 			.get(
-				`http://localhost:8081/interesovanje/generisiXHTML/${ getJMBG }`,
+				`http://localhost:8080/interesovanje/generisiXhtml/${ getJMBG() }`,
 				{
 					headers: {
 						"Access-Control-Allow-Origin": "*",
@@ -64,6 +64,35 @@ const Interesovanje = () => {
 			.then((res: any) => {
 				let blob = new Blob([res.data], {
 					type: "text/html;charset=utf-8",
+				});
+				saveAs(
+					blob,
+					getJMBG()
+				);
+			})
+			.catch((err: any) => {
+				toast.error(err.response.data, {
+					position: toast.POSITION.TOP_CENTER,
+					autoClose: false,
+					toastId: customId,
+				});
+			});
+	};
+
+	const downloadPdf = () => {
+		axios
+			.get(
+				`http://localhost:8080/interesovanje/generisiPdf/${ getJMBG() }`,
+				{
+					headers: {
+						"Access-Control-Allow-Origin": "*",
+					},
+					responseType: "blob",
+				}
+			)
+			.then((res: any) => {
+				let blob = new Blob([res.data], {
+					type: "application/pdf;charset=utf-8",
 				});
 				saveAs(
 					blob,
@@ -230,15 +259,23 @@ const Interesovanje = () => {
 					>
 						<CardBody>
 						<CardTitle tag="h2">Interesovanje</CardTitle>
-						<Label>Vec ste popunili formu za interesovanje</Label>
+						<Label style={{ display: "block" }} >Vec ste popunili formu za interesovanje</Label>
 						<Button
 							className="registruj-login-btn"
 							color="primary"
 							type="button"
-							style={{ display: "block" }}
+							style={{ marginRight: "1em" }}
 							onClick={() => downloadXHTML()}
 						>
 							Skidanje XHTML
+						</Button>
+						<Button
+							className="registruj-login-btn"
+							color="primary"
+							type="button"
+							onClick={() => downloadXHTML()}
+						>
+							Skidanje PDF
 						</Button>
 						</CardBody>
 					</Card>

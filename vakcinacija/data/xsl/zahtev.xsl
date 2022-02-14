@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:in="http:///www.ftn.uns.ac.rs/vakcinacija/interesovanje"
-    xmlns:ct="http:///www.ftn.uns.ac.rs/vakcinacija/commonTypes"
+    xmlns:za="http:///www.ftn.uns.ac.rs/vakcinacija/zahtev"
     version="2.0">
     <xsl:template match="/">
         <html>
@@ -54,96 +53,67 @@
                 </style>
         	</head>
         	<body>
-        		<h1 id = "naslov">Iskazivanje interesovanja za vakcinisanje protiv COVID-19</h1>
-        		<p style = "padding-top:10px">
-                   Gradjanin je: <xsl:value-of select="//in:LicneInformacije/in:Drzavljanstvo/text()"/>
+        		<h1 id = "naslov">Zahtev za zeleni sertifikat COVID-19</h1>
+                
+                <p style = "padding-top:10px;">
+                	JMBG
                 </p>
                 
                 <p style = "padding-top:10px;">
-                	JMBG:
+                	<xsl:value-of select="//za:Podnosilac/za:JMBG/text()"/>
                 </p>
                 
                 <p style = "padding-top:10px;">
-                	<xsl:value-of select="//in:LicneInformacije/in:JMBG/text()"/>
+                	Ime
                 </p>
                 
                 <p style = "padding-top:10px;">
-                	Ime:
+                	<xsl:value-of select="//za:Podnosilac/za:PunoIme/za:Ime/text()"/>
                 </p>
                 
                 <p style = "padding-top:10px;">
-                	<xsl:value-of select="//in:LicneInformacije/in:PunoIme/ct:Ime/text()"/>
+                	Prezime
                 </p>
                 
                 <p style = "padding-top:10px;">
-                	Prezime:
+                	<xsl:value-of select="//za:Podnosilac/za:PunoIme/za:Prezime/text()"/>
+                </p>
+                
+                
+                <p style = "padding-top:10px;">
+                	Datum rodjenja
                 </p>
                 
                 <p style = "padding-top:10px;">
-                	<xsl:value-of select="//in:LicneInformacije/in:PunoIme/ct:Prezime/text()"/>
+                	<xsl:value-of select="//za:Podnosilac/za:DatumRodjenja/text()"/>
                 </p>
                 
                 <p style = "padding-top:10px;">
-                	Adresa elektronske poste:
+                	Pol
                 </p>
                 
                 <p style = "padding-top:10px;">
-                	<xsl:value-of select="//in:LicneInformacije/in:AdresaElektronskePoste/text()"/>
+                	<xsl:value-of select="//za:Podnosilac/za:Pol/text()"/>
                 </p>
                 
                 <p style = "padding-top:10px;">
-                	Broj Mobilnog telefona:
+                	Broj Pasosa
                 </p>
                 
                 <p style = "padding-top:10px;">
-                	<xsl:value-of select="//in:LicneInformacije/in:BrojMobilnogTelefona/text()"/>
+                	<xsl:value-of select="//za:Podnosilac/za:BrojPasosa/text()"/>
                 </p>
                 
                 <p style = "padding-top:10px;">
-                	Broj fiksnog telefona:
-                </p>
-                
-                <p style = "padding-top:10px;">
-                	<xsl:value-of select="//in:LicneInformacije/in:BrojFiksnogTelefona/text()"/>
-                </p>
-                
-                <p style = "padding-top:10px;">
-                	Opstina primanja:
-                </p>
-                
-                <p style = "padding-top:10px;">
-                	<xsl:value-of select="//in:OpstinaPrimanja/text()"/>
-                </p>
-                
-                <p style = "padding-top:10px;">
-                	Tip vakcina:
-                </p>
-                
-                <p style = "padding-top:10px;">
-                	<xsl:value-of select="//in:Vakcina/text()"/>
-                </p>
-                
-                <p style = "padding-top:10px;">
-                	Davalac krvi:
+                	Razlog podnosenja
                 </p>
                 <p style = "padding-top:10px;">
-                	<xsl:choose>
-					 <xsl:when test="//in:DavalacKrvi/text()='true'">
-					  	<p style = "padding-top:10px;">
-		                	Da
-		                </p>
-					 </xsl:when>
-					 <xsl:when test="//in:DavalacKrvi/text()='false'">
-					  	<p style = "padding-top:10px;">
-		                	Ne
-		                </p>
-					 </xsl:when>
-					</xsl:choose>
+                	<xsl:value-of select="//za:RazlogPodnosenja"/>
                 </p>
               	
                  <p style = "padding-top:100px;">
-	                Datum izdavanja: 
-	                <u><xsl:value-of select="//in:DatumPodnosenja/text()"/></u>
+	                Datum podnosenja: 
+	                <u><xsl:value-of select="//za:DatumPodnosenja/text()"/></u>
 	                godine.	
                 </p>
                 <p id="potpis">Potpis</p>
