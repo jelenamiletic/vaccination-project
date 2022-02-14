@@ -57,4 +57,10 @@ public class InteresovanjeController {
 	public ResponseEntity<InputStreamResource> generisiXHTML(@PathVariable String jmbg) throws Exception {
 		return new ResponseEntity<>(new InputStreamResource(interesovanjeService.generisiXHTML(jmbg)), HttpStatus.OK);
 	}
+	
+	@GetMapping(value = "/generisiPdf/{jmbg}", produces = MediaType.TEXT_HTML_VALUE)
+	@PreAuthorize("hasAnyRole('ROLE_GRADJANIN', 'ROLE_SLUZBENIK')")
+	public ResponseEntity<InputStreamResource> generisiPdf(@PathVariable String jmbg) throws Exception {
+		return new ResponseEntity<>(new InputStreamResource(interesovanjeService.generisiPdf(jmbg)), HttpStatus.OK);
+	}
 }
