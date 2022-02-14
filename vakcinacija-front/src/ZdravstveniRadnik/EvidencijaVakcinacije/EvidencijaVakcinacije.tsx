@@ -45,7 +45,8 @@ const EvidencijaVakcinacije = () => {
 		axios.get('http://localhost:8080/saglasnost/pronadjiNajnovijuSaglasnostPoJmbgIliBrPasosa/' + unos.JMBG)
 			.then((res: any) => {
 				const parser = new XMLParser();
-				const result = parser.parse(res.data);
+				const result: Saglasnost = parser.parse(res.data);
+				console.log(result)
 				const saglasnost: Saglasnost = result["sa:Saglasnost"];
 
 				if (saglasnost == null)
@@ -137,11 +138,11 @@ const EvidencijaVakcinacije = () => {
 
 					<sa:VakcineInfo>
 						<sa:NazivVakcine>${pronadjenaSaglasnost["sa:PacijentSaglasnost"]["sa:Imunizacija"]["sa:NazivImunoloskogLeka"]}</sa:NazivVakcine>
-						<sa:DatumDavanjaVakcine>${pronadjenaSaglasnost!["sa:DatumPodnosenja"]}</sa:DatumDavanjaVakcine>
+						<sa:DatumDavanjaVakcine>${(new Date()).toISOString()}</sa:DatumDavanjaVakcine>
 						<sa:NacinDavanjeVakcine />
 						<sa:Ekstremitet>${saglasnost.Ekstremitet}</sa:Ekstremitet>
 						<sa:SerijaVakcine>${saglasnost.SerijaVakcine}</sa:SerijaVakcine>
-						<sa:Proizvodjac>${saglasnost.Proizvodjac}</sa:Proizvodjac>
+						<sa:Proizvodjac>${pronadjenaSaglasnost["sa:PacijentSaglasnost"]["sa:Imunizacija"]["sa:NazivImunoloskogLeka"]}</sa:Proizvodjac>
 						<sa:NezeljanaReakcija>${saglasnost.NezeljanaReakcija}</sa:NezeljanaReakcija>
 					</sa:VakcineInfo>
 
@@ -282,24 +283,6 @@ const EvidencijaVakcinacije = () => {
 
 
 								<CardTitle tag="h3">Lekar:</CardTitle>
-								{/* <FormGroup>
-									<Label>Ime</Label>
-									<Input
-										type="text"
-										name="ImeLekara"
-										placeholder=""
-										innerRef={register}
-									/>
-								</FormGroup>
-								<FormGroup>
-									<Label>Prezime</Label>
-									<Input
-										type="text"
-										name="PrezimeLekara"
-										placeholder=""
-										innerRef={register}
-									/>
-								</FormGroup> */}
 								<FormGroup>
 									<Label>Broj telefona</Label>
 									<Input
@@ -312,28 +295,9 @@ const EvidencijaVakcinacije = () => {
 
 
 								<CardTitle tag="h3">Vakcina:</CardTitle>
-								{/* <FormGroup>
-									<Label>Naziv Vakcine</Label>
-									<Input type="select" name="NazivVakcine" innerRef={register}>
-										<option>Pfizer-BioNTech</option>
-										<option>Sputnik V (Gamaleya истраживачки центар)</option>
-										<option>Sinopharm</option>
-										<option>AstraZeneca</option>
-										<option>Moderna</option>
-									</Input>
-								</FormGroup>
 								<FormGroup>
-									<Label>Datum davanja vakcine</Label>
-									<Input
-										type="text"
-										name="DatumDavanjaVakcine"
-										placeholder=""
-										innerRef={register}
-									/>
-								</FormGroup> */}
-								<FormGroup>
-									<Label>Extremitet</Label>
-									<Input type="select" name="Extremitet" innerRef={register}>
+									<Label>Ekstremitet</Label>
+									<Input type="select" name="Ekstremitet" innerRef={register}>
 										<option>DR</option>
 										<option>LR</option>
 									</Input>
@@ -343,15 +307,6 @@ const EvidencijaVakcinacije = () => {
 									<Input
 										type="text"
 										name="SerijaVakcine"
-										placeholder=""
-										innerRef={register}
-									/>
-								</FormGroup>
-								<FormGroup>
-									<Label>Proizvodjac vakcine</Label>
-									<Input
-										type="text"
-										name="ProizvodjacVakcine"
 										placeholder=""
 										innerRef={register}
 									/>

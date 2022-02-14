@@ -57,36 +57,38 @@ public class TerminServiceImpl implements TerminService{
 		ResponseEntity<Boolean> response = restTemplate.exchange(
                 "http://localhost:8081/vakcina/proveriSmanjiKolicinu/" + vakcina, HttpMethod.PUT, new HttpEntity<Object>(headers), Boolean.class);
 		
-		List<Termin> termini = getSveTermine().stream()
-                .sorted((a1, a2) -> {
-                    XMLGregorianCalendar c1 = a1.getDatum();
-                    XMLGregorianCalendar c2 = a2.getDatum();
-                    return c1.toGregorianCalendar().compareTo(c2.toGregorianCalendar());
-                })
-                .collect(Collectors.toList());
+		Termin termin = null;
 		
-		GregorianCalendar datum = new GregorianCalendar();
-		GregorianCalendar newest = new GregorianCalendar();
-		
-		if(termini.size() != 0) {
-			newest = termini.get(termini.size() - 1).getDatum().toGregorianCalendar();
-		} 
-		
-		if(brojDoze != 1)  {
-			datum.add(Calendar.MONTH, 6);
-		} else {
-			datum.add(Calendar.HOUR, 72);
+		if(response.getBody()) {
+			List<Termin> termini = getSveTermine().stream()
+	                .sorted((a1, a2) -> {
+	                    XMLGregorianCalendar c1 = a1.getDatum();
+	                    XMLGregorianCalendar c2 = a2.getDatum();
+	                    return c1.toGregorianCalendar().compareTo(c2.toGregorianCalendar());
+	                })
+	                .collect(Collectors.toList());
+			
+			GregorianCalendar datum = new GregorianCalendar();
+			GregorianCalendar newest = new GregorianCalendar();
+			
+			if(termini.size() != 0) {
+				newest = termini.get(termini.size() - 1).getDatum().toGregorianCalendar();
+			} 
+			
+			if(brojDoze != 1)  {
+				datum.add(Calendar.MONTH, 6);
+			} else {
+				datum.add(Calendar.HOUR, 72);
+			}
+			
+			if(datum.compareTo(newest) < 0) {
+				datum = newest;
+			}
+			datum.add(Calendar.MINUTE, Termin.DUZINA_VAKCINACIJE);
+			
+			termin = new Termin(DatatypeFactory.newInstance().newXMLGregorianCalendar(datum), jmbg, brojDoze, vakcina);
+			terminRepository.saveTerminObjekat(termin);
 		}
-		
-		if(datum.compareTo(newest) < 0) {
-			datum = newest;
-		}
-		datum.add(Calendar.MINUTE, Termin.DUZINA_VAKCINACIJE);
-		
-		Termin termin = new Termin(DatatypeFactory.newInstance().newXMLGregorianCalendar(datum), jmbg, brojDoze, vakcina);
-		terminRepository.saveTerminObjekat(termin);
-		
-		//TODO umanji vakcinu za 1
 		
 		return termin;
 	}
