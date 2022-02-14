@@ -20,6 +20,7 @@ import { getJMBG, getEmail } from "../../Auth/AuthService";
 import { Termin } from "../../Models/Termin";
 import { XMLParser } from "fast-xml-parser";
 import { saglasnostSchema } from "./Validation/SaglasnostSchema";
+import saveAs from "file-saver";
 
 const Saglasnost = () => {
 	const customId = "saglasnost";
@@ -123,6 +124,65 @@ const Saglasnost = () => {
 			});
 
 	}
+
+
+	const downloadXHTML = () => {
+		axios
+			.get(
+				`http://localhost:8080/saglasnost/generisiXhtml/${ getJMBG() }`,
+				{
+					headers: {
+						"Access-Control-Allow-Origin": "*",
+					},
+					responseType: "blob",
+				}
+			)
+			.then((res: any) => {
+				let blob = new Blob([res.data], {
+					type: "text/html;charset=utf-8",
+				});
+				saveAs(
+					blob,
+					getJMBG()
+				);
+			})
+			.catch((err: any) => {
+				toast.error(err.response.data, {
+					position: toast.POSITION.TOP_CENTER,
+					autoClose: false,
+					toastId: customId,
+				});
+			});
+	};
+
+	const downloadPdf = () => {
+		axios
+			.get(
+				`http://localhost:8080/saglasnost/generisiPdf/${ getJMBG() }`,
+				{
+					headers: {
+						"Access-Control-Allow-Origin": "*",
+					},
+					responseType: "blob",
+				}
+			)
+			.then((res: any) => {
+				let blob = new Blob([res.data], {
+					type: "application/pdf;charset=utf-8",
+				});
+				saveAs(
+					blob,
+					getJMBG()
+				);
+			})
+			.catch((err: any) => {
+				toast.error(err.response.data, {
+					position: toast.POSITION.TOP_CENTER,
+					autoClose: false,
+					toastId: customId,
+				});
+			});
+	};
 
 	
 
@@ -267,7 +327,24 @@ const Saglasnost = () => {
 					>
 						<CardBody>
 							<CardTitle tag="h2">Saglasnost</CardTitle>
-							<Label>Vec ste popunili sve saglasnosti</Label>
+							<Label style={{ display: "block" }}>Vec ste popunili sve saglasnosti</Label>
+							<Button
+							className="registruj-login-btn"
+							color="primary"
+							type="button"
+							style={{ marginRight: "1em" }}
+							onClick={() => downloadXHTML()}
+							>
+								Skidanje XHTML
+							</Button>
+							<Button
+								className="registruj-login-btn"
+								color="primary"
+								type="button"
+								onClick={() => downloadPdf()}
+							>
+								Skidanje PDF
+							</Button>
 						</CardBody>
 				</Card>
 			}
@@ -278,7 +355,7 @@ const Saglasnost = () => {
 					style={{ backgroundColor: "#DEEDE6", borderColor: "black" }}
 					>
 						<CardBody>
-							<CardTitle tag="h2">Saglasnost</CardTitle>
+							<CardTitle tag="h2" >Saglasnost</CardTitle>
 							<Label>Nemate saglasnost, popunite prvo interesovanje</Label>
 						</CardBody>
 				</Card>
