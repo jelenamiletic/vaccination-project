@@ -1,5 +1,6 @@
 package com.xml.vakcinacija.service;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.List;
 
@@ -14,4 +15,8 @@ public interface ZahtevService {
 	Zahtev pronadjiZahtevPoJmbg(String jmbg) throws Exception;
 	
 	void nabaviMetaPodatkeXmlPoJmbg(String jmbg) throws IOException;
+	
+	ByteArrayInputStream generisiPdf(String jmbg) throws Exception;
+
+	ByteArrayInputStream generisiXHTML(String jmbg) throws Exception;
 }
