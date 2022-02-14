@@ -18,5 +18,5 @@ public interface ZahtevService {
 	
 	List<Zahtev> dobaviSveNeodobreneZahteve() throws Exception;
 	
-	void promeniStatusZahteva(String jmbg, OdgovorNaZahtev odgovorNaZahtev) throws Exception;
+	void promeniStatusZahteva(OdgovorNaZahtev odgovorNaZahtev) throws Exception;
 }

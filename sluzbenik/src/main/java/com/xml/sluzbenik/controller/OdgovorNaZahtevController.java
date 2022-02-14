@@ -33,10 +33,10 @@ public class OdgovorNaZahtevController {
 		return new ResponseEntity<>(odgovorNaZahtevService.dobaviSveNeodobreneZahteve(), HttpStatus.OK);
 	}
 	
-	@PutMapping(value = "/promeniStatusZahteva/{jmbg}", consumes = MediaType.APPLICATION_XML_VALUE)
+	@PutMapping(value = "/promeniStatusZahteva", consumes = MediaType.APPLICATION_XML_VALUE)
 	@PreAuthorize("hasRole('ROLE_SLUZBENIK')")
-	public void promeniStatusZahteva(@PathVariable String jmbg, @RequestBody OdgovorNaZahtev odgovorNaZahtev) throws SAXException {
-		odgovorNaZahtevService.promeniStatusZahteva(jmbg, odgovorNaZahtev);
+	public void promeniStatusZahteva(@RequestBody OdgovorNaZahtev odgovorNaZahtev) throws SAXException {
+		odgovorNaZahtevService.promeniStatusZahteva(odgovorNaZahtev);
 	}
 	
 	@GetMapping(value = "/dobaviPoslednjuPotvrduPoJmbg/{jmbg}", produces = MediaType.APPLICATION_XML_VALUE)

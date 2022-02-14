@@ -55,10 +55,10 @@ public class ZahtevController {
 		return new ResponseEntity<>(lista, HttpStatus.OK);
 	}
 	
-	@PutMapping(value = "/promeniStatusZahteva/{jmbg}")
+	@PutMapping(value = "/promeniStatusZahteva")
 	@PreAuthorize("hasRole('ROLE_SLUZBENIK')")
-	public void promeniStatusZahteva(@PathVariable String jmbg, @RequestBody OdgovorNaZahtev odgovorNaZahtev) throws Exception {
-		zahtevService.promeniStatusZahteva(jmbg, odgovorNaZahtev);
+	public void promeniStatusZahteva(@RequestBody OdgovorNaZahtev odgovorNaZahtev) throws Exception {
+		zahtevService.promeniStatusZahteva(odgovorNaZahtev);
 	}
 	
 	@GetMapping(value = "/nabaviMetaPodatkeXmlPoJmbg/{jmbg}")

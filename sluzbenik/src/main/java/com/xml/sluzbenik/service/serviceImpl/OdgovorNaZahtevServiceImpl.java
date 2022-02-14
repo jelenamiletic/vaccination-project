@@ -44,13 +44,13 @@ public class OdgovorNaZahtevServiceImpl implements OdgovorNaZahtevService {
 	}
 
 	@Override
-	public void promeniStatusZahteva(String jmbg, OdgovorNaZahtev odgovorNaZahtev) throws SAXException {
+	public void promeniStatusZahteva(OdgovorNaZahtev odgovorNaZahtev) throws SAXException {
 		TokenBasedAuthentication a = (TokenBasedAuthentication) SecurityContextHolder.getContext().getAuthentication();
 		HttpHeaders headers = new HttpHeaders();
 		String userDetails = marshallerService.marshall(a.getPrincipal(), ContextPutanjeKonstante.CONTEXT_PUTANJA_SLUZBENIK, XSDPutanjeKonstante.XSD_SLUZBENIK);
 		headers.setBearerAuth(a.getToken());
 		headers.set("Sluzbenik", userDetails);
-		restTemplate.exchange("http://localhost:8080/zahtev/promeniStatusZahteva/" + jmbg, HttpMethod.PUT, new HttpEntity<Object>(odgovorNaZahtev, headers), Void.class);
+		restTemplate.exchange("http://localhost:8080/zahtev/promeniStatusZahteva", HttpMethod.PUT, new HttpEntity<Object>(odgovorNaZahtev, headers), Void.class);
 	}
 
 	@Override

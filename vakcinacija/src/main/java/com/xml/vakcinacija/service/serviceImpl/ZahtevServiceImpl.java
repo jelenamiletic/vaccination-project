@@ -3,11 +3,16 @@ package com.xml.vakcinacija.service.serviceImpl;
 import java.io.IOException;
 import java.util.List;
 
+import javax.activation.DataHandler;
+import javax.mail.Message;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
+import javax.mail.util.ByteArrayDataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
-import org.springframework.core.io.ByteArrayResource;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
@@ -52,8 +57,6 @@ public class ZahtevServiceImpl implements ZahtevService{
 	@Autowired
 	private SertifikatService sertifikatService;
 	
-	@Autowired
-	private Environment env;
 
 	@Override
 	public void dodajNoviZahtev(String zahtevXML) throws Exception {
@@ -96,40 +99,48 @@ public class ZahtevServiceImpl implements ZahtevService{
 	}
 
 	@Override
-	public void promeniStatusZahteva(String jmbg, OdgovorNaZahtev odgovorNaZahtev) throws Exception {
-		Gradjanin gradjanin = korisnikRepository.pronadjiGradjanina(null, jmbg);
+	public void promeniStatusZahteva(OdgovorNaZahtev odgovorNaZahtev) throws Exception {
+		Gradjanin gradjanin = korisnikRepository.pronadjiGradjanina(null, odgovorNaZahtev.getJMBG());
 		if (odgovorNaZahtev.getRazlogOdbijanja() == null) {
-			Zahtev zahtev = zahtevRepository.pronadjiZahtevPoJmbg(jmbg);
+			Zahtev zahtev = zahtevRepository.pronadjiZahtevPoJmbg(odgovorNaZahtev.getJMBG());
 			if (zahtev == null) {
-				throw new ZahtevNijePronadjenoException(jmbg);
+				throw new ZahtevNijePronadjenoException(odgovorNaZahtev.getJMBG());
 			}
 			zahtev.setOdobren(true);
 			zahtevRepository.saveZahtevObjekat(zahtev);
-			Sertifikat sertifikat = sertifikatRepository.pronadjiSertifikatPoJmbg(jmbg);
+			Sertifikat sertifikat = sertifikatRepository.pronadjiSertifikatPoJmbg(odgovorNaZahtev.getJMBG());
 			
 			MimeMessage message = emailSenderService.createMimeMessage();
-			MimeMessageHelper helper = new MimeMessageHelper(message, true);
-			helper.setTo(gradjanin.getEmail());
-			helper.setSubject("Odgovor na zahtev");
-			helper.setFrom(env.getProperty("spring.mail.username"));
-			helper.setText("Postovani " + gradjanin.getPunoIme().getIme() + ",\n"
+			InternetAddress sender = new InternetAddress("mrs_isa_2021_t15_5@hotmail.com");
+	        InternetAddress recipient = new InternetAddress("radicey714@diolang.com");
+			message.setRecipient(Message.RecipientType.TO, recipient);
+			message.setSubject("Odgovor na zahtev");
+			message.setSender(sender);
+			
+		    MimeMultipart mimeMultipart = new MimeMultipart();
+		    
+		    MimeBodyPart textBodyPart = new MimeBodyPart();
+	        textBodyPart.setText("Postovani " + gradjanin.getPunoIme().getIme() + ",\n"
 	        		+ "\tVas zahtev za digitalni zeleni serfifikat je odobren. "
 	        		+ "\tU prilogu nalazi se sertifikat u PDF i XHTML formatu.");
-			
-			helper.addAttachment("Sertifikat.pdf", 
-					new ByteArrayResource(
-							sertifikatService.generisiPdf(sertifikat.getLicneInformacije().getJMBG().getValue()).readAllBytes()));
-			helper.addAttachment("Sertifikat.htm", 
-					new ByteArrayResource(
-							sertifikatService.generisiXHTML(sertifikat.getLicneInformacije().getJMBG().getValue()).readAllBytes()));
-	        emailSenderService.sendEmail(message);
+	        mimeMultipart.addBodyPart(textBodyPart);
+	        
+			MimeBodyPart attachment = new MimeBodyPart();
+		    ByteArrayDataSource ds = new ByteArrayDataSource(
+		    		sertifikatService.generisiPdf(sertifikat.getLicneInformacije().getJMBG().getValue()), "application/pdf"); 
+		    attachment.setDataHandler(new DataHandler(ds));
+		    attachment.setFileName("Sertifikat.pdf");
+		    mimeMultipart.addBodyPart(attachment);
+		    
+		    message.setContent(mimeMultipart);
+			Transport.send(message);
 		} else {
-			zahtevRepository.izbrisiZahtev(jmbg);
+			zahtevRepository.izbrisiZahtev(odgovorNaZahtev.getJMBG());
 			MimeMessage message = emailSenderService.createMimeMessage();
 			MimeMessageHelper helper = new MimeMessageHelper(message, true);
-			helper.setTo(gradjanin.getEmail());
+			helper.setTo("hank.moen59@ethereal.email");
 			helper.setSubject("Odgovor na zahtev");
-			helper.setFrom(env.getProperty("spring.mail.username"));
+			helper.setFrom("mrs_isa_2021_t15_5@hotmail.com");
 			helper.setText(odgovorNaZahtev.getRazlogOdbijanja());
 			emailSenderService.sendEmail(message);
 		}

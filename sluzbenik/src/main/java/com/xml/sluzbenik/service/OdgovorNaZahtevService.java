@@ -11,7 +11,7 @@ public interface OdgovorNaZahtevService {
 
 	ListaZahteva dobaviSveNeodobreneZahteve() throws SAXException;
 	
-	void promeniStatusZahteva(String jmbg, OdgovorNaZahtev odgovorNaZahtev) throws SAXException;
+	void promeniStatusZahteva(OdgovorNaZahtev odgovorNaZahtev) throws SAXException;
 	
 	Potvrda dobaviPoslednjuPotvrduPoJmbg(String jmbg) throws SAXException;
 	

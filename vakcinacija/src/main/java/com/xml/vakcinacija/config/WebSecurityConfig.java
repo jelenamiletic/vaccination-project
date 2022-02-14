@@ -1,9 +1,13 @@
 package com.xml.vakcinacija.config;
 
+import java.util.Properties;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -32,10 +36,26 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 	
 	@Bean
+	public JavaMailSender getJavaMailSender() {
+	    JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+
+	    mailSender.setUsername("mrs_isa_2021_t15_5@hotmail.com");
+	    mailSender.setPassword("PassWord_FOR_MRS_ISA!");
+	      
+	    Properties props = mailSender.getJavaMailProperties();
+	    props.setProperty("mail.transport.protocol", "smtp");
+	    props.setProperty("mail.host", "smtp-mail.outlook.com");
+	    props.put("mail.smtp.starttls.enable", "true");
+	    props.put("mail.smtp.auth", "true");
+ 
+	    return mailSender;
+	}
+	
+	@Bean
 	public RestTemplate restTemplate() {
 	    return new RestTemplate();
 	}
-
+	
 	@Autowired
 	private CustomUserDetailsService customUserDetailsService;
 
@@ -93,7 +113,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/zahtev/pronadjiSve").hasAuthority(RoleKonstante.ROLE_SLUZBENIK)
 				.antMatchers("/zahtev/pronadjiZahtevPoJmbg/{jmbg}").hasAnyAuthority(RoleKonstante.ROLE_GRADJANIN, RoleKonstante.ROLE_SLUZBENIK)
 				.antMatchers("/zahtev/dobaviSveNeodobreneZahteve").hasAuthority(RoleKonstante.ROLE_SLUZBENIK)
-				.antMatchers("/zahtev/promeniStatusZahteva/{jmbg}").hasAuthority(RoleKonstante.ROLE_SLUZBENIK)
+				.antMatchers("/zahtev/promeniStatusZahteva").hasAuthority(RoleKonstante.ROLE_SLUZBENIK)
 				.antMatchers("/zahtev/nabaviMetaPodatkeXmlPoJmbg/{jmbg}").hasAnyAuthority(RoleKonstante.ROLE_GRADJANIN, RoleKonstante.ROLE_SLUZBENIK)
 				
 				// Gradjanin controller

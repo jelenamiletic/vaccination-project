@@ -79,7 +79,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers
 				(
 						"/odgovorNaZahtev//dobaviSveNeodobreneZahteve",
-						"/odgovorNaZahtev/promeniStatusZahteva/{jmbg}",
+						"/odgovorNaZahtev/promeniStatusZahteva",
 						"/odgovorNaZahtev/dobaviPoslednjuPotvrduPoJmbg/{jmbg}",
 						"/odgovorNaZahtev/dodajNoviSertifikat"
 				).hasAuthority(RoleKonstante.ROLE_SLUZBENIK)
