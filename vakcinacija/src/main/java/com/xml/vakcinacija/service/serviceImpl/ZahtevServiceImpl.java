@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.activation.DataHandler;
 import javax.mail.Message;
-import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
@@ -128,7 +127,7 @@ public class ZahtevServiceImpl implements ZahtevService{
 		    MimeBodyPart textBodyPart = new MimeBodyPart();
 	        textBodyPart.setText("Postovani " + gradjanin.getPunoIme().getIme() + ",\n"
 	        		+ "\tVas zahtev za digitalni zeleni serfifikat je odobren. "
-	        		+ "\tU prilogu nalazi se sertifikat u PDF i XHTML formatu.");
+	        		+ "U prilogu nalazi se sertifikat u PDF i XHTML formatu.");
 	        mimeMultipart.addBodyPart(textBodyPart);
 	        
 			MimeBodyPart attachment = new MimeBodyPart();
@@ -146,7 +145,7 @@ public class ZahtevServiceImpl implements ZahtevService{
 		    mimeMultipart.addBodyPart(attachment1);
 		    
 		    message.setContent(mimeMultipart);
-			Transport.send(message);
+		    emailSenderService.sendEmail(message);
 		} else {
 			MimeMessage message = emailSenderService.createMimeMessage();
 			InternetAddress sender = new InternetAddress("mrs_isa_2021_t15_5@hotmail.com");
@@ -161,7 +160,7 @@ public class ZahtevServiceImpl implements ZahtevService{
 	        textBodyPart.setText(odgovorNaZahtev.getRazlogOdbijanja());
 	        mimeMultipart.addBodyPart(textBodyPart); 
 		    message.setContent(mimeMultipart);
-			Transport.send(message);
+		    emailSenderService.sendEmail(message);
 		}
 	}
 

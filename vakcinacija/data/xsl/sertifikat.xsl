@@ -94,7 +94,7 @@
                         </p>
                         <p>
                             <b>Datum / Date:</b>
-                            <xsl:value-of select="//se:Vakcinacija[1]/se:DatumDavanja/text()"/>
+                            <xsl:value-of select="concat(' ', //se:Vakcinacija[1]/se:DatumDavanja/text())"/>
                         </p>
                         <p>
                             <b>Zdravstvena ustanova / Health care insitution:</b>
@@ -105,7 +105,7 @@
                     </div>
                     <div style='display: inline-block; vertical-align: top; margin-left: 10px;'>
                         <p>
-                            <b>Doza / Dose: 1 / 2</b>
+                            <b>Doza / Dose: 2 / 2</b>
                         </p>
                         <p>
                             <b>Tip / Type</b>
@@ -122,7 +122,7 @@
                         </p>
                         <p>
                             <b>Datum / Date:</b>
-                            <xsl:value-of select="//se:Vakcinacija[2]/se:DatumDavanja/text()"/>
+                            <xsl:value-of select="concat(' ', //se:Vakcinacija[2]/se:DatumDavanja/text())"/>
                         </p>
                         <p>
                             <b>Zdravstvena ustanova / Health care insitution:</b>
