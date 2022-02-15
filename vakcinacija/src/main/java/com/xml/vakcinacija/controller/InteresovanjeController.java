@@ -46,7 +46,7 @@ public class InteresovanjeController {
 		return new ResponseEntity<>(interesovanjeService.pronadjiInteresovanjePoJmbg(jmbg), HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/nabaviMetaPodatkeJSONPoJmbg/{jmbg}")
+	@GetMapping(value = "/nabaviMetaPodatkeJSONPoJmbg/{jmbg}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("hasAnyRole('ROLE_GRADJANIN', 'ROLE_SLUZBENIK')")
 	public ResponseEntity<InputStreamResource> nabaviMetaPodatkeJSONPoJmbg(@PathVariable String jmbg) throws IOException {
 		return new ResponseEntity<>(new InputStreamResource(interesovanjeService.nabaviMetaPodatkeJSONPoJmbg(jmbg)), HttpStatus.OK); 

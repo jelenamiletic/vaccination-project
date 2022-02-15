@@ -61,7 +61,7 @@ public class SaglasnostController {
 		return new ResponseEntity<>(saglasnostService.pronadjiNajnovijuSaglasnostPoJmbgIliBrPasosa(id), HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/nabaviMetaPodatkeJSONPoId/{id}")
+	@GetMapping(value = "/nabaviMetaPodatkeJSONPoId/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("hasAnyRole('ROLE_GRADJANIN', 'ROLE_SLUZBENIK')")
 	public ResponseEntity<InputStreamResource> nabaviMetaPodatkeJSONPoId(@PathVariable String id) throws IOException {
 		return new ResponseEntity<>(new InputStreamResource(saglasnostService.nabaviMetaPodatkeJSONPoId(id)), HttpStatus.OK);

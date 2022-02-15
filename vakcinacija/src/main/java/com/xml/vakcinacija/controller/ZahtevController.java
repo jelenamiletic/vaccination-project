@@ -62,7 +62,7 @@ public class ZahtevController {
 		zahtevService.promeniStatusZahteva(odgovorNaZahtev);
 	}
 	
-	@GetMapping(value = "/nabaviMetaPodatkeJSONPoJmbg/{jmbg}")
+	@GetMapping(value = "/nabaviMetaPodatkeJSONPoJmbg/{jmbg}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("hasAnyRole('ROLE_GRADJANIN', 'ROLE_SLUZBENIK')")
 	public ResponseEntity<InputStreamResource> nabaviMetaPodatkeJSONPoJmbg(@PathVariable String jmbg) throws IOException {
 		return new ResponseEntity<>(new InputStreamResource(zahtevService.nabaviMetaPodatkeJSONPoJmbg(jmbg)), HttpStatus.OK);

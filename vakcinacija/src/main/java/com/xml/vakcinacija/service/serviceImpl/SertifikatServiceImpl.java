@@ -40,6 +40,7 @@ public class SertifikatServiceImpl implements SertifikatService {
 
     @Override
     public void dodajNoviSertifikat(String SertifikatXML) throws Exception {
+    	System.out.print(SertifikatXML);
         Sertifikat validanObjekat = (Sertifikat) unmarshallerService.unmarshal(SertifikatXML,
                 ContextPutanjeKonstante.CONTEXT_PUTANJA_SERTIFIKAT, XSDPutanjeKonstante.XSD_SERTIFIKAT);
         if (validanObjekat != null) {

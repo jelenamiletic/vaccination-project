@@ -16,7 +16,6 @@ import org.xml.sax.SAXException;
 
 import com.xml.sluzbenik.model.OdgovorNaZahtev;
 import com.xml.sluzbenik.model.potvrda.Potvrda;
-import com.xml.sluzbenik.model.sertifikat.Sertifikat;
 import com.xml.sluzbenik.model.zahtev.ListaZahteva;
 import com.xml.sluzbenik.service.OdgovorNaZahtevService;
 
@@ -47,7 +46,7 @@ public class OdgovorNaZahtevController {
 	
 	@PostMapping(value = "/dodajNoviSertifikat", consumes = MediaType.APPLICATION_XML_VALUE)
 	@PreAuthorize("hasRole('ROLE_SLUZBENIK')")
-	public void dodajNoviSertifikat(@RequestBody Sertifikat sertifikat) throws SAXException {
-		odgovorNaZahtevService.dodajNoviSertifikat(sertifikat);
+	public void dodajNoviSertifikat(@RequestBody String sertifikatXml) throws SAXException {
+		odgovorNaZahtevService.dodajNoviSertifikat(sertifikatXml);
 	}
 }

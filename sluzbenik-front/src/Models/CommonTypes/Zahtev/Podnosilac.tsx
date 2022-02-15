@@ -1,4 +1,4 @@
-import { PunoIme } from "./PunoIme";
+import { PunoIme } from "../PunoIme";
 
 export interface Podnosilac {
 	"za:PunoIme": PunoIme;

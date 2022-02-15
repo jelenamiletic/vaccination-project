@@ -46,7 +46,7 @@ public class PotvrdaController {
 		return new ResponseEntity<>(potvrdaService.pronadjiPotvrdaPoJmbg(jmbg, brojDoze), HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/nabaviMetaPodatkeJSONPoJmbg/{jmbg}/{brojDoze}")
+	@GetMapping(value = "/nabaviMetaPodatkeJSONPoJmbg/{jmbg}/{brojDoze}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("hasAnyRole('ROLE_GRADJANIN', 'ROLE_SLUZBENIK')")
 	public ResponseEntity<InputStreamResource> nabaviMetaPodatkeJSONPoJmbg(@PathVariable String jmbg, @PathVariable int brojDoze) throws IOException {
 		return new ResponseEntity<>(new InputStreamResource(potvrdaService.nabaviMetaPodatkeJSONPoJmbg(jmbg, brojDoze)), HttpStatus.OK);
