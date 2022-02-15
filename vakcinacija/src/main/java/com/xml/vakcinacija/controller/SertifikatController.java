@@ -12,7 +12,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.List;
 
 @RestController
 @RequestMapping("/sertifikat")
@@ -59,4 +58,15 @@ public class SertifikatController {
     public ResponseEntity<InputStreamResource> nabaviMetaPodatkeJSONPoJmbg(@PathVariable String jmbg) throws IOException {
          return new ResponseEntity<>(new InputStreamResource(sertifikatService.nabaviMetaPodatkeJSONPoJmbg(jmbg)), HttpStatus.OK);
     }
+    
+    @GetMapping(value = "/generisiXhtml/{jmbg}", produces = MediaType.TEXT_HTML_VALUE)
+	@PreAuthorize("hasAnyRole('ROLE_GRADJANIN', 'ROLE_SLUZBENIK')")
+	public ResponseEntity<InputStreamResource> generisiXHTML(@PathVariable String jmbg) throws Exception {
+		return new ResponseEntity<>(new InputStreamResource(sertifikatService.generisiXHTML(jmbg)), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/generisiPdf/{jmbg}", produces = MediaType.APPLICATION_PDF_VALUE)
+	public ResponseEntity<InputStreamResource> generisiPdf(@PathVariable String jmbg) throws Exception {
+		return new ResponseEntity<>(new InputStreamResource(sertifikatService.generisiPdf(jmbg)), HttpStatus.OK);
+	}
 }

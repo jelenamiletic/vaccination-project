@@ -57,6 +57,7 @@ public class ZahtevServiceImpl implements ZahtevService{
 	@Autowired
 	private HTMLTransformerService htmlTransformerService;
 
+	@Autowired
 	private SertifikatRepository sertifikatRepository;
 	
 	@Autowired

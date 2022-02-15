@@ -116,6 +116,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/sertifikat/pronadjiSve").hasAuthority(RoleKonstante.ROLE_SLUZBENIK)
 				.antMatchers("/sertifikat/pronadjiSertifikatPoJmbg/{jmbg}").hasAnyAuthority(RoleKonstante.ROLE_GRADJANIN, RoleKonstante.ROLE_SLUZBENIK)
 				.antMatchers("/sertifikat/nabaviMetaPodatkeJSONPoJmbg/{jmbg}").hasAnyAuthority(RoleKonstante.ROLE_GRADJANIN, RoleKonstante.ROLE_SLUZBENIK)
+				.antMatchers("/sertifikat/generisiXhtml/{jmbg}").hasAnyAuthority(RoleKonstante.ROLE_GRADJANIN, RoleKonstante.ROLE_SLUZBENIK)
+				.antMatchers("/sertifikat/generisiPdf/{jmbg}").permitAll()
 				
 				// Zahtev controller
 				.antMatchers("/zahtev/dodajNoviZahtev").hasAuthority(RoleKonstante.ROLE_GRADJANIN)

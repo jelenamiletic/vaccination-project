@@ -4,7 +4,6 @@ import com.xml.vakcinacija.utils.XSLFOKonstante;
 import com.xml.vakcinacija.utils.XSLKonstante;
 import com.xml.vakcinacija.exception.SertifikatNijePronadjenException;
 import com.xml.vakcinacija.exception.SertifikatPostojiException;
-import com.xml.vakcinacija.model.saglasnost.Saglasnost;
 import com.xml.vakcinacija.model.sertifikat.Sertifikat;
 import com.xml.vakcinacija.repository.SertifikatRepository;
 import com.xml.vakcinacija.service.MarshallerService;
@@ -13,6 +12,7 @@ import com.xml.vakcinacija.service.SertifikatService;
 import com.xml.vakcinacija.service.UnmarshallerService;
 import com.xml.vakcinacija.utils.ContextPutanjeKonstante;
 import com.xml.vakcinacija.utils.NamedGraphURIKonstante;
+import com.xml.vakcinacija.utils.QRCodeGenerator;
 import com.xml.vakcinacija.utils.XSDPutanjeKonstante;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,12 +43,13 @@ public class SertifikatServiceImpl implements SertifikatService {
 	private HTMLTransformerService htmlTransformerService;
 
 
-    @Override
+	@Override
     public void dodajNoviSertifikat(String SertifikatXML) throws Exception {
-    	System.out.print(SertifikatXML);
         Sertifikat validanObjekat = (Sertifikat) unmarshallerService.unmarshal(SertifikatXML,
                 ContextPutanjeKonstante.CONTEXT_PUTANJA_SERTIFIKAT, XSDPutanjeKonstante.XSD_SERTIFIKAT);
         if (validanObjekat != null) {
+        	validanObjekat.setQR(QRCodeGenerator.generisiQRCode("http://localhost:8080/sertifikat/generisiPdf/" + 
+        			validanObjekat.getLicneInformacije().getJMBG().getValue()));
             String pronadjenSertifikatXml = sertifikatRepository.pronadjiSertifikatXmlPoJmbg(validanObjekat.getLicneInformacije().getJMBG().getValue());
             if (pronadjenSertifikatXml != null) {
             	throw new SertifikatPostojiException(validanObjekat.getLicneInformacije().getJMBG().getValue());

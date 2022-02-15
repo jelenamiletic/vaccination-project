@@ -42,6 +42,12 @@
 	                    <fo:block margin-left = "30px" text-align="center" font-family="sans-serif" font-size="14px" padding="1px">
 	                        and test results
 	                    </fo:block>
+	                    <fo:block-container width="5%" left="70%" top="3.9in" position="absolute">
+                            <fo:block>
+                                <xsl:variable name="QR" select="//se:QR/text()"/>
+                                <fo:external-graphic src="url('data:image/jpeg;base64,{$QR}')"/>
+                            </fo:block>
+                        </fo:block-container>
 	                    <fo:block-container margin-top="150px">
 	                    	<fo:block-container width="50%" left="0in" top="0in" position="absolute">
 	                    		<fo:block font-size="11px" font-weight="bold">
