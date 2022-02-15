@@ -65,6 +65,37 @@ public class SertifikatRepository {
 
         return listaSertifikata;
     }
+    
+    public List<String> pronadjiSveOsnovnaPretraga(String pretraga) throws Exception {
+        String xPathIzraz = "//Sertifikat";
+        ResourceSet rezultat = ExistRetrieve.izvrsiXPathIzraz(XMLCollectionIdKonstante.COLLECTION_ID_SERTIFIKAT,
+                xPathIzraz, XMLNamespaceKonstante.NAMESPACE_SERTIFIKAT);
+        if (rezultat == null)
+            return null;
+
+        ResourceIterator i = rezultat.getIterator();
+        XMLResource res = null;
+        List<String> listaSertifikata = new ArrayList<String>();
+
+        while (i.hasMoreResources()) {
+            res = (XMLResource) i.nextResource();
+            
+            String xml = res.getContent().toString();
+            if(xml.contains(pretraga)) {
+            	listaSertifikata.add(xml);
+            }
+        }
+
+        if (res != null) {
+            try {
+                ((EXistResource) res).freeResources();
+            } catch (XMLDBException exception) {
+                exception.printStackTrace();
+            }
+        }
+
+        return listaSertifikata;
+    }
 
     public String pronadjiSertifikatXmlPoJmbg(String jmbg) throws Exception {
         String xPathIzraz = String.format("/Sertifikat[LicneInformacije/JMBG = '%s']" , jmbg);

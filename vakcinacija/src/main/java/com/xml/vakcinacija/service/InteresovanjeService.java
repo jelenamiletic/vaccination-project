@@ -19,4 +19,6 @@ public interface InteresovanjeService {
 	ByteArrayInputStream generisiXHTML(String jmbg) throws Exception;
 	
 	ByteArrayInputStream generisiPdf(String jmbg) throws Exception;
+	
+	String pronadjiSveOsnovnaPretraga(String pretraga) throws Exception;
 }

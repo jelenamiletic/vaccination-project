@@ -69,6 +69,37 @@ public class PotvrdaRepository {
         return listaPotvrda;
 	}
 	
+	public List<String> pronadjiSveOsnovnaPretraga(String pretraga) throws Exception {
+		String xPathIzraz = "//Potvrda";
+        ResourceSet rezultat = ExistRetrieve.izvrsiXPathIzraz(XMLCollectionIdKonstante.COLLECTION_ID_POTVRDA, 
+        		xPathIzraz, XMLNamespaceKonstante.NAMESPACE_POTVRDA);
+        if (rezultat == null)
+            return null;
+
+        ResourceIterator i = rezultat.getIterator();
+        XMLResource res = null;
+        List<String> listaPotvrda = new ArrayList<String>();
+
+        while (i.hasMoreResources()) {
+            res = (XMLResource) i.nextResource();
+            
+            String xml = res.getContent().toString();
+            if(xml.contains(pretraga)) {
+            	listaPotvrda.add(xml);
+            }
+        }
+
+        if (res != null) {
+            try {
+                ((EXistResource) res).freeResources();
+            } catch (XMLDBException exception) {
+                exception.printStackTrace();
+            }
+        }
+
+        return listaPotvrda;
+	}
+	
 	public String pronadjiPotvrdaXmlPoJmbg(String jmbg, int brojDoze) throws Exception {
         String xPathIzraz = String.format("/Potvrda[LicneInformacije/JMBG = '%s'and count(InformacijeOVakcinama/BrojDoze) = %d]" , jmbg, brojDoze);
         ResourceSet rezultat = ExistRetrieve.izvrsiXPathIzraz(XMLCollectionIdKonstante.COLLECTION_ID_POTVRDA, 

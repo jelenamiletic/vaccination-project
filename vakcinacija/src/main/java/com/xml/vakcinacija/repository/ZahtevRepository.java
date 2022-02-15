@@ -69,6 +69,37 @@ public class ZahtevRepository {
         return listaZahteva;
 	}
 	
+	public List<String> pronadjiSveOsnovnaPretraga(String pretraga) throws Exception {
+		String xPathIzraz = "//Zahtev";
+        ResourceSet rezultat = ExistRetrieve.izvrsiXPathIzraz(XMLCollectionIdKonstante.COLLECTION_ID_ZAHTEV, 
+        		xPathIzraz, XMLNamespaceKonstante.NAMESPACE_ZAHTEV);
+        if (rezultat == null)
+            return null;
+
+        ResourceIterator i = rezultat.getIterator();
+        XMLResource res = null;
+        List<String> listaZahteva = new ArrayList<String>();
+
+        while (i.hasMoreResources()) {
+            res = (XMLResource) i.nextResource();
+            
+            String xml = res.getContent().toString();
+            if(xml.contains(pretraga)) {
+            	listaZahteva.add(xml);
+            }
+        }
+
+        if (res != null) {
+            try {
+                ((EXistResource) res).freeResources();
+            } catch (XMLDBException exception) {
+                exception.printStackTrace();
+            }
+        }
+
+        return listaZahteva;
+	}
+	
 	public List<Zahtev> pronadjiNeodobreneZahteve() throws Exception {
 		String xPathIzraz = String.format("/Zahtev[Odobren = '%s']" , false);
         ResourceSet rezultat = ExistRetrieve.izvrsiXPathIzraz(XMLCollectionIdKonstante.COLLECTION_ID_ZAHTEV, 

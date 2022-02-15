@@ -1,6 +1,7 @@
 package com.xml.vakcinacija.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
@@ -38,6 +39,19 @@ public class PotvrdaController {
 		ListaPotvrda lista = new ListaPotvrda();
 		lista.setPotvrda(potvrdaService.pronadjiSve());
 		return new ResponseEntity<>(lista, HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/pronadjiSveOsnovnaPretraga/{pretraga}")
+	@PreAuthorize("hasRole('ROLE_SLUZBENIK')")
+	public ResponseEntity<String> pronadjiSveOsnovnaPretraga(@PathVariable String pretraga) throws Exception {
+		return new ResponseEntity<>(potvrdaService.pronadjiSveOsnovnaPretraga(pretraga), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/pronadjiSveNaprednaPretraga/{ime}/{prezime}/{jmbg}/{pol}")
+	@PreAuthorize("hasRole('ROLE_SLUZBENIK')")
+	public ResponseEntity<String> pronadjiSveNaprednaPretraga(@PathVariable String ime, @PathVariable String prezime,
+			@PathVariable String jmbg, @PathVariable String pol) throws Exception {
+		return new ResponseEntity<>(potvrdaService.pronadjiSveNaprednaPretraga(ime, prezime, jmbg, pol), HttpStatus.OK);
 	}
 
 	@GetMapping(value = "/pronadjiPotvrdaPoJmbg/{jmbg}/{brojDoze}", produces = MediaType.APPLICATION_XML_VALUE)

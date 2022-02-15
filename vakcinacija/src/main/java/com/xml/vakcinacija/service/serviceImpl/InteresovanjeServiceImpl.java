@@ -155,4 +155,17 @@ public class InteresovanjeServiceImpl implements InteresovanjeService {
 		}
 		return pdfTransformerService.generatePDF(interesovanje, com.xml.vakcinacija.utils.XSLFOKonstante.INTERESOVANJE_XSL_FO);
 	}
+	
+	@Override
+	public String pronadjiSveOsnovnaPretraga(String pretraga) throws Exception {
+		String rez = "<Interesovanja>";
+		
+		for (String interesovanje : interesovanjeRepository.pronadjiSveOsnovnaPretraga(pretraga)) {
+			rez += interesovanje;
+		}
+		
+		rez+= "</Interesovanja>";
+		
+		return rez;
+	}
 }

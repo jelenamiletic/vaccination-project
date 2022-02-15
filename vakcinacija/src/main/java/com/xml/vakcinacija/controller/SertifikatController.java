@@ -12,6 +12,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/sertifikat")
@@ -33,6 +34,19 @@ public class SertifikatController {
         lista.setSertifikat(sertifikatService.pronadjiSve());
         return new ResponseEntity<>(lista, HttpStatus.OK);
     }
+    
+    @GetMapping(value = "/pronadjiSveOsnovnaPretraga/{pretraga}")
+	@PreAuthorize("hasRole('ROLE_SLUZBENIK')")
+	public ResponseEntity<String> pronadjiSveOsnovnaPretraga(@PathVariable String pretraga) throws Exception {
+		return new ResponseEntity<>(sertifikatService.pronadjiSveOsnovnaPretraga(pretraga), HttpStatus.OK);
+	}
+    
+    @GetMapping(value = "/pronadjiSveNaprednaPretraga/{ime}/{prezime}/{jmbg}/{pol}")
+	@PreAuthorize("hasRole('ROLE_SLUZBENIK')")
+	public ResponseEntity<String> pronadjiSveNaprednaPretraga(@PathVariable String ime, @PathVariable String prezime,
+			@PathVariable String jmbg, @PathVariable String pol) throws Exception {
+		return new ResponseEntity<>(sertifikatService.pronadjiSveNaprednaPretraga(ime, prezime, jmbg, pol), HttpStatus.OK);
+	}
 
     @GetMapping(value = "/pronadjiSertifikatPoJmbg/{jmbg}", produces = MediaType.APPLICATION_XML_VALUE)
     @PreAuthorize("hasAnyRole('ROLE_GRADJANIN', 'ROLE_SLUZBENIK')")

@@ -214,4 +214,9 @@ public class ZahtevServiceImpl implements ZahtevService{
 		}
 		return htmlTransformerService.generateHTML(zahtevXML, XSLKonstante.ZAHTEV_XSL);
 	}
+	
+	@Override
+	public List<String> pronadjiSveOsnovnaPretraga(String pretraga) throws Exception {
+		return zahtevRepository.pronadjiSveOsnovnaPretraga(pretraga);
+	}
 }

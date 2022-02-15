@@ -159,4 +159,42 @@ public class SaglasnostServiceImpl implements SaglasnostService {
 		return pdfTransformerService.generatePDF(marshallerService.marshall(saglasnost.get(0), ContextPutanjeKonstante.CONTEXT_PUTANJA_SAGLASNOST, 
 				XSDPutanjeKonstante.XSD_SAGLASNOST), com.xml.vakcinacija.utils.XSLFOKonstante.SAGLASNOST_XSL_FO);
 	}
+
+	@Override
+	public String pronadjiSveOsnovnaPretraga(String pretraga) throws Exception {
+		String rez = "<Saglasnosti>";
+		
+		for (String interesovanje : saglasnostRepository.pronadjiSveOsnovnaPretraga(pretraga)) {
+			rez += interesovanje;
+		}
+		
+		rez+= "</Saglasnosti>";
+		
+		return rez;
+	}
+
+	@Override
+	public String pronadjiSveNaprednaPretraga(String ime, String prezime, String jmbg, String pol) throws Exception {
+		
+		String rezultat = "<Saglasnosti>";
+		for (Saglasnost saglasnost : saglasnostRepository.pronadjiSve()) {
+			
+			if(ime == "" || ime == null || saglasnost.getPacijentSaglasnost().getLicneInformacije().getPunoIme().getIme().equals(ime)) {
+				
+				if(prezime == "" || prezime == null ||saglasnost.getPacijentSaglasnost().getLicneInformacije().getPunoIme().getIme().equals(ime)) {
+					
+					if(jmbg == "" || jmbg == null || saglasnost.getPacijentSaglasnost().getLicneInformacije().getDrzavljanstvo().getRepublikaSrbija().getJMBG().getValue().equals(jmbg)
+							|| saglasnost.getPacijentSaglasnost().getLicneInformacije().getDrzavljanstvo().getStranoDrzavljanstvo().getBrojPasosa().getValue().equals(jmbg)) {
+						
+						if(pol == "" || pol == null || saglasnost.getPacijentSaglasnost().getLicneInformacije().getPol().getValue().toString().equals(pol)) {
+							
+							rezultat += marshallerService.marshall(saglasnost, ContextPutanjeKonstante.CONTEXT_PUTANJA_SAGLASNOST, XSDPutanjeKonstante.XSD_SAGLASNOST);
+						}
+					}
+				}
+			}
+		}
+		
+		return rezultat + "</Saglasnosti>";
+	}
 }

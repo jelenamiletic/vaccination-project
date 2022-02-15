@@ -68,6 +68,37 @@ public class InteresovanjeRepository {
         return listaInteresovanja;
 	}
 	
+	public List<String> pronadjiSveOsnovnaPretraga(String pretraga) throws Exception {
+		String xPathIzraz = "//Interesovanje";
+        ResourceSet rezultat = ExistRetrieve.izvrsiXPathIzraz(XMLCollectionIdKonstante.COLLECTION_ID_INTERESOVANJE, 
+        		xPathIzraz, XMLNamespaceKonstante.NAMESPACE_INTERESOVANJE);
+        if (rezultat == null)
+            return null;
+
+        ResourceIterator i = rezultat.getIterator();
+        XMLResource res = null;
+        List<String> listaInteresovanja = new ArrayList<String>();
+
+        while (i.hasMoreResources()) {
+            res = (XMLResource) i.nextResource();
+            
+            String xml = res.getContent().toString();
+            if(xml.contains(pretraga)) {
+            	listaInteresovanja.add(xml);
+            }
+        }
+
+        if (res != null) {
+            try {
+                ((EXistResource) res).freeResources();
+            } catch (XMLDBException exception) {
+                exception.printStackTrace();
+            }
+        }
+
+        return listaInteresovanja;
+	}
+	
 	public String pronadjiInteresovanjeXmlPoJmbg(String jmbg) throws Exception {
         String xPathIzraz = String.format("/Interesovanje[LicneInformacije/JMBG = '%s']" , jmbg);
         ResourceSet rezultat = ExistRetrieve.izvrsiXPathIzraz(XMLCollectionIdKonstante.COLLECTION_ID_INTERESOVANJE, 
