@@ -1,6 +1,8 @@
 
 import { yupResolver } from "@hookform/resolvers/yup";
+import axios from "axios";
 import { Chart, registerables } from "chart.js";
+import { XMLParser } from "fast-xml-parser";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -13,14 +15,12 @@ import "./Pretraga.css";
 Chart.register(...registerables);
 
 enum TipDokumenta {
-    Saglasnost = "Saglasnost za imunizaciju",
-    Potvrda = "Potvrda o vakcinaciji",
-    Sertifikat = "Digitalni Sertifikat",
-    Svi = "Svi dokumenti",
+    Saglasnost = "Saglasnost",
+    Potvrda = "Potvrda",
+    Sertifikat = "Sertifikat",
 }
 
 const tipoviDokumenta: Array<TipDokumenta> = new Array<TipDokumenta>();
-tipoviDokumenta.push(TipDokumenta.Svi);
 tipoviDokumenta.push(TipDokumenta.Saglasnost);
 tipoviDokumenta.push(TipDokumenta.Potvrda);
 tipoviDokumenta.push(TipDokumenta.Sertifikat);
@@ -32,11 +32,10 @@ const Pretraga = () => {
     const [pronadjeniDokumenti, setPronadjeniDokumenti] = useState<Array<any>>();
 
     const [showModal, setShowModal] = useState(false);
-    const [selektovanTipDokumenta, setSelektovanTipDokumenta] = useState(TipDokumenta.Svi);
+    const [selektovanTipDokumenta, setSelektovanTipDokumenta] = useState(TipDokumenta.Saglasnost);
 
     const handleCloseModal = () => setShowModal(false);
     const handleShowModal = () => {
-        console.log("doso");
         setShowModal(true);
     }
 
@@ -54,11 +53,40 @@ const Pretraga = () => {
     const toggle = () => setShowModal(!showModal);
 
     const pretraziKljucneReci = (unos: any) => {
-
+            axios
+			.get("http://localhost:8081/pretraga/osnovnaPretraga/" + unos.Pretraga, {
+				headers: {
+					"Content-Type": "application/xml",
+					"Access-Control-Allow-Origin": "*",
+				},
+			})
+			.then((res: any) => {
+				const parser = new XMLParser();
+				const result = parser.parse(res.data);
+                console.log(result);
+			});
     }
 
     const pretraziNapredno = (unos: any) => {
-
+        const xml = `<PretragaDokumenata>
+                        <TipDokumenta>${unos.TipDokumenta}</TipDokumenta>
+                        <Ime>${unos.Ime}</Ime>
+                        <Prezime>${unos.Prezime}</Prezime>
+                        <JMBG>${unos.JMBG}</JMBG>
+                        <Pol>${unos.Pol}</Pol>
+                    </PretragaDokumenata>`;
+        
+            axios
+			.put("http://localhost:8081/pretraga/naprednaPretraga", xml, {
+				headers: {
+					"Content-Type": "application/xml",
+					"Access-Control-Allow-Origin": "*",
+				},
+			})
+			.then((res: any) => {
+				const parser = new XMLParser();
+				const result = parser.parse(res.data);
+			});
     }
 
     const handleTipDokumentaIzmena = (selectedOption: any) => {
@@ -81,7 +109,7 @@ const Pretraga = () => {
                             <Input
                                 type="text"
                                 name="Pretraga"
-                                placeholder=""
+                                placeholder="npr. Moderna"
                                 innerRef={register}
                             />
                             <FormFeedback>{errors.JMBG?.message}</FormFeedback>
@@ -111,7 +139,8 @@ const Pretraga = () => {
 
                         <FormGroup>
                             <Label>Tip dokumenta:</Label>
-                            <Input type="select" name="TipDokumenta" onChange={handleTipDokumentaIzmena} option={selektovanTipDokumenta} options={TipDokumenta}>
+                            <Input type="select" name="TipDokumenta" onChange={handleTipDokumentaIzmena} option={selektovanTipDokumenta} 
+                            options={TipDokumenta} innerRef={register}>
                                 {tipoviDokumenta.map((doc) => (
                                     <option value={doc}>{doc}</option>
                                 ))}
@@ -121,23 +150,31 @@ const Pretraga = () => {
                         <Label>Ime:</Label>
                         <Input
                             type="text"
-                            placeholder=""
+                            placeholder="Ime"
+                            name="Ime"
+                            innerRef={register}
                         />
                         <Label>Prezime:</Label>
                         <Input
                             type="text"
-                            placeholder=""
+                            placeholder="Prezime"
+                            name="Prezime"
+                            innerRef={register}
                         />
                         <Label>JMBG:</Label>
                         <Input
                             type="text"
                             placeholder=""
+                            name="JMBG"
+                            innerRef={register}
                         />
                         <Label>Muski</Label>
                         <Input
                             className="ml-2"
                             type="radio"
                             name="Pol"
+                            value="Muski"
+                            innerRef={register}
                             checked
                         >
                             Muski
@@ -148,6 +185,8 @@ const Pretraga = () => {
                                 className="ml-2"
                                 type="radio"
                                 name="Pol"
+                                value="Zenski"
+                                innerRef={register}
                                 checked
                             >
                                 Zenski
@@ -158,6 +197,8 @@ const Pretraga = () => {
                                     className="ml-2"
                                     type="radio"
                                     name="Pol"
+                                    value=""
+                                    innerRef={register}
                                     checked
                                 >
                                     Nijedan

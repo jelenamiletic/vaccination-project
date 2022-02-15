@@ -62,26 +62,46 @@ public class PretragaServiceImpl implements PretragaService{
 		
 		PretragaDokumenata pretraga = (PretragaDokumenata) unmarshallerService.unmarshal(pretragaDokumenata, ContextPutanjeKonstante.CONTEXT_PUTANJA_PRETRAGA, null);
 		
+		if(pretraga.getIme().equals("") || pretraga.getIme() == null) {
+			pretraga.setIme("NEMA");
+		}
+		
+		if(pretraga.getPrezime().equals("") || pretraga.getPrezime() == null) {
+			pretraga.setPrezime("NEMA");
+		}
+		
+		if(pretraga.getJMBG().equals("") || pretraga.getJMBG() == null) {
+			pretraga.setJMBG("NEMA");
+		}
+		
+		String p = "";
+		
+		if(pretraga.getPol() == null) {
+			p = "NEMA";
+		}else {
+			p = pretraga.getPol().toString();
+		}
+		
 		String rezultat = "";
 		switch(pretraga.getTipDokumenta()) {
 			case POTVRDA:
 				ResponseEntity<String> potvrda = restTemplate.exchange(
 		                "http://localhost:8080/potvrda/pronadjiSveNaprednaPretraga/" + pretraga.getIme() + "/"
-		                + pretraga.getPrezime() + "/" + pretraga.getJMBG() + "/" + pretraga.getPol(), HttpMethod.GET, new HttpEntity<Object>(headers), String.class);
+		                + pretraga.getPrezime() + "/" + pretraga.getJMBG() + "/" + p, HttpMethod.GET, new HttpEntity<Object>(headers), String.class);
 				rezultat = potvrda.getBody();
 				
 				break;
 			case SAGLASNOST:
 				ResponseEntity<String> saglasnosti = restTemplate.exchange(
 		                "http://localhost:8080/saglasnost/pronadjiSveNaprednaPretraga/" + pretraga.getIme() + "/"
-		                + pretraga.getPrezime() + "/" + pretraga.getJMBG() + "/" + pretraga.getPol(), HttpMethod.GET, new HttpEntity<Object>(headers), String.class);
+		                + pretraga.getPrezime() + "/" + pretraga.getJMBG() + "/" + p, HttpMethod.GET, new HttpEntity<Object>(headers), String.class);
 				rezultat = saglasnosti.getBody();
 				
 				break;
 			case SERTIFIKAT:
 				ResponseEntity<String> sertifikati = restTemplate.exchange(
 		                "http://localhost:8080/sertifikat/pronadjiSveNaprednaPretraga/" + pretraga.getIme() + "/"
-		                + pretraga.getPrezime() + "/" + pretraga.getJMBG() + "/" + pretraga.getPol(), HttpMethod.GET, new HttpEntity<Object>(headers), String.class);
+		                + pretraga.getPrezime() + "/" + pretraga.getJMBG() + "/" + p, HttpMethod.GET, new HttpEntity<Object>(headers), String.class);
 				rezultat = sertifikati.getBody();
 				
 				break;

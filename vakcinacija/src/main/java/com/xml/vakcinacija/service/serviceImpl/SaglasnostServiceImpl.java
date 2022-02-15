@@ -164,8 +164,11 @@ public class SaglasnostServiceImpl implements SaglasnostService {
 	public String pronadjiSveOsnovnaPretraga(String pretraga) throws Exception {
 		String rez = "<Saglasnosti>";
 		
-		for (String interesovanje : saglasnostRepository.pronadjiSveOsnovnaPretraga(pretraga)) {
-			rez += interesovanje;
+		List<String> interesovanja = saglasnostRepository.pronadjiSveOsnovnaPretraga(pretraga);
+		if(interesovanja != null && interesovanja.size() > 0) {
+			for (String interesovanje : saglasnostRepository.pronadjiSveOsnovnaPretraga(pretraga)) {
+				rez += interesovanje;
+			}
 		}
 		
 		rez+= "</Saglasnosti>";
@@ -177,18 +180,24 @@ public class SaglasnostServiceImpl implements SaglasnostService {
 	public String pronadjiSveNaprednaPretraga(String ime, String prezime, String jmbg, String pol) throws Exception {
 		
 		String rezultat = "<Saglasnosti>";
-		for (Saglasnost saglasnost : saglasnostRepository.pronadjiSve()) {
-			
-			if(ime == "" || ime == null || saglasnost.getPacijentSaglasnost().getLicneInformacije().getPunoIme().getIme().equals(ime)) {
+		
+		List<Saglasnost> interesovanja = saglasnostRepository.pronadjiSve();
+		if(interesovanja != null && interesovanja.size() > 0) {
+			for (Saglasnost saglasnost : saglasnostRepository.pronadjiSve()) {
 				
-				if(prezime == "" || prezime == null ||saglasnost.getPacijentSaglasnost().getLicneInformacije().getPunoIme().getIme().equals(ime)) {
+				if(ime.equals("NEMA") || ime == null || saglasnost.getPacijentSaglasnost().getLicneInformacije().getPunoIme().getIme().equals(ime)) {
 					
-					if(jmbg == "" || jmbg == null || saglasnost.getPacijentSaglasnost().getLicneInformacije().getDrzavljanstvo().getRepublikaSrbija().getJMBG().getValue().equals(jmbg)
-							|| saglasnost.getPacijentSaglasnost().getLicneInformacije().getDrzavljanstvo().getStranoDrzavljanstvo().getBrojPasosa().getValue().equals(jmbg)) {
+					if(prezime.equals("NEMA") || prezime == null ||saglasnost.getPacijentSaglasnost().getLicneInformacije().getPunoIme().getIme().equals(ime)) {
 						
-						if(pol == "" || pol == null || saglasnost.getPacijentSaglasnost().getLicneInformacije().getPol().getValue().toString().equals(pol)) {
+						if(jmbg.equals("NEMA") || jmbg == null || ( saglasnost.getPacijentSaglasnost().getLicneInformacije().getDrzavljanstvo().getRepublikaSrbija() != null && 
+								saglasnost.getPacijentSaglasnost().getLicneInformacije().getDrzavljanstvo().getRepublikaSrbija().getJMBG().getValue().equals(jmbg))
+							|| (saglasnost.getPacijentSaglasnost().getLicneInformacije().getDrzavljanstvo().getStranoDrzavljanstvo() != null &&
+									saglasnost.getPacijentSaglasnost().getLicneInformacije().getDrzavljanstvo().getStranoDrzavljanstvo().getBrojPasosa().getValue().equals(jmbg))) {
 							
-							rezultat += marshallerService.marshall(saglasnost, ContextPutanjeKonstante.CONTEXT_PUTANJA_SAGLASNOST, XSDPutanjeKonstante.XSD_SAGLASNOST);
+							if(pol.equals("NEMA") || pol == null || saglasnost.getPacijentSaglasnost().getLicneInformacije().getPol().getValue().toString().equals(pol)) {
+								
+								rezultat += marshallerService.marshall(saglasnost, ContextPutanjeKonstante.CONTEXT_PUTANJA_SAGLASNOST, XSDPutanjeKonstante.XSD_SAGLASNOST);
+							}
 						}
 					}
 				}

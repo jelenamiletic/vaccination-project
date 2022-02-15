@@ -172,8 +172,11 @@ public class PotvrdaServiceImpl implements PotvrdaService{
 	public String pronadjiSveOsnovnaPretraga(String pretraga) throws Exception {
 		String rez = "<Potvrde>";
 		
-		for (String interesovanje : potvrdaRepository.pronadjiSveOsnovnaPretraga(pretraga)) {
-			rez += interesovanje;
+		List<String> interesovanja = potvrdaRepository.pronadjiSveOsnovnaPretraga(pretraga);
+		if(interesovanja != null && interesovanja.size() > 0) {
+			for (String interesovanje : potvrdaRepository.pronadjiSveOsnovnaPretraga(pretraga)) {
+				rez += interesovanje;
+			}
 		}
 		
 		rez+= "</Potvrde>";
@@ -185,22 +188,27 @@ public class PotvrdaServiceImpl implements PotvrdaService{
 	public String pronadjiSveNaprednaPretraga(String ime, String prezime, String jmbg, String pol) throws Exception {
 		
 		String rezultat = "<Potvrde>";
-		for (Potvrda potvrda : potvrdaRepository.pronadjiSve()) {
-			
-			if(ime == "" || ime == null || potvrda.getLicneInformacije().getPunoIme().getIme().equals(ime)) {
+		
+		List<Potvrda> interesovanja = potvrdaRepository.pronadjiSve();
+		
+		if(interesovanja != null && interesovanja.size() > 0) {
+			for (Potvrda potvrda : potvrdaRepository.pronadjiSve()) {
 				
-				if(prezime == "" || prezime == null || potvrda.getLicneInformacije().getPunoIme().getIme().equals(ime)) {
+				if(ime.equals("NEMA") || ime == null || potvrda.getLicneInformacije().getPunoIme().getIme().equals(ime)) {
 					
-					if(jmbg == "" || jmbg == null || potvrda.getLicneInformacije().getJMBG().getValue().equals(jmbg)) {
+					if(prezime.equals("NEMA") || prezime == null || potvrda.getLicneInformacije().getPunoIme().getIme().equals(ime)) {
 						
-						if(pol == "" || pol == null || potvrda.getLicneInformacije().getPol().toString().equals(ime)) {
+						if(jmbg.equals("NEMA") || jmbg == null || potvrda.getLicneInformacije().getJMBG().getValue().equals(jmbg)) {
 							
-							rezultat += marshallerService.marshall(potvrda, ContextPutanjeKonstante.CONTEXT_PUTANJA_POTVRDA, XSDPutanjeKonstante.XSD_POTVRDA);
+							if(pol.equals("NEMA") || pol == null || potvrda.getLicneInformacije().getPol().toString().equals(ime)) {
+								
+								rezultat += marshallerService.marshall(potvrda, ContextPutanjeKonstante.CONTEXT_PUTANJA_POTVRDA, XSDPutanjeKonstante.XSD_POTVRDA);
+							}
 						}
 					}
 				}
 			}
-		}
+		}	
 		
 		return rezultat + "</Potvrde>";
 	}

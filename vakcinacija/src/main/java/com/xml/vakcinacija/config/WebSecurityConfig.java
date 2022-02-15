@@ -99,6 +99,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/potvrda/dobaviPoslednjuPotvrduPoJmbg/{jmbg}").hasAuthority(RoleKonstante.ROLE_SLUZBENIK)
 				.antMatchers("/potvrda/generisiXhtml/{jmbg}").hasAnyAuthority(RoleKonstante.ROLE_GRADJANIN, RoleKonstante.ROLE_SLUZBENIK)
 				.antMatchers("/potvrda/generisiPdf/{jmbg}").hasAnyAuthority(RoleKonstante.ROLE_GRADJANIN, RoleKonstante.ROLE_SLUZBENIK)
+				.antMatchers("/potvrda//pronadjiSveOsnovnaPretraga/{pretraga}").hasAuthority(RoleKonstante.ROLE_SLUZBENIK)
+				.antMatchers("/potvrda//pronadjiSveNaprednaPretraga").hasAuthority(RoleKonstante.ROLE_SLUZBENIK)
 				
 				// Saglasnost controller
 				.antMatchers("/saglasnost/dodajNovuSaglasnost").hasAuthority(RoleKonstante.ROLE_GRADJANIN)
@@ -106,6 +108,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/saglasnost/pronadjiSve").hasAnyAuthority(RoleKonstante.ROLE_SLUZBENIK, RoleKonstante.ROLE_ZDRAVSTVENI_RADNIK)
 				.antMatchers("/saglasnost/pronadjiSaglasnostPoJmbgIliBrPasosa/{id}").hasAnyAuthority(RoleKonstante.ROLE_GRADJANIN, RoleKonstante.ROLE_SLUZBENIK, RoleKonstante.ROLE_ZDRAVSTVENI_RADNIK)
 				.antMatchers("/saglasnost/nabaviMetaPodatkeJSONPoId/{id}").hasAnyAuthority(RoleKonstante.ROLE_GRADJANIN, RoleKonstante.ROLE_SLUZBENIK)
+				.antMatchers("/saglasnost//pronadjiSveOsnovnaPretraga/{pretraga}").hasAuthority(RoleKonstante.ROLE_SLUZBENIK)
+				.antMatchers("/saglasnost//pronadjiSveNaprednaPretraga").hasAuthority(RoleKonstante.ROLE_SLUZBENIK)
 				
 				// Sertifikat controller
 				.antMatchers("/sertifikat/dodajNoviSertifikat").hasAuthority(RoleKonstante.ROLE_SLUZBENIK)

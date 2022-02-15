@@ -106,8 +106,11 @@ public class SertifikatServiceImpl implements SertifikatService {
 	public String pronadjiSveOsnovnaPretraga(String pretraga) throws Exception {
 		String rez = "<Sertifikati>";
 		
-		for (String interesovanje : sertifikatRepository.pronadjiSveOsnovnaPretraga(pretraga)) {
-			rez += interesovanje;
+		List<String> interesovanja = sertifikatRepository.pronadjiSveOsnovnaPretraga(pretraga);
+		if(interesovanja != null && interesovanja.size() != 0) {
+			for (String interesovanje : interesovanja) {
+				rez += interesovanje;
+			}
 		}
 		
 		rez+= "</Sertifikati>";
@@ -119,18 +122,22 @@ public class SertifikatServiceImpl implements SertifikatService {
 	public String pronadjiSveNaprednaPretraga(String ime, String prezime, String jmbg, String pol) throws Exception {
 		
 		String rezultat = "<Sertifikati>";
-		for (Sertifikat sertifikat : sertifikatRepository.pronadjiSve()) {
-			
-			if(ime == "" || ime == null || sertifikat.getLicneInformacije().getPunoIme().getIme().equals(ime)) {
+		
+		List<Sertifikat> interesovanja = sertifikatRepository.pronadjiSve();
+		if(interesovanja != null && interesovanja.size() != 0) {
+			for (Sertifikat sertifikat : sertifikatRepository.pronadjiSve()) {
 				
-				if(prezime == "" || prezime == null || sertifikat.getLicneInformacije().getPunoIme().getIme().equals(ime)) {
+				if(ime.equals("NEMA") || ime == null || sertifikat.getLicneInformacije().getPunoIme().getIme().equals(ime)) {
 					
-					if(jmbg == "" || jmbg == null || sertifikat.getLicneInformacije().getJMBG().getValue().equals(jmbg)
-							|| sertifikat.getLicneInformacije().getBrojPasosa().getValue().equals(jmbg)) {
+					if(prezime.equals("NEMA") || prezime == null || sertifikat.getLicneInformacije().getPunoIme().getIme().equals(ime)) {
 						
-						if(pol == "" || pol == null || sertifikat.getLicneInformacije().getPol().toString().equals(pol)) {
+						if(jmbg.equals("NEMA") || jmbg == null || sertifikat.getLicneInformacije().getJMBG().getValue().equals(jmbg)
+								|| sertifikat.getLicneInformacije().getBrojPasosa().getValue().equals(jmbg)) {
 							
-							rezultat += marshallerService.marshall(sertifikat, ContextPutanjeKonstante.CONTEXT_PUTANJA_SERTIFIKAT, XSDPutanjeKonstante.XSD_SERTIFIKAT);
+							if(pol.equals("NEMA") || pol == null || sertifikat.getLicneInformacije().getPol().toString().equals(pol)) {
+								
+								rezultat += marshallerService.marshall(sertifikat, ContextPutanjeKonstante.CONTEXT_PUTANJA_SERTIFIKAT, XSDPutanjeKonstante.XSD_SERTIFIKAT);
+							}
 						}
 					}
 				}

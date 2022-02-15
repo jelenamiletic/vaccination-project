@@ -26,7 +26,7 @@ public class PretragaController {
 		return new ResponseEntity<>(pretragaService.osnovnaPretraga(pretragaDokumenata), HttpStatus.OK);
 	}
 	
-	@PutMapping(value = "/osnovnaPretraga", produces = MediaType.APPLICATION_XML_VALUE)
+	@PutMapping(value = "/naprednaPretraga", produces = MediaType.APPLICATION_XML_VALUE)
 	@PreAuthorize("hasRole('ROLE_SLUZBENIK')")
 	public ResponseEntity<String> naprednaPretraga(@RequestBody String pretragaDokumenata) throws Exception {
 		return new ResponseEntity<>(pretragaService.naprednaPretraga(pretragaDokumenata), HttpStatus.OK);

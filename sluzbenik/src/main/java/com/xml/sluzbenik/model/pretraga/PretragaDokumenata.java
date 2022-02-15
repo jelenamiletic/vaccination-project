@@ -30,7 +30,7 @@ public class PretragaDokumenata {
 	protected String JMBG;
 	
 	@XmlElement
-	protected Pol pol;
+	protected Pol Pol;
 	
 	@XmlElement
 	protected TipDokumenta TipDokumenta;
@@ -60,11 +60,11 @@ public class PretragaDokumenata {
 	}
 
 	public Pol getPol() {
-		return pol;
+		return Pol;
 	}
 
 	public void setPol(Pol pol) {
-		this.pol = pol;
+		this.Pol = pol;
 	}
 
 	public TipDokumenta getTipDokumenta() {
