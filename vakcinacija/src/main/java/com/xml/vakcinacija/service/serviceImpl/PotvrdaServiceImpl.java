@@ -22,6 +22,7 @@ import com.xml.vakcinacija.model.gradjanin.Gradjanin;
 import com.xml.vakcinacija.model.potvrda.Potvrda;
 import com.xml.vakcinacija.model.sertifikat.Sertifikat;
 import com.xml.vakcinacija.model.termin.Termin;
+import com.xml.vakcinacija.model.zdravstveni_radnik.ZdravstveniRadnik;
 import com.xml.vakcinacija.repository.PotvrdaRepository;
 import com.xml.vakcinacija.service.MarshallerService;
 import com.xml.vakcinacija.service.PotvrdaService;
@@ -54,6 +55,7 @@ public class PotvrdaServiceImpl implements PotvrdaService{
 	@Autowired
 	private HTMLTransformerService htmlTransformerService;
 	
+	@Autowired
 	private TerminService terminService;
 	
 	@Autowired
@@ -69,7 +71,7 @@ public class PotvrdaServiceImpl implements PotvrdaService{
 			if (pronadjenPotvrdaXml != null) {
 				throw new PotvrdaPostojiException(validanObjekat.getLicneInformacije().getJMBG().getValue());
 			}
-			Gradjanin gradjanin = (Gradjanin) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			ZdravstveniRadnik gradjanin = (ZdravstveniRadnik) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			potvrdaRepository.savePotvrdaObjekat(validanObjekat);
 			
 			terminService.postaviIzvrseno(validanObjekat.getLicneInformacije().getJMBG().getValue(), validanObjekat.getInformacijeOVakcinama().size());
