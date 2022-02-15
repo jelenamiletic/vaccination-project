@@ -62,10 +62,10 @@ public class ZahtevController {
 		zahtevService.promeniStatusZahteva(odgovorNaZahtev);
 	}
 	
-	@GetMapping(value = "/nabaviMetaPodatkeXmlPoJmbg/{jmbg}")
+	@GetMapping(value = "/nabaviMetaPodatkeJSONPoJmbg/{jmbg}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("hasAnyRole('ROLE_GRADJANIN', 'ROLE_SLUZBENIK')")
-	public void nabaviMetaPodatkeXmlPoJmbg(@PathVariable String jmbg) throws IOException {
-		zahtevService.nabaviMetaPodatkeXmlPoJmbg(jmbg);
+	public ResponseEntity<InputStreamResource> nabaviMetaPodatkeJSONPoJmbg(@PathVariable String jmbg) throws IOException {
+		return new ResponseEntity<>(new InputStreamResource(zahtevService.nabaviMetaPodatkeJSONPoJmbg(jmbg)), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/generisiPdf/{jmbg}", produces = MediaType.APPLICATION_PDF_VALUE)

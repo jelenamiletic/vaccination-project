@@ -32,7 +32,7 @@
                     <xs:complexType>
                         <xs:sequence>
                             <xs:element name="BrojDoze" type="xs:positiveInteger"/>
-                            <xs:element name="DatumDavanja" type="xs:date"/>
+                            <xs:element name="DatumDavanja" type="xs:dateTime"/>
                             <xs:element name="Serija" type="xs:string"/>
                         </xs:sequence>
                     </xs:complexType>
@@ -71,7 +71,7 @@
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
-                <xs:element name="DatumIzdavanja" type="xs:date"/>
+                <xs:element name="DatumIzdavanja" type="xs:dateTime"/>
                 <xs:element name="QR" type="xs:string"/>
             </xs:sequence>
             <xs:attribute name="about" type="xs:anyURI"/>

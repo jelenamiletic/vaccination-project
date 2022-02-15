@@ -13,10 +13,10 @@ public interface TerminService {
 	Termin getAktuelniTerminPoJmbg(String jmbg) throws Exception;
 	 
 	Termin getTerminPoJmbgIDozi(String jmbg, int brojDoze) throws Exception;
-
-	Termin dodajNoviTermin(String jmbg, int brojDoze, String vakcina) throws Exception;
 	
 	void postaviPopunjenaSaglasnost(String jmbg, int brojDoze) throws Exception;
 	
 	void postaviIzvrseno(String jmbg, int brojDoze) throws Exception;
+
+	Termin dodajNoviTermin(String jmbg, int brojDoze, String vakcina, boolean gradjanin) throws Exception;
 }

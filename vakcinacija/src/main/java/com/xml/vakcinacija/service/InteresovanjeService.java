@@ -14,7 +14,7 @@ public interface InteresovanjeService {
 	
 	Interesovanje pronadjiInteresovanjePoJmbg(String jmbg) throws Exception;
 
-	void nabaviMetaPodatkeXmlPoJmbg(String jmbg) throws IOException;
+	ByteArrayInputStream nabaviMetaPodatkeJSONPoJmbg(String jmbg) throws IOException;
 	
 	ByteArrayInputStream generisiXHTML(String jmbg) throws Exception;
 	

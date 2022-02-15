@@ -313,9 +313,9 @@ public class IzvestajServiceImpl implements IzvestajService {
 	}
 
 	@Override
-	public void nabaviMetaPodatkeXmlPoDatumima(String odDatum, String doDatum) throws IOException {
+	public ByteArrayInputStream nabaviMetaPodatkeJSONPoDatumima(String odDatum, String doDatum) throws IOException {
 		String query = String.format("?s ?p ?o. FILTER (?s = <http://www.ftn.uns.ac.rs/rdf/izvestaj/%1$s/%2$s>)", odDatum, doDatum);
-		rdfService.getMetadataXML(query, "izvestaj_" + odDatum + "_" + doDatum, NamedGraphURIKonstante.SLUZBENIK_NAMED_GRAPH);
+		return rdfService.getMetadataJSON(query, "izvestaj_" + odDatum + "_" + doDatum, NamedGraphURIKonstante.SLUZBENIK_NAMED_GRAPH);
 	}
 
 	@Override

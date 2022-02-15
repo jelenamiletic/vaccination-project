@@ -273,7 +273,7 @@ const Interesovanje = () => {
 							className="registruj-login-btn"
 							color="primary"
 							type="button"
-							onClick={() => downloadXHTML()}
+							onClick={() => downloadPdf()}
 						>
 							Skidanje PDF
 						</Button>

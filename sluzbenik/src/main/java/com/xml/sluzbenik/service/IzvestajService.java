@@ -15,7 +15,7 @@ public interface IzvestajService {
 	
 	Izvestaj pronadjiIzvestaj(String odDatum, String doDatum) throws Exception;
 
-	void nabaviMetaPodatkeXmlPoDatumima(String odDatum, String doDatum) throws IOException;
+	ByteArrayInputStream nabaviMetaPodatkeJSONPoDatumima(String odDatum, String doDatum) throws IOException;
 	
 	ByteArrayInputStream generisiPdf(String odDatum, String doDatum) throws Exception;
 

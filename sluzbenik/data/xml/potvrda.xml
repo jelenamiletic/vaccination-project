@@ -20,11 +20,11 @@
     </po:LicneInformacije>
     <po:InformacijeOVakcinama>
         <po:BrojDoze>1</po:BrojDoze>
-        <po:DatumDavanja>2021-02-02</po:DatumDavanja>
+        <po:DatumDavanja>2021-02-02T00:00:00</po:DatumDavanja>
         <po:Serija>PFI-55609</po:Serija>
     </po:InformacijeOVakcinama>
     <po:ZdravstvenaUstanova>DOM ZDRAVLJA NOVI SAD</po:ZdravstvenaUstanova>
     <po:VakcinaPrveDveDoze property = "pred:VakcinaPrveDveDoze" datatype = "xs:string">Pfizer-BioNTech</po:VakcinaPrveDveDoze>
-    <po:DatumIzdavanja>2021-05-05</po:DatumIzdavanja>
+    <po:DatumIzdavanja>2021-05-05T00:00:00</po:DatumIzdavanja>
     <po:QR>http://www.ftn.uns.ac.rs/</po:QR>
 </po:Potvrda>

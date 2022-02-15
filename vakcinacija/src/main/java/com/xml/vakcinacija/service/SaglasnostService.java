@@ -1,5 +1,6 @@
 package com.xml.vakcinacija.service;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.List;
 
@@ -17,5 +18,9 @@ public interface SaglasnostService {
 	
 	Saglasnost pronadjiNajnovijuSaglasnostPoJmbgIliBrPasosa(String id) throws Exception;
 
-	void nabaviMetaPodatkeXmlPoId(String id) throws IOException;
+	ByteArrayInputStream nabaviMetaPodatkeJSONPoId(String id) throws IOException;
+
+	ByteArrayInputStream generisiPdf(String jmbg) throws Exception;
+
+	ByteArrayInputStream generisiXhtml(String jmbg) throws Exception;
 }

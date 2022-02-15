@@ -12,7 +12,7 @@ public interface PotvrdaService {
 	
 	List<Potvrda> pronadjiSve() throws Exception;
 	
-	void nabaviMetaPodatkeXmlPoJmbg(String jmbg, int brojDoze) throws IOException;
+	ByteArrayInputStream nabaviMetaPodatkeJSONPoJmbg(String jmbg, int brojDoze) throws IOException;
 
 	Potvrda pronadjiPotvrdaPoJmbg(String jmbg, int brojDoze) throws Exception;
 	

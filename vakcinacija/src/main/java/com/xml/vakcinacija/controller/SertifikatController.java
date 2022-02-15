@@ -4,6 +4,7 @@ import com.xml.vakcinacija.model.sertifikat.ListaSertifikata;
 import com.xml.vakcinacija.model.sertifikat.Sertifikat;
 import com.xml.vakcinacija.service.SertifikatService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -39,9 +40,9 @@ public class SertifikatController {
         return new ResponseEntity<>(sertifikatService.pronadjiSertifikatPoJmbg(jmbg), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/nabaviMetaPodatkeXmlPoJmbg/{jmbg}")
+    @GetMapping(value = "/nabaviMetaPodatkeJSONPoJmbg/{jmbg}", produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAnyRole('ROLE_GRADJANIN', 'ROLE_SLUZBENIK')")
-    public void nabaviMetaPodatkeXmlPoJmbg(@PathVariable String jmbg) throws IOException {
-        sertifikatService.nabaviMetaPodatkeXmlPoJmbg(jmbg);
+    public ResponseEntity<InputStreamResource> nabaviMetaPodatkeJSONPoJmbg(@PathVariable String jmbg) throws IOException {
+         return new ResponseEntity<>(new InputStreamResource(sertifikatService.nabaviMetaPodatkeJSONPoJmbg(jmbg)), HttpStatus.OK);
     }
 }

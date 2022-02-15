@@ -4,7 +4,6 @@ import org.xml.sax.SAXException;
 
 import com.xml.sluzbenik.model.OdgovorNaZahtev;
 import com.xml.sluzbenik.model.potvrda.Potvrda;
-import com.xml.sluzbenik.model.sertifikat.Sertifikat;
 import com.xml.sluzbenik.model.zahtev.ListaZahteva;
 
 public interface OdgovorNaZahtevService {
@@ -15,5 +14,5 @@ public interface OdgovorNaZahtevService {
 	
 	Potvrda dobaviPoslednjuPotvrduPoJmbg(String jmbg) throws SAXException;
 	
-	void dodajNoviSertifikat(Sertifikat sertifikat) throws SAXException;
+	void dodajNoviSertifikat(String sertifikatXml) throws SAXException;
 }
