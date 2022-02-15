@@ -20,6 +20,7 @@ import { getJMBG, getEmail } from "../../Auth/AuthService";
 import { Termin } from "../../Models/Termin";
 import { XMLParser } from "fast-xml-parser";
 import { saglasnostSchema } from "./Validation/SaglasnostSchema";
+import saveAs from "file-saver";
 
 const Saglasnost = () => {
 	const customId = "saglasnost";
@@ -96,6 +97,7 @@ const Saglasnost = () => {
 					<sa:BrojMobilnogTelefona>${saglasnost.BrojMobilnog}</sa:BrojMobilnogTelefona>
 					<sa:Email property = "pred:email" datatype = "xs:string">${getEmail()}</sa:Email>
 					<sa:RadniStatus>${saglasnost.RadniStatus}</sa:RadniStatus>
+					<sa:ZanimanjeZaposlenog>${saglasnost.ZanimanjeZaposlenog}</sa:ZanimanjeZaposlenog>
 				</sa:LicneInformacije>
 				<sa:Imunizacija>
 					<sa:NazivImunoloskogLeka>${termin?.vakcina}</sa:NazivImunoloskogLeka>
@@ -123,6 +125,65 @@ const Saglasnost = () => {
 			});
 
 	}
+
+
+	const downloadXHTML = () => {
+		axios
+			.get(
+				`http://localhost:8080/saglasnost/generisiXhtml/${ getJMBG() }`,
+				{
+					headers: {
+						"Access-Control-Allow-Origin": "*",
+					},
+					responseType: "blob",
+				}
+			)
+			.then((res: any) => {
+				let blob = new Blob([res.data], {
+					type: "text/html;charset=utf-8",
+				});
+				saveAs(
+					blob,
+					getJMBG()
+				);
+			})
+			.catch((err: any) => {
+				toast.error(err.response.data, {
+					position: toast.POSITION.TOP_CENTER,
+					autoClose: false,
+					toastId: customId,
+				});
+			});
+	};
+
+	const downloadPdf = () => {
+		axios
+			.get(
+				`http://localhost:8080/saglasnost/generisiPdf/${ getJMBG() }`,
+				{
+					headers: {
+						"Access-Control-Allow-Origin": "*",
+					},
+					responseType: "blob",
+				}
+			)
+			.then((res: any) => {
+				let blob = new Blob([res.data], {
+					type: "application/pdf;charset=utf-8",
+				});
+				saveAs(
+					blob,
+					getJMBG()
+				);
+			})
+			.catch((err: any) => {
+				toast.error(err.response.data, {
+					position: toast.POSITION.TOP_CENTER,
+					autoClose: false,
+					toastId: customId,
+				});
+			});
+	};
 
 	
 
@@ -234,19 +295,32 @@ const Saglasnost = () => {
 									/>
 									<FormFeedback>{errors.Adresa?.message}</FormFeedback>
 								</FormGroup>
-								
+
 								<FormGroup>
 									<Label>Radni Status</Label>
-									<Input
-										type="text"
-										name="RadniStatus"
-										placeholder="Radni status"
-										invalid={errors.RadniStatus?.message}
-										innerRef={register}
-									/>
-									<FormFeedback>{errors.RadniStatus?.message}</FormFeedback>
+									<Input type="select" name="RadniStatus" innerRef={register}>
+										<option>Zaposlen</option>
+										<option>Nezaposlen</option>
+										<option>Penzioner</option>
+										<option>Ucenik</option>
+										<option>Student</option>
+										<option>Dete</option>
+									</Input>
 								</FormGroup>
-								
+
+								<FormGroup>
+									<Label>ZanimanjeZaposlenog</Label>
+									<Input type="select" name="ZanimanjeZaposlenog" innerRef={register}>
+										<option>Drugo</option>
+										<option>Zdravstvena zastita</option>
+										<option>Socijalna zastita</option>
+										<option>Prosveta</option>
+										<option>MUP</option>
+										<option>Vojska RS</option>
+										<option>Dete</option>
+									</Input>
+								</FormGroup>
+
 								<Button
 									className="registruj-login-btn"
 									color="primary"
@@ -267,7 +341,24 @@ const Saglasnost = () => {
 					>
 						<CardBody>
 							<CardTitle tag="h2">Saglasnost</CardTitle>
-							<Label>Vec ste popunili sve saglasnosti</Label>
+							<Label style={{ display: "block" }}>Vec ste popunili sve saglasnosti</Label>
+							<Button
+							className="registruj-login-btn"
+							color="primary"
+							type="button"
+							style={{ marginRight: "1em" }}
+							onClick={() => downloadXHTML()}
+							>
+								Skidanje XHTML
+							</Button>
+							<Button
+								className="registruj-login-btn"
+								color="primary"
+								type="button"
+								onClick={() => downloadPdf()}
+							>
+								Skidanje PDF
+							</Button>
 						</CardBody>
 				</Card>
 			}
@@ -278,7 +369,7 @@ const Saglasnost = () => {
 					style={{ backgroundColor: "#DEEDE6", borderColor: "black" }}
 					>
 						<CardBody>
-							<CardTitle tag="h2">Saglasnost</CardTitle>
+							<CardTitle tag="h2" >Saglasnost</CardTitle>
 							<Label>Nemate saglasnost, popunite prvo interesovanje</Label>
 						</CardBody>
 				</Card>

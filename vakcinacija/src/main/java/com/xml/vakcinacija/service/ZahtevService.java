@@ -17,7 +17,12 @@ public interface ZahtevService {
 	
 	ByteArrayInputStream nabaviMetaPodatkeJSONPoJmbg(String jmbg) throws IOException;
 	
+	ByteArrayInputStream generisiPdf(String jmbg) throws Exception;
+
+	ByteArrayInputStream generisiXHTML(String jmbg) throws Exception;
+  
 	List<Zahtev> dobaviSveNeodobreneZahteve() throws Exception;
 	
 	void promeniStatusZahteva(OdgovorNaZahtev odgovorNaZahtev) throws Exception;
+
 }

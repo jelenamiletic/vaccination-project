@@ -36,6 +36,8 @@ import com.xml.vakcinacija.service.ZahtevService;
 import com.xml.vakcinacija.utils.ContextPutanjeKonstante;
 import com.xml.vakcinacija.utils.NamedGraphURIKonstante;
 import com.xml.vakcinacija.utils.XSDPutanjeKonstante;
+import com.xml.vakcinacija.utils.XSLFOKonstante;
+import com.xml.vakcinacija.utils.XSLKonstante;
 
 @Service
 public class ZahtevServiceImpl implements ZahtevService{
@@ -50,6 +52,11 @@ public class ZahtevServiceImpl implements ZahtevService{
 	private ZahtevRepository zahtevRepository;
 	
 	@Autowired
+	private PDFTransformerService pdfTransformerService;
+	
+	@Autowired
+	private HTMLTransformerService htmlTransformerService;
+
 	private SertifikatRepository sertifikatRepository;
 	
 	@Autowired
@@ -188,5 +195,23 @@ public class ZahtevServiceImpl implements ZahtevService{
 	public ByteArrayInputStream nabaviMetaPodatkeJSONPoJmbg(String jmbg) throws IOException {
 		String query = String.format("?s ?p ?o. ?s <http://www.ftn.uns.ac.rs/rdf/zahtev/predicate/jmbg> \"%s\"^^<http://www.w3.org/2001/XMLSchemastring>", jmbg);
 		return rdfService.getMetadataJSON(query, "zahtev_" + jmbg, NamedGraphURIKonstante.IMUNIZACIJA_NAMED_GRAPH);
+	}
+	
+	@Override
+	public ByteArrayInputStream generisiPdf(String jmbg) throws Exception {
+		String zahtevXML = zahtevRepository.pronadjiZahtevXmlPoJmbg(jmbg);
+		if (zahtevXML == null) {
+			throw new ZahtevNijePronadjenoException(jmbg);
+		}
+		return pdfTransformerService.generatePDF(zahtevXML, XSLFOKonstante.ZAHTEV_XSL_FO);
+	}
+	
+	@Override
+	public ByteArrayInputStream generisiXHTML(String jmbg) throws Exception {
+		String zahtevXML = zahtevRepository.pronadjiZahtevXmlPoJmbg(jmbg);
+		if (zahtevXML == null) {
+			throw new ZahtevNijePronadjenoException(jmbg);
+		}
+		return htmlTransformerService.generateHTML(zahtevXML, XSLKonstante.ZAHTEV_XSL);
 	}
 }

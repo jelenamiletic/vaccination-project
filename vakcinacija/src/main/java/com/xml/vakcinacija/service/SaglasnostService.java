@@ -19,4 +19,8 @@ public interface SaglasnostService {
 	Saglasnost pronadjiNajnovijuSaglasnostPoJmbgIliBrPasosa(String id) throws Exception;
 
 	ByteArrayInputStream nabaviMetaPodatkeJSONPoId(String id) throws IOException;
+
+	ByteArrayInputStream generisiPdf(String jmbg) throws Exception;
+
+	ByteArrayInputStream generisiXhtml(String jmbg) throws Exception;
 }

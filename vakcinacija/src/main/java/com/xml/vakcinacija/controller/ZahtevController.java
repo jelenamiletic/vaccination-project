@@ -67,4 +67,16 @@ public class ZahtevController {
 	public ResponseEntity<InputStreamResource> nabaviMetaPodatkeJSONPoJmbg(@PathVariable String jmbg) throws IOException {
 		return new ResponseEntity<>(new InputStreamResource(zahtevService.nabaviMetaPodatkeJSONPoJmbg(jmbg)), HttpStatus.OK);
 	}
+	
+	@GetMapping(value = "/generisiPdf/{jmbg}", produces = MediaType.APPLICATION_PDF_VALUE)
+	@PreAuthorize("hasRole('ROLE_GRADJANIN')")
+	public ResponseEntity<InputStreamResource> generisiPdf(@PathVariable String jmbg) throws Exception {
+		return new ResponseEntity<>(new InputStreamResource(zahtevService.generisiPdf(jmbg)), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/generisiXHTML/{jmbg}", produces = MediaType.TEXT_HTML_VALUE)
+	@PreAuthorize("hasRole('ROLE_GRADJANIN')")
+	public ResponseEntity<InputStreamResource> generisiXHTML(@PathVariable String jmbg) throws Exception {
+		return new ResponseEntity<>(new InputStreamResource(zahtevService.generisiXHTML(jmbg)), HttpStatus.OK);
+	}
 }

@@ -11,6 +11,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Saglasnost from "./Gradjanin/Saglasnost/Saglasnost";
 import Zahtev from "./Gradjanin/Zahtev/FormaZaIzdavanje";
 import EvidencijaVakcinacije from "./ZdravstveniRadnik/EvidencijaVakcinacije/EvidencijaVakcinacije";
+import PregledDokumenata from "./Gradjanin/PregledDokumenata/PregledDokumenata";
 
 function App() {
 	return (
@@ -54,6 +55,12 @@ function App() {
 							element={<ProtectedRoute roles={["ROLE_ZDRAVSTVENI_RADNIK"]} />}
 						>
 							<Route path="/evidencija-vakcinacije" element={<EvidencijaVakcinacije />} />
+						</Route>
+						<Route
+							path="/pregled-dokumenata"
+							element={<ProtectedRoute roles={["ROLE_GRADJANIN"]} />}
+						>
+							<Route path="/pregled-dokumenata" element={<PregledDokumenata />} />
 						</Route>
 					</Routes>
 				</Fragment>

@@ -59,82 +59,82 @@
                    Gradjanin je: <xsl:value-of select="//in:LicneInformacije/in:Drzavljanstvo/text()"/>
                 </p>
                 
-                <p style = "padding-top:10px;">
+                <p style = "padding-top:10px; font-weight:bold;">
                 	JMBG:
                 </p>
                 
-                <p style = "padding-top:10px;">
+                <p style = "padding-top:10px; padding-left:50px">
                 	<xsl:value-of select="//in:LicneInformacije/in:JMBG/text()"/>
                 </p>
                 
-                <p style = "padding-top:10px;">
+                <p style = "padding-top:10px; font-weight:bold;">
                 	Ime:
                 </p>
                 
-                <p style = "padding-top:10px;">
+                <p style = "padding-top:10px; padding-left:50px">
                 	<xsl:value-of select="//in:LicneInformacije/in:PunoIme/ct:Ime/text()"/>
                 </p>
                 
-                <p style = "padding-top:10px;">
+                <p style = "padding-top:10px; font-weight:bold;">
                 	Prezime:
                 </p>
                 
-                <p style = "padding-top:10px;">
+                <p style = "padding-top:10px; padding-left:50px">
                 	<xsl:value-of select="//in:LicneInformacije/in:PunoIme/ct:Prezime/text()"/>
                 </p>
                 
-                <p style = "padding-top:10px;">
+                <p style = "padding-top:10px; font-weight:bold;">
                 	Adresa elektronske poste:
                 </p>
                 
-                <p style = "padding-top:10px;">
+                <p style = "padding-top:10px; padding-left:50px">
                 	<xsl:value-of select="//in:LicneInformacije/in:AdresaElektronskePoste/text()"/>
                 </p>
                 
-                <p style = "padding-top:10px;">
+                <p style = "padding-top:10px; font-weight:bold;">
                 	Broj Mobilnog telefona:
                 </p>
                 
-                <p style = "padding-top:10px;">
+                <p style = "padding-top:10px; padding-left:50px">
                 	<xsl:value-of select="//in:LicneInformacije/in:BrojMobilnogTelefona/text()"/>
                 </p>
                 
-                <p style = "padding-top:10px;">
+                <p style = "padding-top:10px; font-weight:bold;">
                 	Broj fiksnog telefona:
                 </p>
                 
-                <p style = "padding-top:10px;">
+                <p style = "padding-top:10px; padding-left:50px">
                 	<xsl:value-of select="//in:LicneInformacije/in:BrojFiksnogTelefona/text()"/>
                 </p>
                 
-                <p style = "padding-top:10px;">
+                <p style = "padding-top:10px; font-weight:bold;">
                 	Opstina primanja:
                 </p>
                 
-                <p style = "padding-top:10px;">
+                <p style = "padding-top:10px; padding-left:50px">
                 	<xsl:value-of select="//in:OpstinaPrimanja/text()"/>
                 </p>
                 
-                <p style = "padding-top:10px;">
+                <p style = "padding-top:10px; font-weight:bold;">
                 	Tip vakcina:
                 </p>
                 
-                <p style = "padding-top:10px;">
+                <p style = "padding-top:10px; padding-left:50px">
                 	<xsl:value-of select="//in:Vakcina/text()"/>
                 </p>
                 
-                <p style = "padding-top:10px;">
+                <p style = "padding-top:10px; font-weight:bold;">
                 	Davalac krvi:
                 </p>
                 <p style = "padding-top:10px;">
                 	<xsl:choose>
 					 <xsl:when test="//in:DavalacKrvi/text()='true'">
-					  	<p style = "padding-top:10px;">
+					  	<p style = "padding-top:10px; padding-left:50px">
 		                	Da
 		                </p>
 					 </xsl:when>
 					 <xsl:when test="//in:DavalacKrvi/text()='false'">
-					  	<p style = "padding-top:10px;">
+					  	<p style = "padding-top:10px; padding-left:50px">
 		                	Ne
 		                </p>
 					 </xsl:when>

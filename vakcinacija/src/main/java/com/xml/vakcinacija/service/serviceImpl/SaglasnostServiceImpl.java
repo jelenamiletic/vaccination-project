@@ -13,6 +13,7 @@ import com.xml.vakcinacija.model.saglasnost.Saglasnost;
 import com.xml.vakcinacija.model.saglasnost.Saglasnost.ZdravstveniRadnikSaglasnost.Obrazac.VakcineInfo;
 import com.xml.vakcinacija.model.zdravstveni_radnik.ZdravstveniRadnik;
 import com.xml.vakcinacija.repository.SaglasnostRepository;
+import com.xml.vakcinacija.service.MarshallerService;
 import com.xml.vakcinacija.service.RDFService;
 import com.xml.vakcinacija.service.SaglasnostService;
 import com.xml.vakcinacija.service.TerminService;
@@ -20,12 +21,16 @@ import com.xml.vakcinacija.service.UnmarshallerService;
 import com.xml.vakcinacija.utils.ContextPutanjeKonstante;
 import com.xml.vakcinacija.utils.NamedGraphURIKonstante;
 import com.xml.vakcinacija.utils.XSDPutanjeKonstante;
+import com.xml.vakcinacija.utils.XSLKonstante;
 
 @Service
 public class SaglasnostServiceImpl implements SaglasnostService {
 		
 	@Autowired
 	private UnmarshallerService unmarshallerService;
+	
+	@Autowired
+	private MarshallerService marshallerService;
 	
 	@Autowired
 	private RDFService rdfService;
@@ -35,6 +40,12 @@ public class SaglasnostServiceImpl implements SaglasnostService {
 	
 	@Autowired
 	private TerminService terminService;
+	
+	@Autowired
+	private PDFTransformerService pdfTransformerService;
+	
+	@Autowired
+	private HTMLTransformerService htmlTransformerService;
 
 	@Override
 	public void dodajNovuSaglasnost(String XML) throws Exception {
@@ -111,5 +122,41 @@ public class SaglasnostServiceImpl implements SaglasnostService {
 	public ByteArrayInputStream nabaviMetaPodatkeJSONPoId(String id) throws IOException {
 		String query = String.format("?s ?p ?o. FILTER (?s = <http://www.ftn.uns.ac.rs/rdf/saglasnost/%s>)", id);
 		return rdfService.getMetadataJSON(query, "saglasnost_" + id, NamedGraphURIKonstante.IMUNIZACIJA_NAMED_GRAPH);
+	}
+
+	@Override
+	public ByteArrayInputStream generisiXhtml(String id) throws Exception {
+		boolean jmbg = false;
+		
+		if(id.length() == 13)
+		{
+			jmbg = true;
+		}
+		
+		List<Saglasnost> saglasnost = saglasnostRepository.pronadjiSaglasnostXmlPoFullId(id, jmbg);
+		if (saglasnost == null) {
+			throw new Exception();
+		}
+		//TODO za sad samo prvi uzmem
+		return htmlTransformerService.generateHTML(marshallerService.marshall(saglasnost.get(0), ContextPutanjeKonstante.CONTEXT_PUTANJA_SAGLASNOST, 
+				XSDPutanjeKonstante.XSD_SAGLASNOST), XSLKonstante.SAGLASNOST_XSL);
+	}
+
+	@Override
+	public ByteArrayInputStream generisiPdf(String id) throws Exception {
+		boolean jmbg = false;
+		
+		if(id.length() == 13)
+		{
+			jmbg = true;
+		}
+		
+		List<Saglasnost> saglasnost = saglasnostRepository.pronadjiSaglasnostXmlPoFullId(id, jmbg);
+		if (saglasnost == null) {
+			throw new Exception();
+		}
+		//TODO za sad samo prvi uzmem
+		return pdfTransformerService.generatePDF(marshallerService.marshall(saglasnost.get(0), ContextPutanjeKonstante.CONTEXT_PUTANJA_SAGLASNOST, 
+				XSDPutanjeKonstante.XSD_SAGLASNOST), com.xml.vakcinacija.utils.XSLFOKonstante.SAGLASNOST_XSL_FO);
 	}
 }
