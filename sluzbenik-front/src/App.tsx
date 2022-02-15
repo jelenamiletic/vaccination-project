@@ -43,14 +43,13 @@ function App() {
 							element={<ProtectedRoute roles={["ROLE_SLUZBENIK"]} />}
 						>
 							<Route path="/dokumenti" element={<Pretraga />} />
-						>
 						</Route>
-            <Route
+						<Route
 							path="/zahtevi"
 							element={<ProtectedRoute roles={["ROLE_SLUZBENIK"]} />}
 						>
 							<Route path="/zahtevi" element={<Zahtevi />} />
-						>
+						</Route>
 					</Routes>
 				</Fragment>
 			</Router>
