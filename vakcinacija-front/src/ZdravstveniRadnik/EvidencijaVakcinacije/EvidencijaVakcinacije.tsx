@@ -46,8 +46,21 @@ const EvidencijaVakcinacije = () => {
 			.then((res: any) => {
 				const parser = new XMLParser();
 				const result: Saglasnost = parser.parse(res.data);
-				console.log(result)
+
 				const saglasnost: Saglasnost = result["sa:Saglasnost"];
+
+				saglasnost["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:BrojFiksnogTelefona"] = saglasnost["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:BrojFiksnogTelefona"].toString();
+				saglasnost["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:BrojMobilnogTelefona"] = saglasnost["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:BrojMobilnogTelefona"].toString();
+
+				if (saglasnost["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:BrojFiksnogTelefona"].length < 9) {
+					saglasnost["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:BrojFiksnogTelefona"] = saglasnost["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:BrojFiksnogTelefona"].padStart(9, '0');
+				}
+
+				if (saglasnost["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:BrojMobilnogTelefona"].length < 10) {
+					saglasnost["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:BrojMobilnogTelefona"] = saglasnost["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:BrojMobilnogTelefona"].padStart(10, '0');
+				}
+
+				console.log(saglasnost)
 
 				if (saglasnost == null)
 					toast.error("Nepostoji saglasnost pacijenta", {
@@ -55,7 +68,6 @@ const EvidencijaVakcinacije = () => {
 						autoClose: false,
 						toastId: customId,
 					});
-
 				setPronadjenaSaglasnost(saglasnost);
 			}).catch((err: any) => {
 				setPronadjenaSaglasnost(null);
@@ -65,8 +77,6 @@ const EvidencijaVakcinacije = () => {
 	const podnosenjeEvidencijeVakcinacije = (saglasnost: any) => {
 
 		let prethodneVakcineXML = "";
-
-		console.log(pronadjenaSaglasnost)
 
 		if (pronadjenaSaglasnost!["sa:ZdravstveniRadnikSaglasnost"]) {
 			if (Array.isArray(pronadjenaSaglasnost!["sa:ZdravstveniRadnikSaglasnost"]["sa:Obrazac"]["sa:VakcineInfo"])) {
@@ -206,7 +216,7 @@ const EvidencijaVakcinacije = () => {
 			</po:LicneInformacije>
 			<po:InformacijeOVakcinama>
 				<po:BrojDoze>${pronadjenaSaglasnost!["sa:ZdravstveniRadnikSaglasnost"] ? pronadjenaSaglasnost!["sa:ZdravstveniRadnikSaglasnost"]["sa:Obrazac"]["sa:VakcineInfo"].length + 1 : 1}</po:BrojDoze>
-				<po:DatumDavanja>${new Date(new Date().toString().split('GMT')[0]+' UTC').toISOString().split('.')[0]}</po:DatumDavanja>
+				<po:DatumDavanja>${new Date(new Date().toString().split('GMT')[0] + ' UTC').toISOString().split('.')[0]}</po:DatumDavanja>
 				<po:Serija>${saglasnost.SerijaVakcine}</po:Serija>
 			</po:InformacijeOVakcinama>
 			<po:ZdravstvenaUstanova>${saglasnost.ZdravstvenaUstanova}</po:ZdravstvenaUstanova>
@@ -328,8 +338,10 @@ const EvidencijaVakcinacije = () => {
 										type="text"
 										name="ZdravstvenaUstanova"
 										placeholder=""
+										invalid={errors.ZdravstvenaUstanova?.message}
 										innerRef={register}
 									/>
+									<FormFeedback>{errors.ZdravstvenaUstanova?.message}</FormFeedback>
 								</FormGroup>
 								<FormGroup>
 									<Label>Vakcinacijski Punkt</Label>
@@ -337,11 +349,11 @@ const EvidencijaVakcinacije = () => {
 										type="text"
 										name="VakcinacijskiPunkt"
 										placeholder=""
+										invalid={errors.VakcinacijskiPunkt?.message}
 										innerRef={register}
 									/>
+									<FormFeedback>{errors.VakcinacijskiPunkt?.message}</FormFeedback>
 								</FormGroup>
-
-
 								<CardTitle tag="h3">Lekar:</CardTitle>
 								<FormGroup>
 									<Label>Broj telefona</Label>
@@ -349,8 +361,10 @@ const EvidencijaVakcinacije = () => {
 										type="text"
 										name="BrojTelefonaLekara"
 										placeholder=""
+										invalid={errors.BrojTelefonaLekara?.message}
 										innerRef={register}
 									/>
+									<FormFeedback>{errors.BrojTelefonaLekara?.message}</FormFeedback>
 								</FormGroup>
 
 
@@ -368,8 +382,10 @@ const EvidencijaVakcinacije = () => {
 										type="text"
 										name="SerijaVakcine"
 										placeholder=""
+										invalid={errors.SerijaVakcine?.message}
 										innerRef={register}
 									/>
+									<FormFeedback>{errors.SerijaVakcine?.message}</FormFeedback>
 								</FormGroup>
 								<FormGroup>
 									<Label>Nezeljana reakcija</Label>
@@ -389,8 +405,10 @@ const EvidencijaVakcinacije = () => {
 										type="text"
 										name="DatumUtvrdjivanja"
 										placeholder=""
+										invalid={errors.DatumUtvrdjivanja?.message}
 										innerRef={register}
 									/>
+									<FormFeedback>{errors.DatumUtvrdjivanja?.message}</FormFeedback>
 								</FormGroup>
 								<FormGroup>
 									<Label>Dijagnoza</Label>
