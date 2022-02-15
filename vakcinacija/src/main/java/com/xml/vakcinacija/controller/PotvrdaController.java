@@ -3,6 +3,7 @@ package com.xml.vakcinacija.controller;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -55,5 +56,17 @@ public class PotvrdaController {
 	@PreAuthorize("hasRole('ROLE_SLUZBENIK')")
 	public ResponseEntity<Potvrda> dobaviPoslednjuPotvrduPoJmbg(@PathVariable String jmbg) throws Exception {
 		return new ResponseEntity<>(potvrdaService.dobaviPoslednjuPotvrduPoJmbg(jmbg), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/generisiXhtml/{jmbg}", produces = MediaType.TEXT_HTML_VALUE)
+	@PreAuthorize("hasAnyRole('ROLE_GRADJANIN', 'ROLE_SLUZBENIK')")
+	public ResponseEntity<InputStreamResource> generisiXHTML(@PathVariable String jmbg) throws Exception {
+		return new ResponseEntity<>(new InputStreamResource(potvrdaService.generisiXHTML(jmbg)), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/generisiPdf/{jmbg}", produces = MediaType.TEXT_HTML_VALUE)
+	@PreAuthorize("hasAnyRole('ROLE_GRADJANIN', 'ROLE_SLUZBENIK')")
+	public ResponseEntity<InputStreamResource> generisiPdf(@PathVariable String jmbg) throws Exception {
+		return new ResponseEntity<>(new InputStreamResource(potvrdaService.generisiPdf(jmbg)), HttpStatus.OK);
 	}
 }

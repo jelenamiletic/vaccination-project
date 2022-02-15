@@ -1,5 +1,6 @@
 package com.xml.vakcinacija.service;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.List;
 
@@ -16,4 +17,8 @@ public interface PotvrdaService {
 	Potvrda pronadjiPotvrdaPoJmbg(String jmbg, int brojDoze) throws Exception;
 	
 	Potvrda dobaviPoslednjuPotvrduPoJmbg(String jmbg) throws Exception;
+	
+	ByteArrayInputStream generisiXHTML(String jmbg) throws Exception;
+	
+	ByteArrayInputStream generisiPdf(String jmbg) throws Exception;
 }

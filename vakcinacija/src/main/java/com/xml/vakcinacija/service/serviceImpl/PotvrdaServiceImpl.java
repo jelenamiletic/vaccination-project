@@ -1,5 +1,6 @@
 package com.xml.vakcinacija.service.serviceImpl;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.List;
 
@@ -16,6 +17,7 @@ import com.xml.vakcinacija.service.UnmarshallerService;
 import com.xml.vakcinacija.utils.ContextPutanjeKonstante;
 import com.xml.vakcinacija.utils.NamedGraphURIKonstante;
 import com.xml.vakcinacija.utils.XSDPutanjeKonstante;
+import com.xml.vakcinacija.utils.XSLKonstante;
 
 @Service
 public class PotvrdaServiceImpl implements PotvrdaService{
@@ -28,6 +30,12 @@ public class PotvrdaServiceImpl implements PotvrdaService{
 	
 	@Autowired
 	private PotvrdaRepository potvrdaRepository;
+	
+	@Autowired
+	private PDFTransformerService pdfTransformerService;
+	
+	@Autowired
+	private HTMLTransformerService htmlTransformerService;
 
 	@Override
 	public void dodajNoviPotvrda(String PotvrdaXML) throws Exception {
@@ -77,5 +85,23 @@ public class PotvrdaServiceImpl implements PotvrdaService{
 	public void nabaviMetaPodatkeXmlPoJmbg(String jmbg, int brojDoze) throws IOException {
 		String query = String.format("?s ?p ?o. FILTER (?s = <http://www.ftn.uns.ac.rs/rdf/potvrda/%s_%d>)", jmbg, brojDoze);
 		rdfService.getMetadataXML(query, "potvrda_" + jmbg + "_" + brojDoze, NamedGraphURIKonstante.IMUNIZACIJA_NAMED_GRAPH);
+	}
+	
+	@Override
+	public ByteArrayInputStream generisiXHTML(String jmbg) throws Exception {
+		String potvrda = potvrdaRepository.pronadjiPotvrdaXmlPoJmbg(jmbg, 1);
+		if (potvrda == null) {
+			throw new Exception();
+		}
+		return htmlTransformerService.generateHTML(potvrda, XSLKonstante.POTVRDA_XSL);
+	}
+
+	@Override
+	public ByteArrayInputStream generisiPdf(String jmbg) throws Exception {
+		String potvrda = potvrdaRepository.pronadjiPotvrdaXmlPoJmbg(jmbg, 1);
+		if (potvrda == null) {
+			throw new Exception();
+		}
+		return pdfTransformerService.generatePDF(potvrda, com.xml.vakcinacija.utils.XSLFOKonstante.POTVRDA_XSL_FO);
 	}
 }
