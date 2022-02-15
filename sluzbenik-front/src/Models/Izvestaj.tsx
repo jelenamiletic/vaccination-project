@@ -1,7 +1,7 @@
-import { KolicnaDozaPoRednomBroju } from "./CommonTypes/KolicnaDozaPoRednomBroju";
-import { PeriodIzvestaja } from "./CommonTypes/PeriodIzvestaja";
-import { RaspodelaDozaPoProizvodjacu } from "./CommonTypes/RaspodelaDozaPoProizvodjacu";
-import { ZahteviZaDigitalniSertifikat } from "./CommonTypes/ZahteviZaDigitalniSertifikat";
+import { KolicnaDozaPoRednomBroju } from "./CommonTypes/Izvestaj/KolicnaDozaPoRednomBroju";
+import { PeriodIzvestaja } from "./CommonTypes/Izvestaj/PeriodIzvestaja";
+import { RaspodelaDozaPoProizvodjacu } from "./CommonTypes/Izvestaj/RaspodelaDozaPoProizvodjacu";
+import { ZahteviZaDigitalniSertifikat } from "./CommonTypes/Izvestaj/ZahteviZaDigitalniSertifikat";
 
 export interface Izvestaj {
 	"iz:BrojPodnetihDokumenata": number;

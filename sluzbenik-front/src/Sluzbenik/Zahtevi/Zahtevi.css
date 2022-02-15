@@ -1,0 +1,24 @@
+.list-group-item {
+	color: black;
+	font-weight: bold;
+	background-color: #deede6;
+}
+
+.text-expandable {
+	border: ridge;
+	padding: 5px;
+	min-height: 5em;
+}
+
+.zahtev-card {
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	color: black;
+	margin-bottom: 1em;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 100px;
+	padding: 1em;
+	text-align: left;
+	max-width: 1050px;
+	border-collapse: collapse;
+}

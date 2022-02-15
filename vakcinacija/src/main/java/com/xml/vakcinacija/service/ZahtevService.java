@@ -15,7 +15,7 @@ public interface ZahtevService {
 	
 	Zahtev pronadjiZahtevPoJmbg(String jmbg) throws Exception;
 	
-	void nabaviMetaPodatkeXmlPoJmbg(String jmbg) throws IOException;
+	ByteArrayInputStream nabaviMetaPodatkeJSONPoJmbg(String jmbg) throws IOException;
 	
 	ByteArrayInputStream generisiPdf(String jmbg) throws Exception;
 

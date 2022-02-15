@@ -40,6 +40,7 @@ public class SertifikatServiceImpl implements SertifikatService {
 
     @Override
     public void dodajNoviSertifikat(String SertifikatXML) throws Exception {
+    	System.out.print(SertifikatXML);
         Sertifikat validanObjekat = (Sertifikat) unmarshallerService.unmarshal(SertifikatXML,
                 ContextPutanjeKonstante.CONTEXT_PUTANJA_SERTIFIKAT, XSDPutanjeKonstante.XSD_SERTIFIKAT);
         if (validanObjekat != null) {
@@ -73,9 +74,9 @@ public class SertifikatServiceImpl implements SertifikatService {
     }
 
     @Override
-    public void nabaviMetaPodatkeXmlPoJmbg(String jmbg) throws IOException {
+    public ByteArrayInputStream nabaviMetaPodatkeJSONPoJmbg(String jmbg) throws IOException {
         String query = String.format("?s ?p ?o. FILTER (?s = <http://www.ftn.uns.ac.rs/rdf/sertifikat/%s>)", jmbg);
-        rdfService.getMetadataXML(query, "sertifikat_" + jmbg, NamedGraphURIKonstante.IMUNIZACIJA_NAMED_GRAPH);
+        return rdfService.getMetadataJSON(query, "sertifikat_" + jmbg, NamedGraphURIKonstante.IMUNIZACIJA_NAMED_GRAPH);
     }
     
     @Override

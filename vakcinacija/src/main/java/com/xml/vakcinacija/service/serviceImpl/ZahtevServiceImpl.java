@@ -2,6 +2,7 @@ package com.xml.vakcinacija.service.serviceImpl;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.activation.DataHandler;
@@ -20,10 +21,12 @@ import com.xml.vakcinacija.exception.ZahtevNijePronadjenoException;
 import com.xml.vakcinacija.exception.ZahtevPostojiException;
 import com.xml.vakcinacija.model.OdgovorNaZahtev;
 import com.xml.vakcinacija.model.gradjanin.Gradjanin;
+import com.xml.vakcinacija.model.potvrda.Potvrda;
 import com.xml.vakcinacija.model.sertifikat.Sertifikat;
 
 import com.xml.vakcinacija.model.zahtev.Zahtev;
 import com.xml.vakcinacija.repository.KorisnikRepository;
+import com.xml.vakcinacija.repository.PotvrdaRepository;
 import com.xml.vakcinacija.repository.SertifikatRepository;
 import com.xml.vakcinacija.repository.ZahtevRepository;
 import com.xml.vakcinacija.service.RDFService;
@@ -55,6 +58,9 @@ public class ZahtevServiceImpl implements ZahtevService{
 	private HTMLTransformerService htmlTransformerService;
 
 	private SertifikatRepository sertifikatRepository;
+	
+	@Autowired
+	private PotvrdaRepository potvrdaRepository;
 	
 	@Autowired
 	private KorisnikRepository korisnikRepository;
@@ -108,7 +114,19 @@ public class ZahtevServiceImpl implements ZahtevService{
 	
 	@Override
 	public List<Zahtev> dobaviSveNeodobreneZahteve() throws Exception {
-		return zahtevRepository.pronadjiNeodobreneZahteve();
+		List<Zahtev> neodobreniZahteviViseOdJedneDoze = new ArrayList<Zahtev>();
+		List<Zahtev> neodobreniZahtevi = zahtevRepository.pronadjiNeodobreneZahteve();
+		List<Potvrda> potvrde = potvrdaRepository.pronadjiSve();
+		for (Zahtev z : neodobreniZahtevi) {
+			for (Potvrda p : potvrde) {
+				if (z.getPodnosilac().getJMBG().getValue().equals(p.getLicneInformacije().getJMBG().getValue()) && 
+						p.getInformacijeOVakcinama().size() > 1) {
+					neodobreniZahteviViseOdJedneDoze.add(z);
+					break;
+				}
+			}
+		}
+		return neodobreniZahteviViseOdJedneDoze;
 	}
 
 	@Override
@@ -140,14 +158,14 @@ public class ZahtevServiceImpl implements ZahtevService{
 	        
 			MimeBodyPart attachment = new MimeBodyPart();
 		    ByteArrayDataSource ds = new ByteArrayDataSource(
-		    		sertifikatService.generisiPdf(sertifikat.getLicneInformacije().getJMBG().getValue()), "application/pdf"); 
+		    		sertifikatService.generisiPdf(sertifikat.getLicneInformacije().getJMBG().getValue()), "application/pdf;charset=UTF-8"); 
 		    attachment.setDataHandler(new DataHandler(ds));
 		    attachment.setFileName("Sertifikat.pdf");
 		    mimeMultipart.addBodyPart(attachment);
 		    
 		    MimeBodyPart attachment1 = new MimeBodyPart();
 		    ByteArrayDataSource ds1 = new ByteArrayDataSource(
-		    		sertifikatService.generisiXHTML(sertifikat.getLicneInformacije().getJMBG().getValue()), "text/html"); 
+		    		sertifikatService.generisiXHTML(sertifikat.getLicneInformacije().getJMBG().getValue()), "text/html;charset=UTF-8"); 
 		    attachment1.setDataHandler(new DataHandler(ds1));
 		    attachment1.setFileName("Sertifikat.htm");
 		    mimeMultipart.addBodyPart(attachment1);
@@ -155,6 +173,7 @@ public class ZahtevServiceImpl implements ZahtevService{
 		    message.setContent(mimeMultipart);
 		    emailSenderService.sendEmail(message);
 		} else {
+			zahtevRepository.izbrisiZahtev(odgovorNaZahtev.getJMBG());
 			MimeMessage message = emailSenderService.createMimeMessage();
 			InternetAddress sender = new InternetAddress("mrs_isa_2021_t15_5@hotmail.com");
 	        InternetAddress recipient = new InternetAddress(gradjanin.getEmail());
@@ -173,9 +192,9 @@ public class ZahtevServiceImpl implements ZahtevService{
 	}
 
 	@Override
-	public void nabaviMetaPodatkeXmlPoJmbg(String jmbg) throws IOException {
+	public ByteArrayInputStream nabaviMetaPodatkeJSONPoJmbg(String jmbg) throws IOException {
 		String query = String.format("?s ?p ?o. ?s <http://www.ftn.uns.ac.rs/rdf/zahtev/predicate/jmbg> \"%s\"^^<http://www.w3.org/2001/XMLSchemastring>", jmbg);
-		rdfService.getMetadataXML(query, "zahtev_" + jmbg, NamedGraphURIKonstante.IMUNIZACIJA_NAMED_GRAPH);
+		return rdfService.getMetadataJSON(query, "zahtev_" + jmbg, NamedGraphURIKonstante.IMUNIZACIJA_NAMED_GRAPH);
 	}
 	
 	@Override

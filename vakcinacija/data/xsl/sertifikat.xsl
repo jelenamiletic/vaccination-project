@@ -89,8 +89,7 @@
                             <b>Proizvodjac i serija / Manufacturer and batch number:</b>
                         </p>
                         <p>
-                            <xsl:value-of select="//se:Vakcinacija[1]/se:Proizvodjac/text()"/>
-                            <xsl:value-of select="//se:Vakcinacija[1]/se:Serija/text()"/>
+                            <xsl:value-of select="concat(' ', //se:Vakcinacija[1]/se:Proizvodjac/text(), //se:Vakcinacija[1]/se:Serija/text())"/>
                         </p>
                         <p>
                             <b>Datum / Date:</b>
@@ -117,8 +116,7 @@
                             <b>Proizvodjac i serija / Manufacturer and batch number:</b>
                         </p>
                         <p>
-                            <xsl:value-of select="//se:Vakcinacija[2]/se:Proizvodjac/text()"/>
-                            <xsl:value-of select="//se:Vakcinacija[2]/se:Serija/text()"/>
+                            <xsl:value-of select="concat(' ', //se:Vakcinacija[2]/se:Proizvodjac/text(), //se:Vakcinacija[2]/se:Serija/text())"/>
                         </p>
                         <p>
                             <b>Datum / Date:</b>

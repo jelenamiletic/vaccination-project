@@ -18,4 +18,5 @@
         <za:BrojPasosa property = "pred:BrojPasosa" datatype = "xs:string">124422489</za:BrojPasosa>
     </za:Podnosilac>
     <za:RazlogPodnosenja>Neki random razlog</za:RazlogPodnosenja>
+    <za:Odobren></za:Odobren>
 </za:Zahtev>

@@ -47,10 +47,10 @@ public class IzvestajController {
 		return new ResponseEntity<>(izvestajService.pronadjiIzvestaj(odDatum, doDatum), HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/nabaviMetaPodatkeXmlPoDatumima/{odDatum}/{doDatum}")
+	@GetMapping(value = "/nabaviMetaPodatkeJSONPoDatumima/{odDatum}/{doDatum}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("hasRole('ROLE_SLUZBENIK')")
-	public void nabaviMetaPodatkeXmlPoDatumima(@PathVariable String odDatum, @PathVariable String doDatum) throws IOException {
-		izvestajService.nabaviMetaPodatkeXmlPoDatumima(odDatum, doDatum);
+	public ResponseEntity<InputStreamResource> nabaviMetaPodatkeJSONPoDatumima(@PathVariable String odDatum, @PathVariable String doDatum) throws IOException {
+		return new ResponseEntity<>((new InputStreamResource(izvestajService.nabaviMetaPodatkeJSONPoDatumima(odDatum, doDatum))), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/generisiPdf/{odDatum}/{doDatum}", produces = MediaType.APPLICATION_PDF_VALUE)

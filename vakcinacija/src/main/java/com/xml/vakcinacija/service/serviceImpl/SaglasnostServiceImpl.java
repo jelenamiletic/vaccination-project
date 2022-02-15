@@ -119,9 +119,9 @@ public class SaglasnostServiceImpl implements SaglasnostService {
 	}
 	
 	@Override
-	public void nabaviMetaPodatkeXmlPoId(String id) throws IOException {
+	public ByteArrayInputStream nabaviMetaPodatkeJSONPoId(String id) throws IOException {
 		String query = String.format("?s ?p ?o. FILTER (?s = <http://www.ftn.uns.ac.rs/rdf/saglasnost/%s>)", id);
-		rdfService.getMetadataXML(query, "saglasnost_" + id, NamedGraphURIKonstante.IMUNIZACIJA_NAMED_GRAPH);
+		return rdfService.getMetadataJSON(query, "saglasnost_" + id, NamedGraphURIKonstante.IMUNIZACIJA_NAMED_GRAPH);
 	}
 
 	@Override

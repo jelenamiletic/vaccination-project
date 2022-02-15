@@ -133,9 +133,9 @@ public class InteresovanjeServiceImpl implements InteresovanjeService {
 	}
 	
 	@Override
-	public void nabaviMetaPodatkeXmlPoJmbg(String jmbg) throws IOException {
+	public ByteArrayInputStream nabaviMetaPodatkeJSONPoJmbg(String jmbg) throws IOException {
 		String query = String.format("?s ?p ?o. ?s <http://www.ftn.uns.ac.rs/rdf/interesovanje/predicate/jmbg> \"%s\"^^<http://www.w3.org/2001/XMLSchemastring>", jmbg);
-		rdfService.getMetadataXML(query, "interesovanje_" + jmbg, NamedGraphURIKonstante.IMUNIZACIJA_NAMED_GRAPH);
+		return rdfService.getMetadataJSON(query, "interesovanje_" + jmbg, NamedGraphURIKonstante.IMUNIZACIJA_NAMED_GRAPH);
 	}
 
 	@Override

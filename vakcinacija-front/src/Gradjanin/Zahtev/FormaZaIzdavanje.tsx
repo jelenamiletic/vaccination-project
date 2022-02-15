@@ -26,10 +26,10 @@ const Zahtev = () => {
 	const customId = "zahtev";
 
 	const [editorState, setEditorState] = useState(() =>
-    EditorState.createEmpty()
-  	);
+		EditorState.createEmpty()
+	);
 
-	const editor =  useRef<any>(null);
+	const editor = useRef<any>(null);
 	function focusEditor() {
 		if (editor && editor.current) {
 			editor.current.focus();
@@ -38,8 +38,7 @@ const Zahtev = () => {
 
 	const navigate = useNavigate();
 
-	useEffect(() => {
-	}, [])
+	useEffect(() => {}, []);
 
 	const {
 		register,
@@ -67,9 +66,14 @@ const Zahtev = () => {
 							<za:DatumRodjenja>${zahtev.DatumRodjenja}</za:DatumRodjenja>
 							<za:Pol>Muski</za:Pol>
 							<za:JMBG property = "pred:jmbg" datatype = "xs:string">${getJMBG()}</za:JMBG>
-							<za:BrojPasosa property = "pred:BrojPasosa" datatype = "xs:string">${zahtev.BrojPasosa}</za:BrojPasosa>
+							<za:BrojPasosa property = "pred:BrojPasosa" datatype = "xs:string">${
+								zahtev.BrojPasosa
+							}</za:BrojPasosa>
 						</za:Podnosilac>
-						<za:RazlogPodnosenja>${editorState.getCurrentContent().getPlainText('\u0001')}</za:RazlogPodnosenja>
+						<za:RazlogPodnosenja>${editorState
+							.getCurrentContent()
+							.getPlainText("\u0001")}</za:RazlogPodnosenja>
+						<za:Odobren></za:Odobren>
 					</za:Zahtev>`;
 		axios
 			.post("http://localhost:8080/zahtev/dodajNoviZahtev", xml, {
@@ -96,7 +100,7 @@ const Zahtev = () => {
 			<Card
 				className="card-login-registracija"
 				style={{ backgroundColor: "#DEEDE6", borderColor: "black" }}
-				>
+			>
 				<CardBody>
 					<CardTitle tag="h2">Zahtev za zeleni sertifikat</CardTitle>
 					<Form className="form-login-registracija">
@@ -123,15 +127,19 @@ const Zahtev = () => {
 						</FormGroup>
 						<FormGroup>
 							<div
-							style={{ border: "1px solid black", minHeight: "6em", cursor: "text" }}
-							onClick={focusEditor}
+								style={{
+									border: "1px solid black",
+									minHeight: "6em",
+									cursor: "text",
+								}}
+								onClick={focusEditor}
 							>
-							<Editor
-								ref={editor}
-								editorState={editorState}
-								onChange={setEditorState}
-								placeholder="Write something!"
-							/>
+								<Editor
+									ref={editor}
+									editorState={editorState}
+									onChange={setEditorState}
+									placeholder="Write something!"
+								/>
 							</div>
 						</FormGroup>
 						<Button

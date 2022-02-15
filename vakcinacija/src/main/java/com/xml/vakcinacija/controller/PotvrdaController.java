@@ -3,6 +3,7 @@ package com.xml.vakcinacija.controller;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -45,10 +46,10 @@ public class PotvrdaController {
 		return new ResponseEntity<>(potvrdaService.pronadjiPotvrdaPoJmbg(jmbg, brojDoze), HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/nabaviMetaPodatkeXmlPoJmbg/{jmbg}/{brojDoze}")
+	@GetMapping(value = "/nabaviMetaPodatkeJSONPoJmbg/{jmbg}/{brojDoze}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("hasAnyRole('ROLE_GRADJANIN', 'ROLE_SLUZBENIK')")
-	public void nabaviMetaPodatkeXmlPoJmbg(@PathVariable String jmbg, @PathVariable int brojDoze) throws IOException {
-		potvrdaService.nabaviMetaPodatkeXmlPoJmbg(jmbg, brojDoze);
+	public ResponseEntity<InputStreamResource> nabaviMetaPodatkeJSONPoJmbg(@PathVariable String jmbg, @PathVariable int brojDoze) throws IOException {
+		return new ResponseEntity<>(new InputStreamResource(potvrdaService.nabaviMetaPodatkeJSONPoJmbg(jmbg, brojDoze)), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/dobaviPoslednjuPotvrduPoJmbg/{jmbg}", produces = MediaType.APPLICATION_XML_VALUE)

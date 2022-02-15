@@ -61,10 +61,10 @@ public class SaglasnostController {
 		return new ResponseEntity<>(saglasnostService.pronadjiNajnovijuSaglasnostPoJmbgIliBrPasosa(id), HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/nabaviMetaPodatkeXmlPoId/{id}")
+	@GetMapping(value = "/nabaviMetaPodatkeJSONPoId/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("hasAnyRole('ROLE_GRADJANIN', 'ROLE_SLUZBENIK')")
-	public void nabaviMetaPodatkeXmlPoJmbg(@PathVariable String id) throws IOException {
-		saglasnostService.nabaviMetaPodatkeXmlPoId(id);
+	public ResponseEntity<InputStreamResource> nabaviMetaPodatkeJSONPoId(@PathVariable String id) throws IOException {
+		return new ResponseEntity<>(new InputStreamResource(saglasnostService.nabaviMetaPodatkeJSONPoId(id)), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/generisiXhtml/{jmbg}", produces = MediaType.TEXT_HTML_VALUE)
