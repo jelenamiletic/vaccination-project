@@ -104,6 +104,37 @@ public class SaglasnostRepository {
         return listaSaglasnosti;
 	}
 	
+	public List<String> pronadjiSveOsnovnaPretraga(String pretraga) throws Exception {
+		String xPathIzraz = "//Saglasnost";
+        ResourceSet rezultat = ExistRetrieve.izvrsiXPathIzraz(XMLCollectionIdKonstante.COLLECTION_ID_SAGLASNOST, 
+        		xPathIzraz, XMLNamespaceKonstante.NAMESPACE_SAGLASNOST);
+        if (rezultat == null)
+            return null;
+
+        ResourceIterator i = rezultat.getIterator();
+        XMLResource res = null;
+        List<String> listaSaglasnosti = new ArrayList<String>();
+
+        while (i.hasMoreResources()) {
+            res = (XMLResource) i.nextResource();
+            
+            String xml = res.getContent().toString();
+            if(xml.contains(pretraga)) {
+            	listaSaglasnosti.add(xml);
+            }
+        }
+
+        if (res != null) {
+            try {
+                ((EXistResource) res).freeResources();
+            } catch (XMLDBException exception) {
+                exception.printStackTrace();
+            }
+        }
+
+        return listaSaglasnosti;
+	}
+	
 	public List<Saglasnost> pronadjiSaglasnostXmlPoFullId(String id, boolean jmbg) throws Exception {
         String xPathIzraz;
         

@@ -24,5 +24,7 @@ public interface ZahtevService {
 	List<Zahtev> dobaviSveNeodobreneZahteve() throws Exception;
 	
 	void promeniStatusZahteva(OdgovorNaZahtev odgovorNaZahtev) throws Exception;
+	
+	List<String> pronadjiSveOsnovnaPretraga(String pretraga) throws Exception;
 
 }

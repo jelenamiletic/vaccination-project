@@ -23,4 +23,8 @@ public interface SaglasnostService {
 	ByteArrayInputStream generisiPdf(String jmbg) throws Exception;
 
 	ByteArrayInputStream generisiXhtml(String jmbg) throws Exception;
+	
+	String pronadjiSveOsnovnaPretraga(String pretraga) throws Exception;
+	
+	String pronadjiSveNaprednaPretraga(String ime, String prezime, String jmbg, String Pol) throws Exception;
 }

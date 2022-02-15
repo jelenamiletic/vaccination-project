@@ -20,8 +20,10 @@ import com.xml.vakcinacija.exception.PotvrdaNijePronadjenoException;
 import com.xml.vakcinacija.exception.PotvrdaPostojiException;
 import com.xml.vakcinacija.model.gradjanin.Gradjanin;
 import com.xml.vakcinacija.model.potvrda.Potvrda;
+import com.xml.vakcinacija.model.sertifikat.Sertifikat;
 import com.xml.vakcinacija.model.termin.Termin;
 import com.xml.vakcinacija.repository.PotvrdaRepository;
+import com.xml.vakcinacija.service.MarshallerService;
 import com.xml.vakcinacija.service.PotvrdaService;
 import com.xml.vakcinacija.service.RDFService;
 import com.xml.vakcinacija.service.TerminService;
@@ -36,6 +38,9 @@ public class PotvrdaServiceImpl implements PotvrdaService{
 
 	@Autowired
 	private UnmarshallerService unmarshallerService;
+	
+	@Autowired
+	private MarshallerService marshallerService;
 	
 	@Autowired
 	private RDFService rdfService;
@@ -88,21 +93,21 @@ public class PotvrdaServiceImpl implements PotvrdaService{
 			
 			MimeMultipart mimeMultipart = new MimeMultipart();
 		    
-//		    MimeBodyPart textBodyPart = new MimeBodyPart();
-//	        textBodyPart.setText(mailText);
-//	        mimeMultipart.addBodyPart(textBodyPart);
-//	        
-//			MimeBodyPart attachment = new MimeBodyPart();
-//		    ByteArrayDataSource ds = new ByteArrayDataSource(generisiPdf(gradjanin.getJMBG()), "application/pdf"); 
-//		    attachment.setDataHandler(new DataHandler(ds));
-//		    attachment.setFileName("Potvrda.pdf");
-//		    mimeMultipart.addBodyPart(attachment);
-//		    
-//		    MimeBodyPart attachment1 = new MimeBodyPart();
-//		    ByteArrayDataSource ds1 = new ByteArrayDataSource(generisiXHTML(gradjanin.getJMBG()), "text/html"); 
-//		    attachment1.setDataHandler(new DataHandler(ds1));
-//		    attachment1.setFileName("Potvrda.htm");
-//		    mimeMultipart.addBodyPart(attachment1);
+		    MimeBodyPart textBodyPart = new MimeBodyPart();
+	        textBodyPart.setText(mailText);
+	        mimeMultipart.addBodyPart(textBodyPart);
+	        
+			MimeBodyPart attachment = new MimeBodyPart();
+		    ByteArrayDataSource ds = new ByteArrayDataSource(generisiPdf(gradjanin.getJMBG()), "application/pdf"); 
+		    attachment.setDataHandler(new DataHandler(ds));
+		    attachment.setFileName("Potvrda.pdf");
+		    mimeMultipart.addBodyPart(attachment);
+		    
+		    MimeBodyPart attachment1 = new MimeBodyPart();
+		    ByteArrayDataSource ds1 = new ByteArrayDataSource(generisiXHTML(gradjanin.getJMBG()), "text/html"); 
+		    attachment1.setDataHandler(new DataHandler(ds1));
+		    attachment1.setFileName("Potvrda.htm");
+		    mimeMultipart.addBodyPart(attachment1);
 		    
 		    message.setContent(mimeMultipart);
 		    emailSenderService.sendEmail(message);
@@ -161,5 +166,42 @@ public class PotvrdaServiceImpl implements PotvrdaService{
 			throw new Exception();
 		}
 		return pdfTransformerService.generatePDF(potvrda, com.xml.vakcinacija.utils.XSLFOKonstante.POTVRDA_XSL_FO);
+	}
+	
+	@Override
+	public String pronadjiSveOsnovnaPretraga(String pretraga) throws Exception {
+		String rez = "<Potvrde>";
+		
+		for (String interesovanje : potvrdaRepository.pronadjiSveOsnovnaPretraga(pretraga)) {
+			rez += interesovanje;
+		}
+		
+		rez+= "</Potvrde>";
+		
+		return rez;
+	}
+	
+	@Override
+	public String pronadjiSveNaprednaPretraga(String ime, String prezime, String jmbg, String pol) throws Exception {
+		
+		String rezultat = "<Potvrde>";
+		for (Potvrda potvrda : potvrdaRepository.pronadjiSve()) {
+			
+			if(ime == "" || ime == null || potvrda.getLicneInformacije().getPunoIme().getIme().equals(ime)) {
+				
+				if(prezime == "" || prezime == null || potvrda.getLicneInformacije().getPunoIme().getIme().equals(ime)) {
+					
+					if(jmbg == "" || jmbg == null || potvrda.getLicneInformacije().getJMBG().getValue().equals(jmbg)) {
+						
+						if(pol == "" || pol == null || potvrda.getLicneInformacije().getPol().toString().equals(ime)) {
+							
+							rezultat += marshallerService.marshall(potvrda, ContextPutanjeKonstante.CONTEXT_PUTANJA_POTVRDA, XSDPutanjeKonstante.XSD_POTVRDA);
+						}
+					}
+				}
+			}
+		}
+		
+		return rezultat + "</Potvrde>";
 	}
 }

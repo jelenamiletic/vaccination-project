@@ -1,6 +1,7 @@
 package com.xml.vakcinacija.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
@@ -40,6 +41,12 @@ public class ZahtevController {
 		ListaZahteva lista = new ListaZahteva();
 		lista.setZahtev(zahtevService.pronadjiSve());
 		return new ResponseEntity<>(lista, HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/pronadjiSveOsnovnaPretraga/{pretraga}")
+	@PreAuthorize("hasRole('ROLE_SLUZBENIK')")
+	public ResponseEntity<List<String>> pronadjiSveOsnovnaPretraga(@PathVariable String pretraga) throws Exception {
+		return new ResponseEntity<>(zahtevService.pronadjiSveOsnovnaPretraga(pretraga), HttpStatus.OK);
 	}
 
 	@GetMapping(value = "/pronadjiZahtevPoJmbg/{jmbg}", produces = MediaType.APPLICATION_XML_VALUE)

@@ -19,4 +19,7 @@ public interface SertifikatService {
 
 	ByteArrayInputStream generisiPdf(String jmbg) throws Exception;
 
+	String pronadjiSveOsnovnaPretraga(String pretraga) throws Exception;
+	
+	String pronadjiSveNaprednaPretraga(String ime, String prezime, String jmbg, String pol) throws Exception;
 }
