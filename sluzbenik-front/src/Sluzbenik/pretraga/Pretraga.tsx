@@ -12,6 +12,19 @@ import "./Pretraga.css";
 
 Chart.register(...registerables);
 
+enum TipDokumenta {
+    Saglasnost = "Saglasnost za imunizaciju",
+    Potvrda = "Potvrda o vakcinaciji",
+    Sertifikat = "Digitalni Sertifikat",
+    Svi = "Svi dokumenti",
+}
+
+const tipoviDokumenta: Array<TipDokumenta> = new Array<TipDokumenta>();
+tipoviDokumenta.push(TipDokumenta.Svi);
+tipoviDokumenta.push(TipDokumenta.Saglasnost);
+tipoviDokumenta.push(TipDokumenta.Potvrda);
+tipoviDokumenta.push(TipDokumenta.Sertifikat);
+
 toast.configure();
 const Pretraga = () => {
     const customId = "pretraga";
@@ -19,6 +32,7 @@ const Pretraga = () => {
     const [pronadjeniDokumenti, setPronadjeniDokumenti] = useState<Array<any>>();
 
     const [showModal, setShowModal] = useState(false);
+    const [selektovanTipDokumenta, setSelektovanTipDokumenta] = useState(TipDokumenta.Svi);
 
     const handleCloseModal = () => setShowModal(false);
     const handleShowModal = () => {
@@ -39,9 +53,18 @@ const Pretraga = () => {
 
     const toggle = () => setShowModal(!showModal);
 
-    const pretraziArhivu = (unos: any) => {
+    const pretraziKljucneReci = (unos: any) => {
 
     }
+
+    const pretraziNapredno = (unos: any) => {
+
+    }
+
+    const handleTipDokumentaIzmena = (selectedOption: any) => {
+        setSelektovanTipDokumenta(selectedOption.target.value);
+        console.log(`Option selected:`, selectedOption.target.value);
+    };
 
     return (
         <div>
@@ -64,29 +87,97 @@ const Pretraga = () => {
                             <FormFeedback>{errors.JMBG?.message}</FormFeedback>
                         </FormGroup>
 
-                        <FormGroup>
-                            <Label>Tip dokumenta:</Label>
-                            <Input type="select" name="TipDokumenta">
-                                <option>Sve</option>
-                                <option>Saglasnost za imunizaciju</option>
-                                <option>Potvrda o vakcinaciji</option>
-                                <option>Sertifikat</option>
-                            </Input>
-                            <FormFeedback>{errors.JMBG?.message}</FormFeedback>
-                        </FormGroup>
-
                         <Button
                             className="registruj-login-btn"
                             color="primary"
                             type="button"
                             style={{ display: "block" }}
-                            onClick={handleSubmit(pretraziArhivu)}
+                            onClick={handleSubmit(pretraziKljucneReci)}
                         >
                             Pretraga
                         </Button>
                     </Form>
                 </CardBody>
             </Card>
+
+
+            <Card
+                className="card-login-registracija"
+                style={{ backgroundColor: "#DEEDE6", borderColor: "black" }}
+            >
+                <CardBody>
+                    <Form className="form-login-registracija">
+                        <CardTitle tag="h2">Napredna pretraga</CardTitle>
+
+                        <FormGroup>
+                            <Label>Tip dokumenta:</Label>
+                            <Input type="select" name="TipDokumenta" onChange={handleTipDokumentaIzmena} option={selektovanTipDokumenta} options={TipDokumenta}>
+                                {tipoviDokumenta.map((doc) => (
+                                    <option value={doc}>{doc}</option>
+                                ))}
+                            </Input>
+                        </FormGroup>
+
+                        <Label>Ime:</Label>
+                        <Input
+                            type="text"
+                            placeholder=""
+                        />
+                        <Label>Prezime:</Label>
+                        <Input
+                            type="text"
+                            placeholder=""
+                        />
+                        <Label>JMBG:</Label>
+                        <Input
+                            type="text"
+                            placeholder=""
+                        />
+                        <Label>Muski</Label>
+                        <Input
+                            className="ml-2"
+                            type="radio"
+                            name="Pol"
+                            checked
+                        >
+                            Muski
+                        </Input>
+                        <span className="pl-5">
+                            <Label>Zenski</Label>
+                            <Input
+                                className="ml-2"
+                                type="radio"
+                                name="Pol"
+                                checked
+                            >
+                                Zenski
+                            </Input>
+                            <span className="pl-5">
+                                <Label>Nijedan</Label>
+                                <Input
+                                    className="ml-2"
+                                    type="radio"
+                                    name="Pol"
+                                    checked
+                                >
+                                    Nijedan
+                                </Input>
+                            </span>
+                        </span>
+                        <Button
+                            className="registruj-login-btn"
+                            color="primary"
+                            type="button"
+                            style={{ display: "block" }}
+                            onClick={handleSubmit(pretraziNapredno)}
+                        >
+                            Pretraga
+                        </Button>
+                    </Form>
+                </CardBody>
+            </Card>
+
+
 
             <Table bordered className="div-dokumenti">
                 <thead>
