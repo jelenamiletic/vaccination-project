@@ -60,7 +60,7 @@ public class InteresovanjeServiceImpl implements InteresovanjeService {
 			validanObjekat.getLicneInformacije().getPunoIme().setPrezime(gradjanin.getPunoIme().getPrezime());
 			interesovanjeRepository.saveInteresovanjeObjekat(validanObjekat);
 			
-			terminService.dodajNoviTermin(gradjanin.getJMBG(), 1, validanObjekat.getVakcina().getValue().toString());
+			terminService.dodajNoviTermin(gradjanin.getJMBG(), 1, validanObjekat.getVakcina().getValue().toString(), true);
 			
 			//TODO salji mejl
 			

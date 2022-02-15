@@ -131,6 +131,7 @@ const EvidencijaVakcinacije = () => {
 					<sa:BrojMobilnogTelefona>${pronadjenaSaglasnost!["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:BrojMobilnogTelefona"]}</sa:BrojMobilnogTelefona>
 					<sa:Email property = "pred:email" datatype = "xs:string">${pronadjenaSaglasnost!["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:Email"]}</sa:Email>
 					<sa:RadniStatus>${pronadjenaSaglasnost!["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:RadniStatus"]}</sa:RadniStatus>
+					<sa:ZanimanjeZaposlenog>${pronadjenaSaglasnost!["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:ZanimanjeZaposlenog"]}</sa:ZanimanjeZaposlenog>
 				</sa:LicneInformacije>
 				<sa:Imunizacija>
 					<sa:NazivImunoloskogLeka>${pronadjenaSaglasnost!["sa:PacijentSaglasnost"]["sa:Imunizacija"]["sa:NazivImunoloskogLeka"]}</sa:NazivImunoloskogLeka>
@@ -192,8 +193,7 @@ const EvidencijaVakcinacije = () => {
 			xsi:schemaLocation="http:///www.ftn.uns.ac.rs/vakcinacija/potvrda ../xsd/potvrda.xsd" 
 			xmlns:addr="http://www.ftn.uns.ac.rs/rdf/potvrda"
 			xmlns:pred="http://www.ftn.uns.ac.rs/rdf/potvrda/predicate/"
-			vocab="http://www.ftn.uns.ac.rs/rdf/potvrda/" 
-			about="http://www.ftn.uns.ac.rs/rdf/potvrda/${pronadjenaSaglasnost!["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:Drzavljanstvo"]["sa:RepublikaSrbija"]["sa:JMBG"]}">
+			vocab="http://www.ftn.uns.ac.rs/rdf/potvrda/">
 			<po:Sifra></po:Sifra>
 			<po:LicneInformacije>
 				<po:PunoIme>
@@ -205,7 +205,7 @@ const EvidencijaVakcinacije = () => {
 				<po:JMBG property = "pred:jmbg" datatype = "xs:string">${pronadjenaSaglasnost!["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:Drzavljanstvo"]["sa:RepublikaSrbija"]["sa:JMBG"]}</po:JMBG>
 			</po:LicneInformacije>
 			<po:InformacijeOVakcinama>
-				<po:BrojDoze>${pronadjenaSaglasnost!["sa:ZdravstveniRadnikSaglasnost"]["sa:Obrazac"]["sa:VakcineInfo"].length + 1}</po:BrojDoze>
+				<po:BrojDoze>${pronadjenaSaglasnost!["sa:ZdravstveniRadnikSaglasnost"] ? pronadjenaSaglasnost!["sa:ZdravstveniRadnikSaglasnost"]["sa:Obrazac"]["sa:VakcineInfo"].length + 1 : 1}</po:BrojDoze>
 				<po:DatumDavanja>${new Date(new Date().toString().split('GMT')[0]+' UTC').toISOString().split('.')[0]}</po:DatumDavanja>
 				<po:Serija>${saglasnost.SerijaVakcine}</po:Serija>
 			</po:InformacijeOVakcinama>

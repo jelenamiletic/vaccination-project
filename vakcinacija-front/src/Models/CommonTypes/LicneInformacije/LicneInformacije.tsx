@@ -15,4 +15,5 @@ export interface LicneInformacije {
     "sa:BrojMobilnogTelefona": string;
     "sa:Email": string;
     "sa:RadniStatus": string;
+    "sa:ZanimanjeZaposlenog": string;
 }

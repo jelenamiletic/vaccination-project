@@ -97,6 +97,7 @@ const Saglasnost = () => {
 					<sa:BrojMobilnogTelefona>${saglasnost.BrojMobilnog}</sa:BrojMobilnogTelefona>
 					<sa:Email property = "pred:email" datatype = "xs:string">${getEmail()}</sa:Email>
 					<sa:RadniStatus>${saglasnost.RadniStatus}</sa:RadniStatus>
+					<sa:ZanimanjeZaposlenog>${saglasnost.ZanimanjeZaposlenog}</sa:ZanimanjeZaposlenog>
 				</sa:LicneInformacije>
 				<sa:Imunizacija>
 					<sa:NazivImunoloskogLeka>${termin?.vakcina}</sa:NazivImunoloskogLeka>
@@ -294,19 +295,32 @@ const Saglasnost = () => {
 									/>
 									<FormFeedback>{errors.Adresa?.message}</FormFeedback>
 								</FormGroup>
-								
+
 								<FormGroup>
 									<Label>Radni Status</Label>
-									<Input
-										type="text"
-										name="RadniStatus"
-										placeholder="Radni status"
-										invalid={errors.RadniStatus?.message}
-										innerRef={register}
-									/>
-									<FormFeedback>{errors.RadniStatus?.message}</FormFeedback>
+									<Input type="select" name="RadniStatus" innerRef={register}>
+										<option>Zaposlen</option>
+										<option>Nezaposlen</option>
+										<option>Penzioner</option>
+										<option>Ucenik</option>
+										<option>Student</option>
+										<option>Dete</option>
+									</Input>
 								</FormGroup>
-								
+
+								<FormGroup>
+									<Label>ZanimanjeZaposlenog</Label>
+									<Input type="select" name="ZanimanjeZaposlenog" innerRef={register}>
+										<option>Drugo</option>
+										<option>Zdravstvena zastita</option>
+										<option>Socijalna zastita</option>
+										<option>Prosveta</option>
+										<option>MUP</option>
+										<option>Vojska RS</option>
+										<option>Dete</option>
+									</Input>
+								</FormGroup>
+
 								<Button
 									className="registruj-login-btn"
 									color="primary"

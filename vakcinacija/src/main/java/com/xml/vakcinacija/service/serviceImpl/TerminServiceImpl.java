@@ -47,12 +47,19 @@ public class TerminServiceImpl implements TerminService{
 	private RestTemplate restTemplate;
 
 	@Override
-	public Termin dodajNoviTermin(String jmbg, int brojDoze, String vakcina) throws Exception {
+	public Termin dodajNoviTermin(String jmbg, int brojDoze, String vakcina, boolean gradjanin) throws Exception {
 		TokenBasedAuthentication a = (TokenBasedAuthentication) SecurityContextHolder.getContext().getAuthentication();
 		HttpHeaders headers = new HttpHeaders();
-		String userDetails = marshallerService.marshall(a.getPrincipal(), ContextPutanjeKonstante.CONTEXT_PUTANJA_GRADJANIN, XSDPutanjeKonstante.XSD_GRADJANIN);
-		headers.setBearerAuth(a.getToken());
-		headers.set("Gradjanin", userDetails);
+		if(gradjanin) {
+			String userDetails = marshallerService.marshall(a.getPrincipal(), ContextPutanjeKonstante.CONTEXT_PUTANJA_GRADJANIN, XSDPutanjeKonstante.XSD_GRADJANIN);
+			headers.setBearerAuth(a.getToken());
+			headers.set("Gradjanin", userDetails);
+		} else {
+			String userDetails = marshallerService.marshall(a.getPrincipal(), ContextPutanjeKonstante.CONTEXT_PUTANJA_ZDRAVSTVENI_RADNIK, XSDPutanjeKonstante.XSD_ZDRAVSTVENI_RADNIK);
+			headers.setBearerAuth(a.getToken());
+			headers.set("ZdravstveniRadnik", userDetails);
+		}
+		
 		
 		ResponseEntity<Boolean> response = restTemplate.exchange(
                 "http://localhost:8081/vakcina/proveriSmanjiKolicinu/" + vakcina, HttpMethod.PUT, new HttpEntity<Object>(headers), Boolean.class);

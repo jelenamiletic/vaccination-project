@@ -12,6 +12,7 @@ import com.xml.vakcinacija.model.potvrda.Potvrda;
 import com.xml.vakcinacija.repository.PotvrdaRepository;
 import com.xml.vakcinacija.service.PotvrdaService;
 import com.xml.vakcinacija.service.RDFService;
+import com.xml.vakcinacija.service.TerminService;
 import com.xml.vakcinacija.service.UnmarshallerService;
 import com.xml.vakcinacija.utils.ContextPutanjeKonstante;
 import com.xml.vakcinacija.utils.NamedGraphURIKonstante;
@@ -28,6 +29,9 @@ public class PotvrdaServiceImpl implements PotvrdaService{
 	
 	@Autowired
 	private PotvrdaRepository potvrdaRepository;
+	
+	@Autowired
+	private TerminService terminService;
 
 	@Override
 	public void dodajNoviPotvrda(String PotvrdaXML) throws Exception {
@@ -40,6 +44,13 @@ public class PotvrdaServiceImpl implements PotvrdaService{
 				throw new PotvrdaPostojiException(validanObjekat.getLicneInformacije().getJMBG().getValue());
 			}
 			potvrdaRepository.savePotvrdaObjekat(validanObjekat);
+			
+			terminService.postaviIzvrseno(validanObjekat.getLicneInformacije().getJMBG().getValue(), validanObjekat.getInformacijeOVakcinama().size());
+			
+			terminService.dodajNoviTermin(validanObjekat.getLicneInformacije().getJMBG().getValue(), 
+					validanObjekat.getInformacijeOVakcinama().size() + 1, validanObjekat.getVakcinaPrveDveDoze().getValue().toString(), false);
+			
+			//TODO slati mejl
 			
 			try {
 				rdfService.save(PotvrdaXML, "potvrda_" + validanObjekat.getLicneInformacije().getJMBG().getValue()
