@@ -13,12 +13,12 @@
     </xs:simpleType>
     <xs:simpleType name = "Opstina">
         <xs:restriction base="xs:string"> 
-            <xs:pattern value="[a-zA-z]+"/> 
+            <xs:pattern value="[a-z\s*A-z]+"/> 
         </xs:restriction>
     </xs:simpleType>
     <xs:simpleType name = "Mesto">
         <xs:restriction base="xs:string"> 
-            <xs:pattern value="[a-zA-z]+"/> 
+            <xs:pattern value="[a-z\s*A-z]+"/> 
         </xs:restriction>
     </xs:simpleType>
     <xs:simpleType name = "Proizvodjac">
