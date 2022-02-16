@@ -208,6 +208,9 @@ const Pretraga = () => {
 				: dokument["po:InformacijeOVakcinama"]["po:BrojDoze"];
 			putanja = `http://localhost:8081/pretraga/nabaviMetaPodatkePotvrdaRDFPoJmbg/${jmbg}/${brojDoze}`;
 			nazivFajla = "RDF_Potvrda" + jmbg + "_" + brojDoze + ".rdf";
+		} else{
+			putanja = `http://localhost:8081/pretraga/nabaviMetaPodatkeSertifikatRDFPoJmbg/${dokument["se:LicneInformacije"]["se:JMBG"]}`;
+			nazivFajla = "RDF_Sertifikat" + dokument["se:LicneInformacije"]["se:JMBG"] + ".rdf";
 		}
 		axios
 			.get(putanja, {
@@ -265,6 +268,9 @@ const Pretraga = () => {
 				: dokument["po:InformacijeOVakcinama"]["po:BrojDoze"];
 			putanja = `http://localhost:8081/pretraga/nabaviMetaPodatkePotvrdaJSONPoJmbg/${jmbg}/${brojDoze}`;
 			nazivFajla = "JSON_Potvrda" + jmbg + "_" + brojDoze + ".json";
+		} else{
+			putanja = `http://localhost:8081/pretraga/nabaviMetaPodatkeSertifikatJSONPoJmbg/${dokument["se:LicneInformacije"]["se:JMBG"]}`;
+			nazivFajla = "JSON_Sertifikat" + dokument["se:LicneInformacije"]["se:JMBG"] + ".json";
 		}
 		axios
 			.get(putanja, {
