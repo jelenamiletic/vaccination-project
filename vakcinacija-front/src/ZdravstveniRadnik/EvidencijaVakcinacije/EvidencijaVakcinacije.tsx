@@ -258,7 +258,7 @@ const EvidencijaVakcinacije = () => {
 					<sa:TrajneKontraindikacije>${saglasnost.TrajneKontraindikacije}</sa:TrajneKontraindikacije>
 				</sa:Obrazac>
 			</sa:ZdravstveniRadnikSaglasnost>
-			<sa:DatumPodnosenja>${pronadjenaSaglasnost!["sa:DatumPodnosenja"]}</sa:DatumPodnosenja>
+			<sa:DatumPodnosenja>${new Date(new Date().toString().split('GMT')[0] + ' UTC').toISOString().split('.')[0]}</sa:DatumPodnosenja>
 		</sa:Saglasnost>`;
 		axios
 			.put("http://localhost:8080/saglasnost/promeniSaglasnost", xml, {
@@ -339,7 +339,7 @@ const EvidencijaVakcinacije = () => {
 			</po:InformacijeOVakcinama>
 			<po:ZdravstvenaUstanova>${ustanova}</po:ZdravstvenaUstanova>
 			<po:VakcinaPrveDveDoze property = "pred:VakcinaPrveDveDoze" datatype = "xs:string">${pronadjenaSaglasnost!["sa:PacijentSaglasnost"]["sa:Imunizacija"]["sa:NazivImunoloskogLeka"]}</po:VakcinaPrveDveDoze>
-			<po:DatumIzdavanja>${pronadjenaSaglasnost!["sa:DatumPodnosenja"]}</po:DatumIzdavanja>
+			<po:DatumIzdavanja>${new Date(new Date().toString().split('GMT')[0] + ' UTC').toISOString().split('.')[0]}</po:DatumIzdavanja>
 			<po:QR>http://www.ftn.uns.ac.rs/</po:QR>
 		</po:Potvrda>`;
 		console.log(xml_potvrda)

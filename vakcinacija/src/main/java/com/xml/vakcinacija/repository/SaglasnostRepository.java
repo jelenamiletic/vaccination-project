@@ -105,6 +105,45 @@ public class SaglasnostRepository {
         return listaSaglasnosti;
 	}
 	
+	public String pronadjiPoJmbgIBrojDoze(String JMBG, int brojDoze, boolean jmbg) throws Exception {
+		String xPathIzraz = "";
+		
+		if (jmbg) 
+        {
+        	xPathIzraz = 
+        			String.format("/Saglasnost[PacijentSaglasnost/LicneInformacije/Drzavljanstvo/RepublikaSrbija/JMBG = '%s' and count(ZdravstveniRadnikSaglasnost/Obrazac/VakcineInfo) = %d]" , JMBG, brojDoze);
+        } 
+        else 
+        {
+        	xPathIzraz = 
+        			String.format("/Saglasnost[PacijentSaglasnost/LicneInformacije/Drzavljanstvo/StranoDrzavljanstvo/BrojPasosa = '%s' and count(ZdravstveniRadnikSaglasnost/Obrazac/VakcineInfo) = %d]" , JMBG, brojDoze);
+        }
+		
+        ResourceSet rezultat = ExistRetrieve.izvrsiXPathIzraz(XMLCollectionIdKonstante.COLLECTION_ID_SAGLASNOST, 
+        		xPathIzraz, XMLNamespaceKonstante.NAMESPACE_SAGLASNOST);
+        if (rezultat == null)
+            return null;
+
+        ResourceIterator i = rezultat.getIterator();
+        XMLResource res = null;
+        String potvrda = null;
+
+        while (i.hasMoreResources()) {
+            res = (XMLResource) i.nextResource();
+            potvrda = res.getContent().toString();
+        }
+
+        if (res != null) {
+            try {
+                ((EXistResource) res).freeResources();
+            } catch (XMLDBException exception) {
+                exception.printStackTrace();
+            }
+        }
+
+        return potvrda;
+	}
+	
 	public List<String> pronadjiSveOsnovnaPretraga(String pretraga) throws Exception {
 		String xPathIzraz = "//Saglasnost";
         ResourceSet rezultat = ExistRetrieve.izvrsiXPathIzraz(XMLCollectionIdKonstante.COLLECTION_ID_SAGLASNOST, 

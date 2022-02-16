@@ -1,6 +1,6 @@
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:h="http://www.w3.org/1999/xhtml">
 <rdf:Description rdf:about="">
-<pred:jmbg xmlns:pred="http://www.ftn.uns.ac.rs/rdf/saglasnost/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">2323232323232</pred:jmbg>
+<pred:jmbg xmlns:pred="http://www.ftn.uns.ac.rs/rdf/saglasnost/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">1112221112221</pred:jmbg>
 </rdf:Description>
 <rdf:Description rdf:about="">
 <pred:pol xmlns:pred="http://www.ftn.uns.ac.rs/rdf/saglasnost/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">Muski</pred:pol>
@@ -9,9 +9,9 @@
 <pred:adresa xmlns:pred="http://www.ftn.uns.ac.rs/rdf/saglasnost/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">Mornarska 4</pred:adresa>
 </rdf:Description>
 <rdf:Description rdf:about="">
-<pred:mesto xmlns:pred="http://www.ftn.uns.ac.rs/rdf/saglasnost/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">ns</pred:mesto>
+<pred:mesto xmlns:pred="http://www.ftn.uns.ac.rs/rdf/saglasnost/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">Novi Sad</pred:mesto>
 </rdf:Description>
 <rdf:Description rdf:about="">
-<pred:email xmlns:pred="http://www.ftn.uns.ac.rs/rdf/saglasnost/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">majmun@majmun.com</pred:email>
+<pred:email xmlns:pred="http://www.ftn.uns.ac.rs/rdf/saglasnost/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">srbin@srbija.com</pred:email>
 </rdf:Description>
 </rdf:RDF>

@@ -69,7 +69,7 @@ public class PotvrdaServiceImpl implements PotvrdaService{
 			if (pronadjenPotvrdaXml != null) {
 				throw new PotvrdaPostojiException(validanObjekat.getLicneInformacije().getJMBG().getValue());
 			}
-			ZdravstveniRadnik gradjanin = (ZdravstveniRadnik) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			ZdravstveniRadnik zdravstveniRadnik = (ZdravstveniRadnik) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			potvrdaRepository.savePotvrdaObjekat(validanObjekat);
 			
 			terminService.postaviIzvrseno(validanObjekat.getLicneInformacije().getJMBG().getValue(), validanObjekat.getInformacijeOVakcinama().size());
@@ -77,14 +77,15 @@ public class PotvrdaServiceImpl implements PotvrdaService{
 			Termin termin = terminService.dodajNoviTermin(validanObjekat.getLicneInformacije().getJMBG().getValue(), 
 					validanObjekat.getInformacijeOVakcinama().size() + 1, validanObjekat.getVakcinaPrveDveDoze().getValue().toString(), false);
 			
+			//TODO staviti nekako email gradjanina
 			MimeMessage message = emailSenderService.createMimeMessage();
 			InternetAddress sender = new InternetAddress("mrs_isa_2021_t15_5@hotmail.com");
-	        InternetAddress recipient = new InternetAddress(gradjanin.getEmail());
+	        InternetAddress recipient = new InternetAddress(zdravstveniRadnik.getEmail());
 			message.setRecipient(Message.RecipientType.TO, recipient);
 			message.setSubject("Potvrda o vakcinaciji");
 			message.setSender(sender);
 			
-			String mailText = "Postovani " + gradjanin.getPunoIme().getIme() + ",\n"
+			String mailText = "Postovani " + zdravstveniRadnik.getPunoIme().getIme() + ",\n"
 	        		+ "\tU prilogu se nalazi xhtml i pdf potvrde vakcinacije\n";
 			if(termin != null) {
 				mailText +=  "Dodeljen vam je termin za vakcinaciju:\n\t\t" + termin.getDatum()
@@ -98,13 +99,13 @@ public class PotvrdaServiceImpl implements PotvrdaService{
 	        mimeMultipart.addBodyPart(textBodyPart);
 	        
 			MimeBodyPart attachment = new MimeBodyPart();
-		    ByteArrayDataSource ds = new ByteArrayDataSource(generisiPdf(gradjanin.getJMBG()), "application/pdf"); 
+		    ByteArrayDataSource ds = new ByteArrayDataSource(generisiPdf(validanObjekat.getLicneInformacije().getJMBG().getValue(), validanObjekat.getInformacijeOVakcinama().size()), "application/pdf"); 
 		    attachment.setDataHandler(new DataHandler(ds));
 		    attachment.setFileName("Potvrda.pdf");
 		    mimeMultipart.addBodyPart(attachment);
 		    
 		    MimeBodyPart attachment1 = new MimeBodyPart();
-		    ByteArrayDataSource ds1 = new ByteArrayDataSource(generisiXHTML(gradjanin.getJMBG()), "text/html"); 
+		    ByteArrayDataSource ds1 = new ByteArrayDataSource(generisiXHTML(validanObjekat.getLicneInformacije().getJMBG().getValue(), validanObjekat.getInformacijeOVakcinama().size()), "text/html"); 
 		    attachment1.setDataHandler(new DataHandler(ds1));
 		    attachment1.setFileName("Potvrda.htm");
 		    mimeMultipart.addBodyPart(attachment1);
@@ -160,19 +161,19 @@ public class PotvrdaServiceImpl implements PotvrdaService{
 	}
 	
 	@Override
-	public ByteArrayInputStream generisiXHTML(String jmbg) throws Exception {
-		String potvrda = potvrdaRepository.pronadjiPotvrdaXmlPoJmbg(jmbg, 1);
-		if (potvrda == null) {
-			throw new Exception();
+	public ByteArrayInputStream generisiXHTML(String id, int brojDoze) throws Exception {
+		String potvrda = potvrdaRepository.pronadjiPotvrdaXmlPoJmbg(id, brojDoze);
+		if (potvrda == null || potvrda.equals("")) {
+			return null;
 		}
 		return htmlTransformerService.generateHTML(potvrda, XSLKonstante.POTVRDA_XSL);
 	}
 
 	@Override
-	public ByteArrayInputStream generisiPdf(String jmbg) throws Exception {
-		String potvrda = potvrdaRepository.pronadjiPotvrdaXmlPoJmbg(jmbg, 1);
-		if (potvrda == null) {
-			throw new Exception();
+	public ByteArrayInputStream generisiPdf(String id, int brojDoze) throws Exception {
+		String potvrda = potvrdaRepository.pronadjiPotvrdaXmlPoJmbg(id, brojDoze);
+		if (potvrda == null || potvrda.equals("")) {
+			return null;
 		}
 		return pdfTransformerService.generatePDF(potvrda, com.xml.vakcinacija.utils.XSLFOKonstante.POTVRDA_XSL_FO);
 	}

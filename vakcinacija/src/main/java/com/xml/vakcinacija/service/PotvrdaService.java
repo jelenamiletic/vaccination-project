@@ -20,11 +20,11 @@ public interface PotvrdaService {
 	
 	Potvrda dobaviPoslednjuPotvrduPoJmbg(String jmbg) throws Exception;
 	
-	ByteArrayInputStream generisiXHTML(String jmbg) throws Exception;
-	
-	ByteArrayInputStream generisiPdf(String jmbg) throws Exception;
+	ByteArrayInputStream generisiPdf(String jmbg, int brojDoze) throws Exception;
 
 	String pronadjiSveOsnovnaPretraga(String pretraga) throws Exception;
 
 	String pronadjiSveNaprednaPretraga(String ime, String prezime, String jmbg, String pol) throws Exception;
+
+	ByteArrayInputStream generisiXHTML(String jmbg, int brojDoze) throws Exception;
 }

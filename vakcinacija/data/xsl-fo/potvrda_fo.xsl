@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:fo="http://www.w3.org/1999/XSL/Format"
-    xmlns:in="http:///www.ftn.uns.ac.rs/vakcinacija/potvrda"
+    xmlns:po="http:///www.ftn.uns.ac.rs/vakcinacija/potvrda"
     xmlns:ct="http:///www.ftn.uns.ac.rs/vakcinacija/commonTypes"
     version="2.0">
     <xsl:template match="/">

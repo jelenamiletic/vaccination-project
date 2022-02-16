@@ -157,7 +157,7 @@ public class SaglasnostServiceImpl implements SaglasnostService {
 	}
 
 	@Override
-	public ByteArrayInputStream generisiXhtml(String id) throws Exception {
+	public ByteArrayInputStream generisiXhtml(String id, int brojDoze) throws Exception {
 		boolean jmbg = false;
 		
 		if(id.length() == 13)
@@ -165,17 +165,16 @@ public class SaglasnostServiceImpl implements SaglasnostService {
 			jmbg = true;
 		}
 		
-		List<Saglasnost> saglasnost = saglasnostRepository.pronadjiSaglasnostXmlPoFullId(id, jmbg);
-		if (saglasnost == null) {
-			throw new Exception();
+		String xml = saglasnostRepository.pronadjiPoJmbgIBrojDoze(id, brojDoze, jmbg);
+		if(xml.equals("")  || xml == null) {
+			return null;
 		}
-		//TODO za sad samo prvi uzmem
-		return htmlTransformerService.generateHTML(marshallerService.marshall(saglasnost.get(0), ContextPutanjeKonstante.CONTEXT_PUTANJA_SAGLASNOST, 
-				XSDPutanjeKonstante.XSD_SAGLASNOST), XSLKonstante.SAGLASNOST_XSL);
+		
+		return htmlTransformerService.generateHTML(xml, XSLKonstante.SAGLASNOST_XSL);
 	}
 
 	@Override
-	public ByteArrayInputStream generisiPdf(String id) throws Exception {
+	public ByteArrayInputStream generisiPdf(String id, int brojDoze) throws Exception {
 		boolean jmbg = false;
 		
 		if(id.length() == 13)
@@ -187,9 +186,13 @@ public class SaglasnostServiceImpl implements SaglasnostService {
 		if (saglasnost == null) {
 			throw new Exception();
 		}
-		//TODO za sad samo prvi uzmem
-		return pdfTransformerService.generatePDF(marshallerService.marshall(saglasnost.get(0), ContextPutanjeKonstante.CONTEXT_PUTANJA_SAGLASNOST, 
-				XSDPutanjeKonstante.XSD_SAGLASNOST), com.xml.vakcinacija.utils.XSLFOKonstante.SAGLASNOST_XSL_FO);
+		
+		String xml = saglasnostRepository.pronadjiPoJmbgIBrojDoze(id, brojDoze, jmbg);
+		if(xml.equals("")  || xml == null) {
+			return null;
+		}
+		
+		return pdfTransformerService.generatePDF(xml, com.xml.vakcinacija.utils.XSLFOKonstante.SAGLASNOST_XSL_FO);
 	}
 
 	@Override
