@@ -192,7 +192,7 @@ const PregledDokumenata = () => {
                         </DropdownMenu>
                     </Dropdown>
 				</CardBody>
-				{documents.length != 0 && vecIma &&
+				{documents && documents.length !== 0 && vecIma &&
 				<div>
 					<Table
 						height={320}
@@ -205,7 +205,7 @@ const PregledDokumenata = () => {
 
 						<Column width={300} fixed>
 							<HeaderCell>Datum podnosenja</HeaderCell>
-							<Cell dataKey={`${documentType.substring(0,2)}:DatumPodnosenja`}/>
+							<Cell dataKey={`${documentType.toLowerCase().substring(0,2)}:DatumPodnosenja`}/>
 						</Column>
 						<Column width={120} fixed="right">
 							<HeaderCell>Download</HeaderCell>
