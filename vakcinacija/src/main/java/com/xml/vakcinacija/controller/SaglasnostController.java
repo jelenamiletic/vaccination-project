@@ -1,7 +1,6 @@
 package com.xml.vakcinacija.controller;
 
 import java.io.IOException;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.xml.vakcinacija.model.saglasnost.ListaSaglasnosti;
@@ -81,10 +81,16 @@ public class SaglasnostController {
 		return new ResponseEntity<>(saglasnostService.pronadjiNajnovijuPunuSaglasnostPoJmbgIliBrPasosa(id), HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/nabaviMetaPodatkeJSONPoId/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "/nabaviMetaPodatkeJSONPoId", produces = MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("hasAnyRole('ROLE_GRADJANIN', 'ROLE_SLUZBENIK')")
-	public ResponseEntity<InputStreamResource> nabaviMetaPodatkeJSONPoId(@PathVariable String id) throws IOException {
-		return new ResponseEntity<>(new InputStreamResource(saglasnostService.nabaviMetaPodatkeJSONPoId(id)), HttpStatus.OK);
+	public ResponseEntity<InputStreamResource> nabaviMetaPodatkeJSONPoId(@RequestParam("about") String about) throws IOException {
+		return new ResponseEntity<>(new InputStreamResource(saglasnostService.nabaviMetaPodatkeJSONPoId(about)), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/nabaviMetaPodatkeRDFPoId", produces = MediaType.APPLICATION_XML_VALUE)
+	@PreAuthorize("hasAnyRole('ROLE_GRADJANIN', 'ROLE_SLUZBENIK')")
+	public ResponseEntity<InputStreamResource> nabaviMetaPodatkeRDFPoId(@RequestParam("about") String about) throws Exception {
+		return new ResponseEntity<>(new InputStreamResource(saglasnostService.nabaviMetaPodatkeRDFPoId(about)), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/generisiXhtml/{jmbg}", produces = MediaType.TEXT_HTML_VALUE)

@@ -18,9 +18,7 @@ import org.springframework.stereotype.Service;
 
 import com.xml.vakcinacija.exception.PotvrdaNijePronadjenoException;
 import com.xml.vakcinacija.exception.PotvrdaPostojiException;
-import com.xml.vakcinacija.model.gradjanin.Gradjanin;
 import com.xml.vakcinacija.model.potvrda.Potvrda;
-import com.xml.vakcinacija.model.sertifikat.Sertifikat;
 import com.xml.vakcinacija.model.termin.Termin;
 import com.xml.vakcinacija.model.zdravstveni_radnik.ZdravstveniRadnik;
 import com.xml.vakcinacija.repository.PotvrdaRepository;
@@ -150,6 +148,15 @@ public class PotvrdaServiceImpl implements PotvrdaService{
 	public ByteArrayInputStream nabaviMetaPodatkeJSONPoJmbg(String jmbg, int brojDoze) throws IOException {
 		String query = String.format("?s ?p ?o. FILTER (?s = <http://www.ftn.uns.ac.rs/rdf/potvrda/%s_%d>)", jmbg, brojDoze);
 		return rdfService.getMetadataJSON(query, "potvrda_" + jmbg + "_" + brojDoze, NamedGraphURIKonstante.IMUNIZACIJA_NAMED_GRAPH);
+	}
+	
+	@Override
+	public ByteArrayInputStream nabaviMetaPodatkeRDFPoJmbg(String jmbg, int brojDoze) throws Exception {
+		String potvrdaXml = potvrdaRepository.pronadjiPotvrdaXmlPoJmbg(jmbg, brojDoze);
+		if (potvrdaXml == null) {
+			throw new PotvrdaNijePronadjenoException(jmbg);
+		}
+		return rdfService.getMetadataRDF(potvrdaXml);
 	}
 	
 	@Override

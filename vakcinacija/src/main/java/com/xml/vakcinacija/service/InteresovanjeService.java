@@ -16,6 +16,8 @@ public interface InteresovanjeService {
 
 	ByteArrayInputStream nabaviMetaPodatkeJSONPoJmbg(String jmbg) throws IOException;
 	
+	ByteArrayInputStream nabaviMetaPodatkeRDFPoJmbg(String jmbg) throws IOException, Exception;
+	
 	ByteArrayInputStream generisiXHTML(String jmbg) throws Exception;
 	
 	ByteArrayInputStream generisiPdf(String jmbg) throws Exception;

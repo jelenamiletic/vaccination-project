@@ -199,6 +199,15 @@ public class ZahtevServiceImpl implements ZahtevService{
 	}
 	
 	@Override
+	public ByteArrayInputStream nabaviMetaPodatkeRDFPoJmbg(String jmbg) throws Exception {
+		String zahtevXml = zahtevRepository.pronadjiZahtevXmlPoJmbg(jmbg);
+		if (zahtevXml == null) {
+			throw new ZahtevNijePronadjenoException(jmbg);
+		}
+		return rdfService.getMetadataRDF(zahtevXml);
+	}
+	
+	@Override
 	public ByteArrayInputStream generisiPdf(String jmbg) throws Exception {
 		String zahtevXML = zahtevRepository.pronadjiZahtevXmlPoJmbg(jmbg);
 		if (zahtevXML == null) {

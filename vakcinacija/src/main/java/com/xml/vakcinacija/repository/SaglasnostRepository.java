@@ -35,10 +35,11 @@ public class SaglasnostRepository {
     }
 	
 	public int saveSaglasnostObjekat(Saglasnost saglasnost) throws Exception {
-		String xml = marshallerService.marshall(saglasnost, ContextPutanjeKonstante.CONTEXT_PUTANJA_SAGLASNOST, 
-				XSDPutanjeKonstante.XSD_SAGLASNOST);
 		String id = saglasnost.getPacijentSaglasnost().getLicneInformacije().getIdFromDrzavljanstvo();
 		int index = getNextDocumentIndex(id);
+		saglasnost.setAbout("http://www.ftn.uns.ac.rs/rdf/saglasnost/" + id + "_" + index);
+		String xml = marshallerService.marshall(saglasnost, ContextPutanjeKonstante.CONTEXT_PUTANJA_SAGLASNOST, 
+				XSDPutanjeKonstante.XSD_SAGLASNOST);
 		ExistStore.save(XMLCollectionIdKonstante.COLLECTION_ID_SAGLASNOST, id + '_' + Integer.toString(index), xml);
 		return index;
 	}
@@ -185,4 +186,40 @@ public class SaglasnostRepository {
 		}
 		return this.pronadjiSaglasnostXmlPoFullId(id, jmbg);
 	}
+	
+	public String nabaviSaglasnostXmlPoNazivXmlFajla(String id) throws Exception {
+		String saglasnostXml = ExistRetrieve.nabaviResurs(XMLCollectionIdKonstante.COLLECTION_ID_SAGLASNOST, id);
+		return saglasnostXml;
+	}
+	
+	public String pronadjiSaglasnostXmlPoSubjekat(String subjekat) throws Exception {
+        String xPathIzraz = String.format("/Saglasnost[@about = '%s']" , subjekat);
+    
+        ResourceSet rezultat = ExistRetrieve.izvrsiXPathIzraz(
+        		XMLCollectionIdKonstante.COLLECTION_ID_SAGLASNOST, 
+        		xPathIzraz,
+        		XMLNamespaceKonstante.NAMESPACE_SAGLASNOST);
+        
+        if (rezultat == null)
+            return null;
+
+        ResourceIterator i = rezultat.getIterator();
+        XMLResource res = null;
+        String sertifikat = null;
+
+        if (i.hasMoreResources()) {
+            res = (XMLResource) i.nextResource();
+            sertifikat = res.getContent().toString();
+        }
+
+        if (res != null) {
+            try {
+                ((EXistResource) res).freeResources();
+            } catch (XMLDBException exception) {
+                exception.printStackTrace();
+            }
+        }
+
+        return sertifikat;
+    }
 }
