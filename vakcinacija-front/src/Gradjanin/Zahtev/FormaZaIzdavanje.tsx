@@ -21,9 +21,12 @@ import { getJMBG } from "../../Auth/AuthService";
 import { zahtevSchema } from "./Validation/ZahtevSchema";
 import { Editor, EditorState } from "draft-js";
 import "draft-js/dist/Draft.css";
+import { XMLParser } from "fast-xml-parser";
+import { Saglasnost } from "../../Models/Saglasnost/Saglasnost";
 
 const Zahtev = () => {
 	const customId = "zahtev";
+	const [postoji, setPostoji] = useState(false);
 
 	const [editorState, setEditorState] = useState(() =>
 		EditorState.createEmpty()
@@ -38,7 +41,9 @@ const Zahtev = () => {
 
 	const navigate = useNavigate();
 
-	useEffect(() => {}, []);
+	useEffect(() => {
+		pronadjiSaglasnost();
+	}, []);
 
 	const {
 		register,
@@ -48,6 +53,30 @@ const Zahtev = () => {
 		resolver: yupResolver(zahtevSchema),
 		mode: "onChange",
 	});
+
+	const pronadjiSaglasnost = () => {
+		axios.get('http://localhost:8080/saglasnost/pronadjiNajnovijuSaglasnostPoJmbgIliBrPasosa/' + getJMBG())
+				.then((res: any) => {
+					const parser = new XMLParser();
+					const result: Saglasnost = parser.parse(res.data);
+					const saglasnost: Saglasnost = result["sa:Saglasnost"];
+					if (!saglasnost){
+						
+						setPostoji(false);
+					
+					} else if(saglasnost!["sa:ZdravstveniRadnikSaglasnost"]){
+						
+						setPostoji(true);
+
+					} else {
+
+						setPostoji(false);
+
+					}
+				}).catch((err: any) => {
+					setPostoji(false);
+				})
+	}	
 
 	const podnosenjeZahteva = (zahtev: ZahtevXML) => {
 		let xml = `<za:Zahtev
@@ -103,7 +132,9 @@ const Zahtev = () => {
 			>
 				<CardBody>
 					<CardTitle tag="h2">Zahtev za zeleni sertifikat</CardTitle>
-					<Form className="form-login-registracija">
+
+					{
+					postoji && <Form className="form-login-registracija">
 						<FormGroup>
 							<Label>Broj pasosa</Label>
 							<Input
@@ -152,6 +183,13 @@ const Zahtev = () => {
 							Podnesi zahtev
 						</Button>
 					</Form>
+					}
+
+					{
+						!postoji && 
+						<Label>Niste primili jos nijednu vakcinu!</Label>
+					}
+					
 				</CardBody>
 			</Card>
 		</>

@@ -70,9 +70,15 @@ public class SaglasnostController {
 	}
 	
 	@GetMapping(value = "/pronadjiNajnovijuSaglasnostPoJmbgIliBrPasosa/{id}", produces = MediaType.APPLICATION_XML_VALUE)
-	@PreAuthorize("hasAnyRole('ROLE_GRADJANIN', 'ROLE_SLUZBENIK', 'ROLE_ZDRAVSTVENI_RADNIK')")
+	@PreAuthorize("hasAnyRole('ROLE_GRADJANIN', 'ROLE_ZDRAVSTVENI_RADNIK')")
 	public ResponseEntity<Saglasnost> pronadjiNajnovijuSaglasnostPoJmbg(@PathVariable String id) throws Exception {
 		return new ResponseEntity<>(saglasnostService.pronadjiNajnovijuSaglasnostPoJmbgIliBrPasosa(id), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/pronadjiNajnovijuPunuSaglasnostPoJmbgIliBrPasosa/{id}", produces = MediaType.APPLICATION_XML_VALUE)
+	@PreAuthorize("hasAnyRole('ROLE_GRADJANIN', 'ROLE_SLUZBENIK', 'ROLE_ZDRAVSTVENI_RADNIK')")
+	public ResponseEntity<Saglasnost> pronadjiNajnovijuPunuSaglasnostPoJmbg(@PathVariable String id) throws Exception {
+		return new ResponseEntity<>(saglasnostService.pronadjiNajnovijuPunuSaglasnostPoJmbgIliBrPasosa(id), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/nabaviMetaPodatkeJSONPoId/{id}", produces = MediaType.APPLICATION_JSON_VALUE)

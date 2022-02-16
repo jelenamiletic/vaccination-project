@@ -22,10 +22,12 @@ import { getJMBG, getEmail } from "../../Auth/AuthService";
 import { EvidencijaVakcinacijeSchema } from "./Validation/EvidencijaVakcinacijeSchema";
 import { ListaSaglasnosti } from "../../Models/Saglasnost/ListaSaglasnosti";
 import { Saglasnost } from "../../Models/Saglasnost/Saglasnost";
+import * as yup from "yup";
 
 const EvidencijaVakcinacije = () => {
 	const customId = "EvidencijaVakcinacije";
 	const [pronadjenaSaglasnost, setPronadjenaSaglasnost] = useState<Saglasnost | null>(null);
+	const [starijaSaglasnost, setStarijaSaglasnost] = useState<Saglasnost | null>(null);
 
 	const navigate = useNavigate();
 
@@ -40,6 +42,26 @@ const EvidencijaVakcinacije = () => {
 		resolver: yupResolver(EvidencijaVakcinacijeSchema),
 		mode: "onChange",
 	});
+
+	const {
+		register: register2,
+		formState: { errors: errors2 },
+		handleSubmit: handleSubmit2,
+	  } = useForm({
+		resolver: yupResolver(
+			yup.object().shape({
+				JMBG: yup
+				.string()
+				.test("len", "JMBG mora imati 13 karaktera!", (val) => val?.length === 13)
+				.matches(/^\d+$/, "JMBG mora da sadrzi samo brojevne vrednosti!"),})),
+		mode: "onChange",
+	  });
+
+
+
+
+
+
 
 	const pretragaSaglasnosti = (unos: any) => {
 		axios.get('http://localhost:8080/saglasnost/pronadjiNajnovijuSaglasnostPoJmbgIliBrPasosa/' + unos.JMBG)
@@ -60,27 +82,61 @@ const EvidencijaVakcinacije = () => {
 					saglasnost["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:BrojMobilnogTelefona"] = saglasnost["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:BrojMobilnogTelefona"].padStart(10, '0');
 				}
 
-				console.log(saglasnost)
-
-				if (saglasnost == null)
+				if (saglasnost == null){
+					
 					toast.error("Nepostoji saglasnost pacijenta", {
 						position: toast.POSITION.TOP_CENTER,
 						autoClose: false,
 						toastId: customId,
-					});
-				setPronadjenaSaglasnost(saglasnost);
+					})
+					setPronadjenaSaglasnost(null);
+				
+				} else if(saglasnost["sa:ZdravstveniRadnikSaglasnost"]){
+					
+					toast.error("Gradjanin je vec primio ovu dozu", {
+						position: toast.POSITION.TOP_CENTER,
+						autoClose: false,
+						toastId: customId,
+					})
+					setPronadjenaSaglasnost(null);
+
+				} else {
+					setPronadjenaSaglasnost(saglasnost);
+
+					axios.get('http://localhost:8080/saglasnost/pronadjiNajnovijuPunuSaglasnostPoJmbgIliBrPasosa/' + unos.JMBG)
+					.then((res: any) => {
+						const rez: Saglasnost = parser.parse(res.data);
+						const s: Saglasnost = rez["sa:Saglasnost"];
+
+						if (saglasnost == null){
+							setStarijaSaglasnost(null);
+						} else{
+							setStarijaSaglasnost(s);
+						}
+
+					}).catch((err: any) => {
+						setStarijaSaglasnost(null);
+					})
+				}
 			}).catch((err: any) => {
 				setPronadjenaSaglasnost(null);
 			})
 	}
 
+
+
+
+
+
+
+
 	const podnosenjeEvidencijeVakcinacije = (saglasnost: any) => {
 
 		let prethodneVakcineXML = "";
 
-		if (pronadjenaSaglasnost!["sa:ZdravstveniRadnikSaglasnost"]) {
-			if (Array.isArray(pronadjenaSaglasnost!["sa:ZdravstveniRadnikSaglasnost"]["sa:Obrazac"]["sa:VakcineInfo"])) {
-				pronadjenaSaglasnost!["sa:ZdravstveniRadnikSaglasnost"]["sa:Obrazac"]["sa:VakcineInfo"].forEach(VakcineInfo => {
+		if (starijaSaglasnost && starijaSaglasnost!["sa:ZdravstveniRadnikSaglasnost"]) {
+			if (Array.isArray(starijaSaglasnost!["sa:ZdravstveniRadnikSaglasnost"]["sa:Obrazac"]["sa:VakcineInfo"])) {
+				starijaSaglasnost!["sa:ZdravstveniRadnikSaglasnost"]["sa:Obrazac"]["sa:VakcineInfo"].forEach(VakcineInfo => {
 					prethodneVakcineXML +=
 						`<sa:VakcineInfo>
 							<sa:NazivVakcine>${VakcineInfo["sa:NazivVakcine"]}</sa:NazivVakcine>
@@ -96,15 +152,31 @@ const EvidencijaVakcinacije = () => {
 			else {
 				prethodneVakcineXML +=
 					`<sa:VakcineInfo>
-						<sa:NazivVakcine>${pronadjenaSaglasnost!["sa:ZdravstveniRadnikSaglasnost"]["sa:Obrazac"]["sa:VakcineInfo"]["sa:NazivVakcine"]}</sa:NazivVakcine>
-						<sa:DatumDavanjaVakcine>${pronadjenaSaglasnost!["sa:ZdravstveniRadnikSaglasnost"]["sa:Obrazac"]["sa:VakcineInfo"]["sa:DatumDavanjaVakcine"]}</sa:DatumDavanjaVakcine>
+						<sa:NazivVakcine>${starijaSaglasnost!["sa:ZdravstveniRadnikSaglasnost"]["sa:Obrazac"]["sa:VakcineInfo"]["sa:NazivVakcine"]}</sa:NazivVakcine>
+						<sa:DatumDavanjaVakcine>${starijaSaglasnost!["sa:ZdravstveniRadnikSaglasnost"]["sa:Obrazac"]["sa:VakcineInfo"]["sa:DatumDavanjaVakcine"]}</sa:DatumDavanjaVakcine>
 						<sa:NacinDavanjeVakcine />
-						<sa:Ekstremitet>${pronadjenaSaglasnost!["sa:ZdravstveniRadnikSaglasnost"]["sa:Obrazac"]["sa:VakcineInfo"]["sa:Ekstremitet"]}</sa:Ekstremitet>
-						<sa:SerijaVakcine>${pronadjenaSaglasnost!["sa:ZdravstveniRadnikSaglasnost"]["sa:Obrazac"]["sa:VakcineInfo"]["sa:SerijaVakcine"]}</sa:SerijaVakcine>
-						<sa:Proizvodjac>${pronadjenaSaglasnost!["sa:ZdravstveniRadnikSaglasnost"]["sa:Obrazac"]["sa:VakcineInfo"]["sa:Proizvodjac"]}</sa:Proizvodjac>
-						<sa:NezeljanaReakcija>${pronadjenaSaglasnost!["sa:ZdravstveniRadnikSaglasnost"]["sa:Obrazac"]["sa:VakcineInfo"]["sa:NezeljanaReakcija"]}</sa:NezeljanaReakcija>
+						<sa:Ekstremitet>${starijaSaglasnost!["sa:ZdravstveniRadnikSaglasnost"]["sa:Obrazac"]["sa:VakcineInfo"]["sa:Ekstremitet"]}</sa:Ekstremitet>
+						<sa:SerijaVakcine>${starijaSaglasnost!["sa:ZdravstveniRadnikSaglasnost"]["sa:Obrazac"]["sa:VakcineInfo"]["sa:SerijaVakcine"]}</sa:SerijaVakcine>
+						<sa:Proizvodjac>${starijaSaglasnost!["sa:ZdravstveniRadnikSaglasnost"]["sa:Obrazac"]["sa:VakcineInfo"]["sa:Proizvodjac"]}</sa:Proizvodjac>
+						<sa:NezeljanaReakcija>${starijaSaglasnost!["sa:ZdravstveniRadnikSaglasnost"]["sa:Obrazac"]["sa:VakcineInfo"]["sa:NezeljanaReakcija"]}</sa:NezeljanaReakcija>
 					</sa:VakcineInfo>`
 			}
+		}
+
+		let drzavljanstvo = "";
+		if(pronadjenaSaglasnost!["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:Drzavljanstvo"]["sa:RepublikaSrbija"]){
+			drzavljanstvo = `<sa:Drzavljanstvo>
+								<sa:RepublikaSrbija>
+									<sa:JMBG property = "pred:jmbg" datatype = "xs:string">${pronadjenaSaglasnost!["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:Drzavljanstvo"]["sa:RepublikaSrbija"]["sa:JMBG"]}</sa:JMBG>
+								</sa:RepublikaSrbija>
+							</sa:Drzavljanstvo>`
+		} else {
+			drzavljanstvo = `<sa:Drzavljanstvo>
+								<sa:StranoDrzavljanstvo>
+									<sa:NazivDrzave>${pronadjenaSaglasnost!["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:Drzavljanstvo"]["sa:StranoDrzavljanstvo"]["sa:NazivDrzave"]}</sa:NazivDrzave>
+									<sa:BrojPasosa>${pronadjenaSaglasnost!["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:Drzavljanstvo"]["sa:StranoDrzavljanstvo"]["sa:BrojPasosa"]}</sa:BrojPasosa>
+								</sa:StranoDrzavljanstvo>
+							</sa:Drzavljanstvo>`
 		}
 
 
@@ -121,11 +193,7 @@ const EvidencijaVakcinacije = () => {
 			>
 			<sa:PacijentSaglasnost>
 				<sa:LicneInformacije>
-					<sa:Drzavljanstvo>
-						<sa:RepublikaSrbija>
-							<sa:JMBG property = "pred:jmbg" datatype = "xs:string">${pronadjenaSaglasnost!["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:Drzavljanstvo"]["sa:RepublikaSrbija"]["sa:JMBG"]}</sa:JMBG>
-						</sa:RepublikaSrbija>
-					</sa:Drzavljanstvo>
+					${drzavljanstvo}
 					<sa:PunoIme>
 						<ct:Ime>${pronadjenaSaglasnost!["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:PunoIme"]["ct:Ime"]}</ct:Ime>
 						<ct:Prezime>${pronadjenaSaglasnost!["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:PunoIme"]["ct:Ime"]}</ct:Prezime>
@@ -186,6 +254,8 @@ const EvidencijaVakcinacije = () => {
 					"Content-Type": "application/xml",
 					"Access-Control-Allow-Origin": "*",
 				},
+			}).then((res: any) => {
+				slanjePotvrde(saglasnost.SerijaVakcine, saglasnost.ZdravstvenaUstanova);
 			})
 			.catch((err: any) => {
 				toast.error(err.response.data, {
@@ -194,6 +264,41 @@ const EvidencijaVakcinacije = () => {
 					toastId: customId,
 				});
 			});
+	};
+
+
+
+
+
+
+
+
+
+
+	const slanjePotvrde = (vakcina : any, ustanova : any) => {
+
+		let stareVakcine = ""
+		let duzina = 0;
+		if(starijaSaglasnost){
+			const s = starijaSaglasnost["sa:ZdravstveniRadnikSaglasnost"]["sa:Obrazac"]["sa:VakcineInfo"];
+			if(Array.isArray(s)){
+				s.forEach( (vakcina, index) =>{
+					stareVakcine += `<po:InformacijeOVakcinama>
+										<po:BrojDoze>${index}</po:BrojDoze>
+										<po:DatumDavanja>${vakcina["sa:DatumDavanjaVakcine"]}</po:DatumDavanja>
+										<po:Serija>${vakcina["sa:SerijaVakcine"]}</po:Serija>
+									</po:InformacijeOVakcinama>`;
+					duzina++;
+				})
+			} else {
+				stareVakcine += `<po:InformacijeOVakcinama>
+									<po:BrojDoze>1</po:BrojDoze>
+									<po:DatumDavanja>${s["sa:DatumDavanjaVakcine"]}</po:DatumDavanja>
+									<po:Serija>${s["sa:SerijaVakcine"]}</po:Serija>
+								</po:InformacijeOVakcinama>`;
+				duzina++;
+			}
+		}
 
 		let xml_potvrda = `<?xml version="1.0" encoding="UTF-8"?>
 		<po:Potvrda
@@ -214,12 +319,13 @@ const EvidencijaVakcinacije = () => {
 				<po:Pol>${pronadjenaSaglasnost!["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:Pol"]}</po:Pol>
 				<po:JMBG property = "pred:jmbg" datatype = "xs:string">${pronadjenaSaglasnost!["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:Drzavljanstvo"]["sa:RepublikaSrbija"]["sa:JMBG"]}</po:JMBG>
 			</po:LicneInformacije>
+			${stareVakcine}
 			<po:InformacijeOVakcinama>
-				<po:BrojDoze>${pronadjenaSaglasnost!["sa:ZdravstveniRadnikSaglasnost"] ? pronadjenaSaglasnost!["sa:ZdravstveniRadnikSaglasnost"]["sa:Obrazac"]["sa:VakcineInfo"].length + 1 : 1}</po:BrojDoze>
+				<po:BrojDoze>${duzina + 1}</po:BrojDoze>
 				<po:DatumDavanja>${new Date(new Date().toString().split('GMT')[0] + ' UTC').toISOString().split('.')[0]}</po:DatumDavanja>
-				<po:Serija>${saglasnost.SerijaVakcine}</po:Serija>
+				<po:Serija>${vakcina}</po:Serija>
 			</po:InformacijeOVakcinama>
-			<po:ZdravstvenaUstanova>${saglasnost.ZdravstvenaUstanova}</po:ZdravstvenaUstanova>
+			<po:ZdravstvenaUstanova>${ustanova}</po:ZdravstvenaUstanova>
 			<po:VakcinaPrveDveDoze property = "pred:VakcinaPrveDveDoze" datatype = "xs:string">${pronadjenaSaglasnost!["sa:PacijentSaglasnost"]["sa:Imunizacija"]["sa:NazivImunoloskogLeka"]}</po:VakcinaPrveDveDoze>
 			<po:DatumIzdavanja>${pronadjenaSaglasnost!["sa:DatumPodnosenja"]}</po:DatumIzdavanja>
 			<po:QR>http://www.ftn.uns.ac.rs/</po:QR>
@@ -247,7 +353,7 @@ const EvidencijaVakcinacije = () => {
 					toastId: customId,
 				});
 			});
-	};
+	}
 
 	return (
 		<div>
@@ -265,10 +371,10 @@ const EvidencijaVakcinacije = () => {
 								type="text"
 								name="JMBG"
 								placeholder="JMBG"
-								invalid={errors.JMBG?.message}
-								innerRef={register}
+								invalid={errors2.JMBG?.message}
+								innerRef={register2}
 							/>
-							<FormFeedback>{errors.JMBG?.message}</FormFeedback>
+							<FormFeedback>{errors2.JMBG?.message}</FormFeedback>
 						</FormGroup>
 
 						<Button
@@ -276,7 +382,7 @@ const EvidencijaVakcinacije = () => {
 							color="primary"
 							type="button"
 							style={{ display: "block" }}
-							onClick={handleSubmit(pretragaSaglasnosti)}
+							onClick={handleSubmit2(pretragaSaglasnosti)}
 						>
 							Pretraga
 						</Button>

@@ -21,10 +21,12 @@ import { Termin } from "../../Models/Termin";
 import { XMLParser } from "fast-xml-parser";
 import { saglasnostSchema } from "./Validation/SaglasnostSchema";
 import saveAs from "file-saver";
+import { Saglasnost } from "../../Models/Saglasnost/Saglasnost";
 
-const Saglasnost = () => {
+const SaglasnostGradjanin = () => {
 	const customId = "saglasnost";
 	const [termin, setTermin] = useState<Termin | null>(null);
+	const [pronadjenaSaglasnost, setPronadjenaSaglasnost] = useState<Saglasnost | null>(null);
 	const [vecIzvrseno, setIzvrseno] = useState(false);
 	const [postoji, setPostoji] = useState(false);
 
@@ -53,15 +55,36 @@ const Saglasnost = () => {
 			setTermin(t);
 			if(t.popunjenaSaglasnost){
 				setIzvrseno(true);
+			}else{
+				axios.get('http://localhost:8080/saglasnost/pronadjiNajnovijuSaglasnostPoJmbgIliBrPasosa/' + getJMBG())
+				.then((res: any) => {
+					const parser = new XMLParser();
+					const result: Saglasnost = parser.parse(res.data);
+					const saglasnost: Saglasnost = result["sa:Saglasnost"];
+					if (!saglasnost){
+						
+						setIzvrseno(false);
+					
+					} else if(saglasnost!["sa:ZdravstveniRadnikSaglasnost"]){
+						
+						setPronadjenaSaglasnost(saglasnost);
+						setIzvrseno(false);
+
+					} else {
+
+						setPronadjenaSaglasnost(saglasnost);
+						setIzvrseno(true);
+
+					}
+				}).catch((err: any) => {
+					setPronadjenaSaglasnost(null);
+				})
 			}
+
+		return false;
 		})
 		.catch((err: any) => {
 			setPostoji(false);
-			// toast.error(err.response.data, {
-			// 	position: toast.POSITION.TOP_CENTER,
-			// 	autoClose: false,
-			// 	toastId: customId,
-			// });
 		})
 	}
 
@@ -317,7 +340,6 @@ const Saglasnost = () => {
 										<option>Prosveta</option>
 										<option>MUP</option>
 										<option>Vojska RS</option>
-										<option>Dete</option>
 									</Input>
 								</FormGroup>
 
@@ -378,4 +400,4 @@ const Saglasnost = () => {
 	);
 };
 
-export default Saglasnost;
+export default SaglasnostGradjanin;

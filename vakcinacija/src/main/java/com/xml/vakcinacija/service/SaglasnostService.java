@@ -27,4 +27,6 @@ public interface SaglasnostService {
 	String pronadjiSveOsnovnaPretraga(String pretraga) throws Exception;
 	
 	String pronadjiSveNaprednaPretraga(String ime, String prezime, String jmbg, String Pol) throws Exception;
+
+	Saglasnost pronadjiNajnovijuPunuSaglasnostPoJmbgIliBrPasosa(String id) throws Exception;
 }

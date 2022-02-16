@@ -1,41 +1,22 @@
 import * as yup from "yup";
 
 export const EvidencijaVakcinacijeSchema = yup.object().shape({
-	JMBG: yup
+	ZdravstvenaUstanova: yup
 		.string()
-		.test("len", "JMBG mora imati 13 karaktera!", (val) => val?.length === 13)
-		.matches(/^\d+$/, "JMBG mora da sadrzi samo brojevne vrednosti!"),
-	/*
-	ImeRoditelja: yup
+		.required("Zdravstvena ustanova je obavezno polje!"),
+	VakcinacijskiPunkt: yup
 		.string()
-		.required("ime roditelja je obavezno polje!"),
-	BrojFiksnog: yup
+		.required("Vakcinacijski punkt je obavezno polje!")
+		.matches(/^\d+$/, "Vakcinacijski punkt mora da sadrzi samo brojevne vrednosti!"),
+	BrojTelefonaLekara: yup
 		.string()
-		.required("broj fiksnog je obavezno polje!")
-		.test("len", "broj fiksnog mora imati 9 karaktera!", (val) => val?.length === 9)
-		.matches(/^\d+$/, "broj fiksnog mora da sadrzi samo brojevne vrednosti!"),
-	BrojMobilnog: yup
-		.string()
-		.required("broj mobilnog je obavezno polje!")
+		.required("Broj telefona lekara je obavezno polje!")
 		.test("len", "broj mobilnog mora imati 10 karaktera!", (val) => val?.length === 10)
-		.matches(/^\d+$/, "broj mobilnog mora da sadrzi samo brojevne vrednosti!"),
-	DatumRodjenja: yup
+		.matches(/^\d+$/, "broj telefona mora da sadrzi samo brojevne vrednosti!"),
+	SerijaVakcine: yup
 		.string()
-		.required("datum rodjenja je obavezno polje!"),
-	MestoRodjenja: yup
+		.required("Serija vakcine je obavezno polje!"),
+	DatumUtvrdjivanja: yup
 		.string()
-		.required("mesto rodjenja je obavezno polje!"),
-	Adresa: yup
-		.string()
-		.required("adresa je obavezno polje!"),
-	Mesto: yup
-		.string()
-		.required("mesto je obavezno polje!"),
-	Opstina: yup
-		.string()
-		.required("opstina je obavezno polje!"),
-	RadniStatus: yup
-		.string()
-		.required("radni status obavezno polje!"),
-	*/
+		.matches(/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/, "godina mora biti u formatu yyyy-mm-dd!"),
 });

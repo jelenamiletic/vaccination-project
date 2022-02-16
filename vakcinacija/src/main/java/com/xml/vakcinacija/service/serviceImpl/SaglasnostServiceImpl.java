@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.xml.vakcinacija.model.gradjanin.Gradjanin;
 import com.xml.vakcinacija.model.saglasnost.Saglasnost;
+import com.xml.vakcinacija.model.saglasnost.Saglasnost.PacijentSaglasnost.LicneInformacije.Drzavljanstvo.StranoDrzavljanstvo;
 import com.xml.vakcinacija.model.saglasnost.Saglasnost.ZdravstveniRadnikSaglasnost.Obrazac.VakcineInfo;
 import com.xml.vakcinacija.model.zdravstveni_radnik.ZdravstveniRadnik;
 import com.xml.vakcinacija.repository.SaglasnostRepository;
@@ -57,6 +58,13 @@ public class SaglasnostServiceImpl implements SaglasnostService {
 			validanObjekat.getPacijentSaglasnost().getLicneInformacije().getPunoIme().setIme(gradjanin.getPunoIme().getIme());
 			validanObjekat.getPacijentSaglasnost().getLicneInformacije().getPunoIme().setPrezime(gradjanin.getPunoIme().getPrezime());
 			validanObjekat.getPacijentSaglasnost().getLicneInformacije().getPol().setValue(gradjanin.getPol());
+			
+//			if(!gradjanin.getDrzavljanstvo().equals("Drzavljanin Republike Srbije")) {
+//				validanObjekat.getPacijentSaglasnost().getLicneInformacije().getDrzavljanstvo().setRepublikaSrbija(null);
+//				validanObjekat.getPacijentSaglasnost().getLicneInformacije().getDrzavljanstvo().setStranoDrzavljanstvo(
+//						(new StranoDrzavljanstvo()).setBrojPasosa());
+//			}
+			
 			int indx = saglasnostRepository.saveSaglasnostObjekat(validanObjekat);
 			
 			terminService.postaviPopunjenaSaglasnost(gradjanin.getJMBG(), 1);
@@ -77,11 +85,6 @@ public class SaglasnostServiceImpl implements SaglasnostService {
 		Saglasnost validanObjekat = (Saglasnost) unmarshallerService.unmarshal(XML, 
 				ContextPutanjeKonstante.CONTEXT_PUTANJA_SAGLASNOST, XSDPutanjeKonstante.XSD_SAGLASNOST);
 		if (validanObjekat != null) {
-//			List<VakcineInfo> info = validanObjekat.getZdravstveniRadnikSaglasnost().getObrazac().getVakcineInfo();
-//			
-//			if(info.size() > 0) {
-//				info.get(info.size() - 1).
-//			}
 			
 			ZdravstveniRadnik radnik = (ZdravstveniRadnik) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			validanObjekat.getZdravstveniRadnikSaglasnost().getLicneInformacijeLekara().getPunoIme().setIme(radnik.getPunoIme().getIme());
@@ -113,6 +116,33 @@ public class SaglasnostServiceImpl implements SaglasnostService {
 		for (Saglasnost saglasnost : saglasnosti) {
 			if(saglasnost.getDatumPodnosenja().toGregorianCalendar().compareTo(najnovija.getDatumPodnosenja().toGregorianCalendar()) > 0) {
 				najnovija = saglasnost;
+			}
+		}
+		return najnovija;
+	}
+	
+	@Override
+	public Saglasnost pronadjiNajnovijuPunuSaglasnostPoJmbgIliBrPasosa(String id) throws Exception {
+		List<Saglasnost> saglasnosti = saglasnostRepository.pronadjiSaglasnostPoJmbgIliBrPasosa(id);
+		if(saglasnosti.size() == 0)
+		{
+			return null;
+		}
+		
+		Saglasnost najnovija = null;
+		for (Saglasnost saglasnost : saglasnosti) {
+			if(saglasnost.getZdravstveniRadnikSaglasnost() != null) {
+				najnovija = saglasnost;
+				break;
+			}
+		}
+		
+		if(najnovija != null) {
+			for (Saglasnost saglasnost : saglasnosti) {
+				if(saglasnost.getDatumPodnosenja().toGregorianCalendar().compareTo(najnovija.getDatumPodnosenja().toGregorianCalendar()) > 0
+						&& saglasnost.getZdravstveniRadnikSaglasnost() != null) {
+					najnovija = saglasnost;
+				}
 			}
 		}
 		return najnovija;
