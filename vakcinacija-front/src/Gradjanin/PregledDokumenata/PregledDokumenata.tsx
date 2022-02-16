@@ -55,13 +55,12 @@ const PregledDokumenata = () => {
 	});
 
     const proveriDalIma = (name) => {
-        if(name != "saglasnost"){
-		axios.get(`http://localhost:8080/${name}/pronadji${name.replace(/^\w/, (c) => c.toUpperCase())}PoJmbg/` + getJMBG())
+		axios.get(name == "saglasnost"? 'http://localhost:8080/saglasnost/pronadjiSaglasnostPoJmbgIliBrPasosa/' + getJMBG():`http://localhost:8080/${name}/pronadji${name.replace(/^\w/, (c) => c.toUpperCase())}PoJmbg/` + getJMBG())
 		.then((res: any) => {
 			setVecIma(true);
 		}).catch((err: any) => {
 			setVecIma(false);
-		})}
+		})
 	}
 
     const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -86,21 +85,35 @@ const PregledDokumenata = () => {
 					let temp3: SertifikatXML = result[Object.keys(result)[1]];
 					setDocuments([temp2]);
 					break;
-				// dodaj saglasnost
 			}	
 			
 		}).catch((err: any) => {
 			setDocuments([]);
-		})}
+		})}else{
+			axios.get(`http://localhost:8080/saglasnost/pronadjiSaglasnostPoJmbgIliBrPasosa/` + getJMBG())
+			.then((res: any) => {
+				const parser = new XMLParser();
+				const result = parser.parse(res.data);
+				let temp1: Saglasnost = result[Object.keys(result)[1]];
+				setDocuments([temp1]);
+			
+		}).catch((err: any) => {
+			setDocuments([]);
+		})
+		}
 	}
 
-    const handleChange = event => {
+    const handleChange =  event => {
         let name = event.target.name;
         proveriDalIma(name);
-		console.log(vecIma);
         setDocumentType(name);
-		vecIma && pronadjiSveDokumente(name);
     };
+
+	useEffect(()=>{
+		vecIma && pronadjiSveDokumente(documentType);
+	}, [vecIma]);
+
+
 
 	const downloadXHTML = (name) => {
 		axios
@@ -179,7 +192,7 @@ const PregledDokumenata = () => {
                         </DropdownMenu>
                     </Dropdown>
 				</CardBody>
-				{documents.length != 0 && 
+				{documents.length != 0 && vecIma &&
 				<div>
 					<Table
 						height={320}
@@ -192,7 +205,7 @@ const PregledDokumenata = () => {
 
 						<Column width={300} fixed>
 							<HeaderCell>Datum podnosenja</HeaderCell>
-							<Cell dataKey="za:DatumPodnosenja"/>
+							<Cell dataKey={`${documentType.substring(0,2)}:DatumPodnosenja`}/>
 						</Column>
 						<Column width={120} fixed="right">
 							<HeaderCell>Download</HeaderCell>
