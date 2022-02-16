@@ -1,7 +1,7 @@
-import { LicneInformacije } from "../LicneInformacije";
+import { LicneInformacije } from "../LicneInformacije/LicneInformacije";
 import { Imunizacija } from "./Imunizacija";
 
 export interface PacijentSaglasnost {
 	"sa:LicneInformacije": LicneInformacije;
-    "sa:Imunizacija": Imunizacija;
+	"sa:Imunizacija": Imunizacija;
 }

@@ -231,6 +231,15 @@ public class SaglasnostRepository {
 		return saglasnostXml;
 	}
 	
+	public Saglasnost nabaviSaglasnostPoNazivXmlFajla(String id) throws Exception {
+		String saglasnostXml = ExistRetrieve.nabaviResurs(XMLCollectionIdKonstante.COLLECTION_ID_SAGLASNOST, id);
+		if (saglasnostXml != null) {
+			return (Saglasnost) unmarshallerService.unmarshal(saglasnostXml,
+            		ContextPutanjeKonstante.CONTEXT_PUTANJA_SAGLASNOST, XSDPutanjeKonstante.XSD_SAGLASNOST);
+		}
+		return null;
+	}
+	
 	public String pronadjiSaglasnostXmlPoSubjekat(String subjekat) throws Exception {
         String xPathIzraz = String.format("/Saglasnost[@about = '%s']" , subjekat);
     

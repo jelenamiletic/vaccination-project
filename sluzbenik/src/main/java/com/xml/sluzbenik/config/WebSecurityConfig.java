@@ -81,7 +81,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 						"/pretraga/osnovnaPretraga/{jmbg}", 
 						"/pretraga/naprednaPretraga", 
 						"/pretraga/nabaviMetaPodatkePotvrdaRDFPoJmbg/{jmbg}/{brojDoze}",
-						"/pretraga/nabaviMetaPodatkePotvrdaJSONPoJmbg/{jmbg}/{brojDoze}"
+						"/pretraga/nabaviMetaPodatkePotvrdaJSONPoJmbg/{jmbg}/{brojDoze}",
+						"/pretraga/nabaviMetaPodatkeSaglasnostRDFPoId/{jmbg}/{brojDoze}",
+						"/pretraga/nabaviMetaPodatkeSaglasnostJSONPoId/{jmbg}/{brojDoze}"
 				).hasAuthority(RoleKonstante.ROLE_SLUZBENIK)
 	
 				.antMatchers

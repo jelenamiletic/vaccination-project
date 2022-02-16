@@ -13,4 +13,8 @@ public interface PretragaService {
 	InputStreamResource nabaviMetaPodatkePotvrdaRDFPoJmbg(String jmbg, int brojDoze) throws IOException, Exception;
 
 	InputStreamResource nabaviMetaPodatkePotvrdaJSONPoJmbg(String jmbg, int brojDoze) throws Exception;
+
+	InputStreamResource nabaviMetaPodatkeSaglasnostJSONPoId(String jmbg, int brojDoze) throws Exception;
+
+	InputStreamResource nabaviMetaPodatkeSaglasnostRDFPoId(String jmbg, int brojDoze) throws Exception;
 }
