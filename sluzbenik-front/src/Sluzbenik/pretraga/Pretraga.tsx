@@ -9,6 +9,9 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Button, Card, CardBody, CardTitle, Form, FormFeedback, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader, Table } from "reactstrap";
+import { ZahteviZaDigitalniSertifikat } from "../../Models/CommonTypes/Izvestaj/ZahteviZaDigitalniSertifikat";
+import { Potvrda } from "../../Models/Potvrda";
+import { Saglasnost } from "../../Models/Saglasnost/Saglasnost";
 import SluzbenikNavbar from "../../Navbars/SluzbenikNavbar";
 import "./Pretraga.css";
 
@@ -29,7 +32,8 @@ toast.configure();
 const Pretraga = () => {
     const customId = "pretraga";
 
-    const [pronadjeniDokumenti, setPronadjeniDokumenti] = useState<Array<any>>();
+    const [pronadjenePotvrde, setPronadjenePotvrde] = useState<Array<Potvrda>>();
+    const [pronadjeneSaglasnosti, setPronadjeneSaglasnosti] = useState<Array<Saglasnost>>();
 
     const [showModal, setShowModal] = useState(false);
     const [selektovanTipDokumenta, setSelektovanTipDokumenta] = useState(TipDokumenta.Saglasnost);
@@ -53,18 +57,30 @@ const Pretraga = () => {
     const toggle = () => setShowModal(!showModal);
 
     const pretraziKljucneReci = (unos: any) => {
-            axios
-			.get("http://localhost:8081/pretraga/osnovnaPretraga/" + unos.Pretraga, {
-				headers: {
-					"Content-Type": "application/xml",
-					"Access-Control-Allow-Origin": "*",
-				},
-			})
-			.then((res: any) => {
-				const parser = new XMLParser();
-				const result = parser.parse(res.data);
+        axios
+            .get("http://localhost:8081/pretraga/osnovnaPretraga/" + unos.Pretraga, {
+                headers: {
+                    "Content-Type": "application/xml",
+                    "Access-Control-Allow-Origin": "*",
+                },
+            })
+            .then((res: any) => {
+                const parser = new XMLParser();
+                const result = parser.parse(res.data);
                 console.log(result);
-			});
+                if (!Array.isArray(result.Dokumenti.Potvrde["po:Potvrda"]))
+                    setPronadjenePotvrde([result.Dokumenti.Potvrde["po:Potvrda"] as Potvrda]);
+                else
+                    setPronadjenePotvrde(result.Dokumenti.Potvrde["po:Potvrda"]);
+
+                if (!Array.isArray(result.Dokumenti.Saglasnosti["sa:Saglasnost"])) {
+                    let Arr: Array<Saglasnost> = new Array<Saglasnost>();
+                    Arr!.push(result.Dokumenti.Saglasnosti["sa:Saglasnost"]);
+                    setPronadjeneSaglasnosti(Arr!);
+                }
+                else
+                    setPronadjeneSaglasnosti(result.Dokumenti.Saglasnosti["sa:Saglasnost"]);
+            });
     }
 
     const pretraziNapredno = (unos: any) => {
@@ -75,18 +91,21 @@ const Pretraga = () => {
                         <JMBG>${unos.JMBG}</JMBG>
                         <Pol>${unos.Pol}</Pol>
                     </PretragaDokumenata>`;
-        
-            axios
-			.put("http://localhost:8081/pretraga/naprednaPretraga", xml, {
-				headers: {
-					"Content-Type": "application/xml",
-					"Access-Control-Allow-Origin": "*",
-				},
-			})
-			.then((res: any) => {
-				const parser = new XMLParser();
-				const result = parser.parse(res.data);
-			});
+
+        axios
+            .put("http://localhost:8081/pretraga/naprednaPretraga", xml, {
+                headers: {
+                    "Content-Type": "application/xml",
+                    "Access-Control-Allow-Origin": "*",
+                },
+            })
+            .then((res: any) => {
+                const parser = new XMLParser();
+                const result = parser.parse(res.data);
+                console.log(result);
+                setPronadjenePotvrde(result.Dokumenti.Potvrde["po:Potvrda"]);
+                setPronadjeneSaglasnosti(result.Dokumenti.Saglasnosti["sa:Saglasnost"]);
+            });
     }
 
     const handleTipDokumentaIzmena = (selectedOption: any) => {
@@ -139,8 +158,8 @@ const Pretraga = () => {
 
                         <FormGroup>
                             <Label>Tip dokumenta:</Label>
-                            <Input type="select" name="TipDokumenta" onChange={handleTipDokumentaIzmena} option={selektovanTipDokumenta} 
-                            options={TipDokumenta} innerRef={register}>
+                            <Input type="select" name="TipDokumenta" onChange={handleTipDokumentaIzmena} option={selektovanTipDokumenta}
+                                options={TipDokumenta} innerRef={register}>
                                 {tipoviDokumenta.map((doc) => (
                                     <option value={doc}>{doc}</option>
                                 ))}
@@ -224,45 +243,47 @@ const Pretraga = () => {
                 <thead>
                     <tr>
                         <th>Dokument</th>
-                        <th>Ime</th>
-                        <th>Tip</th>
+                        <th>Tip Dokumenta</th>
+                        <th>Pacijent</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th scope="row">
-                            <Button variant="primary" onClick={handleShowModal}>
-                                Otvori
-                            </Button>
-                        </th>
-                        <td>23423423442_1</td>
-                        <td>Saglasnost za imunizaciju</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">
-                            <Button variant="primary" onClick={handleShowModal}>
-                                Otvori
-                            </Button>
-                        </th>
-                        <td>23423427876_1</td>
-                        <td>Sertifikat</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">
-                            <Button variant="primary" onClick={handleShowModal}>
-                                Otvori
-                            </Button>
-                        </th>
-                        <td>23423427876_1</td>
-                        <td>Potvrda o vakcinaciji</td>
-                    </tr>
+                    {pronadjenePotvrde && pronadjenePotvrde.map((potvrda: Potvrda) => {
+                        return (
+                            <tr>
+                                <th scope="row">
+                                    <Button variant="primary" onClick={handleShowModal}>
+                                        Otvori
+                                    </Button>
+                                </th>
+                                <td>Potvrda o vakcinaciji</td>
+                                <td>{potvrda["po:LicneInformacije"]["po:PunoIme"]["ct:Ime"]}  {potvrda["po:LicneInformacije"]["po:PunoIme"]["ct:Prezime"]}</td>
+                            </tr>
+                        )
+                    })}
+
+                    {pronadjeneSaglasnosti && pronadjeneSaglasnosti.map((saglasnost: Saglasnost) => {
+                        console.log(pronadjeneSaglasnosti)
+                        return (
+                            <tr>
+                                <th scope="row">
+                                    <Button variant="primary" onClick={handleShowModal}>
+                                        Otvori
+                                    </Button>
+                                </th>
+                                <td>Saglasnost za imunizaciju</td>
+                                <td>{saglasnost["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:PunoIme"]["ct:Ime"]}  {saglasnost["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:PunoIme"]["ct:Prezime"]}</td>
+                            </tr>
+                        )
+                    })}
+
                 </tbody>
             </Table>
 
             <Modal isOpen={showModal} toggle={toggle}>
                 <ModalHeader toggle={toggle}>Dokument</ModalHeader>
                 <ModalBody>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                    
                 </ModalBody>
                 <ModalFooter>
                     <Button color="primary">Preuzmi PDF</Button>
