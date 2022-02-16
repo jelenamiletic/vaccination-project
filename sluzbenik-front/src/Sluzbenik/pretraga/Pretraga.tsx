@@ -37,6 +37,8 @@ const Pretraga = () => {
 
     const [showModal, setShowModal] = useState(false);
     const [selektovanTipDokumenta, setSelektovanTipDokumenta] = useState(TipDokumenta.Saglasnost);
+    const [selektovanaSaglasnost, setSelektovanaSaglasnost] = useState<Saglasnost | null>();
+    const [selektovanaPotvrda, setSelektovanaPotvrda] = useState<Potvrda | null>();
 
     const handleCloseModal = () => setShowModal(false);
     const handleShowModal = () => {
@@ -252,7 +254,11 @@ const Pretraga = () => {
                         return (
                             <tr>
                                 <th scope="row">
-                                    <Button variant="primary" onClick={handleShowModal}>
+                                    <Button variant="primary" onClick={() => {
+                                        setSelektovanaSaglasnost(null);
+                                        setSelektovanaPotvrda(potvrda);
+                                        setShowModal(true);
+                                    }}>
                                         Otvori
                                     </Button>
                                 </th>
@@ -267,7 +273,11 @@ const Pretraga = () => {
                         return (
                             <tr>
                                 <th scope="row">
-                                    <Button variant="primary" onClick={handleShowModal}>
+                                    <Button variant="primary" onClick={() => {
+                                        setSelektovanaPotvrda(null);
+                                        setSelektovanaSaglasnost(saglasnost);
+                                        setShowModal(true);
+                                    }}>
                                         Otvori
                                     </Button>
                                 </th>
@@ -281,9 +291,154 @@ const Pretraga = () => {
             </Table>
 
             <Modal isOpen={showModal} toggle={toggle}>
-                <ModalHeader toggle={toggle}>Dokument</ModalHeader>
+                <ModalHeader toggle={toggle}>
+                    {selektovanaPotvrda && <div>Potvrda o vakcinaciji</div>}
+                    {selektovanaSaglasnost && <div>Saglasnost za imunizaciju</div>}
+                </ModalHeader>
                 <ModalBody>
-                    
+
+                    {selektovanaPotvrda && <div>
+                        <Label>Ime:</Label>
+                        <Input
+                            type="text"
+                            readOnly
+                            placeholder={selektovanaPotvrda["po:LicneInformacije"]["po:PunoIme"]["ct:Ime"]}
+                        />
+                        <Label>Prezime:</Label>
+                        <Input
+                            type="text"
+                            readOnly
+                            placeholder={selektovanaPotvrda["po:LicneInformacije"]["po:PunoIme"]["ct:Prezime"]}
+                        />
+                        <Label>Pol:</Label>
+                        <Input
+                            type="text"
+                            readOnly
+                            placeholder={selektovanaPotvrda["po:LicneInformacije"]["po:Pol"]}
+                        />
+                        <Label>Datum rodjenja:</Label>
+                        <Input
+                            type="text"
+                            readOnly
+                            placeholder={selektovanaPotvrda["po:LicneInformacije"]["po:DatumRodjenja"]}
+                        />
+                        <Label>Datum izdavanja:</Label>
+                        <Input
+                            type="text"
+                            readOnly
+                            placeholder={selektovanaPotvrda["po:DatumIzdavanja"]}
+                        />
+                        <Label>Vakcina:</Label>
+                        <Input
+                            type="text"
+                            readOnly
+                            placeholder={selektovanaPotvrda["po:VakcinaPrveDveDoze"]}
+                        />
+                        <br></br>
+                        <CardTitle tag="h4">Doze:</CardTitle>
+                        {Array.isArray(selektovanaPotvrda["po:InformacijeOVakcinama"]) ? selektovanaPotvrda["po:InformacijeOVakcinama"].map(element => {
+                            <div>
+                                <Label>Datum:</Label>
+                                <Input
+                                    type="text"
+                                    readOnly
+                                    placeholder={element["po:DatumDavanja"]}
+                                />
+                                <Label>Serija:</Label>
+                                <Input
+                                    type="text"
+                                    readOnly
+                                    placeholder={element["po:Serija"]}
+                                />
+                            </div>
+                        }) : <div>
+                            <Label>Datum:</Label>
+                            <Input
+                                type="text"
+                                readOnly
+                                placeholder={selektovanaPotvrda["po:InformacijeOVakcinama"]["po:DatumDavanja"]}
+                            />
+                            <Label>Serija:</Label>
+                            <Input
+                                type="text"
+                                readOnly
+                                placeholder={selektovanaPotvrda["po:InformacijeOVakcinama"]["po:Serija"]}
+                            />
+                        </div>}
+                    </div>
+                    }
+
+                    {selektovanaSaglasnost && <div>
+                        <CardTitle tag="h4">Pacijent:</CardTitle>
+                        <Label>Ime:</Label>
+                        <Input
+                            type="text"
+                            readOnly
+                            placeholder={selektovanaSaglasnost["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:PunoIme"]["ct:Ime"]}
+                        />
+                        <Label>Prezime:</Label>
+                        <Input
+                            type="text"
+                            readOnly
+                            placeholder={selektovanaSaglasnost["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:PunoIme"]["ct:Prezime"]}
+                        />
+                        <Label>Pol:</Label>
+                        <Input
+                            type="text"
+                            readOnly
+                            placeholder={selektovanaSaglasnost["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:Pol"]}
+                        />
+                        <Label>JMBG:</Label>
+                        <Input
+                            type="text"
+                            readOnly
+                            placeholder={selektovanaSaglasnost["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:Drzavljanstvo"]["sa:RepublikaSrbija"]["sa:JMBG"].toString()}
+                        />
+                        <Label>Datum rodjenja:</Label>
+                        <Input
+                            type="text"
+                            readOnly
+                            placeholder={selektovanaSaglasnost["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:DatumRodjenja"]}
+                        />
+                        <br></br>
+                        <CardTitle tag="h4">Zdravstvene informacije:</CardTitle>
+                        <Label>Zdravstvena ustanova:</Label>
+                        <Input
+                            type="text"
+                            readOnly
+                            placeholder={selektovanaSaglasnost["sa:ZdravstveniRadnikSaglasnost"]["sa:ZdravstvenaUstanova"]}
+                        />
+                        <Label>Vakcinacijski punkt:</Label>
+                        <Input
+                            type="text"
+                            readOnly
+                            placeholder={selektovanaSaglasnost["sa:ZdravstveniRadnikSaglasnost"]["sa:VakcinacijskiPunkt"]}
+                        />
+                        <Label>Naziv imunoloskog leka:</Label>
+                        <Input
+                            type="text"
+                            readOnly
+                            placeholder={selektovanaSaglasnost["sa:PacijentSaglasnost"]["sa:Imunizacija"]["sa:NazivImunoloskogLeka"]}
+                        />
+                        
+                        <br></br>
+                        <CardTitle tag="h4">Lekar:</CardTitle>
+                        <Label>Ime lekara:</Label>
+                        <Input
+                            type="text"
+                            readOnly
+                            placeholder={selektovanaSaglasnost["sa:ZdravstveniRadnikSaglasnost"]["sa:LicneInformacijeLekara"]["sa:PunoIme"]["ct:Ime"]}
+                        />
+                        <Label>Prezime lekara:</Label>
+                        <Input
+                            type="text"
+                            readOnly
+                            placeholder={selektovanaSaglasnost["sa:ZdravstveniRadnikSaglasnost"]["sa:LicneInformacijeLekara"]["sa:PunoIme"]["ct:Prezime"]}
+                        />
+                    </div>
+                    }
+
+
                 </ModalBody>
                 <ModalFooter>
                     <Button color="primary">Preuzmi PDF</Button>
