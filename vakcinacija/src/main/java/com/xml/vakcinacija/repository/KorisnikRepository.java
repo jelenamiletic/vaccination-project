@@ -115,6 +115,18 @@ public class KorisnikRepository {
 		return null;
 	}
 	
+	public Gradjanin pronadjiGradjaninaEmail(String email) throws Exception {
+		String xPathIzraz = String.format("/Gradjanin[ct:Email = '%1$s']", email);
+		String xml = this.pronadjiKorisnikaXml(XMLCollectionIdKonstante.COLLECTION_ID_GRADJANIN, xPathIzraz, 
+				XMLNamespaceKonstante.NAMESPACE_GRADJANIN);
+		if (xml != null) {
+			return (Gradjanin) unmarshallerService.unmarshal(xml, 
+				ContextPutanjeKonstante.CONTEXT_PUTANJA_GRADJANIN, 
+				XSDPutanjeKonstante.XSD_GRADJANIN);
+		}
+		return null;
+	}
+	
 	public ZdravstveniRadnik pronadjiZdravstevnogRadnika(String email) throws Exception {
 		String xPathIzraz = String.format("/ZdravstveniRadnik[ct:Email = '%s']", email);
 		String xml = this.pronadjiKorisnikaXml(XMLCollectionIdKonstante.COLLECTION_ID_ZDRAVSTVENI_RADNINK, xPathIzraz, 

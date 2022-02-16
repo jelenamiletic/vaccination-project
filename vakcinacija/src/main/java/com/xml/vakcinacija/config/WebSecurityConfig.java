@@ -130,6 +130,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				
 				// Gradjanin controller
 				.antMatchers("/gradjanin/registracija").permitAll()
+				.antMatchers("/gradjanin/getUlogovaniGradjanin").hasAuthority(RoleKonstante.ROLE_GRADJANIN)
+				.antMatchers("/gradjanin/getGradjaninPoEmail/{email}").hasAuthority(RoleKonstante.ROLE_ZDRAVSTVENI_RADNIK)
 			.anyRequest().authenticated().and()
 			.cors().and()
 			.addFilterBefore(new TokenAuthenticationFilter(tokenUtils, customUserDetailsService), BasicAuthenticationFilter.class);

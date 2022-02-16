@@ -27,6 +27,7 @@ const SaglasnostGradjanin = () => {
 	const customId = "saglasnost";
 	const [termin, setTermin] = useState<Termin | null>(null);
 	const [pronadjenaSaglasnost, setPronadjenaSaglasnost] = useState<Saglasnost | null>(null);
+	const [drzavljanstvo, setDrzavljanstvo] = useState<string>("");
 	const [vecIzvrseno, setIzvrseno] = useState(false);
 	const [postoji, setPostoji] = useState(false);
 
@@ -80,15 +81,32 @@ const SaglasnostGradjanin = () => {
 					setPronadjenaSaglasnost(null);
 				})
 			}
-
-		return false;
 		})
 		.catch((err: any) => {
 			setPostoji(false);
 		})
+
+		axios.get('http://localhost:8080/gradjanin/getUlogovaniGradjanin')
+		.then((res: any) => {
+			const parser = new XMLParser();
+			const result = parser.parse(res.data);
+			setDrzavljanstvo(result["gr:Gradjanin"]["gr:Drzavljanstvo"]);
+		})
 	}
 
 	const slanjeSaglasnosti = (saglasnost : any) => {
+		let d = ''
+		if(drzavljanstvo === 'Drzavljanin Republike Srbije'){
+			d = `<sa:RepublikaSrbija>
+								<sa:JMBG property = "pred:jmbg" datatype = "xs:string">${getJMBG()}</sa:JMBG>
+							 </sa:RepublikaSrbija>`
+		}else{
+			d = `<sa:StranoDrzavljanstvo>
+									<sa:NazivDrzave>${saglasnost.NazivDrzave}</sa:NazivDrzave>
+									<sa:BrojPasosa>${saglasnost.BrojPasosa}</sa:BrojPasosa>
+							 </sa:StranoDrzavljanstvo>`
+		}
+
 		const xml = `<sa:Saglasnost
 			xmlns:xs="http://www.w3.org/2001/XMLSchema"
 			xmlns:sa="http:///www.ftn.uns.ac.rs/vakcinacija/saglasnost"
@@ -101,9 +119,7 @@ const SaglasnostGradjanin = () => {
 			<sa:PacijentSaglasnost>
 				<sa:LicneInformacije>
 					<sa:Drzavljanstvo>
-						<sa:RepublikaSrbija>
-							<sa:JMBG property = "pred:jmbg" datatype = "xs:string">${getJMBG()}</sa:JMBG>
-						</sa:RepublikaSrbija>
+						${d}
 					</sa:Drzavljanstvo>
 					<sa:PunoIme>
 						<ct:Ime></ct:Ime>
@@ -137,6 +153,11 @@ const SaglasnostGradjanin = () => {
 				},
 			})
 			.then((res: any) => {
+				toast.success("Uspesno popunjena saglasnost", {
+					position: toast.POSITION.TOP_CENTER,
+					autoClose: false,
+					toastId: customId,
+				});
 				navigate("/profil");
 			})
 			.catch((err: any) => {
@@ -222,6 +243,29 @@ const SaglasnostGradjanin = () => {
 						<CardBody>
 							<CardTitle tag="h2">Saglasnost</CardTitle>
 							<Form className="form-login-registracija">
+
+								{drzavljanstvo !== 'Drzavljanin Republike Srbije' &&
+									<div>
+										<FormGroup>
+											<Label>Naziv strane drzave</Label>
+											<Input
+												type="text"
+												name="NazivDrzave"
+												placeholder="NazivDrzave"
+												innerRef={register}
+											/>
+										</FormGroup>
+										
+										<FormGroup>
+											<Label>Broj pasosa</Label>
+											<Input
+												type="text"
+												name="BrojPasosa"
+												innerRef={register}
+											/>
+										</FormGroup>
+									</div>
+								}
 
 								<FormGroup>
 									<Label>Ime roditelja</Label>

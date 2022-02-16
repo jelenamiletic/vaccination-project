@@ -38,4 +38,9 @@ public class GradjaninServiceImpl implements GradjaninService {
 		gradjanin.setRoles(roles);
 		korisnikRepository.saveKorisnikObjekat(gradjanin);
 	}
+
+	@Override
+	public Gradjanin poEmail(String email) throws Exception {
+		return korisnikRepository.pronadjiGradjaninaEmail(email);
+	}
 }

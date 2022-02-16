@@ -26,7 +26,7 @@ import { Saglasnost } from "../../Models/Saglasnost/Saglasnost";
 
 const Zahtev = () => {
 	const customId = "zahtev";
-	const [postoji, setPostoji] = useState(false);
+	// const [postoji, setPostoji] = useState(false);
 
 	const [editorState, setEditorState] = useState(() =>
 		EditorState.createEmpty()
@@ -42,7 +42,7 @@ const Zahtev = () => {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		pronadjiSaglasnost();
+		// pronadjiSaglasnost();
 	}, []);
 
 	const {
@@ -54,29 +54,29 @@ const Zahtev = () => {
 		mode: "onChange",
 	});
 
-	const pronadjiSaglasnost = () => {
-		axios.get('http://localhost:8080/saglasnost/pronadjiNajnovijuSaglasnostPoJmbgIliBrPasosa/' + getJMBG())
-				.then((res: any) => {
-					const parser = new XMLParser();
-					const result: Saglasnost = parser.parse(res.data);
-					const saglasnost: Saglasnost = result["sa:Saglasnost"];
-					if (!saglasnost){
+	// const pronadjiSaglasnost = () => {
+	// 	axios.get('http://localhost:8080/saglasnost/pronadjiNajnovijuSaglasnostPoJmbgIliBrPasosa/' + getJMBG())
+	// 			.then((res: any) => {
+	// 				const parser = new XMLParser();
+	// 				const result: Saglasnost = parser.parse(res.data);
+	// 				const saglasnost: Saglasnost = result["sa:Saglasnost"];
+	// 				if (!saglasnost){
 						
-						setPostoji(false);
+	// 					setPostoji(false);
 					
-					} else if(saglasnost!["sa:ZdravstveniRadnikSaglasnost"]){
+	// 				} else if(saglasnost!["sa:ZdravstveniRadnikSaglasnost"]){
 						
-						setPostoji(true);
+	// 					setPostoji(true);
 
-					} else {
+	// 				} else {
 
-						setPostoji(false);
+	// 					setPostoji(false);
 
-					}
-				}).catch((err: any) => {
-					setPostoji(false);
-				})
-	}	
+	// 				}
+	// 			}).catch((err: any) => {
+	// 				setPostoji(false);
+	// 			})
+	// }	
 
 	const podnosenjeZahteva = (zahtev: ZahtevXML) => {
 		let xml = `<za:Zahtev
@@ -112,6 +112,11 @@ const Zahtev = () => {
 				},
 			})
 			.then((res: any) => {
+				toast.success("Uspesno poslat zahtev", {
+					position: toast.POSITION.TOP_CENTER,
+					autoClose: false,
+					toastId: customId,
+				});
 				navigate("/profil");
 			})
 			.catch((err: any) => {
@@ -133,8 +138,7 @@ const Zahtev = () => {
 				<CardBody>
 					<CardTitle tag="h2">Zahtev za zeleni sertifikat</CardTitle>
 
-					{
-					postoji && <Form className="form-login-registracija">
+					 <Form className="form-login-registracija">
 						<FormGroup>
 							<Label>Broj pasosa</Label>
 							<Input
@@ -183,12 +187,11 @@ const Zahtev = () => {
 							Podnesi zahtev
 						</Button>
 					</Form>
-					}
 
-					{
+					{/* {
 						!postoji && 
 						<Label>Niste primili jos nijednu vakcinu!</Label>
-					}
+					} */}
 					
 				</CardBody>
 			</Card>

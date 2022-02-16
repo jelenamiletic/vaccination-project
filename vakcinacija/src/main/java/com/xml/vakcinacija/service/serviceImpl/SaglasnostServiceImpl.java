@@ -59,12 +59,6 @@ public class SaglasnostServiceImpl implements SaglasnostService {
 			validanObjekat.getPacijentSaglasnost().getLicneInformacije().getPunoIme().setPrezime(gradjanin.getPunoIme().getPrezime());
 			validanObjekat.getPacijentSaglasnost().getLicneInformacije().getPol().setValue(gradjanin.getPol());
 			
-//			if(!gradjanin.getDrzavljanstvo().equals("Drzavljanin Republike Srbije")) {
-//				validanObjekat.getPacijentSaglasnost().getLicneInformacije().getDrzavljanstvo().setRepublikaSrbija(null);
-//				validanObjekat.getPacijentSaglasnost().getLicneInformacije().getDrzavljanstvo().setStranoDrzavljanstvo(
-//						(new StranoDrzavljanstvo()).setBrojPasosa());
-//			}
-			
 			int indx = saglasnostRepository.saveSaglasnostObjekat(validanObjekat);
 			
 			terminService.postaviPopunjenaSaglasnost(gradjanin.getJMBG(), 1);

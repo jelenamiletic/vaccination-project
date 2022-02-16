@@ -28,6 +28,7 @@ const EvidencijaVakcinacije = () => {
 	const customId = "EvidencijaVakcinacije";
 	const [pronadjenaSaglasnost, setPronadjenaSaglasnost] = useState<Saglasnost | null>(null);
 	const [starijaSaglasnost, setStarijaSaglasnost] = useState<Saglasnost | null>(null);
+	const [jmbgGradjanina, setJmbg] = useState<string>("");
 
 	const navigate = useNavigate();
 
@@ -52,7 +53,6 @@ const EvidencijaVakcinacije = () => {
 			yup.object().shape({
 				JMBG: yup
 				.string()
-				.test("len", "JMBG mora imati 13 karaktera!", (val) => val?.length === 13)
 				.matches(/^\d+$/, "JMBG mora da sadrzi samo brojevne vrednosti!"),})),
 		mode: "onChange",
 	  });
@@ -70,6 +70,14 @@ const EvidencijaVakcinacije = () => {
 				const result: Saglasnost = parser.parse(res.data);
 
 				const saglasnost: Saglasnost = result["sa:Saglasnost"];
+
+				axios.get('http://localhost:8080/gradjanin/getGradjaninPoEmail/' + 
+				saglasnost!["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:Email"])
+				.then((res: any) => {
+					const parser = new XMLParser();
+					const result = parser.parse(res.data);
+					setJmbg(result["gr:Gradjanin"]["ct:JMBG"]);
+				})
 
 				saglasnost["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:BrojFiksnogTelefona"] = saglasnost["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:BrojFiksnogTelefona"].toString();
 				saglasnost["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:BrojMobilnogTelefona"] = saglasnost["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:BrojMobilnogTelefona"].toString();
@@ -119,6 +127,11 @@ const EvidencijaVakcinacije = () => {
 					})
 				}
 			}).catch((err: any) => {
+				toast.error("Nepostoji saglasnost pacijenta", {
+					position: toast.POSITION.TOP_CENTER,
+					autoClose: false,
+					toastId: customId,
+				})
 				setPronadjenaSaglasnost(null);
 			})
 	}
@@ -188,8 +201,7 @@ const EvidencijaVakcinacije = () => {
 			xsi:schemaLocation="http:///www.ftn.uns.ac.rs/vakcinacija/saglasnost ../xsd/saglasnost.xsd"
 			xmlns:addr="http://www.ftn.uns.ac.rs/rdf/saglasnost"
 			xmlns:pred="http://www.ftn.uns.ac.rs/rdf/saglasnost/predicate/"
-			vocab="http://www.ftn.uns.ac.rs/rdf/saglasnost/" 
-			about="http://www.ftn.uns.ac.rs/rdf/saglasnost/${pronadjenaSaglasnost!["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:Drzavljanstvo"]["sa:RepublikaSrbija"]["sa:JMBG"]}"
+			vocab="http://www.ftn.uns.ac.rs/rdf/saglasnost/"
 			>
 			<sa:PacijentSaglasnost>
 				<sa:LicneInformacije>
@@ -258,6 +270,7 @@ const EvidencijaVakcinacije = () => {
 				slanjePotvrde(saglasnost.SerijaVakcine, saglasnost.ZdravstvenaUstanova);
 			})
 			.catch((err: any) => {
+				console.log(err)
 				toast.error(err.response.data, {
 					position: toast.POSITION.TOP_CENTER,
 					autoClose: false,
@@ -276,7 +289,6 @@ const EvidencijaVakcinacije = () => {
 
 
 	const slanjePotvrde = (vakcina : any, ustanova : any) => {
-
 		let stareVakcine = ""
 		let duzina = 0;
 		if(starijaSaglasnost){
@@ -317,7 +329,7 @@ const EvidencijaVakcinacije = () => {
 				</po:PunoIme>
 				<po:DatumRodjenja>${pronadjenaSaglasnost!["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:DatumRodjenja"]}</po:DatumRodjenja>
 				<po:Pol>${pronadjenaSaglasnost!["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:Pol"]}</po:Pol>
-				<po:JMBG property = "pred:jmbg" datatype = "xs:string">${pronadjenaSaglasnost!["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:Drzavljanstvo"]["sa:RepublikaSrbija"]["sa:JMBG"]}</po:JMBG>
+				<po:JMBG property = "pred:jmbg" datatype = "xs:string">${jmbgGradjanina}</po:JMBG>
 			</po:LicneInformacije>
 			${stareVakcine}
 			<po:InformacijeOVakcinama>
@@ -366,7 +378,7 @@ const EvidencijaVakcinacije = () => {
 				<CardBody>
 					<Form className="form-login-registracija">
 						<FormGroup>
-							<Label>JMBG</Label>
+							<Label>JMBG ili broj pasosa</Label>
 							<Input
 								type="text"
 								name="JMBG"
