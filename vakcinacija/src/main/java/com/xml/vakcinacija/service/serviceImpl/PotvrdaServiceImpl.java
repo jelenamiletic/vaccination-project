@@ -213,11 +213,11 @@ public class PotvrdaServiceImpl implements PotvrdaService{
 				
 				if(ime.equals("NEMA") || ime == null || potvrda.getLicneInformacije().getPunoIme().getIme().equals(ime)) {
 					
-					if(prezime.equals("NEMA") || prezime == null || potvrda.getLicneInformacije().getPunoIme().getIme().equals(ime)) {
+					if(prezime.equals("NEMA") || prezime == null || potvrda.getLicneInformacije().getPunoIme().getPrezime().equals(prezime)) {
 						
 						if(jmbg.equals("NEMA") || jmbg == null || potvrda.getLicneInformacije().getJMBG().getValue().equals(jmbg)) {
 							
-							if(pol.equals("NEMA") || pol == null || potvrda.getLicneInformacije().getPol().toString().equals(ime)) {
+							if(pol.equals("NEMA") || pol == null || potvrda.getLicneInformacije().getPol().toString().equals(pol)) {
 								
 								rezultat += marshallerService.marshall(potvrda, ContextPutanjeKonstante.CONTEXT_PUTANJA_POTVRDA, XSDPutanjeKonstante.XSD_POTVRDA);
 							}

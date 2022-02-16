@@ -139,7 +139,7 @@ public class SertifikatServiceImpl implements SertifikatService {
 				
 				if(ime.equals("NEMA") || ime == null || sertifikat.getLicneInformacije().getPunoIme().getIme().equals(ime)) {
 					
-					if(prezime.equals("NEMA") || prezime == null || sertifikat.getLicneInformacije().getPunoIme().getIme().equals(ime)) {
+					if(prezime.equals("NEMA") || prezime == null || sertifikat.getLicneInformacije().getPunoIme().getPrezime().equals(prezime)) {
 						
 						if(jmbg.equals("NEMA") || jmbg == null || sertifikat.getLicneInformacije().getJMBG().getValue().equals(jmbg)
 								|| sertifikat.getLicneInformacije().getBrojPasosa().getValue().equals(jmbg)) {

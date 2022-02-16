@@ -240,7 +240,7 @@ public class SaglasnostServiceImpl implements SaglasnostService {
 				
 				if(ime.equals("NEMA") || ime == null || saglasnost.getPacijentSaglasnost().getLicneInformacije().getPunoIme().getIme().equals(ime)) {
 					
-					if(prezime.equals("NEMA") || prezime == null ||saglasnost.getPacijentSaglasnost().getLicneInformacije().getPunoIme().getIme().equals(ime)) {
+					if(prezime.equals("NEMA") || prezime == null ||saglasnost.getPacijentSaglasnost().getLicneInformacije().getPunoIme().getPrezime().equals(prezime)) {
 						
 						if(jmbg.equals("NEMA") || jmbg == null || ( saglasnost.getPacijentSaglasnost().getLicneInformacije().getDrzavljanstvo().getRepublikaSrbija() != null && 
 								saglasnost.getPacijentSaglasnost().getLicneInformacije().getDrzavljanstvo().getRepublikaSrbija().getJMBG().getValue().equals(jmbg))
