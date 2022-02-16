@@ -83,18 +83,27 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 						"/pretraga/nabaviMetaPodatkePotvrdaRDFPoJmbg/{jmbg}/{brojDoze}",
 						"/pretraga/nabaviMetaPodatkePotvrdaJSONPoJmbg/{jmbg}/{brojDoze}",
 						"/pretraga/nabaviMetaPodatkeSaglasnostRDFPoId/{jmbg}/{brojDoze}",
-						"/pretraga/nabaviMetaPodatkeSaglasnostJSONPoId/{jmbg}/{brojDoze}"
+						"/pretraga/nabaviMetaPodatkeSaglasnostJSONPoId/{jmbg}/{brojDoze}",
+						"/pretraga/nabaviMetaPodatkeSertifikatRDFPoJmbg/{jmbg}",
+						"/pretraga/nabaviMetaPodatkeSertifikatJSONPoJmbg/{jmbg}"
 				).hasAuthority(RoleKonstante.ROLE_SLUZBENIK)
 	
 				.antMatchers
 				(
-						"/odgovorNaZahtev//dobaviSveNeodobreneZahteve",
+						"/odgovorNaZahtev/dobaviSveNeodobreneZahteve",
 						"/odgovorNaZahtev/promeniStatusZahteva",
 						"/odgovorNaZahtev/dobaviPoslednjuPotvrduPoJmbg/{jmbg}",
 						"/odgovorNaZahtev/dodajNoviSertifikat"
 				).hasAuthority(RoleKonstante.ROLE_SLUZBENIK)
-				.antMatchers("/dokumenti/saglasnost/generisiXhtml/{jmbg}/{brojDoze}").hasAuthority(RoleKonstante.ROLE_SLUZBENIK)
-				.antMatchers("/dokumenti/saglasnost/generisiPdf/{jmbg}/{brojDoze}").hasAuthority(RoleKonstante.ROLE_SLUZBENIK)
+				.antMatchers
+				(
+						"/dokumenti/saglasnostGenerisiXhtml/{jmbg}/{brojDoze}",
+						"/dokumenti/saglasnostGenerisiPdf/{jmbg}/{brojDoze}",
+						"/dokumenti/potvrdaGenerisiXhtml/{jmbg}/{brojDoze}",
+						"/dokumenti/potvrdaGenerisiPdf/{jmbg}/{brojDoze}",
+						"/dokumenti/sertifikatGenerisiXhtml/{jmbg}",
+						"/dokumenti/sertifikatGenerisiPdf/{jmbg}"
+				).hasAuthority(RoleKonstante.ROLE_SLUZBENIK)
 			.anyRequest().authenticated().and()
 			.cors().and()
 			.addFilterBefore(new TokenAuthenticationFilter(tokenUtils, customUserDetailsService), BasicAuthenticationFilter.class);

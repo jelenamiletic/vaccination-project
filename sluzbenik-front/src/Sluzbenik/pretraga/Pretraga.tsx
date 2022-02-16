@@ -123,10 +123,10 @@ const Pretraga = () => {
 				const parser = new XMLParser();
 				const result = parser.parse(res.data);
 				console.log(result);
-				if(result.Potvrde){
+				if (result.Potvrde) {
 					setPronadjenePotvrde(result.Potvrde["po:Potvrda"]);
 				}
-				if(result.Saglasnosti){
+				if (result.Saglasnosti) {
 					setPronadjeneSaglasnosti(result.Saglasnosti["sa:Saglasnost"]);
 				}
 			});
@@ -137,180 +137,180 @@ const Pretraga = () => {
 		console.log(`Option selected:`, selectedOption.target.value);
 	};
 
-	const preuzmiRDFPotvrda = (jmbg: string, brojDoze: number) => {
-		axios
-			.get(
-				`http://localhost:8081/pretraga/nabaviMetaPodatkePotvrdaRDFPoJmbg/${jmbg}/${brojDoze}`,
-				{
-					headers: {
-						"Content-Type": "application/xml",
-						"Access-Control-Allow-Origin": "*",
-					},
-					responseType: "blob",
-				}
+	const preuzmiRDFMetapodatke = (dokument: any, tip: TipDokumenta) => {
+		let putanja = "";
+		let nazivFajla = "";
+		if (tip === TipDokumenta.Saglasnost) {
+			let id = "";
+			if (
+				dokument["sa:PacijentSaglasnost"]["sa:LicneInformacije"][
+					"sa:Drzavljanstvo"
+				]["sa:RepublikaSrbija"] == null
+			) {
+				id =
+					dokument["sa:PacijentSaglasnost"]["sa:LicneInformacije"][
+						"sa:Drzavljanstvo"
+					]["sa:StranoDrzavljanstvo"]["sa:BrojPasosa"];
+			} else {
+				id =
+					dokument["sa:PacijentSaglasnost"]["sa:LicneInformacije"][
+						"sa:Drzavljanstvo"
+					]["sa:RepublikaSrbija"]["sa:JMBG"];
+			}
+			let brojDoze = Array.isArray(
+				dokument["sa:ZdravstveniRadnikSaglasnost"]["sa:Obrazac"][
+					"sa:VakcineInfo"
+				]
 			)
+				? dokument["sa:ZdravstveniRadnikSaglasnost"]["sa:Obrazac"][
+						"sa:VakcineInfo"
+				  ].length
+				: 1;
+			putanja = `http://localhost:8081/pretraga/nabaviMetaPodatkeSaglasnostRDFPoId/${id}/${brojDoze}`;
+			nazivFajla = "RDF_Saglasnost" + id + "_" + brojDoze + ".rdf";
+		} else if (tip === TipDokumenta.Potvrda) {
+			let jmbg = dokument["po:LicneInformacije"]["po:JMBG"];
+			let brojDoze = Array.isArray(dokument["po:InformacijeOVakcinama"])
+				? dokument["po:InformacijeOVakcinama"][
+						dokument["po:InformacijeOVakcinama"].length - 1
+				  ]["po:BrojDoze"]
+				: dokument["po:InformacijeOVakcinama"]["po:BrojDoze"];
+			putanja = `http://localhost:8081/pretraga/nabaviMetaPodatkePotvrdaRDFPoJmbg/${jmbg}/${brojDoze}`;
+			nazivFajla = "RDF_Potvrda" + jmbg + "_" + brojDoze + ".rdf";
+		}
+		axios
+			.get(putanja, {
+				headers: {
+					"Content-Type": "application/xml",
+					"Access-Control-Allow-Origin": "*",
+				},
+				responseType: "blob",
+			})
 			.then((res: any) => {
 				let blob = new Blob([res.data], {
 					type: "application/xml;charset=utf-8",
 				});
-				saveAs(blob, "RDF_Potvrda" + jmbg + "_" + brojDoze + ".rdf");
+				saveAs(blob, nazivFajla);
 			});
 	};
 
-	const preuzmiJSONPotvrda = (jmbg: string, brojDoze: number) => {
-		axios
-			.get(
-				`http://localhost:8081/pretraga/nabaviMetaPodatkePotvrdaJSONPoJmbg/${jmbg}/${brojDoze}`,
-				{
-					headers: {
-						"Content-Type": "application/xml",
-						"Access-Control-Allow-Origin": "*",
-					},
-					responseType: "blob",
-				}
+	const preuzmiJSONMetapodatke = (dokument: any, tip: TipDokumenta) => {
+		let putanja = "";
+		let nazivFajla = "";
+		if (tip === TipDokumenta.Saglasnost) {
+			let id = "";
+			if (
+				dokument["sa:PacijentSaglasnost"]["sa:LicneInformacije"][
+					"sa:Drzavljanstvo"
+				]["sa:RepublikaSrbija"] == null
+			) {
+				id =
+					dokument["sa:PacijentSaglasnost"]["sa:LicneInformacije"][
+						"sa:Drzavljanstvo"
+					]["sa:StranoDrzavljanstvo"]["sa:BrojPasosa"];
+			} else {
+				id =
+					dokument["sa:PacijentSaglasnost"]["sa:LicneInformacije"][
+						"sa:Drzavljanstvo"
+					]["sa:RepublikaSrbija"]["sa:JMBG"];
+			}
+			let brojDoze = Array.isArray(
+				dokument["sa:ZdravstveniRadnikSaglasnost"]["sa:Obrazac"][
+					"sa:VakcineInfo"
+				]
 			)
+				? dokument["sa:ZdravstveniRadnikSaglasnost"]["sa:Obrazac"][
+						"sa:VakcineInfo"
+				  ].length
+				: 1;
+			putanja = `http://localhost:8081/pretraga/nabaviMetaPodatkeSaglasnostJSONPoId/${id}/${brojDoze}`;
+			nazivFajla = "JSON_Saglasnost" + id + "_" + brojDoze + ".json";
+		} else if (tip === TipDokumenta.Potvrda) {
+			let jmbg = dokument["po:LicneInformacije"]["po:JMBG"];
+			let brojDoze = Array.isArray(dokument["po:InformacijeOVakcinama"])
+				? dokument["po:InformacijeOVakcinama"][
+						dokument["po:InformacijeOVakcinama"].length - 1
+				  ]["po:BrojDoze"]
+				: dokument["po:InformacijeOVakcinama"]["po:BrojDoze"];
+			putanja = `http://localhost:8081/pretraga/nabaviMetaPodatkePotvrdaJSONPoJmbg/${jmbg}/${brojDoze}`;
+			nazivFajla = "JSON_Potvrda" + jmbg + "_" + brojDoze + ".json";
+		}
+		axios
+			.get(putanja, {
+				headers: {
+					"Content-Type": "application/xml",
+					"Access-Control-Allow-Origin": "*",
+				},
+				responseType: "blob",
+			})
 			.then((res: any) => {
 				let blob = new Blob([res.data], {
 					type: "application/json;charset=utf-8",
 				});
-				saveAs(blob, "JSON_Potvrda" + jmbg + "_" + brojDoze + ".json");
-			});
-	};
-
-	const preuzmiRDFSaglasnost = (saglasnost: Saglasnost) => {
-		let id = "";
-		if (
-			saglasnost["sa:PacijentSaglasnost"]["sa:LicneInformacije"][
-				"sa:Drzavljanstvo"
-			]["sa:RepublikaSrbija"] == null
-		) {
-			id =
-				saglasnost["sa:PacijentSaglasnost"]["sa:LicneInformacije"][
-					"sa:Drzavljanstvo"
-				]["sa:StranoDrzavljanstvo"]["sa:BrojPasosa"];
-		} else {
-			id =
-				saglasnost["sa:PacijentSaglasnost"]["sa:LicneInformacije"][
-					"sa:Drzavljanstvo"
-				]["sa:RepublikaSrbija"]["sa:JMBG"];
-		}
-		let brojDoze = Array.isArray(
-			saglasnost["sa:ZdravstveniRadnikSaglasnost"]["sa:Obrazac"][
-				"sa:VakcineInfo"
-			]
-		)
-			? saglasnost["sa:ZdravstveniRadnikSaglasnost"]["sa:Obrazac"][
-					"sa:VakcineInfo"
-			  ].length
-			: 1;
-		axios
-			.get(
-				`http://localhost:8081/pretraga/nabaviMetaPodatkeSaglasnostRDFPoId/${id}/${brojDoze}`,
-				{
-					headers: {
-						"Content-Type": "application/xml",
-						"Access-Control-Allow-Origin": "*",
-					},
-					responseType: "blob",
-				}
-			)
-			.then((res: any) => {
-				let blob = new Blob([res.data], {
-					type: "application/xml;charset=utf-8",
-				});
-				saveAs(blob, "RDF_Saglasnost" + id + "_" + brojDoze + ".rdf");
-			});
-	};
-
-	const preuzmiJSONSaglasnost = (saglasnost: Saglasnost) => {
-		let id = "";
-		if (
-			saglasnost["sa:PacijentSaglasnost"]["sa:LicneInformacije"][
-				"sa:Drzavljanstvo"
-			]["sa:RepublikaSrbija"] == null
-		) {
-			id =
-				saglasnost["sa:PacijentSaglasnost"]["sa:LicneInformacije"][
-					"sa:Drzavljanstvo"
-				]["sa:StranoDrzavljanstvo"]["sa:BrojPasosa"];
-		} else {
-			id =
-				saglasnost["sa:PacijentSaglasnost"]["sa:LicneInformacije"][
-					"sa:Drzavljanstvo"
-				]["sa:RepublikaSrbija"]["sa:JMBG"];
-		}
-		let brojDoze = Array.isArray(
-			saglasnost["sa:ZdravstveniRadnikSaglasnost"]["sa:Obrazac"][
-				"sa:VakcineInfo"
-			]
-		)
-			? saglasnost["sa:ZdravstveniRadnikSaglasnost"]["sa:Obrazac"][
-					"sa:VakcineInfo"
-			  ].length
-			: 1;
-		axios
-			.get(
-				`http://localhost:8081/pretraga/nabaviMetaPodatkeSaglasnostJSONPoId/${id}/${brojDoze}`,
-				{
-					headers: {
-						"Content-Type": "application/xml",
-						"Access-Control-Allow-Origin": "*",
-					},
-					responseType: "blob",
-				}
-			)
-			.then((res: any) => {
-				let blob = new Blob([res.data], {
-					type: "application/json;charset=utf-8",
-				});
-				saveAs(blob, "JSON_Saglasnost" + id + "_" + brojDoze + ".json");
+				saveAs(blob, nazivFajla);
 			});
 	};
 
 	const downloadXHTML = (dokument: any, tip: string) => {
-		let putanja = '';
-		if(tip === TipDokumenta.Saglasnost){
+		let putanja = "";
+		if (tip === TipDokumenta.Saglasnost) {
 			let brojDoze = 0;
-			if(Array.isArray(dokument["sa:ZdravstveniRadnikSaglasnost"]["sa:Obrazac"]["sa:VakcineInfo"])){
-				brojDoze = dokument["sa:ZdravstveniRadnikSaglasnost"].length
-			}else{
-				brojDoze = 1
+			if (
+				Array.isArray(
+					dokument["sa:ZdravstveniRadnikSaglasnost"]["sa:Obrazac"][
+						"sa:VakcineInfo"
+					]
+				)
+			) {
+				brojDoze =
+					dokument["sa:ZdravstveniRadnikSaglasnost"]["sa:Obrazac"][
+						"sa:VakcineInfo"
+					].length;
+			} else {
+				brojDoze = 1;
 			}
 
-			putanja = 
-			`http://localhost:8081/dokumenti/saglasnost/generisiXhtml/${ dokument["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:Drzavljanstvo"]["sa:RepublikaSrbija"]["sa:JMBG"] }/${brojDoze}`;
-		}else if(tip === TipDokumenta.Potvrda){
-			let brojDoze = 0;
-			if(Array.isArray(dokument["po:InformacijeOVakcinama"])){
-				brojDoze = dokument["po:InformacijeOVakcinama"].length
-			}else{
-				brojDoze = 1
+			let id = "";
+			if (
+				dokument["sa:PacijentSaglasnost"]["sa:LicneInformacije"][
+					"sa:Drzavljanstvo"
+				]["sa:RepublikaSrbija"] == null
+			) {
+				id =
+					dokument["sa:PacijentSaglasnost"]["sa:LicneInformacije"][
+						"sa:Drzavljanstvo"
+					]["sa:StranoDrzavljanstvo"]["sa:BrojPasosa"];
+			} else {
+				id =
+					dokument["sa:PacijentSaglasnost"]["sa:LicneInformacije"][
+						"sa:Drzavljanstvo"
+					]["sa:RepublikaSrbija"]["sa:JMBG"];
 			}
 
-			putanja = 
-			`http://localhost:8080/potvrda/generisiXhtml/${ dokument["po:LicneInformacije"]["po:JMBG"] }/${brojDoze}`;
-		}else{
+			putanja = `http://localhost:8081/dokumenti/saglasnostGenerisiXhtml/${id}/${brojDoze}`;
+		} else if (tip === TipDokumenta.Potvrda) {
+			let brojDoze = 0;
+			if (Array.isArray(dokument["po:InformacijeOVakcinama"])) {
+				brojDoze = dokument["po:InformacijeOVakcinama"].length;
+			} else {
+				brojDoze = 1;
+			}
 
+			putanja = `http://localhost:8081/dokumenti/potvrdaGenerisiXhtml/${dokument["po:LicneInformacije"]["po:JMBG"]}/${brojDoze}`;
 		}
 
 		axios
-			.get(
-				putanja,
-				{
-					headers: {
-						"Access-Control-Allow-Origin": "*",
-					},
-					responseType: "blob",
-				}
-			)
+			.get(putanja, {
+				headers: {
+					"Access-Control-Allow-Origin": "*",
+				},
+				responseType: "blob",
+			})
 			.then((res: any) => {
 				let blob = new Blob([res.data], {
 					type: "text/html;charset=utf-8",
 				});
-				saveAs(
-					blob,
-					'SkinutFajl'
-				);
+				saveAs(blob, "SkinutFajl");
 			})
 			.catch((err: any) => {
 				toast.error(err.response.data, {
@@ -322,49 +322,65 @@ const Pretraga = () => {
 	};
 
 	const downloadPdf = (dokument: any, tip: string) => {
-		let putanja = '';
-		if(tip === TipDokumenta.Saglasnost){
+		let putanja = "";
+		if (tip === TipDokumenta.Saglasnost) {
 			let brojDoze = 0;
-			if(Array.isArray(dokument["sa:ZdravstveniRadnikSaglasnost"]["sa:Obrazac"]["sa:VakcineInfo"])){
-				brojDoze = dokument["sa:ZdravstveniRadnikSaglasnost"].length
-			}else{
-				brojDoze = 1
+			if (
+				Array.isArray(
+					dokument["sa:ZdravstveniRadnikSaglasnost"]["sa:Obrazac"][
+						"sa:VakcineInfo"
+					]
+				)
+			) {
+				brojDoze =
+					dokument["sa:ZdravstveniRadnikSaglasnost"]["sa:Obrazac"][
+						"sa:VakcineInfo"
+					].length;
+			} else {
+				brojDoze = 1;
 			}
 
-			putanja = 
-			`http://localhost:8080/saglasnost/generisiPdf/${ dokument["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:Drzavljanstvo"]["sa:RepublikaSrbija"]["sa:JMBG"] }/${brojDoze}`;
-		}else if(tip === TipDokumenta.Potvrda){
-			let brojDoze = 0;
-			if(Array.isArray(dokument["po:InformacijeOVakcinama"])){
-				brojDoze = dokument["po:InformacijeOVakcinama"].length
-			}else{
-				brojDoze = 1
+			let id = "";
+			if (
+				dokument["sa:PacijentSaglasnost"]["sa:LicneInformacije"][
+					"sa:Drzavljanstvo"
+				]["sa:RepublikaSrbija"] == null
+			) {
+				id =
+					dokument["sa:PacijentSaglasnost"]["sa:LicneInformacije"][
+						"sa:Drzavljanstvo"
+					]["sa:StranoDrzavljanstvo"]["sa:BrojPasosa"];
+			} else {
+				id =
+					dokument["sa:PacijentSaglasnost"]["sa:LicneInformacije"][
+						"sa:Drzavljanstvo"
+					]["sa:RepublikaSrbija"]["sa:JMBG"];
 			}
 
-			putanja = 
-			`http://localhost:8080/potvrda/generisiPdf/${ dokument["po:LicneInformacije"]["po:JMBG"] }/${brojDoze}`;
-		}else{
+			putanja = `http://localhost:8081/dokumenti/saglasnostGenerisiPdf/${id}/${brojDoze}`;
+		} else if (tip === TipDokumenta.Potvrda) {
+			let brojDoze = 0;
+			if (Array.isArray(dokument["po:InformacijeOVakcinama"])) {
+				brojDoze = dokument["po:InformacijeOVakcinama"].length;
+			} else {
+				brojDoze = 1;
+			}
 
+			putanja = `http://localhost:8081/dokumenti/potvrdaGenerisiPdf/${dokument["po:LicneInformacije"]["po:JMBG"]}/${brojDoze}`;
 		}
 
 		axios
-			.get(
-				putanja,
-				{
-					headers: {
-						"Access-Control-Allow-Origin": "*",
-					},
-					responseType: "blob",
-				}
-			)
+			.get(putanja, {
+				headers: {
+					"Access-Control-Allow-Origin": "*",
+				},
+				responseType: "blob",
+			})
 			.then((res: any) => {
 				let blob = new Blob([res.data], {
 					type: "application/pdf;charset=utf-8",
 				});
-				saveAs(
-					blob,
-					'SkinutFajl'
-				);
+				saveAs(blob, "SkinutFajl");
 			})
 			.catch((err: any) => {
 				toast.error(err.response.data, {
@@ -512,7 +528,6 @@ const Pretraga = () => {
 				<tbody>
 					{pronadjenePotvrde &&
 						pronadjenePotvrde.map((potvrda: Potvrda) => {
-							console.log(potvrda);
 							return (
 								<tr>
 									<th scope="row">
@@ -536,14 +551,7 @@ const Pretraga = () => {
 										<Button
 											variant="primary"
 											onClick={() =>
-												preuzmiRDFPotvrda(
-													potvrda["po:LicneInformacije"]["po:JMBG"],
-													Array.isArray(potvrda["po:InformacijeOVakcinama"])
-														? potvrda["po:InformacijeOVakcinama"][
-																["po:InformacijeOVakcinama"].length - 1
-														  ]["po:BrojDoze"]
-														: potvrda["po:InformacijeOVakcinama"]["po:BrojDoze"]
-												)
+												preuzmiRDFMetapodatke(potvrda, TipDokumenta.Potvrda)
 											}
 										>
 											Preuzmi
@@ -553,14 +561,7 @@ const Pretraga = () => {
 										<Button
 											variant="primary"
 											onClick={() =>
-												preuzmiJSONPotvrda(
-													potvrda["po:LicneInformacije"]["po:JMBG"],
-													Array.isArray(potvrda["po:InformacijeOVakcinama"])
-														? potvrda["po:InformacijeOVakcinama"][
-																["po:InformacijeOVakcinama"].length - 1
-														  ]["po:BrojDoze"]
-														: potvrda["po:InformacijeOVakcinama"]["po:BrojDoze"]
-												)
+												preuzmiJSONMetapodatke(potvrda, TipDokumenta.Potvrda)
 											}
 										>
 											Preuzmi
@@ -603,7 +604,12 @@ const Pretraga = () => {
 									<td>
 										<Button
 											variant="primary"
-											onClick={() => preuzmiRDFSaglasnost(saglasnost)}
+											onClick={() =>
+												preuzmiRDFMetapodatke(
+													saglasnost,
+													TipDokumenta.Saglasnost
+												)
+											}
 										>
 											Preuzmi
 										</Button>
@@ -611,7 +617,12 @@ const Pretraga = () => {
 									<td>
 										<Button
 											variant="primary"
-											onClick={() => preuzmiJSONSaglasnost(saglasnost)}
+											onClick={() =>
+												preuzmiJSONMetapodatke(
+													saglasnost,
+													TipDokumenta.Saglasnost
+												)
+											}
 										>
 											Preuzmi
 										</Button>
@@ -625,9 +636,9 @@ const Pretraga = () => {
 							{selektovanaPotvrda && <div>Potvrda o vakcinaciji</div>}
 							{selektovanaSaglasnost && <div>Saglasnost za imunizaciju</div>}
 						</ModalHeader>
-							{selektovanaPotvrda && (
-								<div>
-									<ModalBody>
+						{selektovanaPotvrda && (
+							<div>
+								<ModalBody>
 									<Label>Ime:</Label>
 									<Input
 										type="text"
@@ -725,17 +736,31 @@ const Pretraga = () => {
 											/>
 										</div>
 									)}
-									</ModalBody>
-									<ModalFooter>
-										<Button color="primary" onClick={()=>{downloadPdf(selektovanaPotvrda, TipDokumenta.Potvrda)}}>Preuzmi PDF</Button>{" "}
-										<Button color="primary" onClick={()=>{downloadXHTML(selektovanaPotvrda, TipDokumenta.Potvrda)}} >Preuzmi XHTML</Button>
-									</ModalFooter>
-								</div>
-							)}
+								</ModalBody>
+								<ModalFooter>
+									<Button
+										color="primary"
+										onClick={() => {
+											downloadPdf(selektovanaPotvrda, TipDokumenta.Potvrda);
+										}}
+									>
+										Preuzmi PDF
+									</Button>{" "}
+									<Button
+										color="primary"
+										onClick={() => {
+											downloadXHTML(selektovanaPotvrda, TipDokumenta.Potvrda);
+										}}
+									>
+										Preuzmi XHTML
+									</Button>
+								</ModalFooter>
+							</div>
+						)}
 
-							{selektovanaSaglasnost && (
-								<div>
-									<ModalBody>
+						{selektovanaSaglasnost && (
+							<div>
+								<ModalBody>
 									<CardTitle tag="h4">Pacijent:</CardTitle>
 									<Label>Ime:</Label>
 									<Input
@@ -842,14 +867,33 @@ const Pretraga = () => {
 											]["sa:PunoIme"]["ct:Prezime"]
 										}
 									/>
-									</ModalBody>
+								</ModalBody>
 								<ModalFooter>
-									<Button color="primary" onClick={()=>{downloadPdf(selektovanaPotvrda, TipDokumenta.Potvrda)}}>Preuzmi PDF</Button>
-									{" "}
-									<Button color="primary" onClick={()=>{downloadXHTML(selektovanaSaglasnost, TipDokumenta.Saglasnost)}}>Preuzmi XHTML</Button>
+									<Button
+										color="primary"
+										onClick={() => {
+											downloadPdf(
+												selektovanaSaglasnost,
+												TipDokumenta.Saglasnost
+											);
+										}}
+									>
+										Preuzmi PDF
+									</Button>{" "}
+									<Button
+										color="primary"
+										onClick={() => {
+											downloadXHTML(
+												selektovanaSaglasnost,
+												TipDokumenta.Saglasnost
+											);
+										}}
+									>
+										Preuzmi XHTML
+									</Button>
 								</ModalFooter>
-								</div>
-							)}
+							</div>
+						)}
 					</Modal>
 				</tbody>
 			</Table>

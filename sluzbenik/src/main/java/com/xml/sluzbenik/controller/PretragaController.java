@@ -56,4 +56,16 @@ public class PretragaController {
 	public ResponseEntity<InputStreamResource> nabaviMetaPodatkeSaglasnostJSONPoId(@PathVariable String jmbg, @PathVariable int brojDoze) throws Exception {
 		return new ResponseEntity<>(pretragaService.nabaviMetaPodatkeSaglasnostJSONPoId(jmbg, brojDoze), HttpStatus.OK);
 	}
+	
+	@GetMapping(value = "/nabaviMetaPodatkeSertifikatRDFPoJmbg/{jmbg}", produces = MediaType.APPLICATION_XML_VALUE)
+	@PreAuthorize("hasRole('ROLE_SLUZBENIK')")
+	public ResponseEntity<InputStreamResource> nabaviMetaPodatkeSertifikatRDFPoJmbg(@PathVariable String jmbg) throws Exception {
+		return new ResponseEntity<>(pretragaService.nabaviMetaPodatkeSertifikatRDFPoJmbg(jmbg), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/nabaviMetaPodatkeSertifikatJSONPoJmbg/{jmbg}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasRole('ROLE_SLUZBENIK')")
+	public ResponseEntity<InputStreamResource> nabaviMetaPodatkeSertifikatJSONPoJmbg(@PathVariable String jmbg) throws Exception {
+		return new ResponseEntity<>(pretragaService.nabaviMetaPodatkeSertifikatJSONPoJmbg(jmbg), HttpStatus.OK);
+	}
 }

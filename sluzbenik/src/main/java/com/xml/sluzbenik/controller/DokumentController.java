@@ -2,6 +2,7 @@ package com.xml.sluzbenik.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -31,33 +32,93 @@ public class DokumentController {
 	@Autowired
 	private MarshallerService marshallerService;
 
-	@GetMapping(value = "saglasnost/generisiXhtml/{jmbg}/{brojDoze}", produces = MediaType.TEXT_HTML_VALUE)
-	@PreAuthorize("hasAnyRole('ROLE_GRADJANIN', 'ROLE_SLUZBENIK')")
-	public ResponseEntity<InputStreamResource> generisiXHTML(@PathVariable String jmbg, @PathVariable int brojDoze) throws Exception {
+	@GetMapping(value = "/saglasnostGenerisiXhtml/{jmbg}/{brojDoze}", produces = MediaType.TEXT_HTML_VALUE)
+	@PreAuthorize("hasRole('ROLE_SLUZBENIK')")
+	public ResponseEntity<InputStreamResource> saglasnostGenerisiXHTML(@PathVariable String jmbg, @PathVariable int brojDoze) throws Exception {
 		TokenBasedAuthentication a = (TokenBasedAuthentication) SecurityContextHolder.getContext().getAuthentication();
 		HttpHeaders headers = new HttpHeaders();
 		String userDetails = marshallerService.marshall(a.getPrincipal(), ContextPutanjeKonstante.CONTEXT_PUTANJA_SLUZBENIK, XSDPutanjeKonstante.XSD_SLUZBENIK);
 		headers.setBearerAuth(a.getToken());
 		headers.set("Sluzbenik", userDetails);
 		
-		ResponseEntity<InputStreamResource> saglasnosti = restTemplate.exchange(
-                "http://localhost:8080/saglasnost/generisiXhtml/"+ jmbg + "/" + brojDoze, HttpMethod.GET, new HttpEntity<Object>(headers), InputStreamResource.class);
+		ResponseEntity<Resource> saglasnosti = restTemplate.exchange(
+                "http://localhost:8080/saglasnost/generisiXhtml/"+ jmbg + "/" + brojDoze, HttpMethod.GET, new HttpEntity<Object>(headers), Resource.class);
 		
-		return new ResponseEntity<>(saglasnosti.getBody(), HttpStatus.OK);
+		return new ResponseEntity<>(new InputStreamResource(saglasnosti.getBody().getInputStream()), HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "saglasnost/generisiPdf/{jmbg}/{brojDoze}", produces = MediaType.TEXT_HTML_VALUE)
-	@PreAuthorize("hasAnyRole('ROLE_GRADJANIN', 'ROLE_SLUZBENIK')")
-	public ResponseEntity<InputStreamResource> generisiPdf(@PathVariable String jmbg, @PathVariable int brojDoze) throws Exception {
+	@GetMapping(value = "/saglasnostGenerisiPdf/{jmbg}/{brojDoze}", produces = MediaType.APPLICATION_PDF_VALUE)
+	@PreAuthorize("hasRole('ROLE_SLUZBENIK')")
+	public ResponseEntity<InputStreamResource> saglasnostGenerisiPdf(@PathVariable String jmbg, @PathVariable int brojDoze) throws Exception {
 		TokenBasedAuthentication a = (TokenBasedAuthentication) SecurityContextHolder.getContext().getAuthentication();
 		HttpHeaders headers = new HttpHeaders();
 		String userDetails = marshallerService.marshall(a.getPrincipal(), ContextPutanjeKonstante.CONTEXT_PUTANJA_SLUZBENIK, XSDPutanjeKonstante.XSD_SLUZBENIK);
 		headers.setBearerAuth(a.getToken());
 		headers.set("Sluzbenik", userDetails);
 		
-		ResponseEntity<InputStreamResource> saglasnosti = restTemplate.exchange(
-                "http://localhost:8080/saglasnost/generisiPdf/"+ jmbg + "/" + brojDoze, HttpMethod.GET, new HttpEntity<Object>(headers), InputStreamResource.class);
+		ResponseEntity<Resource> saglasnosti = restTemplate.exchange(
+                "http://localhost:8080/saglasnost/generisiPdf/"+ jmbg + "/" + brojDoze, HttpMethod.GET, new HttpEntity<Object>(headers), Resource.class);
 		
-		return new ResponseEntity<>(saglasnosti.getBody(), HttpStatus.OK);
+		return new ResponseEntity<>(new InputStreamResource(saglasnosti.getBody().getInputStream()), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/potvrdaGenerisiXhtml/{jmbg}/{brojDoze}", produces = MediaType.TEXT_HTML_VALUE)
+	@PreAuthorize("hasRole('ROLE_SLUZBENIK')")
+	public ResponseEntity<InputStreamResource> potvrdaGenerisiXHTML(@PathVariable String jmbg, @PathVariable int brojDoze) throws Exception {
+		TokenBasedAuthentication a = (TokenBasedAuthentication) SecurityContextHolder.getContext().getAuthentication();
+		HttpHeaders headers = new HttpHeaders();
+		String userDetails = marshallerService.marshall(a.getPrincipal(), ContextPutanjeKonstante.CONTEXT_PUTANJA_SLUZBENIK, XSDPutanjeKonstante.XSD_SLUZBENIK);
+		headers.setBearerAuth(a.getToken());
+		headers.set("Sluzbenik", userDetails);
+		
+		ResponseEntity<Resource> saglasnosti = restTemplate.exchange(
+                "http://localhost:8080/potvrda/generisiXhtml/"+ jmbg + "/" + brojDoze, HttpMethod.GET, new HttpEntity<Object>(headers), Resource.class);
+		
+		return new ResponseEntity<>(new InputStreamResource(saglasnosti.getBody().getInputStream()), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/potvrdaGenerisiPdf/{jmbg}/{brojDoze}", produces = MediaType.APPLICATION_PDF_VALUE)
+	@PreAuthorize("hasRole('ROLE_SLUZBENIK')")
+	public ResponseEntity<InputStreamResource> potvrdaGenerisiPdf(@PathVariable String jmbg, @PathVariable int brojDoze) throws Exception {
+		TokenBasedAuthentication a = (TokenBasedAuthentication) SecurityContextHolder.getContext().getAuthentication();
+		HttpHeaders headers = new HttpHeaders();
+		String userDetails = marshallerService.marshall(a.getPrincipal(), ContextPutanjeKonstante.CONTEXT_PUTANJA_SLUZBENIK, XSDPutanjeKonstante.XSD_SLUZBENIK);
+		headers.setBearerAuth(a.getToken());
+		headers.set("Sluzbenik", userDetails);
+		
+		ResponseEntity<Resource> saglasnosti = restTemplate.exchange(
+                "http://localhost:8080/potvrda/generisiPdf/"+ jmbg + "/" + brojDoze, HttpMethod.GET, new HttpEntity<Object>(headers), Resource.class);
+		
+		return new ResponseEntity<>(new InputStreamResource(saglasnosti.getBody().getInputStream()), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/sertifikatGenerisiXhtml/{jmbg}", produces = MediaType.TEXT_HTML_VALUE)
+	@PreAuthorize("hasRole('ROLE_SLUZBENIK')")
+	public ResponseEntity<InputStreamResource> sertifikatGenerisiXHTML(@PathVariable String jmbg) throws Exception {
+		TokenBasedAuthentication a = (TokenBasedAuthentication) SecurityContextHolder.getContext().getAuthentication();
+		HttpHeaders headers = new HttpHeaders();
+		String userDetails = marshallerService.marshall(a.getPrincipal(), ContextPutanjeKonstante.CONTEXT_PUTANJA_SLUZBENIK, XSDPutanjeKonstante.XSD_SLUZBENIK);
+		headers.setBearerAuth(a.getToken());
+		headers.set("Sluzbenik", userDetails);
+		
+		ResponseEntity<Resource> saglasnosti = restTemplate.exchange(
+                "http://localhost:8080/sertifikat/generisiXhtml/"+ jmbg, HttpMethod.GET, new HttpEntity<Object>(headers), Resource.class);
+		
+		return new ResponseEntity<>(new InputStreamResource(saglasnosti.getBody().getInputStream()), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/sertifikatGenerisiPdf/{jmbg}", produces = MediaType.APPLICATION_PDF_VALUE)
+	@PreAuthorize("hasRole('ROLE_SLUZBENIK')")
+	public ResponseEntity<InputStreamResource> sertifikatGenerisiPdf(@PathVariable String jmbg) throws Exception {
+		TokenBasedAuthentication a = (TokenBasedAuthentication) SecurityContextHolder.getContext().getAuthentication();
+		HttpHeaders headers = new HttpHeaders();
+		String userDetails = marshallerService.marshall(a.getPrincipal(), ContextPutanjeKonstante.CONTEXT_PUTANJA_SLUZBENIK, XSDPutanjeKonstante.XSD_SLUZBENIK);
+		headers.setBearerAuth(a.getToken());
+		headers.set("Sluzbenik", userDetails);
+		
+		ResponseEntity<Resource> saglasnosti = restTemplate.exchange(
+                "http://localhost:8080/sertifikat/generisiPdf/"+ jmbg, HttpMethod.GET, new HttpEntity<Object>(headers), Resource.class);
+		
+		return new ResponseEntity<>(new InputStreamResource(saglasnosti.getBody().getInputStream()), HttpStatus.OK);
 	}
 }

@@ -96,7 +96,7 @@ const Login = () => {
 							<FormFeedback>{errors.Email?.message}</FormFeedback>
 						</FormGroup>
 						<FormGroup>
-							<Label>Password</Label>
+							<Label>Lozinka</Label>
 							<Input
 								type="password"
 								name="Lozinka"
