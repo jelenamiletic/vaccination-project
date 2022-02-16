@@ -5,5 +5,6 @@ export interface ZahtevXML {
 	Pol: string;
 	BrojPasosa: string;
 	JMBG: string;
+	Odobren: boolean;
 	RazlogPodnosenja: string;
 }

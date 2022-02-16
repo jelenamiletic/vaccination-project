@@ -19,7 +19,8 @@ import { ZahtevXML } from "../../Models/Zahtev";
 import GradjaninNavbar from "../../Navbars/GradjaninNavbar";
 import { getJMBG } from "../../Auth/AuthService";
 import { zahtevSchema } from "./Validation/ZahtevSchema";
-import { Editor, EditorState } from "draft-js";
+import {EditorState } from "draft-js";
+import {Editor} from "react-draft-wysiwyg";
 import "draft-js/dist/Draft.css";
 import { XMLParser } from "fast-xml-parser";
 import { Saglasnost } from "../../Models/Saglasnost/Saglasnost";
@@ -33,11 +34,6 @@ const Zahtev = () => {
 	);
 
 	const editor = useRef<any>(null);
-	function focusEditor() {
-		if (editor && editor.current) {
-			editor.current.focus();
-		}
-	}
 
 	const navigate = useNavigate();
 
@@ -167,14 +163,24 @@ const Zahtev = () => {
 									minHeight: "6em",
 									cursor: "text",
 								}}
-								onClick={focusEditor}
 							>
+								<div className='editor'>
 								<Editor
 									ref={editor}
 									editorState={editorState}
-									onChange={setEditorState}
+									onEditorStateChange={setEditorState}
 									placeholder="Write something!"
+									toolbar={{
+										options: ['inline', 'fontSize', 'list', 'textAlign', 'history'],
+										inline: { inDropdown: true },
+										list: { inDropdown: true },
+										textAlign: { inDropdown: true },
+										link: { inDropdown: true },
+										history: { inDropdown: true },
+									  }}
 								/>
+								</div>
+								
 							</div>
 						</FormGroup>
 						<Button
