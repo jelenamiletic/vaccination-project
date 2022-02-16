@@ -37,6 +37,8 @@ public class PotvrdaRepository {
 	public void savePotvrdaObjekat(Potvrda potvrda) throws Exception {
 		String xml = marshallerService.marshall(potvrda, ContextPutanjeKonstante.CONTEXT_PUTANJA_POTVRDA, 
 				XSDPutanjeKonstante.XSD_POTVRDA);
+		potvrda.setAbout("http://www.ftn.uns.ac.rs/rdf/potvrda/" + potvrda.getLicneInformacije().getJMBG().getValue() + "_" + 
+				potvrda.getInformacijeOVakcinama().get(potvrda.getInformacijeOVakcinama().size()-1).getBrojDoze());
 		ExistStore.save(XMLCollectionIdKonstante.COLLECTION_ID_POTVRDA, potvrda.getLicneInformacije().getJMBG().getValue() + "_" + 
 				potvrda.getInformacijeOVakcinama().get(potvrda.getInformacijeOVakcinama().size()-1).getBrojDoze(), xml);
 	}

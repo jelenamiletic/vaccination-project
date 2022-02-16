@@ -4,6 +4,8 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.List;
 
+import org.xml.sax.SAXException;
+
 import com.xml.vakcinacija.model.saglasnost.Saglasnost;
 
 public interface SaglasnostService {
@@ -18,9 +20,9 @@ public interface SaglasnostService {
 	
 	Saglasnost pronadjiNajnovijuSaglasnostPoJmbgIliBrPasosa(String id) throws Exception;
 
-	ByteArrayInputStream nabaviMetaPodatkeJSONPoId(String id) throws IOException;
+	ByteArrayInputStream nabaviMetaPodatkeJSONPoId(String id, int brojDoze) throws IOException, SAXException, Exception;
 	
-	ByteArrayInputStream nabaviMetaPodatkeRDFPoId(String id) throws IOException, Exception;
+	ByteArrayInputStream nabaviMetaPodatkeRDFPoId(String id, int brojDoze) throws IOException, Exception;
 
 	ByteArrayInputStream generisiPdf(String id, int brojDoze) throws Exception;
 	

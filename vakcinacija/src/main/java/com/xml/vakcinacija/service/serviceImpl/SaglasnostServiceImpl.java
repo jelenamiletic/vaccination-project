@@ -1,14 +1,12 @@
 package com.xml.vakcinacija.service.serviceImpl;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import com.xml.vakcinacija.exception.SaglasnostNijePronadjenaException;
 import com.xml.vakcinacija.model.gradjanin.Gradjanin;
 import com.xml.vakcinacija.model.saglasnost.Saglasnost;
 import com.xml.vakcinacija.model.zdravstveni_radnik.ZdravstveniRadnik;
@@ -142,18 +140,38 @@ public class SaglasnostServiceImpl implements SaglasnostService {
 	}
 	
 	@Override
-	public ByteArrayInputStream nabaviMetaPodatkeJSONPoId(String id) throws IOException {
-		String query = String.format("?s ?p ?o. FILTER (?s = <%s>)", id);
+	public ByteArrayInputStream nabaviMetaPodatkeJSONPoId(String id, int brojDoze) throws Exception {
+		boolean jmbg = false;
+		
+		if(id.length() == 13)
+		{
+			jmbg = true;
+		}
+		
+		String xml = saglasnostRepository.pronadjiPoJmbgIBrojDoze(id, brojDoze, jmbg);
+		if(xml.equals("")  || xml == null) {
+			return null;
+		}
+		Saglasnost saglasnost = (Saglasnost) unmarshallerService.unmarshal(xml,
+        		ContextPutanjeKonstante.CONTEXT_PUTANJA_SAGLASNOST, XSDPutanjeKonstante.XSD_SAGLASNOST);
+		String query = String.format("?s ?p ?o. FILTER (?s = <%s>)", saglasnost.getAbout());
 		return rdfService.getMetadataJSON(query, "saglasnost_" + id, NamedGraphURIKonstante.IMUNIZACIJA_NAMED_GRAPH);
 	}
 	
 	@Override
-	public ByteArrayInputStream nabaviMetaPodatkeRDFPoId(String about) throws Exception {
-		String saglasnostXml = saglasnostRepository.pronadjiSaglasnostXmlPoSubjekat(about);
-		if (saglasnostXml == null) {
-			throw new SaglasnostNijePronadjenaException(about);
+	public ByteArrayInputStream nabaviMetaPodatkeRDFPoId(String id, int brojDoze) throws Exception {
+		boolean jmbg = false;
+		
+		if(id.length() == 13)
+		{
+			jmbg = true;
 		}
-		return rdfService.getMetadataRDF(saglasnostXml);
+		
+		String xml = saglasnostRepository.pronadjiPoJmbgIBrojDoze(id, brojDoze, jmbg);
+		if(xml.equals("")  || xml == null) {
+			return null;
+		}
+		return rdfService.getMetadataRDF(xml);
 	}
 
 	@Override
