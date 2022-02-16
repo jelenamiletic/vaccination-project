@@ -48,7 +48,7 @@ public class PretragaController {
 	@GetMapping(value = "/nabaviMetaPodatkeSaglasnostRDFPoId/{jmbg}/{brojDoze}", produces = MediaType.APPLICATION_XML_VALUE)
 	@PreAuthorize("hasRole('ROLE_SLUZBENIK')")
 	public ResponseEntity<InputStreamResource> nabaviMetaPodatkeSaglasnostRDFPoId(@PathVariable String jmbg, @PathVariable int brojDoze) throws Exception {
-		return new ResponseEntity<>(pretragaService.nabaviMetaPodatkePotvrdaRDFPoJmbg(jmbg, brojDoze), HttpStatus.OK);
+		return new ResponseEntity<>(pretragaService.nabaviMetaPodatkeSaglasnostRDFPoId(jmbg, brojDoze), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/nabaviMetaPodatkeSaglasnostJSONPoId/{jmbg}/{brojDoze}", produces = MediaType.APPLICATION_JSON_VALUE)

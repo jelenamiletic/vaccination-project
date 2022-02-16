@@ -1,3 +1,3 @@
 export interface RepublikaSrbija {
-    "sa:JMBG": number;
+	"sa:JMBG": string;
 }

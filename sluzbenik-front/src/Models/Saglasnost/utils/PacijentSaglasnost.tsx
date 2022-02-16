@@ -1,4 +1,4 @@
-import { LicneInformacije } from "../LicneInformacije/LicneInformacije";
+import { LicneInformacije } from "../LicneInformacije";
 import { Imunizacija } from "./Imunizacija";
 
 export interface PacijentSaglasnost {

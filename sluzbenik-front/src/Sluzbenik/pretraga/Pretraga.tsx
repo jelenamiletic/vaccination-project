@@ -1,11 +1,9 @@
-import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "axios";
 import { Chart, registerables } from "chart.js";
 import { XMLParser } from "fast-xml-parser";
 import saveAs from "file-saver";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {
@@ -24,7 +22,6 @@ import {
 	ModalHeader,
 	Table,
 } from "reactstrap";
-import { ZahteviZaDigitalniSertifikat } from "../../Models/CommonTypes/Izvestaj/ZahteviZaDigitalniSertifikat";
 import { Potvrda } from "../../Models/Potvrda";
 import { Saglasnost } from "../../Models/Saglasnost/Saglasnost";
 import SluzbenikNavbar from "../../Navbars/SluzbenikNavbar";
@@ -52,16 +49,20 @@ const Pretraga = () => {
 		useState<Array<Saglasnost>>();
 
 	const [showModal, setShowModal] = useState(false);
-	const [selektovanTipDokumenta, setSelektovanTipDokumenta] = useState(TipDokumenta.Saglasnost);
-	const [selektovanaSaglasnost, setSelektovanaSaglasnost] = useState<Saglasnost | null>();
-	const [selektovanaPotvrda, setSelektovanaPotvrda] = useState<Potvrda | null>();
+	const [selektovanTipDokumenta, setSelektovanTipDokumenta] = useState(
+		TipDokumenta.Saglasnost
+	);
+	const [selektovanaSaglasnost, setSelektovanaSaglasnost] =
+		useState<Saglasnost | null>();
+	const [selektovanaPotvrda, setSelektovanaPotvrda] =
+		useState<Potvrda | null>();
 
 	const handleCloseModal = () => setShowModal(false);
 	const handleShowModal = () => {
 		setShowModal(true);
 	};
 
-	useEffect(() => { }, []);
+	useEffect(() => {}, []);
 
 	const {
 		register,
@@ -133,7 +134,6 @@ const Pretraga = () => {
 	};
 
 	const preuzmiRDFPotvrda = (jmbg: string, brojDoze: number) => {
-		console.log(brojDoze);
 		axios
 			.get(
 				`http://localhost:8081/pretraga/nabaviMetaPodatkePotvrdaRDFPoJmbg/${jmbg}/${brojDoze}`,
@@ -149,12 +149,11 @@ const Pretraga = () => {
 				let blob = new Blob([res.data], {
 					type: "application/xml;charset=utf-8",
 				});
-				saveAs(blob, "RDF_" + jmbg + "_" + brojDoze + ".rdf");
+				saveAs(blob, "RDF_Potvrda" + jmbg + "_" + brojDoze + ".rdf");
 			});
 	};
 
 	const preuzmiJSONPotvrda = (jmbg: string, brojDoze: number) => {
-		console.log(brojDoze);
 		axios
 			.get(
 				`http://localhost:8081/pretraga/nabaviMetaPodatkePotvrdaJSONPoJmbg/${jmbg}/${brojDoze}`,
@@ -170,7 +169,97 @@ const Pretraga = () => {
 				let blob = new Blob([res.data], {
 					type: "application/json;charset=utf-8",
 				});
-				saveAs(blob, "JSON_" + jmbg + "_" + brojDoze + ".json");
+				saveAs(blob, "JSON_Potvrda" + jmbg + "_" + brojDoze + ".json");
+			});
+	};
+
+	const preuzmiRDFSaglasnost = (saglasnost: Saglasnost) => {
+		let id = "";
+		if (
+			saglasnost["sa:PacijentSaglasnost"]["sa:LicneInformacije"][
+				"sa:Drzavljanstvo"
+			]["sa:RepublikaSrbija"] == null
+		) {
+			id =
+				saglasnost["sa:PacijentSaglasnost"]["sa:LicneInformacije"][
+					"sa:Drzavljanstvo"
+				]["sa:StranoDrzavljanstvo"]["sa:BrojPasosa"];
+		} else {
+			id =
+				saglasnost["sa:PacijentSaglasnost"]["sa:LicneInformacije"][
+					"sa:Drzavljanstvo"
+				]["sa:RepublikaSrbija"]["sa:JMBG"];
+		}
+		let brojDoze = Array.isArray(
+			saglasnost["sa:ZdravstveniRadnikSaglasnost"]["sa:Obrazac"][
+				"sa:VakcineInfo"
+			]
+		)
+			? saglasnost["sa:ZdravstveniRadnikSaglasnost"]["sa:Obrazac"][
+					"sa:VakcineInfo"
+			  ].length
+			: 1;
+		axios
+			.get(
+				`http://localhost:8081/pretraga/nabaviMetaPodatkeSaglasnostRDFPoId/${id}/${brojDoze}`,
+				{
+					headers: {
+						"Content-Type": "application/xml",
+						"Access-Control-Allow-Origin": "*",
+					},
+					responseType: "blob",
+				}
+			)
+			.then((res: any) => {
+				let blob = new Blob([res.data], {
+					type: "application/xml;charset=utf-8",
+				});
+				saveAs(blob, "RDF_Saglasnost" + id + "_" + brojDoze + ".rdf");
+			});
+	};
+
+	const preuzmiJSONSaglasnost = (saglasnost: Saglasnost) => {
+		let id = "";
+		if (
+			saglasnost["sa:PacijentSaglasnost"]["sa:LicneInformacije"][
+				"sa:Drzavljanstvo"
+			]["sa:RepublikaSrbija"] == null
+		) {
+			id =
+				saglasnost["sa:PacijentSaglasnost"]["sa:LicneInformacije"][
+					"sa:Drzavljanstvo"
+				]["sa:StranoDrzavljanstvo"]["sa:BrojPasosa"];
+		} else {
+			id =
+				saglasnost["sa:PacijentSaglasnost"]["sa:LicneInformacije"][
+					"sa:Drzavljanstvo"
+				]["sa:RepublikaSrbija"]["sa:JMBG"];
+		}
+		let brojDoze = Array.isArray(
+			saglasnost["sa:ZdravstveniRadnikSaglasnost"]["sa:Obrazac"][
+				"sa:VakcineInfo"
+			]
+		)
+			? saglasnost["sa:ZdravstveniRadnikSaglasnost"]["sa:Obrazac"][
+					"sa:VakcineInfo"
+			  ].length
+			: 1;
+		axios
+			.get(
+				`http://localhost:8081/pretraga/nabaviMetaPodatkeSaglasnostJSONPoId/${id}/${brojDoze}`,
+				{
+					headers: {
+						"Content-Type": "application/xml",
+						"Access-Control-Allow-Origin": "*",
+					},
+					responseType: "blob",
+				}
+			)
+			.then((res: any) => {
+				let blob = new Blob([res.data], {
+					type: "application/json;charset=utf-8",
+				});
+				saveAs(blob, "JSON_Saglasnost" + id + "_" + brojDoze + ".json");
 			});
 	};
 
@@ -314,11 +403,14 @@ const Pretraga = () => {
 							return (
 								<tr>
 									<th scope="row">
-										<Button variant="primary" onClick={() => {
-											setSelektovanaSaglasnost(null);
-											setSelektovanaPotvrda(potvrda);
-											setShowModal(true);
-										}}>
+										<Button
+											variant="primary"
+											onClick={() => {
+												setSelektovanaSaglasnost(null);
+												setSelektovanaPotvrda(potvrda);
+												setShowModal(true);
+											}}
+										>
 											Otvori
 										</Button>
 									</th>
@@ -334,10 +426,9 @@ const Pretraga = () => {
 												preuzmiRDFPotvrda(
 													potvrda["po:LicneInformacije"]["po:JMBG"],
 													Array.isArray(potvrda["po:InformacijeOVakcinama"])
-														? (potvrda["po:LicneInformacije"]["po:JMBG"],
-															potvrda["po:InformacijeOVakcinama"][
-															["po:InformacijeOVakcinama"].length - 1
-															]["po:BrojDoze"])
+														? potvrda["po:InformacijeOVakcinama"][
+																["po:InformacijeOVakcinama"].length - 1
+														  ]["po:BrojDoze"]
 														: potvrda["po:InformacijeOVakcinama"]["po:BrojDoze"]
 												)
 											}
@@ -352,10 +443,9 @@ const Pretraga = () => {
 												preuzmiJSONPotvrda(
 													potvrda["po:LicneInformacije"]["po:JMBG"],
 													Array.isArray(potvrda["po:InformacijeOVakcinama"])
-														? (potvrda["po:LicneInformacije"]["po:JMBG"],
-															potvrda["po:InformacijeOVakcinama"][
-															["po:InformacijeOVakcinama"].length - 1
-															]["po:BrojDoze"])
+														? potvrda["po:InformacijeOVakcinama"][
+																["po:InformacijeOVakcinama"].length - 1
+														  ]["po:BrojDoze"]
 														: potvrda["po:InformacijeOVakcinama"]["po:BrojDoze"]
 												)
 											}
@@ -367,25 +457,55 @@ const Pretraga = () => {
 							);
 						})}
 
-					{pronadjeneSaglasnosti && pronadjeneSaglasnosti.map((saglasnost: Saglasnost) => {
-						console.log(pronadjeneSaglasnosti)
-						return (
-							<tr>
-								<th scope="row">
-									<Button variant="primary" onClick={() => {
-										setSelektovanaPotvrda(null);
-										setSelektovanaSaglasnost(saglasnost);
-										setShowModal(true);
-									}}>
-										Otvori
-									</Button>
-								</th>
-								<td>Saglasnost za imunizaciju</td>
-								<td>{saglasnost["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:PunoIme"]["ct:Ime"]}  {saglasnost["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:PunoIme"]["ct:Prezime"]}</td>
-							</tr>
-						)
-					})}
-
+					{pronadjeneSaglasnosti &&
+						pronadjeneSaglasnosti.map((saglasnost: Saglasnost) => {
+							console.log(pronadjeneSaglasnosti);
+							return (
+								<tr>
+									<th scope="row">
+										<Button
+											variant="primary"
+											onClick={() => {
+												setSelektovanaPotvrda(null);
+												setSelektovanaSaglasnost(saglasnost);
+												setShowModal(true);
+											}}
+										>
+											Otvori
+										</Button>
+									</th>
+									<td>Saglasnost za imunizaciju</td>
+									<td>
+										{
+											saglasnost["sa:PacijentSaglasnost"][
+												"sa:LicneInformacije"
+											]["sa:PunoIme"]["ct:Ime"]
+										}{" "}
+										{
+											saglasnost["sa:PacijentSaglasnost"][
+												"sa:LicneInformacije"
+											]["sa:PunoIme"]["ct:Prezime"]
+										}
+									</td>
+									<td>
+										<Button
+											variant="primary"
+											onClick={() => preuzmiRDFSaglasnost(saglasnost)}
+										>
+											Preuzmi
+										</Button>
+									</td>
+									<td>
+										<Button
+											variant="primary"
+											onClick={() => preuzmiJSONSaglasnost(saglasnost)}
+										>
+											Preuzmi
+										</Button>
+									</td>
+								</tr>
+							);
+						})}
 
 					<Modal isOpen={showModal} toggle={toggle}>
 						<ModalHeader toggle={toggle}>
@@ -393,160 +513,228 @@ const Pretraga = () => {
 							{selektovanaSaglasnost && <div>Saglasnost za imunizaciju</div>}
 						</ModalHeader>
 						<ModalBody>
-
-							{selektovanaPotvrda && <div>
-								<Label>Ime:</Label>
-								<Input
-									type="text"
-									readOnly
-									placeholder={selektovanaPotvrda["po:LicneInformacije"]["po:PunoIme"]["ct:Ime"]}
-								/>
-								<Label>Prezime:</Label>
-								<Input
-									type="text"
-									readOnly
-									placeholder={selektovanaPotvrda["po:LicneInformacije"]["po:PunoIme"]["ct:Prezime"]}
-								/>
-								<Label>Pol:</Label>
-								<Input
-									type="text"
-									readOnly
-									placeholder={selektovanaPotvrda["po:LicneInformacije"]["po:Pol"]}
-								/>
-								<Label>Datum rodjenja:</Label>
-								<Input
-									type="text"
-									readOnly
-									placeholder={selektovanaPotvrda["po:LicneInformacije"]["po:DatumRodjenja"]}
-								/>
-								<Label>Datum izdavanja:</Label>
-								<Input
-									type="text"
-									readOnly
-									placeholder={selektovanaPotvrda["po:DatumIzdavanja"]}
-								/>
-								<Label>Vakcina:</Label>
-								<Input
-									type="text"
-									readOnly
-									placeholder={selektovanaPotvrda["po:VakcinaPrveDveDoze"]}
-								/>
-								<br></br>
-								<CardTitle tag="h4">Doze:</CardTitle>
-								{Array.isArray(selektovanaPotvrda["po:InformacijeOVakcinama"]) ? selektovanaPotvrda["po:InformacijeOVakcinama"].map(element => {
-									<div>
-										<Label>Datum:</Label>
-										<Input
-											type="text"
-											readOnly
-											placeholder={element["po:DatumDavanja"]}
-										/>
-										<Label>Serija:</Label>
-										<Input
-											type="text"
-											readOnly
-											placeholder={element["po:Serija"]}
-										/>
-									</div>
-								}) : <div>
-									<Label>Datum:</Label>
+							{selektovanaPotvrda && (
+								<div>
+									<Label>Ime:</Label>
 									<Input
 										type="text"
 										readOnly
-										placeholder={selektovanaPotvrda["po:InformacijeOVakcinama"]["po:DatumDavanja"]}
+										placeholder={
+											selektovanaPotvrda["po:LicneInformacije"]["po:PunoIme"][
+												"ct:Ime"
+											]
+										}
 									/>
-									<Label>Serija:</Label>
+									<Label>Prezime:</Label>
 									<Input
 										type="text"
 										readOnly
-										placeholder={selektovanaPotvrda["po:InformacijeOVakcinama"]["po:Serija"]}
+										placeholder={
+											selektovanaPotvrda["po:LicneInformacije"]["po:PunoIme"][
+												"ct:Prezime"
+											]
+										}
 									/>
-								</div>}
-							</div>
-							}
+									<Label>Pol:</Label>
+									<Input
+										type="text"
+										readOnly
+										placeholder={
+											selektovanaPotvrda["po:LicneInformacije"]["po:Pol"]
+										}
+									/>
+									<Label>Datum rodjenja:</Label>
+									<Input
+										type="text"
+										readOnly
+										placeholder={
+											selektovanaPotvrda["po:LicneInformacije"][
+												"po:DatumRodjenja"
+											]
+										}
+									/>
+									<Label>Datum izdavanja:</Label>
+									<Input
+										type="text"
+										readOnly
+										placeholder={selektovanaPotvrda["po:DatumIzdavanja"]}
+									/>
+									<Label>Vakcina:</Label>
+									<Input
+										type="text"
+										readOnly
+										placeholder={selektovanaPotvrda["po:VakcinaPrveDveDoze"]}
+									/>
+									<br></br>
+									<CardTitle tag="h4">Doze:</CardTitle>
+									{Array.isArray(
+										selektovanaPotvrda["po:InformacijeOVakcinama"]
+									) ? (
+										selektovanaPotvrda["po:InformacijeOVakcinama"].map(
+											(element) => {
+												<div>
+													<Label>Datum:</Label>
+													<Input
+														type="text"
+														readOnly
+														placeholder={element["po:DatumDavanja"]}
+													/>
+													<Label>Serija:</Label>
+													<Input
+														type="text"
+														readOnly
+														placeholder={element["po:Serija"]}
+													/>
+												</div>;
+											}
+										)
+									) : (
+										<div>
+											<Label>Datum:</Label>
+											<Input
+												type="text"
+												readOnly
+												placeholder={
+													selektovanaPotvrda["po:InformacijeOVakcinama"][
+														"po:DatumDavanja"
+													]
+												}
+											/>
+											<Label>Serija:</Label>
+											<Input
+												type="text"
+												readOnly
+												placeholder={
+													selektovanaPotvrda["po:InformacijeOVakcinama"][
+														"po:Serija"
+													]
+												}
+											/>
+										</div>
+									)}
+								</div>
+							)}
 
-							{selektovanaSaglasnost && <div>
-								<CardTitle tag="h4">Pacijent:</CardTitle>
-								<Label>Ime:</Label>
-								<Input
-									type="text"
-									readOnly
-									placeholder={selektovanaSaglasnost["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:PunoIme"]["ct:Ime"]}
-								/>
-								<Label>Prezime:</Label>
-								<Input
-									type="text"
-									readOnly
-									placeholder={selektovanaSaglasnost["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:PunoIme"]["ct:Prezime"]}
-								/>
-								<Label>Pol:</Label>
-								<Input
-									type="text"
-									readOnly
-									placeholder={selektovanaSaglasnost["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:Pol"]}
-								/>
-								<Label>JMBG:</Label>
-								<Input
-									type="text"
-									readOnly
-									placeholder={selektovanaSaglasnost["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:Drzavljanstvo"]["sa:RepublikaSrbija"]["sa:JMBG"].toString()}
-								/>
-								<Label>Datum rodjenja:</Label>
-								<Input
-									type="text"
-									readOnly
-									placeholder={selektovanaSaglasnost["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:DatumRodjenja"]}
-								/>
-								<br></br>
-								<CardTitle tag="h4">Zdravstvene informacije:</CardTitle>
-								<Label>Zdravstvena ustanova:</Label>
-								<Input
-									type="text"
-									readOnly
-									placeholder={selektovanaSaglasnost["sa:ZdravstveniRadnikSaglasnost"]["sa:ZdravstvenaUstanova"]}
-								/>
-								<Label>Vakcinacijski punkt:</Label>
-								<Input
-									type="text"
-									readOnly
-									placeholder={selektovanaSaglasnost["sa:ZdravstveniRadnikSaglasnost"]["sa:VakcinacijskiPunkt"]}
-								/>
-								<Label>Naziv imunoloskog leka:</Label>
-								<Input
-									type="text"
-									readOnly
-									placeholder={selektovanaSaglasnost["sa:PacijentSaglasnost"]["sa:Imunizacija"]["sa:NazivImunoloskogLeka"]}
-								/>
+							{selektovanaSaglasnost && (
+								<div>
+									<CardTitle tag="h4">Pacijent:</CardTitle>
+									<Label>Ime:</Label>
+									<Input
+										type="text"
+										readOnly
+										placeholder={
+											selektovanaSaglasnost["sa:PacijentSaglasnost"][
+												"sa:LicneInformacije"
+											]["sa:PunoIme"]["ct:Ime"]
+										}
+									/>
+									<Label>Prezime:</Label>
+									<Input
+										type="text"
+										readOnly
+										placeholder={
+											selektovanaSaglasnost["sa:PacijentSaglasnost"][
+												"sa:LicneInformacije"
+											]["sa:PunoIme"]["ct:Prezime"]
+										}
+									/>
+									<Label>Pol:</Label>
+									<Input
+										type="text"
+										readOnly
+										placeholder={
+											selektovanaSaglasnost["sa:PacijentSaglasnost"][
+												"sa:LicneInformacije"
+											]["sa:Pol"]
+										}
+									/>
+									<Label>JMBG:</Label>
+									<Input
+										type="text"
+										readOnly
+										placeholder={selektovanaSaglasnost["sa:PacijentSaglasnost"][
+											"sa:LicneInformacije"
+										]["sa:Drzavljanstvo"]["sa:RepublikaSrbija"][
+											"sa:JMBG"
+										].toString()}
+									/>
+									<Label>Datum rodjenja:</Label>
+									<Input
+										type="text"
+										readOnly
+										placeholder={
+											selektovanaSaglasnost["sa:PacijentSaglasnost"][
+												"sa:LicneInformacije"
+											]["sa:DatumRodjenja"]
+										}
+									/>
+									<br></br>
+									<CardTitle tag="h4">Zdravstvene informacije:</CardTitle>
+									<Label>Zdravstvena ustanova:</Label>
+									<Input
+										type="text"
+										readOnly
+										placeholder={
+											selektovanaSaglasnost["sa:ZdravstveniRadnikSaglasnost"][
+												"sa:ZdravstvenaUstanova"
+											]
+										}
+									/>
+									<Label>Vakcinacijski punkt:</Label>
+									<Input
+										type="text"
+										readOnly
+										placeholder={
+											selektovanaSaglasnost["sa:ZdravstveniRadnikSaglasnost"][
+												"sa:VakcinacijskiPunkt"
+											]
+										}
+									/>
+									<Label>Naziv imunoloskog leka:</Label>
+									<Input
+										type="text"
+										readOnly
+										placeholder={
+											selektovanaSaglasnost["sa:PacijentSaglasnost"][
+												"sa:Imunizacija"
+											]["sa:NazivImunoloskogLeka"]
+										}
+									/>
 
-								<br></br>
-								<CardTitle tag="h4">Lekar:</CardTitle>
-								<Label>Ime lekara:</Label>
-								<Input
-									type="text"
-									readOnly
-									placeholder={selektovanaSaglasnost["sa:ZdravstveniRadnikSaglasnost"]["sa:LicneInformacijeLekara"]["sa:PunoIme"]["ct:Ime"]}
-								/>
-								<Label>Prezime lekara:</Label>
-								<Input
-									type="text"
-									readOnly
-									placeholder={selektovanaSaglasnost["sa:ZdravstveniRadnikSaglasnost"]["sa:LicneInformacijeLekara"]["sa:PunoIme"]["ct:Prezime"]}
-								/>
-							</div>
-							}
-
-
+									<br></br>
+									<CardTitle tag="h4">Lekar:</CardTitle>
+									<Label>Ime lekara:</Label>
+									<Input
+										type="text"
+										readOnly
+										placeholder={
+											selektovanaSaglasnost["sa:ZdravstveniRadnikSaglasnost"][
+												"sa:LicneInformacijeLekara"
+											]["sa:PunoIme"]["ct:Ime"]
+										}
+									/>
+									<Label>Prezime lekara:</Label>
+									<Input
+										type="text"
+										readOnly
+										placeholder={
+											selektovanaSaglasnost["sa:ZdravstveniRadnikSaglasnost"][
+												"sa:LicneInformacijeLekara"
+											]["sa:PunoIme"]["ct:Prezime"]
+										}
+									/>
+								</div>
+							)}
 						</ModalBody>
 						<ModalFooter>
-							<Button color="primary">Preuzmi PDF</Button>
-							{' '}
+							<Button color="primary">Preuzmi PDF</Button>{" "}
 							<Button color="primary">Preuzmi XHTML</Button>
 						</ModalFooter>
 					</Modal>
 				</tbody>
 			</Table>
 		</div>
-	)
+	);
 };
 
 export default Pretraga;
