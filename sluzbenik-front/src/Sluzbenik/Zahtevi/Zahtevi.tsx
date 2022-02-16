@@ -36,8 +36,9 @@ toast.configure();
 const Zahtevi = () => {
 	const customId = "zahtevi";
 
-	const [neodobreniZahtevi, setNeodobreniZahtevi] =
-		useState<Array<Zahtev> | null>(null);
+	const [neodobreniZahtevi, setNeodobreniZahtevi] = useState<
+		Array<Zahtev> | null | undefined
+	>(null);
 
 	const [selektovaniZahtev, setSelectovaniZahtev] = useState<Zahtev | null>(
 		null
@@ -266,12 +267,10 @@ const Zahtevi = () => {
 		<div>
 			<SluzbenikNavbar />
 			<div>
-				{neodobreniZahtevi !== null && neodobreniZahtevi.length === 0 && (
-					<Container style={{ paddingTop: "55px" }}>
-						<h1>Trenutno nemaju zahtevi za obradu.</h1>
-					</Container>
+				{(neodobreniZahtevi == null || neodobreniZahtevi.length === 0) && (
+					<p>Trenutno nemaju zahtevi za obradu.</p>
 				)}
-				{neodobreniZahtevi !== null && neodobreniZahtevi.length > 0 && (
+				{neodobreniZahtevi != null && neodobreniZahtevi.length > 0 && (
 					<Container style={{ paddingTop: "55px" }}>
 						<ListGroup>
 							{neodobreniZahtevi.map((zahtev: Zahtev) => {
