@@ -100,7 +100,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/potvrda/nabaviMetaPodatkeRDFPoJmbg/{jmbg}/{brojDoze}").hasAnyAuthority(RoleKonstante.ROLE_GRADJANIN, RoleKonstante.ROLE_SLUZBENIK)
 				.antMatchers("/potvrda/dobaviPoslednjuPotvrduPoJmbg/{jmbg}").hasAuthority(RoleKonstante.ROLE_SLUZBENIK)
 				.antMatchers("/potvrda/generisiXhtml/{jmbg}/{brojDoze}").hasAnyAuthority(RoleKonstante.ROLE_GRADJANIN, RoleKonstante.ROLE_SLUZBENIK)
-				.antMatchers("/potvrda/generisiPdf/{jmbg}/{brojDoze}").hasAnyAuthority(RoleKonstante.ROLE_GRADJANIN, RoleKonstante.ROLE_SLUZBENIK)
+				.antMatchers("/potvrda/generisiPdf/{jmbg}/{brojDoze}").permitAll()
 				.antMatchers("/potvrda/pronadjiSveOsnovnaPretraga/{pretraga}").hasAuthority(RoleKonstante.ROLE_SLUZBENIK)
 				.antMatchers("/potvrda/pronadjiSveNaprednaPretraga").hasAuthority(RoleKonstante.ROLE_SLUZBENIK)
 				

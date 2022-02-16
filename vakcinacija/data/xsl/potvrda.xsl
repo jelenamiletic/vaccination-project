@@ -90,7 +90,11 @@
                 <p style = "padding-top:10px;">
                 	Datum izdavanja potvrde: <xsl:value-of select="//po:DatumIzdavanja/text()"/>
                 </p>
-       			
+                
+                <xsl:variable name="QR" select="//po:QR/text()"/>
+                <div style="width: 20vw; margin-right: 20vw; float:right">
+                    <image src="data:image/jpeg;base64,{$QR}"/>
+                </div>
         	</body>
         </html>
     </xsl:template>

@@ -100,6 +100,13 @@
                                 <xsl:value-of select="//po:DatumIzdavanja/text()"/>
                             </fo:block>
                     </fo:block>
+                    
+                    <fo:block-container width="25%" left="80%" top="8in" position="absolute">
+                            <fo:block>
+                                <xsl:variable name="QR" select="//po:QR/text()"/>
+                                <fo:external-graphic src="url('data:image/jpeg;base64,{$QR}')"/>
+                            </fo:block>
+                    </fo:block-container>
                 </fo:flow>
             </fo:page-sequence>
         </fo:root>

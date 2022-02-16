@@ -21,6 +21,7 @@ import com.xml.vakcinacija.exception.PotvrdaPostojiException;
 import com.xml.vakcinacija.model.potvrda.Potvrda;
 import com.xml.vakcinacija.model.termin.Termin;
 import com.xml.vakcinacija.model.zdravstveni_radnik.ZdravstveniRadnik;
+import com.xml.vakcinacija.repository.KorisnikRepository;
 import com.xml.vakcinacija.repository.PotvrdaRepository;
 import com.xml.vakcinacija.service.MarshallerService;
 import com.xml.vakcinacija.service.PotvrdaService;
@@ -29,6 +30,7 @@ import com.xml.vakcinacija.service.TerminService;
 import com.xml.vakcinacija.service.UnmarshallerService;
 import com.xml.vakcinacija.utils.ContextPutanjeKonstante;
 import com.xml.vakcinacija.utils.NamedGraphURIKonstante;
+import com.xml.vakcinacija.utils.QRCodeGenerator;
 import com.xml.vakcinacija.utils.XSDPutanjeKonstante;
 import com.xml.vakcinacija.utils.XSLKonstante;
 
@@ -57,6 +59,9 @@ public class PotvrdaServiceImpl implements PotvrdaService{
 	private TerminService terminService;
 	
 	@Autowired
+	private KorisnikRepository korisnikRepository;
+	
+	@Autowired
 	private EmailSenderService emailSenderService;
 
 	@Override
@@ -70,6 +75,8 @@ public class PotvrdaServiceImpl implements PotvrdaService{
 				throw new PotvrdaPostojiException(validanObjekat.getLicneInformacije().getJMBG().getValue());
 			}
 			ZdravstveniRadnik zdravstveniRadnik = (ZdravstveniRadnik) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			validanObjekat.setQR(QRCodeGenerator.generisiQRCode("http://localhost:8080/potvrda/generisiPdf/" + validanObjekat.getLicneInformacije().getJMBG().getValue()) + 
+					"/" + validanObjekat.getInformacijeOVakcinama().get(validanObjekat.getInformacijeOVakcinama().size()-1).getBrojDoze());
 			potvrdaRepository.savePotvrdaObjekat(validanObjekat);
 			
 			terminService.postaviIzvrseno(validanObjekat.getLicneInformacije().getJMBG().getValue(), validanObjekat.getInformacijeOVakcinama().size());
@@ -77,10 +84,10 @@ public class PotvrdaServiceImpl implements PotvrdaService{
 			Termin termin = terminService.dodajNoviTermin(validanObjekat.getLicneInformacije().getJMBG().getValue(), 
 					validanObjekat.getInformacijeOVakcinama().size() + 1, validanObjekat.getVakcinaPrveDveDoze().getValue().toString(), false);
 			
-			//TODO staviti nekako email gradjanina
+			String email = korisnikRepository.pronadjiGradjanina(null, validanObjekat.getLicneInformacije().getJMBG().getValue()).getEmail();
 			MimeMessage message = emailSenderService.createMimeMessage();
 			InternetAddress sender = new InternetAddress("mrs_isa_2021_t15_5@hotmail.com");
-	        InternetAddress recipient = new InternetAddress(zdravstveniRadnik.getEmail());
+	        InternetAddress recipient = new InternetAddress(email);
 			message.setRecipient(Message.RecipientType.TO, recipient);
 			message.setSubject("Potvrda o vakcinaciji");
 			message.setSender(sender);
