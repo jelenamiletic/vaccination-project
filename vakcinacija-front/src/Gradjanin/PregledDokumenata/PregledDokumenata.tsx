@@ -83,7 +83,7 @@ const PregledDokumenata = () => {
 					break;
 				case "sertifikat":
 					let temp3: SertifikatXML = result[Object.keys(result)[1]];
-					setDocuments([temp2]);
+					setDocuments([temp3]);
 					break;
 			}	
 			
