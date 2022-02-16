@@ -22,13 +22,13 @@ public interface SaglasnostService {
 	
 	ByteArrayInputStream nabaviMetaPodatkeRDFPoId(String id) throws IOException, Exception;
 
-	ByteArrayInputStream generisiPdf(String jmbg) throws Exception;
-
-	ByteArrayInputStream generisiXhtml(String jmbg) throws Exception;
+	ByteArrayInputStream generisiPdf(String id, int brojDoze) throws Exception;
 	
 	String pronadjiSveOsnovnaPretraga(String pretraga) throws Exception;
 	
 	String pronadjiSveNaprednaPretraga(String ime, String prezime, String jmbg, String Pol) throws Exception;
 
 	Saglasnost pronadjiNajnovijuPunuSaglasnostPoJmbgIliBrPasosa(String id) throws Exception;
+
+	ByteArrayInputStream generisiXhtml(String id, int brojDoze) throws Exception;
 }

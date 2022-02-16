@@ -93,15 +93,15 @@ public class SaglasnostController {
 		return new ResponseEntity<>(new InputStreamResource(saglasnostService.nabaviMetaPodatkeRDFPoId(about)), HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/generisiXhtml/{jmbg}", produces = MediaType.TEXT_HTML_VALUE)
+	@GetMapping(value = "/generisiXhtml/{jmbg}/{brojDoze}", produces = MediaType.TEXT_HTML_VALUE)
 	@PreAuthorize("hasAnyRole('ROLE_GRADJANIN', 'ROLE_SLUZBENIK')")
-	public ResponseEntity<InputStreamResource> generisiXHTML(@PathVariable String jmbg) throws Exception {
-		return new ResponseEntity<>(new InputStreamResource(saglasnostService.generisiXhtml(jmbg)), HttpStatus.OK);
+	public ResponseEntity<InputStreamResource> generisiXHTML(@PathVariable String jmbg, @PathVariable int brojDoze) throws Exception {
+		return new ResponseEntity<>(new InputStreamResource(saglasnostService.generisiXhtml(jmbg, brojDoze)), HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/generisiPdf/{jmbg}", produces = MediaType.TEXT_HTML_VALUE)
+	@GetMapping(value = "/generisiPdf/{jmbg}/{brojDoze}", produces = MediaType.TEXT_HTML_VALUE)
 	@PreAuthorize("hasAnyRole('ROLE_GRADJANIN', 'ROLE_SLUZBENIK')")
-	public ResponseEntity<InputStreamResource> generisiPdf(@PathVariable String jmbg) throws Exception {
-		return new ResponseEntity<>(new InputStreamResource(saglasnostService.generisiPdf(jmbg)), HttpStatus.OK);
+	public ResponseEntity<InputStreamResource> generisiPdf(@PathVariable String jmbg, @PathVariable int brojDoze) throws Exception {
+		return new ResponseEntity<>(new InputStreamResource(saglasnostService.generisiPdf(jmbg, brojDoze)), HttpStatus.OK);
 	}
 }

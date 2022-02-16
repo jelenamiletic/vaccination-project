@@ -77,15 +77,15 @@ public class PotvrdaController {
 		return new ResponseEntity<>(potvrdaService.dobaviPoslednjuPotvrduPoJmbg(jmbg), HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/generisiXhtml/{jmbg}", produces = MediaType.TEXT_HTML_VALUE)
+	@GetMapping(value = "/generisiXhtml/{jmbg}/{brojDoze}", produces = MediaType.TEXT_HTML_VALUE)
 	@PreAuthorize("hasAnyRole('ROLE_GRADJANIN', 'ROLE_SLUZBENIK')")
-	public ResponseEntity<InputStreamResource> generisiXHTML(@PathVariable String jmbg) throws Exception {
-		return new ResponseEntity<>(new InputStreamResource(potvrdaService.generisiXHTML(jmbg)), HttpStatus.OK);
+	public ResponseEntity<InputStreamResource> generisiXHTML(@PathVariable String jmbg, @PathVariable int brojDoze) throws Exception {
+		return new ResponseEntity<>(new InputStreamResource(potvrdaService.generisiXHTML(jmbg, brojDoze)), HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/generisiPdf/{jmbg}", produces = MediaType.TEXT_HTML_VALUE)
+	@GetMapping(value = "/generisiPdf/{jmbg}/{brojDoze}", produces = MediaType.TEXT_HTML_VALUE)
 	@PreAuthorize("hasAnyRole('ROLE_GRADJANIN', 'ROLE_SLUZBENIK')")
-	public ResponseEntity<InputStreamResource> generisiPdf(@PathVariable String jmbg) throws Exception {
-		return new ResponseEntity<>(new InputStreamResource(potvrdaService.generisiPdf(jmbg)), HttpStatus.OK);
+	public ResponseEntity<InputStreamResource> generisiPdf(@PathVariable String jmbg, @PathVariable int brojDoze) throws Exception {
+		return new ResponseEntity<>(new InputStreamResource(potvrdaService.generisiPdf(jmbg, brojDoze)), HttpStatus.OK);
 	}
 }

@@ -172,9 +172,10 @@ const SaglasnostGradjanin = () => {
 
 
 	const downloadXHTML = () => {
+
 		axios
 			.get(
-				`http://localhost:8080/saglasnost/generisiXhtml/${ getJMBG() }`,
+				`http://localhost:8080/saglasnost/generisiXhtml/${ getJMBG() }/${0}`,
 				{
 					headers: {
 						"Access-Control-Allow-Origin": "*",
@@ -201,9 +202,10 @@ const SaglasnostGradjanin = () => {
 	};
 
 	const downloadPdf = () => {
+
 		axios
 			.get(
-				`http://localhost:8080/saglasnost/generisiPdf/${ getJMBG() }`,
+				`http://localhost:8080/saglasnost/generisiPdf/${ getJMBG() }/${0}`,
 				{
 					headers: {
 						"Access-Control-Allow-Origin": "*",
@@ -408,23 +410,27 @@ const SaglasnostGradjanin = () => {
 						<CardBody>
 							<CardTitle tag="h2">Saglasnost</CardTitle>
 							<Label style={{ display: "block" }}>Vec ste popunili sve saglasnosti</Label>
-							<Button
-							className="registruj-login-btn"
-							color="primary"
-							type="button"
-							style={{ marginRight: "1em" }}
-							onClick={() => downloadXHTML()}
-							>
-								Skidanje XHTML
-							</Button>
-							<Button
-								className="registruj-login-btn"
-								color="primary"
-								type="button"
-								onClick={() => downloadPdf()}
-							>
-								Skidanje PDF
-							</Button>
+							{drzavljanstvo === 'Drzavljanin Republike Srbije' &&
+								<div>
+									<Button
+										className="registruj-login-btn"
+										color="primary"
+										type="button"
+										style={{ marginRight: "1em" }}
+										onClick={() => downloadXHTML()}
+										>
+										Skidanje XHTML
+									</Button>
+									<Button
+										className="registruj-login-btn"
+										color="primary"
+										type="button"
+										onClick={() => downloadPdf()}
+									>
+									Skidanje PDF
+								</Button>
+								</div>
+							}
 						</CardBody>
 				</Card>
 			}
