@@ -24,6 +24,7 @@ import {
 } from "reactstrap";
 import { Potvrda } from "../../Models/Potvrda";
 import { Saglasnost } from "../../Models/Saglasnost/Saglasnost";
+import { Sertifikat } from "../../Models/Sertifikat";
 import SluzbenikNavbar from "../../Navbars/SluzbenikNavbar";
 import "./Pretraga.css";
 
@@ -45,6 +46,7 @@ const Pretraga = () => {
 	const customId = "pretraga";
 
 	const [pronadjenePotvrde, setPronadjenePotvrde] = useState<Array<Potvrda>>();
+	const [pronadjeniSertifikati, setPronadjeniSertifikati] = useState<Array<Sertifikat>>();
 	const [pronadjeneSaglasnosti, setPronadjeneSaglasnosti] =
 		useState<Array<Saglasnost>>();
 
@@ -56,6 +58,8 @@ const Pretraga = () => {
 		useState<Saglasnost | null>();
 	const [selektovanaPotvrda, setSelektovanaPotvrda] =
 		useState<Potvrda | null>();
+	const [selektovaniSertifikat, setSelektovaniSertifikat] =
+		useState<any | null>();
 
 	const handleCloseModal = () => setShowModal(false);
 	const handleShowModal = () => {
@@ -86,20 +90,42 @@ const Pretraga = () => {
 				const parser = new XMLParser();
 				const result = parser.parse(res.data);
 				console.log(result);
-				if (!Array.isArray(result.Dokumenti.Potvrde["po:Potvrda"]))
-					setPronadjenePotvrde([
-						result.Dokumenti.Potvrde["po:Potvrda"] as Potvrda,
-					]);
-				else setPronadjenePotvrde(result.Dokumenti.Potvrde["po:Potvrda"]);
+				setPronadjenePotvrde(undefined);
+				setPronadjeneSaglasnosti(undefined);
+				setPronadjeniSertifikati(undefined);
+				if(result.Dokumenti.Potvrde){
+					if (!Array.isArray(result.Dokumenti.Potvrde["po:Potvrda"])){
+						setPronadjenePotvrde([
+							result.Dokumenti.Potvrde["po:Potvrda"] as Potvrda,
+						]);
+					} else  {
+						setPronadjenePotvrde(result.Dokumenti.Potvrde["po:Potvrda"]);
+					} 
+				}
 
-				if (!Array.isArray(result.Dokumenti.Saglasnosti["sa:Saglasnost"])) {
-					let Arr: Array<Saglasnost> = new Array<Saglasnost>();
-					Arr!.push(result.Dokumenti.Saglasnosti["sa:Saglasnost"]);
-					setPronadjeneSaglasnosti(Arr!);
-				} else
-					setPronadjeneSaglasnosti(
-						result.Dokumenti.Saglasnosti["sa:Saglasnost"]
-					);
+				if(result.Dokumenti.Saglasnosti){
+					if (!Array.isArray(result.Dokumenti.Saglasnosti["sa:Saglasnost"])) {
+						let Arr: Array<Saglasnost> = new Array<Saglasnost>();
+						Arr!.push(result.Dokumenti.Saglasnosti["sa:Saglasnost"]);
+						setPronadjeneSaglasnosti(Arr!);
+					} else{
+						setPronadjeneSaglasnosti(
+							result.Dokumenti.Saglasnosti["sa:Saglasnost"]
+						);
+					}
+				}
+
+				if(result.Dokumenti.Sertifikati){
+					if (!Array.isArray(result.Dokumenti.Sertifikati["se:Sertifikat"])) {
+						let Arr: Array<Sertifikat> = new Array<Sertifikat>();
+						Arr!.push(result.Dokumenti.Sertifikati["se:Sertifikat"]);
+						setPronadjeniSertifikati(Arr!);
+					} else{
+						setPronadjeniSertifikati(
+							result.Dokumenti.Sertifikati["se:Sertifikati"]
+						);
+					}
+				}
 			});
 	};
 
@@ -123,11 +149,16 @@ const Pretraga = () => {
 				const parser = new XMLParser();
 				const result = parser.parse(res.data);
 				console.log(result);
+				setPronadjenePotvrde(undefined);
+				setPronadjeneSaglasnosti(undefined);
+				setPronadjeniSertifikati(undefined);
 				if (result.Potvrde) {
 					setPronadjenePotvrde(result.Potvrde["po:Potvrda"]);
 				}
 				if (result.Saglasnosti) {
 					setPronadjeneSaglasnosti(result.Saglasnosti["sa:Saglasnost"]);
+				} else{
+					setPronadjeniSertifikati(result.Potvrde["se:Sertifikat"]);
 				}
 			});
 	};
@@ -297,6 +328,8 @@ const Pretraga = () => {
 			}
 
 			putanja = `http://localhost:8081/dokumenti/potvrdaGenerisiXhtml/${dokument["po:LicneInformacije"]["po:JMBG"]}/${brojDoze}`;
+		}else {
+			putanja = `http://localhost:8081/dokumenti/sertifikatGenerisiXhtml/${dokument["se:LicneInformacije"]["se:JMBG"]}`;
 		}
 
 		axios
@@ -322,6 +355,7 @@ const Pretraga = () => {
 	};
 
 	const downloadPdf = (dokument: any, tip: string) => {
+		console.log(dokument["se:Vakcinacija"])
 		let putanja = "";
 		if (tip === TipDokumenta.Saglasnost) {
 			let brojDoze = 0;
@@ -367,6 +401,8 @@ const Pretraga = () => {
 			}
 
 			putanja = `http://localhost:8081/dokumenti/potvrdaGenerisiPdf/${dokument["po:LicneInformacije"]["po:JMBG"]}/${brojDoze}`;
+		}else {
+			putanja = `http://localhost:8081/dokumenti/sertifikatGenerisiPdf/${dokument["se:LicneInformacije"]["se:JMBG"]}`;
 		}
 
 		axios
@@ -536,6 +572,7 @@ const Pretraga = () => {
 											onClick={() => {
 												setSelektovanaSaglasnost(null);
 												setSelektovanaPotvrda(potvrda);
+												setSelektovaniSertifikat(null);
 												setShowModal(true);
 											}}
 										>
@@ -582,6 +619,7 @@ const Pretraga = () => {
 											onClick={() => {
 												setSelektovanaPotvrda(null);
 												setSelektovanaSaglasnost(saglasnost);
+												setSelektovaniSertifikat(null);
 												setShowModal(true);
 											}}
 										>
@@ -631,11 +669,163 @@ const Pretraga = () => {
 							);
 						})}
 
+						{pronadjeniSertifikati && pronadjeniSertifikati.map((sertifikat: Sertifikat) => {
+							return (
+								<tr>
+									<th scope="row">
+										<Button
+											variant="primary"
+											onClick={() => {
+												setSelektovanaSaglasnost(null);
+												setSelektovanaPotvrda(null);
+												setSelektovaniSertifikat(sertifikat);
+												setShowModal(true);
+											}}
+										>
+											Otvori
+										</Button>
+									</th>
+									<td>Digitalni Zeleni Sertifikat</td>
+									<td>
+										{sertifikat["se:LicneInformacije"]["se:PunoIme"]["ct:Ime"]}{" "}
+										{sertifikat["se:LicneInformacije"]["se:PunoIme"]["ct:Prezime"]}
+									</td>
+									<td>
+										<Button
+											variant="primary"
+											onClick={() =>
+												preuzmiRDFMetapodatke(sertifikat, TipDokumenta.Sertifikat)
+											}
+										>
+											Preuzmi
+										</Button>
+									</td>
+									<td>
+										<Button
+											variant="primary"
+											onClick={() =>
+												preuzmiJSONMetapodatke(sertifikat, TipDokumenta.Sertifikat)
+											}
+										>
+											Preuzmi
+										</Button>
+									</td>
+								</tr>
+							);
+						})}
+
 					<Modal isOpen={showModal} toggle={toggle}>
 						<ModalHeader toggle={toggle}>
 							{selektovanaPotvrda && <div>Potvrda o vakcinaciji</div>}
 							{selektovanaSaglasnost && <div>Saglasnost za imunizaciju</div>}
+							{selektovaniSertifikat && <div>Digitalni zeleni sertifikat</div>}
 						</ModalHeader>
+						{selektovaniSertifikat && (
+							<div>
+								<ModalBody>
+									<Label>Ime:</Label>
+									<Input
+										type="text"
+										readOnly
+										placeholder={
+											selektovaniSertifikat["se:LicneInformacije"]["se:PunoIme"]["ct:Ime"]
+										}
+									/>
+									<Label>Prezime:</Label>
+									<Input
+										type="text"
+										readOnly
+										placeholder={
+											selektovaniSertifikat["se:LicneInformacije"]["se:PunoIme"]["ct:Prezime"]
+										}
+									/>
+									<Label>Pol:</Label>
+									<Input
+										type="text"
+										readOnly
+										placeholder={
+											selektovaniSertifikat["se:LicneInformacije"]["se:Pol"]
+										}
+									/>
+									<Label>Datum rodjenja:</Label>
+									<Input
+										type="text"
+										readOnly
+										placeholder={
+											selektovaniSertifikat["se:LicneInformacije"]["se:DatumRodjenja"]
+										}
+									/>
+									<Label>Datum izdavanja:</Label>
+									<Input
+										type="text"
+										readOnly
+										placeholder={selektovaniSertifikat["se:DatumVremeIzdavanja"]}
+									/>
+									<br></br>
+									<CardTitle tag="h4">Doze:</CardTitle>
+									{Array.isArray(
+										selektovaniSertifikat["se:Vakcinacija"]
+									) ? (
+										selektovaniSertifikat["se:Vakcinacija"].map(
+											(element) => {
+												<div>
+													<Label>Datum Davanja:</Label>
+													<Input
+														type="text"
+														readOnly
+														placeholder={element["se:DatumDavanja"]}
+													/>
+													<Label>TipVakcine:</Label>
+													<Input
+														type="text"
+														readOnly
+														placeholder={element["se:TipVakcine"]}
+													/>
+												</div>;
+											}
+										)
+									) : (
+										<div>
+											<Label>Datum:</Label>
+											<Input
+												type="text"
+												readOnly
+												placeholder={
+													selektovaniSertifikat["se:Vakcinacija"]["se:DatumDavanja"]
+												}
+											/>
+											<Label>Serija:</Label>
+											<Input
+												type="text"
+												readOnly
+												placeholder={
+													selektovaniSertifikat["se:Vakcinacija"]["se:TipVakcine"]
+												}
+											/>
+										</div>
+									)}
+								</ModalBody>
+								<ModalFooter>
+									<Button
+										color="primary"
+										onClick={() => {
+											downloadPdf(selektovaniSertifikat, TipDokumenta.Sertifikat);
+										}}
+									>
+										Preuzmi PDF
+									</Button>{" "}
+									<Button
+										color="primary"
+										onClick={() => {
+											downloadXHTML(selektovaniSertifikat, TipDokumenta.Sertifikat);
+										}}
+									>
+										Preuzmi XHTML
+									</Button>
+								</ModalFooter>
+							</div>
+						)}
+
 						{selektovanaPotvrda && (
 							<div>
 								<ModalBody>
