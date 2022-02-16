@@ -86,6 +86,15 @@ public class SertifikatServiceImpl implements SertifikatService {
     }
     
     @Override
+	public ByteArrayInputStream nabaviMetaPodatkeRDFPoJmbg(String jmbg) throws Exception {
+    	String sertifikatXml = sertifikatRepository.pronadjiSertifikatXmlPoJmbg(jmbg);
+        if(sertifikatXml == null){
+            throw new SertifikatNijePronadjenException(jmbg);
+        }
+        return rdfService.getMetadataRDF(sertifikatXml);
+	}
+    
+    @Override
 	public ByteArrayInputStream generisiPdf(String jmbg) throws Exception {
 		String sertifikatXml = sertifikatRepository.pronadjiSertifikatXmlPoJmbg(jmbg);
 		if (sertifikatXml == null) {

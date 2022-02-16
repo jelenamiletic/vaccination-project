@@ -268,7 +268,9 @@ const Zahtevi = () => {
 			<SluzbenikNavbar />
 			<div>
 				{(neodobreniZahtevi == null || neodobreniZahtevi.length === 0) && (
-					<p>Trenutno nemaju zahtevi za obradu.</p>
+					<Container style={{ paddingTop: "55px" }}>
+						<h1>Trenutno nemaju zahtevi za obradu.</h1>
+					</Container>
 				)}
 				{neodobreniZahtevi != null && neodobreniZahtevi.length > 0 && (
 					<Container style={{ paddingTop: "55px" }}>

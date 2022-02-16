@@ -13,6 +13,8 @@ public interface PotvrdaService {
 	List<Potvrda> pronadjiSve() throws Exception;
 	
 	ByteArrayInputStream nabaviMetaPodatkeJSONPoJmbg(String jmbg, int brojDoze) throws IOException;
+	
+	ByteArrayInputStream nabaviMetaPodatkeRDFPoJmbg(String jmbg, int brojDoze) throws IOException, Exception;
 
 	Potvrda pronadjiPotvrdaPoJmbg(String jmbg, int brojDoze) throws Exception;
 	

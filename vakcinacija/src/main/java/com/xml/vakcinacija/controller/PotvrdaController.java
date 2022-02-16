@@ -1,7 +1,6 @@
 package com.xml.vakcinacija.controller;
 
 import java.io.IOException;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
@@ -64,6 +63,12 @@ public class PotvrdaController {
 	@PreAuthorize("hasAnyRole('ROLE_GRADJANIN', 'ROLE_SLUZBENIK')")
 	public ResponseEntity<InputStreamResource> nabaviMetaPodatkeJSONPoJmbg(@PathVariable String jmbg, @PathVariable int brojDoze) throws IOException {
 		return new ResponseEntity<>(new InputStreamResource(potvrdaService.nabaviMetaPodatkeJSONPoJmbg(jmbg, brojDoze)), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/nabaviMetaPodatkeRDFPoJmbg/{jmbg}/{brojDoze}", produces = MediaType.APPLICATION_XML_VALUE)
+	@PreAuthorize("hasAnyRole('ROLE_GRADJANIN', 'ROLE_SLUZBENIK')")
+	public ResponseEntity<InputStreamResource> nabaviMetaPodatkeRDFPoJmbg(@PathVariable String jmbg, @PathVariable int brojDoze) throws Exception {
+		return new ResponseEntity<>(new InputStreamResource(potvrdaService.nabaviMetaPodatkeRDFPoJmbg(jmbg, brojDoze)), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/dobaviPoslednjuPotvrduPoJmbg/{jmbg}", produces = MediaType.APPLICATION_XML_VALUE)

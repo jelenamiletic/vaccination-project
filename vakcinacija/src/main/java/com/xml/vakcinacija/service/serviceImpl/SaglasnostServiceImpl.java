@@ -8,10 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import com.xml.vakcinacija.exception.SaglasnostNijePronadjenaException;
 import com.xml.vakcinacija.model.gradjanin.Gradjanin;
 import com.xml.vakcinacija.model.saglasnost.Saglasnost;
-import com.xml.vakcinacija.model.saglasnost.Saglasnost.PacijentSaglasnost.LicneInformacije.Drzavljanstvo.StranoDrzavljanstvo;
-import com.xml.vakcinacija.model.saglasnost.Saglasnost.ZdravstveniRadnikSaglasnost.Obrazac.VakcineInfo;
 import com.xml.vakcinacija.model.zdravstveni_radnik.ZdravstveniRadnik;
 import com.xml.vakcinacija.repository.SaglasnostRepository;
 import com.xml.vakcinacija.service.MarshallerService;
@@ -144,8 +143,17 @@ public class SaglasnostServiceImpl implements SaglasnostService {
 	
 	@Override
 	public ByteArrayInputStream nabaviMetaPodatkeJSONPoId(String id) throws IOException {
-		String query = String.format("?s ?p ?o. FILTER (?s = <http://www.ftn.uns.ac.rs/rdf/saglasnost/%s>)", id);
+		String query = String.format("?s ?p ?o. FILTER (?s = <%s>)", id);
 		return rdfService.getMetadataJSON(query, "saglasnost_" + id, NamedGraphURIKonstante.IMUNIZACIJA_NAMED_GRAPH);
+	}
+	
+	@Override
+	public ByteArrayInputStream nabaviMetaPodatkeRDFPoId(String about) throws Exception {
+		String saglasnostXml = saglasnostRepository.pronadjiSaglasnostXmlPoSubjekat(about);
+		if (saglasnostXml == null) {
+			throw new SaglasnostNijePronadjenaException(about);
+		}
+		return rdfService.getMetadataRDF(saglasnostXml);
 	}
 
 	@Override

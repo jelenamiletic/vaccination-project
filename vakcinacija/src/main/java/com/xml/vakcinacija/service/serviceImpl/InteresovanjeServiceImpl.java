@@ -137,6 +137,15 @@ public class InteresovanjeServiceImpl implements InteresovanjeService {
 		String query = String.format("?s ?p ?o. ?s <http://www.ftn.uns.ac.rs/rdf/interesovanje/predicate/jmbg> \"%s\"^^<http://www.w3.org/2001/XMLSchemastring>", jmbg);
 		return rdfService.getMetadataJSON(query, "interesovanje_" + jmbg, NamedGraphURIKonstante.IMUNIZACIJA_NAMED_GRAPH);
 	}
+	
+	@Override
+	public ByteArrayInputStream nabaviMetaPodatkeRDFPoJmbg(String jmbg) throws Exception {
+		String interesovanjeXml = interesovanjeRepository.pronadjiInteresovanjeXmlPoJmbg(jmbg);
+		if (interesovanjeXml == null) {
+			throw new InteresovanjeNijePronadjenoException(jmbg);
+		}
+		return rdfService.getMetadataRDF(interesovanjeXml);
+	}
 
 	@Override
 	public ByteArrayInputStream generisiXHTML(String jmbg) throws Exception {

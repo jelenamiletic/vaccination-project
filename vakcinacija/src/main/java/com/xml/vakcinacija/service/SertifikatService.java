@@ -14,6 +14,8 @@ public interface SertifikatService {
     Sertifikat pronadjiSertifikatPoJmbg(String jmbg) throws Exception;
 
     ByteArrayInputStream nabaviMetaPodatkeJSONPoJmbg(String jmbg) throws IOException;
+    
+    ByteArrayInputStream nabaviMetaPodatkeRDFPoJmbg(String jmbg) throws IOException, Exception;
 
 	ByteArrayInputStream generisiXHTML(String jmbg) throws Exception;
 

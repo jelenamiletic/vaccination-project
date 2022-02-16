@@ -3,7 +3,7 @@
 <pred:brojPodnetihDokumenata xmlns:pred="http://ftn.uns.ac.rs/vakcinacija/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemainteger">10</pred:brojPodnetihDokumenata>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/izvestaj/2021-07-01/2021-12-31">
-<pred:brojPrimljenih xmlns:pred="http://ftn.uns.ac.rs/vakcinacija/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemainteger">10</pred:brojPrimljenih>
+<pred:brojPrimljenih xmlns:pred="http://ftn.uns.ac.rs/vakcinacija/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemainteger">9</pred:brojPrimljenih>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/izvestaj/2021-07-01/2021-12-31">
 <pred:brojIzdatih xmlns:pred="http://ftn.uns.ac.rs/vakcinacija/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemainteger">4</pred:brojIzdatih>

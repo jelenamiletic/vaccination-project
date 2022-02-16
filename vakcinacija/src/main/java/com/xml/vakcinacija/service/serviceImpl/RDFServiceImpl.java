@@ -134,5 +134,28 @@ public class RDFServiceImpl implements RDFService {
 		return new ByteArrayInputStream(bytes);
 		
 	}
+	
+	@Override
+	public ByteArrayInputStream getMetadataRDF(String xml) throws TransformerException, IOException, SAXException {
+		String rdfPath = "data/rdf/temp.rdf";
+
+		PrintWriter printWritter = new PrintWriter(new FileOutputStream(rdfPath));
+		printWritter.println(xml);
+		printWritter.close();
+		
+		MetadataExtractor metadataExtractor = new MetadataExtractor();
+		ByteArrayOutputStream byteArrayOut = new ByteArrayOutputStream();
+		
+		System.out.println("[INFO] Extracting metadata from RDFa attributes...");
+		metadataExtractor.extractMetadata(
+				new FileInputStream(new File(rdfPath)), 
+				byteArrayOut);
+		FileOutputStream outputStream = new FileOutputStream(new File(rdfPath));
+		outputStream.write(byteArrayOut.toByteArray());
+		
+		File readRDFFile = new File(rdfPath);
+		byte[] bytes = FileUtils.readFileToByteArray(readRDFFile);
+		return new ByteArrayInputStream(bytes);
+	}
 
 }

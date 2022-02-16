@@ -59,6 +59,12 @@ public class SertifikatController {
          return new ResponseEntity<>(new InputStreamResource(sertifikatService.nabaviMetaPodatkeJSONPoJmbg(jmbg)), HttpStatus.OK);
     }
     
+    @GetMapping(value = "/nabaviMetaPodatkeRDFPoJmbg/{jmbg}", produces = MediaType.APPLICATION_XML_VALUE)
+    @PreAuthorize("hasAnyRole('ROLE_GRADJANIN', 'ROLE_SLUZBENIK')")
+    public ResponseEntity<InputStreamResource> nabaviMetaPodatkeRDFPoJmbg(@PathVariable String jmbg) throws Exception {
+         return new ResponseEntity<>(new InputStreamResource(sertifikatService.nabaviMetaPodatkeRDFPoJmbg(jmbg)), HttpStatus.OK);
+    }
+    
     @GetMapping(value = "/generisiXhtml/{jmbg}", produces = MediaType.TEXT_HTML_VALUE)
 	@PreAuthorize("hasAnyRole('ROLE_GRADJANIN', 'ROLE_SLUZBENIK')")
 	public ResponseEntity<InputStreamResource> generisiXHTML(@PathVariable String jmbg) throws Exception {

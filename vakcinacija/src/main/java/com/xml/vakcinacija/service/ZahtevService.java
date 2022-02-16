@@ -17,6 +17,8 @@ public interface ZahtevService {
 	
 	ByteArrayInputStream nabaviMetaPodatkeJSONPoJmbg(String jmbg) throws IOException;
 	
+	ByteArrayInputStream nabaviMetaPodatkeRDFPoJmbg(String jmbg) throws IOException, Exception;
+	
 	ByteArrayInputStream generisiPdf(String jmbg) throws Exception;
 
 	ByteArrayInputStream generisiXHTML(String jmbg) throws Exception;

@@ -13,4 +13,6 @@ public interface RDFService {
 		TransformerException, SAXException;
 	
 	ByteArrayInputStream getMetadataJSON(String sparkQuery, String fileName, String namedGraphUri) throws IOException;
+
+	ByteArrayInputStream getMetadataRDF(String xml) throws TransformerException, IOException, SAXException;
 }
