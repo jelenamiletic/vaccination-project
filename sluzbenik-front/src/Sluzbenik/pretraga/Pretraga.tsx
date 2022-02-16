@@ -156,12 +156,35 @@ const Pretraga = () => {
 				setPronadjeneSaglasnosti(undefined);
 				setPronadjeniSertifikati(undefined);
 				if (result.Potvrde) {
-					setPronadjenePotvrde(result.Potvrde["po:Potvrda"]);
+					if (!Array.isArray(result.Potvrde["po:Potvrda"])) {
+						setPronadjenePotvrde([
+							result.Potvrde["po:Potvrda"] as Potvrda,
+						]);
+					} else {
+						setPronadjenePotvrde(result.Potvrde["po:Potvrda"]);
+					}
 				}
 				if (result.Saglasnosti) {
-					setPronadjeneSaglasnosti(result.Saglasnosti["sa:Saglasnost"]);
-				} else {
-					setPronadjeniSertifikati(result.Potvrde["se:Sertifikat"]);
+					if (!Array.isArray(result.Saglasnosti["sa:Saglasnost"])) {
+						let Arr: Array<Saglasnost> = new Array<Saglasnost>();
+						Arr!.push(result.Saglasnosti["sa:Saglasnost"]);
+						setPronadjeneSaglasnosti(Arr!);
+					} else {
+						setPronadjeneSaglasnosti(
+							result.Saglasnosti["sa:Saglasnost"]
+						);
+					}
+				} 
+				if(result.Sertifikati){
+					if (!Array.isArray(result.Sertifikati["se:Sertifikat"])) {
+						let Arr: Array<Sertifikat> = new Array<Sertifikat>();
+						Arr!.push(result.Sertifikati["se:Sertifikat"]);
+						setPronadjeniSertifikati(Arr!);
+					} else {
+						setPronadjeniSertifikati(
+							result.Sertifikati["se:Sertifikat"]
+						);
+					}
 				}
 			});
 	};
