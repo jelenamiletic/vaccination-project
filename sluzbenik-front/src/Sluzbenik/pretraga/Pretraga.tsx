@@ -123,8 +123,12 @@ const Pretraga = () => {
 				const parser = new XMLParser();
 				const result = parser.parse(res.data);
 				console.log(result);
-				setPronadjenePotvrde(result.Dokumenti.Potvrde["po:Potvrda"]);
-				setPronadjeneSaglasnosti(result.Dokumenti.Saglasnosti["sa:Saglasnost"]);
+				if(result.Potvrde){
+					setPronadjenePotvrde(result.Potvrde["po:Potvrda"]);
+				}
+				if(result.Saglasnosti){
+					setPronadjeneSaglasnosti(result.Saglasnosti["sa:Saglasnost"]);
+				}
 			});
 	};
 
@@ -260,6 +264,114 @@ const Pretraga = () => {
 					type: "application/json;charset=utf-8",
 				});
 				saveAs(blob, "JSON_Saglasnost" + id + "_" + brojDoze + ".json");
+			});
+	};
+
+	const downloadXHTML = (dokument: any, tip: string) => {
+		let putanja = '';
+		if(tip === TipDokumenta.Saglasnost){
+			let brojDoze = 0;
+			if(Array.isArray(dokument["sa:ZdravstveniRadnikSaglasnost"]["sa:Obrazac"]["sa:VakcineInfo"])){
+				brojDoze = dokument["sa:ZdravstveniRadnikSaglasnost"].length
+			}else{
+				brojDoze = 1
+			}
+
+			putanja = 
+			`http://localhost:8081/dokumenti/saglasnost/generisiXhtml/${ dokument["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:Drzavljanstvo"]["sa:RepublikaSrbija"]["sa:JMBG"] }/${brojDoze}`;
+		}else if(tip === TipDokumenta.Potvrda){
+			let brojDoze = 0;
+			if(Array.isArray(dokument["po:InformacijeOVakcinama"])){
+				brojDoze = dokument["po:InformacijeOVakcinama"].length
+			}else{
+				brojDoze = 1
+			}
+
+			putanja = 
+			`http://localhost:8080/potvrda/generisiXhtml/${ dokument["po:LicneInformacije"]["po:JMBG"] }/${brojDoze}`;
+		}else{
+
+		}
+
+		axios
+			.get(
+				putanja,
+				{
+					headers: {
+						"Access-Control-Allow-Origin": "*",
+					},
+					responseType: "blob",
+				}
+			)
+			.then((res: any) => {
+				let blob = new Blob([res.data], {
+					type: "text/html;charset=utf-8",
+				});
+				saveAs(
+					blob,
+					'SkinutFajl'
+				);
+			})
+			.catch((err: any) => {
+				toast.error(err.response.data, {
+					position: toast.POSITION.TOP_CENTER,
+					autoClose: false,
+					toastId: customId,
+				});
+			});
+	};
+
+	const downloadPdf = (dokument: any, tip: string) => {
+		let putanja = '';
+		if(tip === TipDokumenta.Saglasnost){
+			let brojDoze = 0;
+			if(Array.isArray(dokument["sa:ZdravstveniRadnikSaglasnost"]["sa:Obrazac"]["sa:VakcineInfo"])){
+				brojDoze = dokument["sa:ZdravstveniRadnikSaglasnost"].length
+			}else{
+				brojDoze = 1
+			}
+
+			putanja = 
+			`http://localhost:8080/saglasnost/generisiPdf/${ dokument["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:Drzavljanstvo"]["sa:RepublikaSrbija"]["sa:JMBG"] }/${brojDoze}`;
+		}else if(tip === TipDokumenta.Potvrda){
+			let brojDoze = 0;
+			if(Array.isArray(dokument["po:InformacijeOVakcinama"])){
+				brojDoze = dokument["po:InformacijeOVakcinama"].length
+			}else{
+				brojDoze = 1
+			}
+
+			putanja = 
+			`http://localhost:8080/potvrda/generisiPdf/${ dokument["po:LicneInformacije"]["po:JMBG"] }/${brojDoze}`;
+		}else{
+
+		}
+
+		axios
+			.get(
+				putanja,
+				{
+					headers: {
+						"Access-Control-Allow-Origin": "*",
+					},
+					responseType: "blob",
+				}
+			)
+			.then((res: any) => {
+				let blob = new Blob([res.data], {
+					type: "application/pdf;charset=utf-8",
+				});
+				saveAs(
+					blob,
+					'SkinutFajl'
+				);
+			})
+			.catch((err: any) => {
+				toast.error(err.response.data, {
+					position: toast.POSITION.TOP_CENTER,
+					autoClose: false,
+					toastId: customId,
+				});
 			});
 	};
 
@@ -400,6 +512,7 @@ const Pretraga = () => {
 				<tbody>
 					{pronadjenePotvrde &&
 						pronadjenePotvrde.map((potvrda: Potvrda) => {
+							console.log(potvrda);
 							return (
 								<tr>
 									<th scope="row">
@@ -512,9 +625,9 @@ const Pretraga = () => {
 							{selektovanaPotvrda && <div>Potvrda o vakcinaciji</div>}
 							{selektovanaSaglasnost && <div>Saglasnost za imunizaciju</div>}
 						</ModalHeader>
-						<ModalBody>
 							{selektovanaPotvrda && (
 								<div>
+									<ModalBody>
 									<Label>Ime:</Label>
 									<Input
 										type="text"
@@ -612,11 +725,17 @@ const Pretraga = () => {
 											/>
 										</div>
 									)}
+									</ModalBody>
+									<ModalFooter>
+										<Button color="primary" onClick={()=>{downloadPdf(selektovanaPotvrda, TipDokumenta.Potvrda)}}>Preuzmi PDF</Button>{" "}
+										<Button color="primary" onClick={()=>{downloadXHTML(selektovanaPotvrda, TipDokumenta.Potvrda)}} >Preuzmi XHTML</Button>
+									</ModalFooter>
 								</div>
 							)}
 
 							{selektovanaSaglasnost && (
 								<div>
+									<ModalBody>
 									<CardTitle tag="h4">Pacijent:</CardTitle>
 									<Label>Ime:</Label>
 									<Input
@@ -723,13 +842,14 @@ const Pretraga = () => {
 											]["sa:PunoIme"]["ct:Prezime"]
 										}
 									/>
+									</ModalBody>
+								<ModalFooter>
+									<Button color="primary" onClick={()=>{downloadPdf(selektovanaPotvrda, TipDokumenta.Potvrda)}}>Preuzmi PDF</Button>
+									{" "}
+									<Button color="primary" onClick={()=>{downloadXHTML(selektovanaSaglasnost, TipDokumenta.Saglasnost)}}>Preuzmi XHTML</Button>
+								</ModalFooter>
 								</div>
 							)}
-						</ModalBody>
-						<ModalFooter>
-							<Button color="primary">Preuzmi PDF</Button>{" "}
-							<Button color="primary">Preuzmi XHTML</Button>
-						</ModalFooter>
 					</Modal>
 				</tbody>
 			</Table>

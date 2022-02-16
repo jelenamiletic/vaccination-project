@@ -93,6 +93,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 						"/odgovorNaZahtev/dobaviPoslednjuPotvrduPoJmbg/{jmbg}",
 						"/odgovorNaZahtev/dodajNoviSertifikat"
 				).hasAuthority(RoleKonstante.ROLE_SLUZBENIK)
+				.antMatchers("/dokumenti/saglasnost/generisiXhtml/{jmbg}/{brojDoze}").hasAuthority(RoleKonstante.ROLE_SLUZBENIK)
+				.antMatchers("/dokumenti/saglasnost/generisiPdf/{jmbg}/{brojDoze}").hasAuthority(RoleKonstante.ROLE_SLUZBENIK)
 			.anyRequest().authenticated().and()
 			.cors().and()
 			.addFilterBefore(new TokenAuthenticationFilter(tokenUtils, customUserDetailsService), BasicAuthenticationFilter.class);
