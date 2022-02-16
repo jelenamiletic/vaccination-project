@@ -76,7 +76,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/vakcina/dobaviSve", "/vakcina/azurirajKolicinu").hasAuthority(RoleKonstante.ROLE_SLUZBENIK)
 				.antMatchers("/vakcina/smanjiKolicinu/{nazivVakcine}").hasAuthority(RoleKonstante.ROLE_ZDRAVSTVENI_RADNIK)
 				.antMatchers("/vakcina/proveriSmanjiKolicinu/{nazivVakcine}").hasAnyAuthority(RoleKonstante.ROLE_GRADJANIN, RoleKonstante.ROLE_ZDRAVSTVENI_RADNIK)
-				.antMatchers("/pretraga/osnovnaPretraga/{jmbg}", "/pretraga/naprednaPretraga").hasAuthority(RoleKonstante.ROLE_SLUZBENIK)
+				.antMatchers
+				(
+						"/pretraga/osnovnaPretraga/{jmbg}", 
+						"/pretraga/naprednaPretraga", 
+						"/pretraga/nabaviMetaPodatkePotvrdaRDFPoJmbg/{jmbg}/{brojDoze}",
+						"/pretraga/nabaviMetaPodatkePotvrdaJSONPoJmbg/{jmbg}/{brojDoze}"
+				).hasAuthority(RoleKonstante.ROLE_SLUZBENIK)
 	
 				.antMatchers
 				(

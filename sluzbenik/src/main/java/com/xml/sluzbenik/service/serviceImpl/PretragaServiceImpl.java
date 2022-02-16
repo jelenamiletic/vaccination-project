@@ -1,8 +1,8 @@
 package com.xml.sluzbenik.service.serviceImpl;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -111,6 +111,34 @@ public class PretragaServiceImpl implements PretragaService{
 		}
 		
 		return rezultat;
+	}
+
+	@Override
+	public InputStreamResource nabaviMetaPodatkePotvrdaRDFPoJmbg(String jmbg, int brojDoze) throws Exception {
+		TokenBasedAuthentication a = (TokenBasedAuthentication) SecurityContextHolder.getContext().getAuthentication();
+		HttpHeaders headers = new HttpHeaders();
+		String userDetails = marshallerService.marshall(a.getPrincipal(), ContextPutanjeKonstante.CONTEXT_PUTANJA_SLUZBENIK, XSDPutanjeKonstante.XSD_SLUZBENIK);
+		headers.setBearerAuth(a.getToken());
+		headers.set("Sluzbenik", userDetails);
+		
+		ResponseEntity<Resource> resp = restTemplate.exchange(
+                "http://localhost:8080/potvrda/nabaviMetaPodatkeRDFPoJmbg/" + jmbg + "/" + brojDoze, HttpMethod.GET, new HttpEntity<Object>(headers), Resource.class);
+		
+		return new InputStreamResource(resp.getBody().getInputStream());
+	}
+	
+	@Override
+	public InputStreamResource nabaviMetaPodatkePotvrdaJSONPoJmbg(String jmbg, int brojDoze) throws Exception {
+		TokenBasedAuthentication a = (TokenBasedAuthentication) SecurityContextHolder.getContext().getAuthentication();
+		HttpHeaders headers = new HttpHeaders();
+		String userDetails = marshallerService.marshall(a.getPrincipal(), ContextPutanjeKonstante.CONTEXT_PUTANJA_SLUZBENIK, XSDPutanjeKonstante.XSD_SLUZBENIK);
+		headers.setBearerAuth(a.getToken());
+		headers.set("Sluzbenik", userDetails);
+		
+		ResponseEntity<Resource> resp = restTemplate.exchange(
+                "http://localhost:8080/potvrda/nabaviMetaPodatkeJSONPoJmbg/" + jmbg + "/" + brojDoze, HttpMethod.GET, new HttpEntity<Object>(headers), Resource.class);
+		
+		return new InputStreamResource(resp.getBody().getInputStream());
 	}
 	
 }

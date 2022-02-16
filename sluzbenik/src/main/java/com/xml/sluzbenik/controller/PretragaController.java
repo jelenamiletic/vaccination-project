@@ -1,6 +1,7 @@
 package com.xml.sluzbenik.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -30,5 +31,17 @@ public class PretragaController {
 	@PreAuthorize("hasRole('ROLE_SLUZBENIK')")
 	public ResponseEntity<String> naprednaPretraga(@RequestBody String pretragaDokumenata) throws Exception {
 		return new ResponseEntity<>(pretragaService.naprednaPretraga(pretragaDokumenata), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/nabaviMetaPodatkePotvrdaRDFPoJmbg/{jmbg}/{brojDoze}", produces = MediaType.APPLICATION_XML_VALUE)
+	@PreAuthorize("hasRole('ROLE_SLUZBENIK')")
+	public ResponseEntity<InputStreamResource> nabaviMetaPodatkePotvrdaRDFPoJmbg(@PathVariable String jmbg, @PathVariable int brojDoze) throws Exception {
+		return new ResponseEntity<>(pretragaService.nabaviMetaPodatkePotvrdaRDFPoJmbg(jmbg, brojDoze), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/nabaviMetaPodatkePotvrdaJSONPoJmbg/{jmbg}/{brojDoze}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasRole('ROLE_SLUZBENIK')")
+	public ResponseEntity<InputStreamResource> nabaviMetaPodatkePotvrdaJSONPoJmbg(@PathVariable String jmbg, @PathVariable int brojDoze) throws Exception {
+		return new ResponseEntity<>(pretragaService.nabaviMetaPodatkePotvrdaJSONPoJmbg(jmbg, brojDoze), HttpStatus.OK);
 	}
 }

@@ -1,17 +1,8 @@
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:h="http://www.w3.org/1999/xhtml">
-<rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/saglasnost/2442155366578_1">
-<pred:jmbg xmlns:pred="http://ftn.uns.ac.rs/vakcinacija/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">2442155366578</pred:jmbg>
+<rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/potvrda/1153355353511_1">
+<pred:jmbg xmlns:pred="http://ftn.uns.ac.rs/vakcinacija/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">1153355353511</pred:jmbg>
 </rdf:Description>
-<rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/saglasnost/2442155366578_1">
-<pred:pol xmlns:pred="http://ftn.uns.ac.rs/vakcinacija/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">Muski</pred:pol>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/saglasnost/2442155366578_1">
-<pred:adresa xmlns:pred="http://ftn.uns.ac.rs/vakcinacija/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">test</pred:adresa>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/saglasnost/2442155366578_1">
-<pred:mesto xmlns:pred="http://ftn.uns.ac.rs/vakcinacija/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">test</pred:mesto>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/saglasnost/2442155366578_1">
-<pred:email xmlns:pred="http://ftn.uns.ac.rs/vakcinacija/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">pera22@gmail.com</pred:email>
+<rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/potvrda/1153355353511_1">
+<pred:VakcinaPrveDveDoze xmlns:pred="http://ftn.uns.ac.rs/vakcinacija/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">Pfizer-BioNTech</pred:VakcinaPrveDveDoze>
 </rdf:Description>
 </rdf:RDF>
