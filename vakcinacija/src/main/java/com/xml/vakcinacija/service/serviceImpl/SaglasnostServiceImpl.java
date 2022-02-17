@@ -58,7 +58,7 @@ public class SaglasnostServiceImpl implements SaglasnostService {
 			
 			int indx = saglasnostRepository.saveSaglasnostObjekat(validanObjekat);
 			
-			terminService.postaviPopunjenaSaglasnost(gradjanin.getJMBG(), 1);
+			terminService.postaviPopunjenaSaglasnost(gradjanin.getJMBG(), indx + 1);
 			
 			try {
 				rdfService.save(XML, "saglasnost_" + 

@@ -1,5 +1,8 @@
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:h="http://www.w3.org/1999/xhtml">
 <rdf:Description rdf:about="">
+<pred:jmbg xmlns:pred="http://www.ftn.uns.ac.rs/rdf/saglasnost/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">1122112211221</pred:jmbg>
+</rdf:Description>
+<rdf:Description rdf:about="">
 <pred:pol xmlns:pred="http://www.ftn.uns.ac.rs/rdf/saglasnost/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">Muski</pred:pol>
 </rdf:Description>
 <rdf:Description rdf:about="">
@@ -9,6 +12,6 @@
 <pred:mesto xmlns:pred="http://www.ftn.uns.ac.rs/rdf/saglasnost/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">Novi Sad</pred:mesto>
 </rdf:Description>
 <rdf:Description rdf:about="">
-<pred:email xmlns:pred="http://www.ftn.uns.ac.rs/rdf/saglasnost/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">dodjos2@dodjos.com</pred:email>
+<pred:email xmlns:pred="http://www.ftn.uns.ac.rs/rdf/saglasnost/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">albino@albino.com</pred:email>
 </rdf:Description>
 </rdf:RDF>

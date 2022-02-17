@@ -6,7 +6,7 @@
 <pred:jmbg xmlns:pred="http://www.ftn.uns.ac.rs/rdf/interesovanje/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">1122112211221</pred:jmbg>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/interesovanje/1122112211221">
-<pred:email xmlns:pred="http://www.ftn.uns.ac.rs/rdf/interesovanje/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">bol@email.com</pred:email>
+<pred:email xmlns:pred="http://www.ftn.uns.ac.rs/rdf/interesovanje/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">albino@albino.com</pred:email>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/interesovanje/1122112211221">
 <pred:brojMobilnogTelefona xmlns:pred="http://www.ftn.uns.ac.rs/rdf/interesovanje/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">0606095154</pred:brojMobilnogTelefona>
@@ -15,7 +15,7 @@
 <pred:brojFiksongTelefona xmlns:pred="http://www.ftn.uns.ac.rs/rdf/interesovanje/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">212121212</pred:brojFiksongTelefona>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/interesovanje/1122112211221">
-<pred:opstinaPrimanja xmlns:pred="http://www.ftn.uns.ac.rs/rdf/interesovanje/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">NS</pred:opstinaPrimanja>
+<pred:opstinaPrimanja xmlns:pred="http://www.ftn.uns.ac.rs/rdf/interesovanje/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">Novi Sad</pred:opstinaPrimanja>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/interesovanje/1122112211221">
 <pred:vakcina xmlns:pred="http://www.ftn.uns.ac.rs/rdf/interesovanje/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">Pfizer-BioNTech</pred:vakcina>

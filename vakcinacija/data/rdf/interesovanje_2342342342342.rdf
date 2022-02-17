@@ -6,16 +6,16 @@
 <pred:jmbg xmlns:pred="http://www.ftn.uns.ac.rs/rdf/interesovanje/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">2342342342342</pred:jmbg>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/interesovanje/2342342342342">
-<pred:email xmlns:pred="http://www.ftn.uns.ac.rs/rdf/interesovanje/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">nidapog293@alfaceti.com</pred:email>
+<pred:email xmlns:pred="http://www.ftn.uns.ac.rs/rdf/interesovanje/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">dodjos2@dodjos.com</pred:email>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/interesovanje/2342342342342">
-<pred:brojMobilnogTelefona xmlns:pred="http://www.ftn.uns.ac.rs/rdf/interesovanje/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">1606095154</pred:brojMobilnogTelefona>
+<pred:brojMobilnogTelefona xmlns:pred="http://www.ftn.uns.ac.rs/rdf/interesovanje/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">0606095154</pred:brojMobilnogTelefona>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/interesovanje/2342342342342">
-<pred:brojFiksongTelefona xmlns:pred="http://www.ftn.uns.ac.rs/rdf/interesovanje/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">212121212</pred:brojFiksongTelefona>
+<pred:brojFiksongTelefona xmlns:pred="http://www.ftn.uns.ac.rs/rdf/interesovanje/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">121212121</pred:brojFiksongTelefona>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/interesovanje/2342342342342">
-<pred:opstinaPrimanja xmlns:pred="http://www.ftn.uns.ac.rs/rdf/interesovanje/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">NS</pred:opstinaPrimanja>
+<pred:opstinaPrimanja xmlns:pred="http://www.ftn.uns.ac.rs/rdf/interesovanje/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">mali idjos</pred:opstinaPrimanja>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/interesovanje/2342342342342">
 <pred:vakcina xmlns:pred="http://www.ftn.uns.ac.rs/rdf/interesovanje/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">Pfizer-BioNTech</pred:vakcina>

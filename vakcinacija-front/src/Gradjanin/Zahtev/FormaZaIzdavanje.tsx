@@ -24,10 +24,12 @@ import {Editor} from "react-draft-wysiwyg";
 import "draft-js/dist/Draft.css";
 import { XMLParser } from "fast-xml-parser";
 import { Saglasnost } from "../../Models/Saglasnost/Saglasnost";
+import { Potvrda } from "../../Models/Potvrda";
 
 const Zahtev = () => {
 	const customId = "zahtev";
-	// const [postoji, setPostoji] = useState(false);
+	const [postoji, setPostoji] = useState(false);
+	const [postojiPotvrda, setPostojiPotvrda] = useState(false);
 
 	const [editorState, setEditorState] = useState(() =>
 		EditorState.createEmpty()
@@ -38,7 +40,8 @@ const Zahtev = () => {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		// pronadjiSaglasnost();
+		pronadjiZahtev();
+		pronadjiPotvrdu();
 	}, []);
 
 	const {
@@ -50,29 +53,48 @@ const Zahtev = () => {
 		mode: "onChange",
 	});
 
-	// const pronadjiSaglasnost = () => {
-	// 	axios.get('http://localhost:8080/saglasnost/pronadjiNajnovijuSaglasnostPoJmbgIliBrPasosa/' + getJMBG())
-	// 			.then((res: any) => {
-	// 				const parser = new XMLParser();
-	// 				const result: Saglasnost = parser.parse(res.data);
-	// 				const saglasnost: Saglasnost = result["sa:Saglasnost"];
-	// 				if (!saglasnost){
+	const pronadjiZahtev = () => {
+		axios.get('http://localhost:8080/zahtev/pronadjiZahtevPoJmbg/' + getJMBG())
+				.then((res: any) => {
+					const parser = new XMLParser();
+					const result= parser.parse(res.data);
+					const zahtev: ZahtevXML = result["za:Zahtev"];
+					if (!zahtev){
 						
-	// 					setPostoji(false);
+						setPostoji(false);
 					
-	// 				} else if(saglasnost!["sa:ZdravstveniRadnikSaglasnost"]){
+					} else {
+
+						setPostoji(true);
+
+					}
+				}).catch((err: any) => {
+					setPostoji(false);
+				})
+	}
+	
+	const pronadjiPotvrdu = () => {
+		axios.get('http://localhost:8080/potvrda/dobaviPoslednjuPotvrduPoJmbg/' + getJMBG())
+				.then((res: any) => {
+					const parser = new XMLParser();
+					const result= parser.parse(res.data);
+					const potvrda: Potvrda = result["po:Potvrda"];
+					if (!potvrda){
 						
-	// 					setPostoji(true);
+						setPostojiPotvrda(false);
+					
+					} else {
+						const poslednjaVakcina = potvrda["po:InformacijeOVakcinama"][potvrda["po:InformacijeOVakcinama"].length - 1]
 
-	// 				} else {
+						if(poslednjaVakcina["po:BrojDoze"] >= 2){
+							setPostojiPotvrda(true);
+						}
 
-	// 					setPostoji(false);
-
-	// 				}
-	// 			}).catch((err: any) => {
-	// 				setPostoji(false);
-	// 			})
-	// }	
+					}
+				}).catch((err: any) => {
+					setPostojiPotvrda(false);
+				})
+	}	
 
 	const podnosenjeZahteva = (zahtev: ZahtevXML) => {
 		let xml = `<za:Zahtev
@@ -134,7 +156,9 @@ const Zahtev = () => {
 				<CardBody>
 					<CardTitle tag="h2">Zahtev za zeleni sertifikat</CardTitle>
 
-					 <Form className="form-login-registracija">
+					{
+						!postoji && postojiPotvrda &&
+						<Form className="form-login-registracija">
 						<FormGroup>
 							<Label>Broj pasosa</Label>
 							<Input
@@ -193,11 +217,17 @@ const Zahtev = () => {
 							Podnesi zahtev
 						</Button>
 					</Form>
+					}
 
-					{/* {
-						!postoji && 
-						<Label>Niste primili jos nijednu vakcinu!</Label>
-					} */}
+					{
+						postoji && 
+						<Label>Vec ste podneli zahtev!</Label>
+					}
+
+					{
+						!postoji && !postojiPotvrda &&
+						<Label>Niste jos primili dve vakcine!</Label>
+					}
 					
 				</CardBody>
 			</Card>

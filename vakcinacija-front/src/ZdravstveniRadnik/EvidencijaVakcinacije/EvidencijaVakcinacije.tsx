@@ -221,7 +221,8 @@ const EvidencijaVakcinacije = () => {
 					<sa:BrojMobilnogTelefona>${pronadjenaSaglasnost!["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:BrojMobilnogTelefona"]}</sa:BrojMobilnogTelefona>
 					<sa:Email property = "pred:email" datatype = "xs:string">${pronadjenaSaglasnost!["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:Email"]}</sa:Email>
 					<sa:RadniStatus>${pronadjenaSaglasnost!["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:RadniStatus"]}</sa:RadniStatus>
-					<sa:ZanimanjeZaposlenog>${pronadjenaSaglasnost!["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:ZanimanjeZaposlenog"]}</sa:ZanimanjeZaposlenog>
+					${pronadjenaSaglasnost!["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:ZanimanjeZaposlenog"] ?
+						`<sa:ZanimanjeZaposlenog>${pronadjenaSaglasnost!["sa:PacijentSaglasnost"]["sa:LicneInformacije"]["sa:ZanimanjeZaposlenog"]}</sa:ZanimanjeZaposlenog>` : ''}
 				</sa:LicneInformacije>
 				<sa:Imunizacija>
 					<sa:NazivImunoloskogLeka>${pronadjenaSaglasnost!["sa:PacijentSaglasnost"]["sa:Imunizacija"]["sa:NazivImunoloskogLeka"]}</sa:NazivImunoloskogLeka>

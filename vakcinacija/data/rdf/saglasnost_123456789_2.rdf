@@ -9,6 +9,6 @@
 <pred:mesto xmlns:pred="http://www.ftn.uns.ac.rs/rdf/saglasnost/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">Novi Sad</pred:mesto>
 </rdf:Description>
 <rdf:Description rdf:about="">
-<pred:email xmlns:pred="http://www.ftn.uns.ac.rs/rdf/saglasnost/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">dodjos@dodjos.com</pred:email>
+<pred:email xmlns:pred="http://www.ftn.uns.ac.rs/rdf/saglasnost/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">dodjos2@dodjos.com</pred:email>
 </rdf:Description>
 </rdf:RDF>

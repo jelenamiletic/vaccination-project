@@ -150,6 +150,11 @@ const Interesovanje = () => {
 				},
 			})
 			.then((res: any) => {
+				toast.success("Uspesno popunjeno interesovanje", {
+					position: toast.POSITION.TOP_CENTER,
+					autoClose: false,
+					toastId: customId,
+				});
 				navigate("/profil");
 			})
 			.catch((err: any) => {
@@ -260,7 +265,7 @@ const Interesovanje = () => {
 						<CardBody>
 						<CardTitle tag="h2">Interesovanje</CardTitle>
 						<Label style={{ display: "block" }} >Vec ste popunili formu za interesovanje</Label>
-						<Button
+						{/* <Button
 							className="registruj-login-btn"
 							color="primary"
 							type="button"
@@ -276,7 +281,7 @@ const Interesovanje = () => {
 							onClick={() => downloadPdf()}
 						>
 							Skidanje PDF
-						</Button>
+						</Button> */}
 						</CardBody>
 					</Card>
 			}

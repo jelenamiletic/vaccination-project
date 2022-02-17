@@ -79,7 +79,7 @@ public class PotvrdaController {
 	}
 	
 	@GetMapping(value = "/dobaviPoslednjuPotvrduPoJmbg/{jmbg}", produces = MediaType.APPLICATION_XML_VALUE)
-	@PreAuthorize("hasRole('ROLE_SLUZBENIK')")
+	@PreAuthorize("hasAnyRole('ROLE_GRADJANIN', 'ROLE_SLUZBENIK')")
 	public ResponseEntity<Potvrda> dobaviPoslednjuPotvrduPoJmbg(@PathVariable String jmbg) throws Exception {
 		return new ResponseEntity<>(potvrdaService.dobaviPoslednjuPotvrduPoJmbg(jmbg), HttpStatus.OK);
 	}
