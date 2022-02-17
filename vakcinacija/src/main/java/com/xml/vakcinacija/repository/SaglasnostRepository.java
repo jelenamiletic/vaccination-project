@@ -45,10 +45,11 @@ public class SaglasnostRepository {
 	}
 	
 	public int editSaglasnostObjekat(Saglasnost saglasnost) throws Exception {
-		String xml = marshallerService.marshall(saglasnost, ContextPutanjeKonstante.CONTEXT_PUTANJA_SAGLASNOST, 
-				XSDPutanjeKonstante.XSD_SAGLASNOST);
 		String id = saglasnost.getPacijentSaglasnost().getLicneInformacije().getIdFromDrzavljanstvo();
 		int index = getNextDocumentIndex(id) - 1;
+		saglasnost.setAbout("http://www.ftn.uns.ac.rs/rdf/saglasnost/" + id + "_" + index);
+		String xml = marshallerService.marshall(saglasnost, ContextPutanjeKonstante.CONTEXT_PUTANJA_SAGLASNOST, 
+				XSDPutanjeKonstante.XSD_SAGLASNOST);
 		ExistStore.save(XMLCollectionIdKonstante.COLLECTION_ID_SAGLASNOST, id + '_' + Integer.toString(index), xml);
 		return index;
 	}

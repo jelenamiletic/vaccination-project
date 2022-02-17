@@ -57,11 +57,15 @@ public class SaglasnostServiceImpl implements SaglasnostService {
 			validanObjekat.getPacijentSaglasnost().getLicneInformacije().getPol().setValue(gradjanin.getPol());
 			
 			int indx = saglasnostRepository.saveSaglasnostObjekat(validanObjekat);
+			String id = validanObjekat.getPacijentSaglasnost().getLicneInformacije().getIdFromDrzavljanstvo();
+			validanObjekat.setAbout("http://www.ftn.uns.ac.rs/rdf/saglasnost/" + id + "_" + indx);
+			
+			String noviXml = marshallerService.marshall(validanObjekat, ContextPutanjeKonstante.CONTEXT_PUTANJA_SAGLASNOST, XSDPutanjeKonstante.XSD_SAGLASNOST);
 			
 			terminService.postaviPopunjenaSaglasnost(gradjanin.getJMBG(), indx + 1);
 			
 			try {
-				rdfService.save(XML, "saglasnost_" + 
+				rdfService.save(noviXml, "saglasnost_" + 
 						validanObjekat.getPacijentSaglasnost().getLicneInformacije().getIdFromDrzavljanstvo() + '_' + Integer.toString(indx), 
 						NamedGraphURIKonstante.IMUNIZACIJA_NAMED_GRAPH);
 			} catch (Exception e) {

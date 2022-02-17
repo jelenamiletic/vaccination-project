@@ -29,6 +29,7 @@ public class GradjaninServiceImpl implements GradjaninService {
 		if (postoji != null) {
 			throw new KorisnikPostojiException();
 		}
+		gradjanin.setEmail(gradjanin.getEmail().toLowerCase());
 		gradjanin.setLozinka(passwordEncoder.encode(gradjanin.getLozinka()));
 		List<Role> roles = new ArrayList<Role>();
 		Role role = new Role();

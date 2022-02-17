@@ -1,0 +1,43 @@
+{ "head": {
+    "vars": [ "s" , "p" , "o" ]
+  } ,
+  "results": {
+    "bindings": [
+      { 
+        "s": { "type": "uri" , "value": "http://www.ftn.uns.ac.rs/rdf/interesovanje/1153355353511" } ,
+        "p": { "type": "uri" , "value": "http://www.ftn.uns.ac.rs/rdf/interesovanje/predicate/vakcina" } ,
+        "o": { "type": "literal" , "datatype": "http://www.w3.org/2001/XMLSchemastring" , "value": "Pfizer-BioNTech" }
+      } ,
+      { 
+        "s": { "type": "uri" , "value": "http://www.ftn.uns.ac.rs/rdf/interesovanje/1153355353511" } ,
+        "p": { "type": "uri" , "value": "http://www.ftn.uns.ac.rs/rdf/interesovanje/predicate/opstinaPrimanja" } ,
+        "o": { "type": "literal" , "datatype": "http://www.w3.org/2001/XMLSchemastring" , "value": "Sabac" }
+      } ,
+      { 
+        "s": { "type": "uri" , "value": "http://www.ftn.uns.ac.rs/rdf/interesovanje/1153355353511" } ,
+        "p": { "type": "uri" , "value": "http://www.ftn.uns.ac.rs/rdf/interesovanje/predicate/brojFiksongTelefona" } ,
+        "o": { "type": "literal" , "datatype": "http://www.w3.org/2001/XMLSchemastring" , "value": "015518556" }
+      } ,
+      { 
+        "s": { "type": "uri" , "value": "http://www.ftn.uns.ac.rs/rdf/interesovanje/1153355353511" } ,
+        "p": { "type": "uri" , "value": "http://www.ftn.uns.ac.rs/rdf/interesovanje/predicate/brojMobilnogTelefona" } ,
+        "o": { "type": "literal" , "datatype": "http://www.w3.org/2001/XMLSchemastring" , "value": "0635678901" }
+      } ,
+      { 
+        "s": { "type": "uri" , "value": "http://www.ftn.uns.ac.rs/rdf/interesovanje/1153355353511" } ,
+        "p": { "type": "uri" , "value": "http://www.ftn.uns.ac.rs/rdf/interesovanje/predicate/email" } ,
+        "o": { "type": "literal" , "datatype": "http://www.w3.org/2001/XMLSchemastring" , "value": "test@gmail.com" }
+      } ,
+      { 
+        "s": { "type": "uri" , "value": "http://www.ftn.uns.ac.rs/rdf/interesovanje/1153355353511" } ,
+        "p": { "type": "uri" , "value": "http://www.ftn.uns.ac.rs/rdf/interesovanje/predicate/jmbg" } ,
+        "o": { "type": "literal" , "datatype": "http://www.w3.org/2001/XMLSchemastring" , "value": "1153355353511" }
+      } ,
+      { 
+        "s": { "type": "uri" , "value": "http://www.ftn.uns.ac.rs/rdf/interesovanje/1153355353511" } ,
+        "p": { "type": "uri" , "value": "http://www.ftn.uns.ac.rs/rdf/interesovanje/predicate/drzavljanstvo" } ,
+        "o": { "type": "literal" , "datatype": "http://www.w3.org/2001/XMLSchemastring" , "value": "Drzavljаnin Republike Srbije" }
+      }
+    ]
+  }
+}

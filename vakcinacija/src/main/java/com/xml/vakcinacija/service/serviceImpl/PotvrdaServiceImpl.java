@@ -78,6 +78,10 @@ public class PotvrdaServiceImpl implements PotvrdaService{
 			validanObjekat.setQR(QRCodeGenerator.generisiQRCode("http://localhost:8080/potvrda/generisiPdf/" + validanObjekat.getLicneInformacije().getJMBG().getValue()) + 
 					"/" + validanObjekat.getInformacijeOVakcinama().get(validanObjekat.getInformacijeOVakcinama().size()-1).getBrojDoze());
 			potvrdaRepository.savePotvrdaObjekat(validanObjekat);
+			validanObjekat.setAbout("http://www.ftn.uns.ac.rs/rdf/potvrda/" + validanObjekat.getLicneInformacije().getJMBG().getValue() + "_" + 
+					validanObjekat.getInformacijeOVakcinama().get(validanObjekat.getInformacijeOVakcinama().size()-1).getBrojDoze());
+			
+			String noviXml = marshallerService.marshall(validanObjekat, ContextPutanjeKonstante.CONTEXT_PUTANJA_POTVRDA, XSDPutanjeKonstante.XSD_POTVRDA);
 			
 			terminService.postaviIzvrseno(validanObjekat.getLicneInformacije().getJMBG().getValue(), validanObjekat.getInformacijeOVakcinama().size());
 			
@@ -121,7 +125,7 @@ public class PotvrdaServiceImpl implements PotvrdaService{
 		    emailSenderService.sendEmail(message);
 			
 			try {
-				rdfService.save(PotvrdaXML, "potvrda_" + validanObjekat.getLicneInformacije().getJMBG().getValue()
+				rdfService.save(noviXml, "potvrda_" + validanObjekat.getLicneInformacije().getJMBG().getValue()
 						+ "_" + brojDoze, NamedGraphURIKonstante.IMUNIZACIJA_NAMED_GRAPH);
 			} catch (Exception e) {
 				e.printStackTrace();
