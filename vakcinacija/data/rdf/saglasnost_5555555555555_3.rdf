@@ -1,17 +1,17 @@
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:h="http://www.w3.org/1999/xhtml">
-<rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/saglasnost/5555555555555_2">
+<rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/saglasnost/5555555555555_3">
 <pred:jmbg xmlns:pred="http://ftn.uns.ac.rs/vakcinacija/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">5555555555555</pred:jmbg>
 </rdf:Description>
-<rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/saglasnost/5555555555555_2">
+<rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/saglasnost/5555555555555_3">
 <pred:pol xmlns:pred="http://ftn.uns.ac.rs/vakcinacija/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">Muski</pred:pol>
 </rdf:Description>
-<rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/saglasnost/5555555555555_2">
+<rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/saglasnost/5555555555555_3">
 <pred:adresa xmlns:pred="http://ftn.uns.ac.rs/vakcinacija/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">test</pred:adresa>
 </rdf:Description>
-<rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/saglasnost/5555555555555_2">
+<rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/saglasnost/5555555555555_3">
 <pred:mesto xmlns:pred="http://ftn.uns.ac.rs/vakcinacija/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">test</pred:mesto>
 </rdf:Description>
-<rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/saglasnost/5555555555555_2">
+<rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/saglasnost/5555555555555_3">
 <pred:email xmlns:pred="http://ftn.uns.ac.rs/vakcinacija/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">fff@gmail.com</pred:email>
 </rdf:Description>
 </rdf:RDF>

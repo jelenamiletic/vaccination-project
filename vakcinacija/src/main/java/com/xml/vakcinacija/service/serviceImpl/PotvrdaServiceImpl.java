@@ -66,6 +66,7 @@ public class PotvrdaServiceImpl implements PotvrdaService{
 
 	@Override
 	public void dodajNoviPotvrda(String PotvrdaXML) throws Exception {
+		System.out.print(PotvrdaXML);
 		Potvrda validanObjekat = (Potvrda) unmarshallerService.unmarshal(PotvrdaXML, 
 				ContextPutanjeKonstante.CONTEXT_PUTANJA_POTVRDA, XSDPutanjeKonstante.XSD_POTVRDA);
 		if (validanObjekat != null) {

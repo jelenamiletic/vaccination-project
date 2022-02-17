@@ -174,6 +174,88 @@
                 	<xsl:value-of select="//sa:ZdravstveniRadnikSaglasnost/sa:LicneInformacijeLekara/sa:BrojTelefona/text()"/>
                 </p>
        			
+       			<table>
+                    <tr style="border-bottom: 1px solid #e7e9eb;">
+                        <th>Naziv vakcine</th>
+                        <th>Datum davanja vakcine (V1 i V2)</th>
+                        <th>Nacin davanja vakcine</th>
+                        <th>Ekstremitet</th>
+                        <th>Serija vakcine (lot)</th>
+                        <th>Proizvodjac</th>
+                        <th>Nezeljena reakcija</th>
+                        <th>Potpis lekara</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <xsl:value-of select="//sa:ZdravstveniRadnikSaglasnost/sa:Obrazac/sa:VakcineInfo[1]/sa:NazivVakcine/text()"/>
+                        </td>
+                        <td>
+                            <xsl:value-of select="//sa:ZdravstveniRadnikSaglasnost/sa:Obrazac/sa:VakcineInfo[1]/sa:DatumDavanjaVakcine/text()"/>
+                        </td>
+                        <td>
+                            IM
+                        </td>
+                        <td>
+                            <xsl:value-of select="//sa:ZdravstveniRadnikSaglasnost/sa:Obrazac/sa:VakcineInfo[1]/sa:Ekstremitet/text()"/>
+                        </td>
+                        <td>
+                            <xsl:value-of select="//sa:ZdravstveniRadnikSaglasnost/sa:Obrazac/sa:VakcineInfo[1]/sa:SerijaVakcine/text()"/>
+                        </td>
+                        <td>
+                            <xsl:value-of select="//sa:ZdravstveniRadnikSaglasnost/sa:Obrazac/sa:VakcineInfo[1]/sa:Proizvodjac/text()"/>
+                        </td>
+                        <td>
+                            <xsl:value-of select="//sa:ZdravstveniRadnikSaglasnost/sa:Obrazac/sa:VakcineInfo[1]/sa:NezeljanaReakcija/text()"/>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <xsl:value-of select="//sa:ZdravstveniRadnikSaglasnost/sa:Obrazac/sa:VakcineInfo[2]/sa:NazivVakcine/text()"/>
+                        </td>
+                        <td>
+                            <xsl:value-of select="//sa:ZdravstveniRadnikSaglasnost/sa:Obrazac/sa:VakcineInfo[2]/sa:DatumDavanjaVakcine/text()"/>
+                        </td>
+                        <td>
+                            IM
+                        </td>
+                        <td>
+                            <xsl:value-of select="//sa:ZdravstveniRadnikSaglasnost/sa:Obrazac/sa:VakcineInfo[2]/sa:Ekstremitet/text()"/>
+                        </td>
+                        <td>
+                            <xsl:value-of select="//sa:ZdravstveniRadnikSaglasnost/sa:Obrazac/sa:VakcineInfo[2]/sa:SerijaVakcine/text()"/>
+                        </td>
+                        <td>
+                            <xsl:value-of select="//sa:ZdravstveniRadnikSaglasnost/sa:Obrazac/sa:VakcineInfo[2]/sa:Proizvodjac/text()"/>
+                        </td>
+                        <td>
+                            <xsl:value-of select="//sa:ZdravstveniRadnikSaglasnost/sa:Obrazac/sa:VakcineInfo[2]/sa:NezeljanaReakcija/text()"/>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td colspan = "8">
+                            <div style = "float: left">Privremene kontraindikacije</div>
+                            <br/>
+                            <div style = "float: left">(Datum utvrdjivanja i dijagnoza)</div>
+                            <div style = "float: right">
+                            	<xsl:value-of select="//sa:ZdravstveniRadnikSaglasnost/sa:Obrazac/sa:PrivremeneKontraindikacije/sa:DatumUtvrdjivanja/text()"/>
+                            </div>
+                            <br/>
+                            <div style = "float: right">
+                            	<xsl:value-of select="//sa:ZdravstveniRadnikSaglasnost/sa:Obrazac/sa:PrivremeneKontraindikacije/sa:Dijagnoza/text()"/>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan = "8">
+                            <div style = "float: left">Odluka komisije za trajne kontraindikacije (ako postoji upistati Da)</div>
+                            <div style = "float: right">
+                            	<xsl:value-of select="//sa:ZdravstveniRadnikSaglasnost/sa:Obrazac/sa:TrajneKontraindikacije/text()"/>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
         	</body>
         </html>
     </xsl:template>

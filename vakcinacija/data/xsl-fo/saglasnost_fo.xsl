@@ -167,7 +167,8 @@
 	                            <fo:inline>
 	                                Datum izdavanja: 
 	                                <fo:inline text-decoration="underline">
-	                                   <xsl:value-of select="//sa:DatumPodnosenja/text()"/>
+	                                   <xsl:value-of select="format-dateTime(//sa:DatumPodnosenja/text(), '[Y0001]-[M01]-[D01] [H01]:[m01]')"/>
+	                                   
 	                                </fo:inline>
 	                                godine
 	                            </fo:inline>
@@ -180,9 +181,9 @@
 	                        </fo:block-container>
                     	</fo:block-container>
                     	
-                    <fo:block font-size="13px" padding="10px">
+                    <fo:block font-size="13px" padding-top="20px">
                         	<fo:inline font-weight="bold"> 
-                        		 #####################################################################################################
+                        		 #############################################################
                         	</fo:inline>
                     </fo:block>
                     
@@ -230,7 +231,156 @@
 		                		<xsl:value-of select="//sa:ZdravstveniRadnikSaglasnost/sa:LicneInformacijeLekara/sa:BrojTelefona/text()"/>
 		                	</fo:inline>
                     </fo:block>
-                    	
+                    <fo:block font-size="10px">
+	                    <fo:table text-align="center" font-family="serif" border="1px solid black" margin="5px auto 5px auto">
+	                    	<fo:table-column column-width="20%"/>
+	                        <fo:table-column column-width="18%"/>
+	                        <fo:table-column column-width="9%"/>
+	                        <fo:table-column column-width="11%"/>
+	                        <fo:table-column column-width="10%"/>
+	                        <fo:table-column column-width="13%"/>
+	                        <fo:table-column column-width="15%"/>
+	                        <fo:table-column column-width="8%"/>
+	                        <fo:table-body>
+	                            	<fo:table-row border="1px solid black">
+	                                    <fo:table-cell font-family="sans-serif" padding="2px" border="1px solid black">
+	                                        <fo:block>Naziv vakcine</fo:block>
+	                                    </fo:table-cell>
+	                                    <fo:table-cell font-family="sans-serif" padding="2px" border="1px solid black">
+	                                        <fo:block>Datum davanja vakcine (V1 i V2)</fo:block>
+	                                    </fo:table-cell>
+	                                    <fo:table-cell font-family="sans-serif" padding="10px" border="1px solid black">
+	                                        <fo:block>Nacin davanja vakcine</fo:block>
+	                                    </fo:table-cell>
+	                                    <fo:table-cell font-family="sans-serif" padding="2px" border="1px solid black">
+	                                        <fo:block>Ekstremitet</fo:block>
+	                                    </fo:table-cell>
+	                                    <fo:table-cell font-family="sans-serif" padding="2px" border="1px solid black">
+	                                        <fo:block>Serija vakcine (lot)</fo:block>
+	                                    </fo:table-cell>
+	                                    <fo:table-cell font-family="sans-serif" padding="2px" border="1px solid black">
+	                                        <fo:block>Proizvodjac</fo:block>
+	                                    </fo:table-cell>
+	                                    <fo:table-cell font-family="sans-serif" padding="2px" border="1px solid black">
+	                                        <fo:block>Nezeljena reakcija</fo:block>
+	                                    </fo:table-cell>
+	                                    <fo:table-cell font-family="sans-serif" padding="2px" border="1px solid black">
+	                                        <fo:block>Potpis lekara</fo:block>
+	                                    </fo:table-cell>
+	                                </fo:table-row>
+	                                <fo:table-row border="1px solid black">
+	                                    <fo:table-cell padding="2px" border="1px solid black">
+	                                        <fo:block>
+	                                            <xsl:value-of select="//sa:ZdravstveniRadnikSaglasnost/sa:Obrazac/sa:VakcineInfo[1]/sa:NazivVakcine/text()"/>
+	                                        </fo:block>
+	                                    </fo:table-cell>
+	                                    <fo:table-cell padding="2px" border="1px solid black">
+	                                        <fo:block>
+	                                            <xsl:value-of select="format-dateTime(//sa:ZdravstveniRadnikSaglasnost/sa:Obrazac/sa:VakcineInfo[1]/sa:DatumDavanjaVakcine/text(), '[Y0001]-[M01]-[D01] [H01]:[m01]')"/>
+	                                        </fo:block>
+	                                    </fo:table-cell>
+	                                    <fo:table-cell padding="2px" border="1px solid black">
+	                                        <fo:block>
+	                                            IM
+	                                        </fo:block>
+	                                    </fo:table-cell>
+	                                    <fo:table-cell padding="2px" border="1px solid black">
+	                                        <fo:block>
+	                                            <xsl:value-of select="//sa:ZdravstveniRadnikSaglasnost/sa:Obrazac/sa:VakcineInfo[1]/sa:Ekstremitet/text()"/>
+	                                        </fo:block>
+	                                    </fo:table-cell>
+	                                    <fo:table-cell padding="2px" border="1px solid black">
+	                                        <fo:block>
+	                                            <xsl:value-of select="//sa:ZdravstveniRadnikSaglasnost/sa:Obrazac/sa:VakcineInfo[1]/sa:SerijaVakcine/text()"/>
+	                                        </fo:block>
+	                                    </fo:table-cell>
+	                                    <fo:table-cell padding="2px" border="1px solid black">
+	                                        <fo:block>
+	                                            <xsl:value-of select="//sa:ZdravstveniRadnikSaglasnost/sa:Obrazac/sa:VakcineInfo[1]/sa:Proizvodjac/text()"/>
+	                                        </fo:block>
+	                                    </fo:table-cell>
+	                                    <fo:table-cell padding="2px" border="1px solid black">
+	                                        <fo:block>
+	                                            <xsl:value-of select="//sa:ZdravstveniRadnikSaglasnost/sa:Obrazac/sa:VakcineInfo[1]/sa:NezeljanaReakcija/text()"/>
+	                                        </fo:block>
+	                                    </fo:table-cell>
+	                                    <fo:table-cell padding="10px" border="1px solid black">
+	                                        <fo:block>
+	                                            
+	                                        </fo:block>
+	                                    </fo:table-cell>
+	                                </fo:table-row>
+	                                <fo:table-row border="1px solid black">
+	                                    <fo:table-cell padding="2px" border="1px solid black">
+	                                        <fo:block>
+	                                            <xsl:value-of select="//sa:ZdravstveniRadnikSaglasnost/sa:Obrazac/sa:VakcineInfo[2]/sa:NazivVakcine/text()"/>
+	                                        </fo:block>
+	                                    </fo:table-cell>
+	                                    <fo:table-cell padding="2px" border="1px solid black">
+	                                        <fo:block>
+	                                            <xsl:value-of select="//sa:ZdravstveniRadnikSaglasnost/sa:Obrazac/sa:VakcineInfo[2]/sa:DatumDavanjaVakcine/text()"/>
+	                                        </fo:block>
+	                                    </fo:table-cell>
+	                                    <fo:table-cell padding="2px" border="1px solid black">
+	                                        <fo:block>
+	                                            IM
+	                                        </fo:block>
+	                                    </fo:table-cell>
+	                                    <fo:table-cell padding="2px" border="1px solid black">
+	                                        <fo:block>
+	                                            <xsl:value-of select="//sa:ZdravstveniRadnikSaglasnost/sa:Obrazac/sa:VakcineInfo[2]/sa:Ekstremitet/text()"/>
+	                                        </fo:block>
+	                                    </fo:table-cell>
+	                                    <fo:table-cell padding="2px" border="1px solid black">
+	                                        <fo:block>
+	                                            <xsl:value-of select="//sa:ZdravstveniRadnikSaglasnost/sa:Obrazac/sa:VakcineInfo[2]/sa:SerijaVakcine/text()"/>
+	                                        </fo:block>
+	                                    </fo:table-cell>
+	                                    <fo:table-cell padding="2px" border="1px solid black">
+	                                        <fo:block>
+	                                            <xsl:value-of select="//sa:ZdravstveniRadnikSaglasnost/sa:Obrazac/sa:VakcineInfo[2]/sa:Proizvodjac/text()"/>
+	                                        </fo:block>
+	                                    </fo:table-cell>
+	                                    <fo:table-cell padding="2px" border="1px solid black">
+	                                        <fo:block>
+	                                            <xsl:value-of select="//sa:ZdravstveniRadnikSaglasnost/sa:Obrazac/sa:VakcineInfo[2]/sa:NezeljanaReakcija/text()"/>
+	                                        </fo:block>
+	                                    </fo:table-cell>
+	                                    <fo:table-cell padding="2px" border="1px solid black">
+	                                        <fo:block>
+	                                            
+	                                        </fo:block>
+	                                    </fo:table-cell>
+	                                </fo:table-row>
+	                                <fo:table-row border="1px solid black">
+	                                    <fo:table-cell padding="2px" border="1px solid black" number-columns-spanned = "8">
+	                                        <fo:block text-align = "left">
+	                                            Privremene kontraindikacije
+	                                        </fo:block>
+	                                        <fo:block text-align = "left">
+	                                            (Datum utvrdjivanja i dijagnoza)
+	                                        </fo:block>
+	                                        <fo:block text-align = "right">
+	                                            <xsl:value-of select="//sa:ZdravstveniRadnikSaglasnost/sa:Obrazac/sa:PrivremeneKontraindikacije/sa:DatumUtvrdjivanja/text()"/>
+	                                        </fo:block>
+	                                        <fo:block text-align = "right">
+	                                            <xsl:value-of select="//sa:ZdravstveniRadnikSaglasnost/sa:Obrazac/sa:PrivremeneKontraindikacije/sa:Dijagnoza/text()"/>
+	                                        </fo:block>
+	                                    </fo:table-cell>
+	                                </fo:table-row>
+	                                <fo:table-row border="1px solid black">
+	                                	<fo:table-cell padding="2px" border="1px solid black" number-columns-spanned = "8">
+	                                		<fo:block text-align = "left">
+	                                     		Odluka komisije za trajne kontraindikacije (ako postoji upistati Da)
+		                                    </fo:block>
+		                                    <fo:block text-align = "right">
+		                                     	<xsl:value-of select="//sa:ZdravstveniRadnikSaglasnost/sa:Obrazac/sa:TrajneKontraindikacije/text()"/>
+		                                    </fo:block>
+	                                	</fo:table-cell>
+	                               </fo:table-row>
+	                            </fo:table-body>
+	                		</fo:table>
+                		</fo:block>
                 </fo:flow>
             </fo:page-sequence>
         </fo:root>
