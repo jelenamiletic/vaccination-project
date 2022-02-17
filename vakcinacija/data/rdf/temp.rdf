@@ -1,8 +1,23 @@
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:h="http://www.w3.org/1999/xhtml">
-<rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/sertifikat/1153355353511">
-<pred:jmbg xmlns:pred="http://ftn.uns.ac.rs/vakcinacija/predicate/" rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">1153355353511</pred:jmbg>
+<rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/interesovanje/5555555555555">
+<pred:drzavljanstvo xmlns:pred="http://ftn.uns.ac.rs/vakcinacija/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">Drzavljanin Republike Srbije</pred:drzavljanstvo>
 </rdf:Description>
-<rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/sertifikat/1153355353511">
-<pred:brojPasosa xmlns:pred="http://ftn.uns.ac.rs/vakcinacija/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">040503921</pred:brojPasosa>
+<rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/interesovanje/5555555555555">
+<pred:jmbg xmlns:pred="http://ftn.uns.ac.rs/vakcinacija/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">5555555555555</pred:jmbg>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/interesovanje/5555555555555">
+<pred:email xmlns:pred="http://ftn.uns.ac.rs/vakcinacija/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">zivanac@majmun.com</pred:email>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/interesovanje/5555555555555">
+<pred:brojMobilnogTelefona xmlns:pred="http://ftn.uns.ac.rs/vakcinacija/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">0606095154</pred:brojMobilnogTelefona>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/interesovanje/5555555555555">
+<pred:brojFiksongTelefona xmlns:pred="http://ftn.uns.ac.rs/vakcinacija/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">123456789</pred:brojFiksongTelefona>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/interesovanje/5555555555555">
+<pred:opstinaPrimanja xmlns:pred="http://ftn.uns.ac.rs/vakcinacija/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">mali idjos</pred:opstinaPrimanja>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/interesovanje/5555555555555">
+<pred:vakcina xmlns:pred="http://ftn.uns.ac.rs/vakcinacija/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">Moderna</pred:vakcina>
 </rdf:Description>
 </rdf:RDF>

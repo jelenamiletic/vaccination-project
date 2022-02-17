@@ -302,7 +302,7 @@ const EvidencijaVakcinacije = () => {
 			if(Array.isArray(s)){
 				s.forEach( (vakcina, index) =>{
 					stareVakcine += `<po:InformacijeOVakcinama>
-										<po:BrojDoze>${index}</po:BrojDoze>
+										<po:BrojDoze>${index + 1}</po:BrojDoze>
 										<po:DatumDavanja>${vakcina["sa:DatumDavanjaVakcine"]}</po:DatumDavanja>
 										<po:Serija>${vakcina["sa:SerijaVakcine"]}</po:Serija>
 									</po:InformacijeOVakcinama>`;
