@@ -29,4 +29,9 @@ export const saglasnostSchema = yup.object().shape({
 	Opstina: yup
 		.string()
 		.required("opstina je obavezno polje!"),
+	// BrojPasosa: yup
+	// 	.string()
+	// 	.test("len", "Broj pasosa mora imati 9 karaktera!", (val) => val?.length === 9)
+	// 	.matches(/^\d+$/, "Broj pasosa mora da sadrzi samo brojevne vrednosti!")
+	// 	.notRequired(),
 });

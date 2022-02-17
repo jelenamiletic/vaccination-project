@@ -19,4 +19,7 @@ export const EvidencijaVakcinacijeSchema = yup.object().shape({
 	DatumUtvrdjivanja: yup
 		.string()
 		.matches(/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/, "godina mora biti u formatu yyyy-mm-dd!"),
+	Dijagnoza: yup
+		.string()
+		.required("Dijagnoza je obavezna!"),
 });

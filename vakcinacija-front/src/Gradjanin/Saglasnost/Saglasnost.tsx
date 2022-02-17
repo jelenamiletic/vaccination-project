@@ -171,67 +171,6 @@ const SaglasnostGradjanin = () => {
 
 	}
 
-
-	// const downloadXHTML = () => {
-
-	// 	axios
-	// 		.get(
-	// 			`http://localhost:8080/saglasnost/generisiXhtml/${ getJMBG() }/${0}`,
-	// 			{
-	// 				headers: {
-	// 					"Access-Control-Allow-Origin": "*",
-	// 				},
-	// 				responseType: "blob",
-	// 			}
-	// 		)
-	// 		.then((res: any) => {
-	// 			let blob = new Blob([res.data], {
-	// 				type: "text/html;charset=utf-8",
-	// 			});
-	// 			saveAs(
-	// 				blob,
-	// 				getJMBG()
-	// 			);
-	// 		})
-	// 		.catch((err: any) => {
-	// 			toast.error(err.response.data, {
-	// 				position: toast.POSITION.TOP_CENTER,
-	// 				autoClose: false,
-	// 				toastId: customId,
-	// 			});
-	// 		});
-	// };
-
-	// const downloadPdf = () => {
-
-	// 	axios
-	// 		.get(
-	// 			`http://localhost:8080/saglasnost/generisiPdf/${ getJMBG() }/${0}`,
-	// 			{
-	// 				headers: {
-	// 					"Access-Control-Allow-Origin": "*",
-	// 				},
-	// 				responseType: "blob",
-	// 			}
-	// 		)
-	// 		.then((res: any) => {
-	// 			let blob = new Blob([res.data], {
-	// 				type: "application/pdf;charset=utf-8",
-	// 			});
-	// 			saveAs(
-	// 				blob,
-	// 				getJMBG()
-	// 			);
-	// 		})
-	// 		.catch((err: any) => {
-	// 			toast.error(err.response.data, {
-	// 				position: toast.POSITION.TOP_CENTER,
-	// 				autoClose: false,
-	// 				toastId: customId,
-	// 			});
-	// 		});
-	// };
-
 	
 
 	return (
