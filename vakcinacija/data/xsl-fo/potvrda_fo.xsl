@@ -60,8 +60,7 @@
                         	    ,serija:
                         	 </fo:inline>
                             <fo:block>
-                                <xsl:value-of select="//po:InformacijeOVakcinama/po:DatumDavanja/text()"/>
-                                <xsl:value-of select="//po:InformacijeOVakcinama/po:Serija/text()"/>
+                                <xsl:value-of select="concat(' ', //po:InformacijeOVakcinama[1]/po:DatumDavanja/text(), //po:InformacijeOVakcinama[1]/po:Serija/text())"/>
                             </fo:block>
                     </fo:block>
                     
@@ -70,7 +69,7 @@
                         	    Datum davanja i broj serije druge doze vakcine:
                         	 </fo:inline>
                             <fo:block>
-                                
+                                <xsl:value-of select="concat(' ', //po:InformacijeOVakcinama[2]/po:DatumDavanja/text(), //po:InformacijeOVakcinama[2]/po:Serija/text())"/>
                             </fo:block>
                     </fo:block> 
                     

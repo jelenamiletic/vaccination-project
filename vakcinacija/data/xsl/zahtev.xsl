@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:za="http:///www.ftn.uns.ac.rs/vakcinacija/zahtev"
+    xmlns:ct="http:///www.ftn.uns.ac.rs/vakcinacija/commonTypes"
     version="2.0">
     <xsl:template match="/">
         <html>
@@ -68,7 +69,7 @@
                 </p>
                 
                 <p style = "padding-top:10px;">
-                	<xsl:value-of select="//za:Podnosilac/za:PunoIme/za:Ime/text()"/>
+                	<xsl:value-of select="//za:Podnosilac/za:PunoIme/ct:Ime/text()"/>
                 </p>
                 
                 <p style = "padding-top:10px;">
@@ -76,7 +77,7 @@
                 </p>
                 
                 <p style = "padding-top:10px;">
-                	<xsl:value-of select="//za:Podnosilac/za:PunoIme/za:Prezime/text()"/>
+                	<xsl:value-of select="//za:Podnosilac/za:PunoIme/ct:Prezime/text()"/>
                 </p>
                 
                 

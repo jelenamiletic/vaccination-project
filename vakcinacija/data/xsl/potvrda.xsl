@@ -72,11 +72,11 @@
                 </p>
                 
                 <p style = "padding-top:10px;">
-                	Datum davanja i broj serije prve doze vakcine: <xsl:value-of select="//po:InformacijeOVakcinama/po:DatumDavanja/text()"/>, serija: <xsl:value-of select="//po:InformacijeOVakcinama/po:Serija/text()"/>
+                	Datum davanja i broj serije prve doze vakcine, serija: <xsl:value-of select="concat(' ', //po:InformacijeOVakcinama[1]/po:DatumDavanja/text(), //po:InformacijeOVakcinama[1]/po:Serija/text())"/>
                 </p>
                 
                 <p style = "padding-top:10px;">
-                	Datum davanja i broj serije druge doze vakcine:
+                	Datum davanja i broj serije druge doze vakcine, serija: <xsl:value-of select="concat(' ', //po:InformacijeOVakcinama[2]/po:DatumDavanja/text(), //po:InformacijeOVakcinama[2]/po:Serija/text())"/>
                 </p>
                 
                 <p style = "padding-top:10px;">

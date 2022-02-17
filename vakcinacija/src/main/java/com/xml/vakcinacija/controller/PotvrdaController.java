@@ -1,7 +1,6 @@
 package com.xml.vakcinacija.controller;
 
 import java.io.IOException;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
@@ -62,8 +61,10 @@ public class PotvrdaController {
 	
 	@GetMapping(value = "/pronadjiPotvrdaPoJmbg/{jmbg}", produces = MediaType.APPLICATION_XML_VALUE)
 	@PreAuthorize("hasAnyRole('ROLE_GRADJANIN', 'ROLE_SLUZBENIK')")
-	public ResponseEntity<List<Potvrda>> pronadjiPotvrdaPoJmbg(@PathVariable String jmbg) throws Exception {
-		return new ResponseEntity<>(potvrdaService.pronadjiPotvrdaPoJmbg(jmbg), HttpStatus.OK);
+	public ResponseEntity<ListaPotvrda> pronadjiPotvrdaPoJmbg(@PathVariable String jmbg) throws Exception {
+		ListaPotvrda lista = new ListaPotvrda();
+		lista.setPotvrda(potvrdaService.pronadjiPotvrdaPoJmbg(jmbg));
+		return new ResponseEntity<>(lista, HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/nabaviMetaPodatkeJSONPoJmbg/{jmbg}/{brojDoze}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -95,3 +96,4 @@ public class PotvrdaController {
 		return new ResponseEntity<>(new InputStreamResource(potvrdaService.generisiPdf(jmbg, brojDoze)), HttpStatus.OK);
 	}
 }
+

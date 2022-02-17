@@ -87,7 +87,7 @@ public class ZahtevController {
 		return new ResponseEntity<>(new InputStreamResource(zahtevService.generisiPdf(jmbg)), HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/generisiXHTML/{jmbg}", produces = MediaType.TEXT_HTML_VALUE)
+	@GetMapping(value = "/generisiXhtml/{jmbg}", produces = MediaType.TEXT_HTML_VALUE)
 	@PreAuthorize("hasRole('ROLE_GRADJANIN')")
 	public ResponseEntity<InputStreamResource> generisiXHTML(@PathVariable String jmbg) throws Exception {
 		return new ResponseEntity<>(new InputStreamResource(zahtevService.generisiXHTML(jmbg)), HttpStatus.OK);

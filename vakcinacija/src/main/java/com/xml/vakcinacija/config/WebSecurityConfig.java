@@ -135,6 +135,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/zahtev/promeniStatusZahteva").hasAuthority(RoleKonstante.ROLE_SLUZBENIK)
 				.antMatchers("/zahtev/nabaviMetaPodatkeJSONPoJmbg/{jmbg}").hasAnyAuthority(RoleKonstante.ROLE_GRADJANIN, RoleKonstante.ROLE_SLUZBENIK)
 				.antMatchers("/zahtev/nabaviMetaPodatkeRDFPoJmbg/{jmbg}").hasAnyAuthority(RoleKonstante.ROLE_GRADJANIN, RoleKonstante.ROLE_SLUZBENIK)
+				.antMatchers("/zahtev/generisiXhtml/{jmbg}").hasAnyAuthority(RoleKonstante.ROLE_GRADJANIN, RoleKonstante.ROLE_SLUZBENIK)
+				.antMatchers("/zahtev/generisiPdf/{jmbg}").hasAnyAuthority(RoleKonstante.ROLE_GRADJANIN, RoleKonstante.ROLE_SLUZBENIK)
 				
 				// Gradjanin controller
 				.antMatchers("/gradjanin/registracija").permitAll()
