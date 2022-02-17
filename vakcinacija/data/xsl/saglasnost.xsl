@@ -185,54 +185,32 @@
                         <th>Nezeljena reakcija</th>
                         <th>Potpis lekara</th>
                     </tr>
-                    <tr>
-                        <td>
-                            <xsl:value-of select="//sa:ZdravstveniRadnikSaglasnost/sa:Obrazac/sa:VakcineInfo[1]/sa:NazivVakcine/text()"/>
-                        </td>
-                        <td>
-                            <xsl:value-of select="//sa:ZdravstveniRadnikSaglasnost/sa:Obrazac/sa:VakcineInfo[1]/sa:DatumDavanjaVakcine/text()"/>
-                        </td>
-                        <td>
-                            IM
-                        </td>
-                        <td>
-                            <xsl:value-of select="//sa:ZdravstveniRadnikSaglasnost/sa:Obrazac/sa:VakcineInfo[1]/sa:Ekstremitet/text()"/>
-                        </td>
-                        <td>
-                            <xsl:value-of select="//sa:ZdravstveniRadnikSaglasnost/sa:Obrazac/sa:VakcineInfo[1]/sa:SerijaVakcine/text()"/>
-                        </td>
-                        <td>
-                            <xsl:value-of select="//sa:ZdravstveniRadnikSaglasnost/sa:Obrazac/sa:VakcineInfo[1]/sa:Proizvodjac/text()"/>
-                        </td>
-                        <td>
-                            <xsl:value-of select="//sa:ZdravstveniRadnikSaglasnost/sa:Obrazac/sa:VakcineInfo[1]/sa:NezeljanaReakcija/text()"/>
-                        </td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <xsl:value-of select="//sa:ZdravstveniRadnikSaglasnost/sa:Obrazac/sa:VakcineInfo[2]/sa:NazivVakcine/text()"/>
-                        </td>
-                        <td>
-                            <xsl:value-of select="//sa:ZdravstveniRadnikSaglasnost/sa:Obrazac/sa:VakcineInfo[2]/sa:DatumDavanjaVakcine/text()"/>
-                        </td>
-                        <td>
-                            IM
-                        </td>
-                        <td>
-                            <xsl:value-of select="//sa:ZdravstveniRadnikSaglasnost/sa:Obrazac/sa:VakcineInfo[2]/sa:Ekstremitet/text()"/>
-                        </td>
-                        <td>
-                            <xsl:value-of select="//sa:ZdravstveniRadnikSaglasnost/sa:Obrazac/sa:VakcineInfo[2]/sa:SerijaVakcine/text()"/>
-                        </td>
-                        <td>
-                            <xsl:value-of select="//sa:ZdravstveniRadnikSaglasnost/sa:Obrazac/sa:VakcineInfo[2]/sa:Proizvodjac/text()"/>
-                        </td>
-                        <td>
-                            <xsl:value-of select="//sa:ZdravstveniRadnikSaglasnost/sa:Obrazac/sa:VakcineInfo[2]/sa:NezeljanaReakcija/text()"/>
-                        </td>
-                        <td></td>
-                    </tr>
+                    <xsl:for-each select="//sa:ZdravstveniRadnikSaglasnost/sa:Obrazac/sa:VakcineInfo">
+                    	<tr>
+	                        <td>
+	                            <xsl:value-of select="sa:NazivVakcine/text()"/>
+	                        </td>
+	                        <td>
+	                            <xsl:value-of select="sa:DatumDavanjaVakcine/text()"/>
+	                        </td>
+	                        <td>
+	                            IM
+	                        </td>
+	                        <td>
+	                            <xsl:value-of select="sa:Ekstremitet/text()"/>
+	                        </td>
+	                        <td>
+	                            <xsl:value-of select="sa:SerijaVakcine/text()"/>
+	                        </td>
+	                        <td>
+	                            <xsl:value-of select="sa:Proizvodjac/text()"/>
+	                        </td>
+	                        <td>
+	                            <xsl:value-of select="sa:NezeljanaReakcija/text()"/>
+	                        </td>
+                        	<td></td>
+                    	</tr>
+                    </xsl:for-each>
                     <tr>
                         <td colspan = "8">
                             <div style = "float: left">Privremene kontraindikacije</div>

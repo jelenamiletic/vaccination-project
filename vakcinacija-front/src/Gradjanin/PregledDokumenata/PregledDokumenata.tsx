@@ -426,6 +426,18 @@ const PregledDokumenata = () => {
 			});
 	};
 
+	const datumIspis = (): string => {
+		if (documentType !== "potvrda" && documentType !== "sertifikat") {
+			return `${documentType.toLowerCase().substring(0, 2)}:DatumPodnosenja`;
+		} else if (documentType === "potvrda") {
+			return `${documentType.toLowerCase().substring(0, 2)}:DatumIzdavanja`;
+		} else if (documentType === "sertifikat") {
+			return `${documentType
+				.toLowerCase()
+				.substring(0, 2)}:DatumVremeIzdavanja`;
+		}
+	};
+
 	return (
 		<>
 			<GradjaninNavbar />
@@ -467,11 +479,7 @@ const PregledDokumenata = () => {
 
 							<Column width={300} fixed>
 								<HeaderCell>Datum podnosenja</HeaderCell>
-								<Cell
-									dataKey={`${documentType
-										.toLowerCase()
-										.substring(0, 2)}:DatumPodnosenja`}
-								/>
+								<Cell dataKey={datumIspis()} />
 							</Column>
 							<Column width={500} fixed="right">
 								<HeaderCell>Download</HeaderCell>

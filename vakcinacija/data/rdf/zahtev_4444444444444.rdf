@@ -3,6 +3,6 @@
 <pred:jmbg xmlns:pred="http://www.ftn.uns.ac.rs/rdf/zahtev/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">4444444444444</pred:jmbg>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/zahtev/4444444444444">
-<pred:BrojPasosa xmlns:pred="http://www.ftn.uns.ac.rs/rdf/zahtev/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">111111111</pred:BrojPasosa>
+<pred:BrojPasosa xmlns:pred="http://www.ftn.uns.ac.rs/rdf/zahtev/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">677676890</pred:BrojPasosa>
 </rdf:Description>
 </rdf:RDF>

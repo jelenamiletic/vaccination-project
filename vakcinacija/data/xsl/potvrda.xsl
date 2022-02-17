@@ -71,25 +71,23 @@
                 	JMBG: <xsl:value-of select="//po:LicneInformacije/po:JMBG/text()"/>
                 </p>
                 
-                <p style = "padding-top:10px;">
-                	Datum davanja i broj serije prve doze vakcine, serija: <xsl:value-of select="concat(' ', //po:InformacijeOVakcinama[1]/po:DatumDavanja/text(), //po:InformacijeOVakcinama[1]/po:Serija/text())"/>
-                </p>
+                <xsl:for-each select="//po:InformacijeOVakcinama">
+                	<p style = "padding-top:10px;">
+                		Datum davanja <xsl:value-of select="po:BrojDoze"/> doze i broj serije vakcine: <xsl:value-of select="concat(' ', po:DatumDavanja/text(), ' ', po:Serija/text())"/>
+	                </p>
+	                <p style = "padding-top:10px;">
+	                	Zdravstvena ustanova koja vakcinise: <xsl:value-of select="po:ZdravstvenaUstanova/text()"/>
+	                </p>
+	                
+	                <p style = "padding-top:10px;">
+	                	Naziv vakcine: <xsl:value-of select="po:VakcinaPrveDveDoze/text()"/>
+	                </p>
+	                
+	                <p style = "padding-top:10px;">
+	                	Datum izdavanja potvrde: <xsl:value-of select="po:DatumIzdavanja/text()"/>
+	                </p>
+                </xsl:for-each>
                 
-                <p style = "padding-top:10px;">
-                	Datum davanja i broj serije druge doze vakcine, serija: <xsl:value-of select="concat(' ', //po:InformacijeOVakcinama[2]/po:DatumDavanja/text(), //po:InformacijeOVakcinama[2]/po:Serija/text())"/>
-                </p>
-                
-                <p style = "padding-top:10px;">
-                	Zdravstvena ustanova koja vakcinise: <xsl:value-of select="//po:ZdravstvenaUstanova/text()"/>
-                </p>
-                
-                <p style = "padding-top:10px;">
-                	Naziv vakcine: <xsl:value-of select="//po:VakcinaPrveDveDoze/text()"/>
-                </p>
-                
-                <p style = "padding-top:10px;">
-                	Datum izdavanja potvrde: <xsl:value-of select="//po:DatumIzdavanja/text()"/>
-                </p>
                 
                 <xsl:variable name="QR" select="//po:QR/text()"/>
                 <div style="width: 20vw; margin-right: 20vw; float:right">

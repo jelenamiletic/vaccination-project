@@ -3,13 +3,13 @@
 <pred:jmbg xmlns:pred="http://www.ftn.uns.ac.rs/rdf/sertifikat/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">4444444444444</pred:jmbg>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/sertifikat/4444444444444">
-<pred:brojPasosa xmlns:pred="http://www.ftn.uns.ac.rs/rdf/sertifikat/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">111111111</pred:brojPasosa>
+<pred:brojPasosa xmlns:pred="http://www.ftn.uns.ac.rs/rdf/sertifikat/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">677676890</pred:brojPasosa>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/sertifikat/4444444444444">
-<pred:tipVakcine xmlns:pred="http://www.ftn.uns.ac.rs/rdf/sertifikat/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">Pfizer-BioNTech</pred:tipVakcine>
+<pred:tipVakcine xmlns:pred="http://www.ftn.uns.ac.rs/rdf/sertifikat/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">Sinopharm</pred:tipVakcine>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/sertifikat/4444444444444">
-<pred:tipVakcine xmlns:pred="http://www.ftn.uns.ac.rs/rdf/sertifikat/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">Pfizer-BioNTech</pred:tipVakcine>
+<pred:tipVakcine xmlns:pred="http://www.ftn.uns.ac.rs/rdf/sertifikat/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">Sinopharm</pred:tipVakcine>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/sertifikat/4444444444444">
 <pred:rezultat xmlns:pred="http://www.ftn.uns.ac.rs/rdf/sertifikat/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">Negativan</pred:rezultat>

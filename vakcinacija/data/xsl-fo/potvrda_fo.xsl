@@ -22,8 +22,7 @@
                         	 	Ime i prezime:
                         	 </fo:inline>
                             <fo:inline>
-                                <xsl:value-of select="//po:LicneInformacije/po:PunoIme/ct:Ime/text()"/>
-                                <xsl:value-of select="//po:LicneInformacije/po:PunoIme/ct:Prezime/text()"/>
+                                <xsl:value-of select="concat(' ', //po:LicneInformacije/po:PunoIme/ct:Ime/text(), ' ', //po:LicneInformacije/po:PunoIme/ct:Prezime/text())"/>
                             </fo:inline>
                     </fo:block>
                     
@@ -54,33 +53,16 @@
                             </fo:block>
                     </fo:block>    	
                     
-                    <fo:block font-size="13px" padding="10px">
+                    <xsl:for-each select="//po:InformacijeOVakcinama">
+                    	<fo:block font-size="13px" padding="10px">
                         	 <fo:inline>
-                        	    Datum davanja i broj serije prve doze vakcine:
-                        	    ,serija:
+                        	    Datum davanja <xsl:value-of select="po:BrojDoze"/> doze i broj serije vakcine:
                         	 </fo:inline>
                             <fo:block>
-                                <xsl:value-of select="concat(' ', //po:InformacijeOVakcinama[1]/po:DatumDavanja/text(), //po:InformacijeOVakcinama[1]/po:Serija/text())"/>
+                                <xsl:value-of select="concat(' ', format-dateTime(po:DatumDavanja/text(), '[Y0001]-[M01]-[D01] [H01]:[m01]'), ' ', po:Serija/text())"/>
                             </fo:block>
                     </fo:block>
-                    
-                    <fo:block font-size="13px" padding="10px">
-                        	 <fo:inline>
-                        	    Datum davanja i broj serije druge doze vakcine:
-                        	 </fo:inline>
-                            <fo:block>
-                                <xsl:value-of select="concat(' ', //po:InformacijeOVakcinama[2]/po:DatumDavanja/text(), //po:InformacijeOVakcinama[2]/po:Serija/text())"/>
-                            </fo:block>
-                    </fo:block> 
-                    
-                    <fo:block font-size="13px" padding="10px">
-                        	 <fo:inline>
-                        	    Zdravstvena ustanova koja vakcinise:
-                        	 </fo:inline>
-                            <fo:block>
-                                <xsl:value-of select="//po:ZdravstvenaUstanova/text()"/>
-                            </fo:block>
-                    </fo:block>
+                    </xsl:for-each>
                     
                     <fo:block font-size="13px" padding="10px">
                         	 <fo:inline>
@@ -96,7 +78,7 @@
                         	    Datum izdavanja potvrde:
                         	 </fo:inline>
                             <fo:block>
-                                <xsl:value-of select="//po:DatumIzdavanja/text()"/>
+                                <xsl:value-of select="format-dateTime(//po:DatumIzdavanja/text(), '[Y0001]-[M01]-[D01] [H01]:[m01]')"/>
                             </fo:block>
                     </fo:block>
                     
