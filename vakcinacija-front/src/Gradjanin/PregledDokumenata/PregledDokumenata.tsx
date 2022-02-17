@@ -36,13 +36,11 @@ const PregledDokumenata = () => {
 	const customId = "pregled-dokumenata";
 
     const [vecIma, setVecIma] = useState(false);
-	const [jmbg, setJmbg] = useState(null);
 	const navigate = useNavigate();
 	const [documentType, setDocumentType] = useState(null);
 	const [documents, setDocuments] = useState<Array<ZahtevXML|SertifikatXML|Saglasnost|InteresovanjeXML>>([]);
 
 	useEffect(() => {
-		setJmbg(getJMBG());
 	}, [])
 
 	const {
@@ -72,6 +70,7 @@ const PregledDokumenata = () => {
 		.then((res: any) => {
 			const parser = new XMLParser();
 			const result = parser.parse(res.data);
+			console.log(result);
 			switch(name){
 				case "zahtev":
 					let temp1: ZahtevXML = result[Object.keys(result)[1]];
@@ -89,13 +88,15 @@ const PregledDokumenata = () => {
 			
 		}).catch((err: any) => {
 			setDocuments([]);
-		})}else{
+		})}else if(name === "saglasnost"){
+			//TODO proveri dal je dodjos
 			axios.get(`http://localhost:8080/saglasnost/pronadjiSaglasnostPoJmbgIliBrPasosa/` + getJMBG())
 			.then((res: any) => {
 				const parser = new XMLParser();
 				const result = parser.parse(res.data);
-				let temp1: Saglasnost = result[Object.keys(result)[1]];
-				setDocuments([temp1]);
+				let temp4: Saglasnost = result[Object.keys(result)[1]];
+				console.log(temp4);
+				setDocuments([temp4]);
 			
 		}).catch((err: any) => {
 			setDocuments([]);
@@ -107,15 +108,17 @@ const PregledDokumenata = () => {
         let name = event.target.name;
         proveriDalIma(name);
         setDocumentType(name);
+		pronadjiSveDokumente(name);
     };
 
 	useEffect(()=>{
 		vecIma && pronadjiSveDokumente(documentType);
-	}, [vecIma]);
+	}, []);
 
 
 
 	const downloadXHTML = (name) => {
+		//TODO nije dobra putanja za sve osim zahteve, za potvrdu i saglasnost treba jos brojDoze, a za saglasnost jos provera dal je dodjos
 		axios
 			.get(
 				`http://localhost:8080/${name}/generisiXHTML/${getJMBG()}`,
@@ -145,6 +148,7 @@ const PregledDokumenata = () => {
 	};
 
     const downloadPDF = (name) => {
+		//TODO nije dobra putanja za sve osim zahteve, za potvrdu i saglasnost treba jos brojDoze, a za saglasnost jos provera dal je dodjos
 		axios
 			.get(
 				`http://localhost:8080/${name}/generisiPdf/${getJMBG()}`,
@@ -189,6 +193,7 @@ const PregledDokumenata = () => {
                             <DropdownItem onClick={handleChange} name="sertifikat">Sertifikat</DropdownItem>
                             <DropdownItem onClick={handleChange} name="interesovanje">Interesovanje</DropdownItem>
                             <DropdownItem onClick={handleChange} name="saglasnost">Saglasnost</DropdownItem>
+							<DropdownItem onClick={handleChange} name="potvrda">Potvrda</DropdownItem>
                         </DropdownMenu>
                     </Dropdown>
 				</CardBody>

@@ -144,6 +144,15 @@ public class PotvrdaServiceImpl implements PotvrdaService{
 	}
 	
 	@Override
+	public List<Potvrda> pronadjiPotvrdaPoJmbg(String jmbg) throws Exception {
+		List<Potvrda> potvrda = potvrdaRepository.pronadjiPotvrdaPoJmbg(jmbg);
+		if (potvrda == null) {
+			throw new PotvrdaNijePronadjenoException(jmbg);
+		}
+		return potvrda;
+	}
+	
+	@Override
 	public Potvrda dobaviPoslednjuPotvrduPoJmbg(String jmbg) throws Exception {
 		Potvrda potvrda = potvrdaRepository.dobaviPoslednjuPotvrduPoJmbg(jmbg);
 		if (potvrda == null) {

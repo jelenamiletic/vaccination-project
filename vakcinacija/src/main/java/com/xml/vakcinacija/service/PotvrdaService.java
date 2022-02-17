@@ -27,4 +27,6 @@ public interface PotvrdaService {
 	String pronadjiSveNaprednaPretraga(String ime, String prezime, String jmbg, String pol) throws Exception;
 
 	ByteArrayInputStream generisiXHTML(String jmbg, int brojDoze) throws Exception;
+
+	List<Potvrda> pronadjiPotvrdaPoJmbg(String jmbg)  throws Exception ;
 }
