@@ -22,8 +22,8 @@ Pokrenuti aplikativni server (/bin/startup.bat) i pristupiti exist i fuseki baza
 * http://localhost:8082/fuseki
 * http://localhost:8082/fuseki2
 
-Na http://localhost:8082/fuseki kreirati dataset pod nazivom **Vakcinacija**, 
-a na http://localhost:8082/fuseki2 dataset nazvati **Sluzbenik**.
+Na http://localhost:8082/fuseki kreirati **persistent** dataset pod nazivom **Vakcinacija**, 
+a na http://localhost:8082/fuseki2 **persistent** dataset nazvati **Sluzbenik**.
 
 ### Pokretanje frontend aplikacije
 ```
