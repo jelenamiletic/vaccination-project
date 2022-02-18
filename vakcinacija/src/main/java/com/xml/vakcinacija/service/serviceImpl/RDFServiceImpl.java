@@ -38,6 +38,10 @@ public class RDFServiceImpl implements RDFService {
 	@Override
 	public void save(String xml, String fileName, String namedGraphUri) throws IOException, TransformerException, SAXException {
 		RDFDBAuthenticationUtilities.ConnectionProperties conn = RDFDBAuthenticationUtilities.loadProperties();
+		File directory = new File("data/rdf");
+	    if (!directory.exists()){
+	        directory.mkdir();
+	    }
 		String rdfPath = "data/rdf/" + fileName + ".rdf";
 
 		PrintWriter printWritter = new PrintWriter(new FileOutputStream(rdfPath));
@@ -121,6 +125,10 @@ public class RDFServiceImpl implements RDFService {
 		// Query the collection, dump output response as XML
 		results = query.execSelect();
 		
+		File directory = new File("output_metadata_json");
+	    if (!directory.exists()){
+	        directory.mkdir();
+	    }
 		String xmlFile = "output_metadata_json/" + fileName + ".json";
 		
 		ResultSetFormatter.outputAsJSON(new FileOutputStream(xmlFile), results);
@@ -137,6 +145,10 @@ public class RDFServiceImpl implements RDFService {
 	
 	@Override
 	public ByteArrayInputStream getMetadataRDF(String xml) throws TransformerException, IOException, SAXException {
+		File directory = new File("data/rdf");
+	    if (!directory.exists()){
+	        directory.mkdir();
+	    }
 		String rdfPath = "data/rdf/temp.rdf";
 
 		PrintWriter printWritter = new PrintWriter(new FileOutputStream(rdfPath));
