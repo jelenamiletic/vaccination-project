@@ -5,8 +5,8 @@ Da bi se aplikacija pokrenula potrebno je instalirati sledeće programe:
 * [Eclipse IDE for Enterprise Java and Web Developers](https://www.eclipse.org/downloads/packages/release/2021-03/r/eclipse-ide-enterprise-java-and-web-developers)
 * [Node.js](https://nodejs.org/en/)
 * [Apache TomEE plus 8](http://tomee.apache.org/download-ng.html)
-* [Exist] (https://github.com/eXist-db/exist/releases/tag/eXist-4.8.0)
-* [Fuseki] (https://archive.apache.org/dist/jena/binaries/apache-jena-fuseki-3.17.0.zip)
+* [Exist](https://github.com/eXist-db/exist/releases/tag/eXist-4.8.0)
+* [Fuseki](https://archive.apache.org/dist/jena/binaries/apache-jena-fuseki-3.17.0.zip)
 
 ### Podesavanje Apache TomEE plus 8 servera
 
@@ -22,8 +22,7 @@ Pokrenuti aplikativni server (/bin/startup.bat) i pristupiti exist i fuseki baza
 * http://localhost:8082/fuseki
 * http://localhost:8082/fuseki2
 
-Na http://localhost:8082/fuseki i http://localhost:8082/fuseki2 potrebno je kreirati dataset-ove
-sa nazivima Vakcinacija i Sluzbenik.
+Na http://localhost:8082/fuseki/http://localhost:8082/fuseki2 potrebno je kreirati dataset-ove sa nazivima **Vakcinacija**/**Sluzbenik**.
 
 ### Pokretanje frontend aplikacije
 ```
