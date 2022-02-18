@@ -12,7 +12,7 @@ Da bi se aplikacija pokrenula potrebno je instalirati sledeće programe:
 
 Kopirati [server.xml](./server.xml) u /conf direktorijum TomEE-a.
 
-Preuzmi dva puta exist war fajl, prvi nazovite exist.war, a drugi exist2.war.
+Preuzmite dva puta exist war fajl, prvi nazovite exist.war, a drugi exist2.war.
 Potrebno je istu proceduru odraditi za fuseki, fajlove preimenujte u fuseki.war i fuseki2.war.
 Sledece je potrebno premestiti sve prethodno navedene war fajlove u /webapps direktorijum TomEE-a.
 
@@ -43,4 +43,6 @@ npm start
 Importovati projekte vakcinacija i sluzbenik u Eclipse IDE.
 
 Odabrati opciju ```File -> Import -> Maven -> Existing Maven projects```.
+
+Pokretati VakcinacijaApplication i SluzbenikApplication u importovanim projektima.
 
