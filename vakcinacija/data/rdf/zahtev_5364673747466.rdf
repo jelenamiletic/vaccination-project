@@ -1,8 +1,0 @@
-<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:h="http://www.w3.org/1999/xhtml">
-<rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/zahtev/5364673747466">
-<pred:jmbg xmlns:pred="http://www.ftn.uns.ac.rs/rdf/zahtev/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">5364673747466</pred:jmbg>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.ftn.uns.ac.rs/rdf/zahtev/5364673747466">
-<pred:BrojPasosa xmlns:pred="http://www.ftn.uns.ac.rs/rdf/zahtev/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">383839393</pred:BrojPasosa>
-</rdf:Description>
-</rdf:RDF>

@@ -1,8 +1,0 @@
-<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:h="http://www.w3.org/1999/xhtml">
-<rdf:Description rdf:about="">
-<pred:jmbg xmlns:pred="http://www.ftn.uns.ac.rs/rdf/potvrda/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">3331553665733</pred:jmbg>
-</rdf:Description>
-<rdf:Description rdf:about="">
-<pred:VakcinaPrveDveDoze xmlns:pred="http://www.ftn.uns.ac.rs/rdf/potvrda/predicate/" rdf:datatype="http://www.w3.org/2001/XMLSchemastring">Pfizer-BioNTech</pred:VakcinaPrveDveDoze>
-</rdf:Description>
-</rdf:RDF>
